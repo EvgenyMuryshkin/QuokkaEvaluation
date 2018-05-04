@@ -1,0 +1,14 @@
+﻿{
+  "Project": "SnakeGame",
+  "Configurations": [
+    {
+      "Name": "Quokka",
+      "ClockFrequency": 50000000
+    },
+    {
+      "Name": "Test",
+      "ClockFrequency": 50000000
+    }
+  ],
+  "ProjectLocation": "..\\VHDL"
+}

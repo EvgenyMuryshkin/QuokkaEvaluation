@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2043
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SnakeGame", "SnakeGame\SnakeGame.csproj", "{5670E3B7-E161-4F38-A75C-CDB503537663}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SnakeGame.Tests", "SnakeGame.Tests\SnakeGame.Tests.csproj", "{FA00D59C-1F64-4CB8-8316-AE7FA2B5E358}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Drivers", "Drivers\Drivers.csproj", "{CE756A31-2D49-4521-AC44-B0801F325C0E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuokkaCLI", "QuokkaCLI\QuokkaCLI.csproj", "{0949F86E-1EC0-4FEB-9A31-6022B389D012}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FunctionalTest", "FunctionalTest\FunctionalTest.csproj", "{91095DB4-DB6D-4A3F-B2DF-FB0C93B63933}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DTOs", "DTOs\DTOs.csproj", "{8AA114E8-861B-473C-9B1F-0711EFF0FD47}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeccakTest", "KeccakTest\KeccakTest.csproj", "{E5945998-CF53-4AC5-ADA6-9DB016811C73}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5670E3B7-E161-4F38-A75C-CDB503537663}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5670E3B7-E161-4F38-A75C-CDB503537663}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5670E3B7-E161-4F38-A75C-CDB503537663}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5670E3B7-E161-4F38-A75C-CDB503537663}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA00D59C-1F64-4CB8-8316-AE7FA2B5E358}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA00D59C-1F64-4CB8-8316-AE7FA2B5E358}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA00D59C-1F64-4CB8-8316-AE7FA2B5E358}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA00D59C-1F64-4CB8-8316-AE7FA2B5E358}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE756A31-2D49-4521-AC44-B0801F325C0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE756A31-2D49-4521-AC44-B0801F325C0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE756A31-2D49-4521-AC44-B0801F325C0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE756A31-2D49-4521-AC44-B0801F325C0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0949F86E-1EC0-4FEB-9A31-6022B389D012}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0949F86E-1EC0-4FEB-9A31-6022B389D012}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0949F86E-1EC0-4FEB-9A31-6022B389D012}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0949F86E-1EC0-4FEB-9A31-6022B389D012}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91095DB4-DB6D-4A3F-B2DF-FB0C93B63933}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91095DB4-DB6D-4A3F-B2DF-FB0C93B63933}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91095DB4-DB6D-4A3F-B2DF-FB0C93B63933}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91095DB4-DB6D-4A3F-B2DF-FB0C93B63933}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AA114E8-861B-473C-9B1F-0711EFF0FD47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AA114E8-861B-473C-9B1F-0711EFF0FD47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AA114E8-861B-473C-9B1F-0711EFF0FD47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AA114E8-861B-473C-9B1F-0711EFF0FD47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5945998-CF53-4AC5-ADA6-9DB016811C73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5945998-CF53-4AC5-ADA6-9DB016811C73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5945998-CF53-4AC5-ADA6-9DB016811C73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5945998-CF53-4AC5-ADA6-9DB016811C73}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0BE3F9BA-A23D-459E-8A7D-2D9F1612D011}
+	EndGlobalSection
+EndGlobal

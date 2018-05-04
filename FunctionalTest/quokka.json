@@ -1,0 +1,10 @@
+﻿{
+  "Project": "FncTests",
+  "Configurations": [
+    {
+      "Name": "NEB",
+      "ClockFrequency": 24000000
+    }
+  ],
+  "ProjectLocation": "..\\VHDL"
+}

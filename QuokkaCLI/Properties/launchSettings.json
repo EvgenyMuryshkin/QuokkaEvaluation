@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Quokka.LocalCLI": {
+      "commandName": "Project",
+      "workingDirectory": "..\\FunctionalTest"
+    }
+  }
+}
