@@ -13,6 +13,7 @@ Toolkit runs on all OS, where .NET Core 2.0 is instaled, please refer to framewo
 * Build QuokkaEvaluation.sln using command line tools or Visual Studio
 * Run QuokkaCLI from Visual Studio
 * Alternatively, open CLI location in command line and run "dotnet run -s ..\SnakeGame"
+* Run CLI in watch mode by providing -w argument "dotnet run -s ..\SnakeGame -w"
 
 Output should look something like next:
 ```
