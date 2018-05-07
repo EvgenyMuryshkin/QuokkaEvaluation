@@ -6,6 +6,9 @@ This repository contains
 * Working implementation of Keccak1600 algorythm
 * SnakeGame for 8x8 LED matrix
 
+## Brief
+Please read brief statement about the product here https://github.com/EvgenyMuryshkin/QuokkaEvaluation/raw/master/Docs/Quokka%20Whitepaper.pdf
+
 ## Setup 
 Toolkit runs on all OS, where .NET Core 2.0 is instaled, please refer to framework installation guide for target OS
 
