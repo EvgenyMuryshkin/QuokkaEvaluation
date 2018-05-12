@@ -14,7 +14,7 @@ Toolkit runs on all OS, where .NET Core 2.0 or higher is installed.
 
 Please refer to framework installation guide for Linux https://www.microsoft.com/net/download/linux-package-manager/centos/sdk-current
 
-* Get code from guthub repository git clone https://github.com/EvgenyMuryshkin/QuokkaEvaluation.git
+* Get code from github repository git clone https://github.com/EvgenyMuryshkin/QuokkaEvaluation.git
 * Open QuokkaCLI location in command line and run "dotnet run -s ..\SnakeGame"
 * Run CLI in watch mode by providing -w argument "dotnet run -s ..\SnakeGame -w"
 
