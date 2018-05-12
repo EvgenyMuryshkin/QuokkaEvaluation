@@ -10,7 +10,8 @@ This repository contains
 Please read brief statement about the product here https://github.com/EvgenyMuryshkin/QuokkaEvaluation/raw/master/Docs/Quokka%20Whitepaper.pdf
 
 ## Setup 
-Toolkit runs on all OS, where .NET Core 2.0 is instaled, please refer to framework installation guide for target OS
+Toolkit runs on all OS, where .NET Core 2.0 or higher is installed.
+Please refer to framework installation guide for Linux https://www.microsoft.com/net/download/linux-package-manager/centos/sdk-current
 
 * Get code from guthub repository git clone https://github.com/EvgenyMuryshkin/QuokkaEvaluation.git
 * Build QuokkaEvaluation.sln using command line tools or Visual Studio
