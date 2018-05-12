@@ -11,12 +11,11 @@ Please read brief statement about the product here https://github.com/EvgenyMury
 
 ## Setup 
 Toolkit runs on all OS, where .NET Core 2.0 or higher is installed.
+
 Please refer to framework installation guide for Linux https://www.microsoft.com/net/download/linux-package-manager/centos/sdk-current
 
 * Get code from guthub repository git clone https://github.com/EvgenyMuryshkin/QuokkaEvaluation.git
-* Build QuokkaEvaluation.sln using command line tools or Visual Studio
-* Run QuokkaCLI from Visual Studio
-* Alternatively, open CLI location in command line and run "dotnet run -s ..\SnakeGame"
+* Open QuokkaCLI location in command line and run "dotnet run -s ..\SnakeGame"
 * Run CLI in watch mode by providing -w argument "dotnet run -s ..\SnakeGame -w"
 
 Output should look something like next:
@@ -33,5 +32,7 @@ Configuration [Quokka.qsf] was not found
 Configuration [Test.qsf] was not found
 === Directory transformation completed
 ```
+
+QuokkaEvaluation.sln has all the projects and QuokkaCLI in one place, QuokkaCLI can be run from directly from VS as well
 
 Project is in active development, please contact me if you get any issues of have feedback.
