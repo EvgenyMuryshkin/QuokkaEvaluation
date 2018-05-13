@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:BHMobile"
+             x:Class="BHMobile.MainPage">
+
+    <StackLayout BackgroundColor="{Binding Color}">
+        <!-- Place new controls here -->
+        <Label Text="{Binding Status}"
+            FontSize="Large"
+            HorizontalOptions="Center"
+            VerticalOptions="CenterAndExpand" />
+        <ListView ItemsSource="{Binding EndPoints}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Label FontSize="Medium" TextColor="#336699" Text="{Binding}"/>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Label Text="{Binding Distance}"  
+            FontSize="Large"
+            HorizontalOptions="Center"
+            VerticalOptions="CenterAndExpand" />
+    </StackLayout>
+
+</ContentPage>

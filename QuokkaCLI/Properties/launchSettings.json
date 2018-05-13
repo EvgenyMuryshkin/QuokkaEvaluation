@@ -2,7 +2,8 @@
   "profiles": {
     "Quokka.LocalCLI": {
       "commandName": "Project",
-      "workingDirectory": "..\\FunctionalTest"
+      "commandLineArgs": "-d",
+      "workingDirectory": "..\\BumperHero\\BHDevice"
     }
   }
 }
