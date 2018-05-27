@@ -278,3 +278,6 @@ __pycache__/
 /BumperHero/Quartus/BumperHero/Quokka_Device_TopLevel.sof
 /BumperHero/Quartus/BumperHero/Quokka_Device_TopLevel.sta.rpt
 /BumperHero/Quartus/BumperHero/Quokka_Device_TopLevel.sta.summary
+/SensorsBoard/Quartus/SensorsBoard/db/**.*
+/SensorsBoard/Quartus/SensorsBoard/db/**/*
+/SensorsBoard/Quartus/SensorsBoard/generated/**/*

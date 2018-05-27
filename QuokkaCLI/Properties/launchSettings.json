@@ -2,8 +2,8 @@
   "profiles": {
     "Quokka.LocalCLI": {
       "commandName": "Project",
-      "commandLineArgs": "-d",
-      "workingDirectory": "..\\BumperHero\\BHDevice"
+      "commandLineArgs": "-d -w",
+      "workingDirectory": "..\\SensorsBoard\\Device"
     }
   }
 }

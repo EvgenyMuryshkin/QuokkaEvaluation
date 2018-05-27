@@ -1,0 +1,10 @@
+﻿{
+  "Project": "SensorsBoard",
+  "Configurations": [
+    {
+      "Name": "Quokka",
+      "ClockFrequency": 50000000
+    }
+  ],
+  "ProjectLocation": "..\\Quartus\\SensorsBoard"
+}
