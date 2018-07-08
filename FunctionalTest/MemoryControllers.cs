@@ -131,6 +131,37 @@ namespace Controllers
     }
 
     [BoardConfig(Name = "NEB")]
+    public static class Memory_DefaultInit
+    {
+        public static async Task Aggregator(
+            FPGA.InputSignal<bool> RXD,
+            FPGA.OutputSignal<bool> TXD
+            )
+        {
+            bool internalTXD = true;
+            FPGA.Config.Link(internalTXD, TXD);
+
+            Action mainHandler = () =>
+            {
+                byte data = 0;
+                byte[] buff = new byte[] { 1, 2, 3, 4, 5 };
+
+                UART.Read(115200, RXD, out data);
+
+                for (int i = 0; i < buff.Length; i++)
+                {
+                    byte existing = 0;
+                    existing = buff[i];
+                    UART.RegisteredWrite(115200, existing, out internalTXD);
+                }
+
+            };
+
+            FPGA.Config.OnStartup(mainHandler);
+        }
+    }
+
+    [BoardConfig(Name = "NEB")]
     public static class Memory_InlineInit
     {
         public static async Task Aggregator(
@@ -206,9 +237,9 @@ namespace Controllers
                     UART.RegisteredWrite(115200, tmp, out internalTXD);
                 }
 
-                for (byte jjj = 0; jjj < buff.Length; jjj++)
+                for (byte j = 0; j < buff.Length; j++)
                 {
-                    buff[jjj] = jjj;
+                    buff[j] = j;
                 };
             };
 

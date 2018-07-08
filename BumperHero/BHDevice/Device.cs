@@ -48,8 +48,8 @@ namespace BHDevice
         public static void DistanceMeasuring(
             State state,
             object stateLock,
-            FPGA.Signal<bool> echo,
-            FPGA.Signal<bool> trigger
+            FPGA.InputSignal<bool> echo,
+            FPGA.OutputSignal<bool> trigger
             )
         {
             ushort[] buff = new ushort[10];

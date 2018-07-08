@@ -260,6 +260,7 @@ paket-files/
 __pycache__/
 *.pyc
 /VHDL/generated/**/*
+/Verilog/generated/**/*
 /BumperHero/Quartus/BumperHero/db/**/*
 /**/generated/**/*
 /**/incremental_db/**/*

@@ -45,7 +45,7 @@ namespace Drivers
 
                     if (i > 3)
                     {
-                        current = (ushort)(current << 1 | DOUT);
+                        current = (ushort)(current << 1 | (byte)DOUT);
                     }
 
                     internalSCLK = true;

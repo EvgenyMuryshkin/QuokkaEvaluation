@@ -50,7 +50,7 @@ namespace Drivers
             Func<bool> k5bit = () => FPGA.Config.Bit(colCode, 1);
             Func<bool> k4bit = () => FPGA.Config.Bit(colCode, 0);
 
-            Func<byte> rowCode = () => (byte)( (K3 << 3) | (K2 << 2) | (K1 << 1) | K0);
+            Func<byte> rowCode = () => (byte)( ((uint)K3 << 3) | ((uint)K2 << 2) | ((uint)K1 << 1) | (uint)K0);
 
             FPGA.Config.Link(k7bit, K7);
             FPGA.Config.Link(k6bit, K6);

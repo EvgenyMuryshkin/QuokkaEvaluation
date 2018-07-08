@@ -35,7 +35,7 @@ namespace Drivers
 
                 // this is assign of combinational expression
                 // evaluated and assigned during single clock cycle 
-                result = (byte)((result >> 1) | (RXD << 7));
+                result = (byte)((result >> 1) | ((byte)RXD << 7));
             }
 
             // stop bit

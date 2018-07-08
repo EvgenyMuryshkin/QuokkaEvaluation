@@ -141,8 +141,8 @@ namespace SequentialMath
             Func<T> shiftRemainder = () => FPGA.Config.LShift(rem, 1, num);
             Func<T> nextNumerator = () => FPGA.Config.LShift(num, 1);
             Func<T> nextResult = () => FPGA.Config.LShift(res, 1, needSubtract());
-            Func<T> valueToSubtract = () => FPGA.Config.Math(FPGA.MathType.Multiply, den, needSubtract());
-            Func<T> nextRemainder = () => FPGA.Config.Math(FPGA.MathType.Subtract, rem, valueToSubtract());
+            Func<T> valueToSubtract = () => FPGA.Config.Math(den, FPGA.MathType.Multiply, needSubtract());
+            Func<T> nextRemainder = () => FPGA.Config.Math(rem, FPGA.MathType.Subtract, valueToSubtract());
 
             for (byte i = 0; i < size; i++)
             {

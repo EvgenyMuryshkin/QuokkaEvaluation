@@ -10,5 +10,6 @@
       "ClockFrequency": 50000000
     }
   ],
+  "HDL": "VHDL",
   "ProjectLocation": "..\\VHDL"
 }

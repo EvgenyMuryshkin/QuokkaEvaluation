@@ -6,10 +6,7 @@ namespace Drivers
 {
     public static class HCSR04
     {
-        public static void Measure(
-            FPGA.Signal<bool> Echo, 
-            FPGA.Signal<bool> Trigger, 
-            out ushort Distance)
+        public static void Measure(FPGA.InputSignal<bool> Echo, FPGA.OutputSignal<bool> Trigger, out ushort Distance)
         {
             FPGA.Config.Default(out Trigger, false);
             FPGA.Config.Default(out Distance, 0);

@@ -11,12 +11,24 @@ namespace Drivers
         Subtract,
         Multiply,
         Divide,
-        Sqrt
+        // Sqrt // not supported by verilog FPU 
     }
 
     public interface IFPU
     {
-        void Op(FPGA.Signal<bool> Trigger, FPGA.Signal<bool> Completed, float Lhs, float Rhs, byte Op, FPGA.Signal<float> result);
+        void Op(
+            [ModuleInput]
+            FPGA.Signal<bool> Trigger, 
+            [ModuleOutput]
+            FPGA.Signal<bool> Completed,
+            [ModuleInput]
+            float Lhs,
+            [ModuleInput]
+            float Rhs,
+            [ModuleInput]
+            byte Op, 
+            [ModuleOutput]
+            FPGA.Signal<float> Result);
     }
 
     public static class FPU

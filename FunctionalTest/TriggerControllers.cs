@@ -8,6 +8,35 @@ using System.Threading.Tasks;
 namespace Controllers
 {
     [BoardConfig(Name = "NEB")]
+    public static class Defaults_DefaultRegisterValue
+    {
+        public static async Task Aggregator(
+            FPGA.InputSignal<bool> RXD,
+            FPGA.OutputSignal<bool> TXD
+            )
+        {
+            bool internalTXD = true;
+            FPGA.Config.Link(internalTXD, TXD);
+
+            Action handler = () =>
+            {
+                byte prev = 100, next = 0;
+                while (true)
+                {
+                    UART.Read(115200, RXD, out next);
+
+                    UART.RegisteredWrite(115200, prev, out internalTXD);
+                    UART.RegisteredWrite(115200, next, out internalTXD);
+
+                    prev = next;
+                }
+            };
+
+            FPGA.Config.OnStartup(handler);
+        }
+    }
+
+    [BoardConfig(Name = "NEB")]
     public static class Triggers_ConstTrueTrigger
     {
         public static async Task Aggregator(

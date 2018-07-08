@@ -1,0 +1,15 @@
+﻿{
+  "Project": "KeccakTests",
+  "Configurations": [
+    {
+      "Name": "NEB",
+      "ClockFrequency": 24000000
+    },
+    {
+      "Name": "BIG",
+      "ClockFrequency": 24000000
+    }
+  ],
+  "HDL": "Verilog",
+  "ProjectLocation": "..\\Verilog"
+}
