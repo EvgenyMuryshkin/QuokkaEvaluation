@@ -282,3 +282,4 @@ __pycache__/
 /SensorsBoard/Quartus/SensorsBoard/db/**/*
 *.tan.rpt
 *.tan.summary
+/VHDL/db/*

@@ -1,0 +1,110 @@
+# -------------------------------------------------------------------------- #
+#
+# Copyright (C) 1991-2010 Altera Corporation
+# Your use of Altera Corporation's design tools, logic functions 
+# and other software and tools, and its AMPP partner logic 
+# functions, and any output files from any of the foregoing 
+# (including device programming or simulation files), and any 
+# associated documentation or information are expressly subject 
+# to the terms and conditions of the Altera Program License 
+# Subscription Agreement, Altera MegaCore Function License 
+# Agreement, or other applicable license agreement, including, 
+# without limitation, that your use is for the sole purpose of 
+# programming logic devices manufactured by Altera and sold by 
+# Altera or its authorized distributors.  Please refer to the 
+# applicable agreement for further details.
+#
+# -------------------------------------------------------------------------- #
+#
+# Quartus II
+# Version 9.1 Build 350 03/24/2010 Service Pack 2 SJ Web Edition
+# Date created = 20:13:14  August 01, 2018
+#
+# -------------------------------------------------------------------------- #
+#
+# Notes:
+#
+# 1) The default values for assignments are stored in the file:
+#		Quokka_assignment_defaults.qdf
+#    If this file doesn't exist, see file:
+#		assignment_defaults.qdf
+#
+# 2) Altera recommends that you do not modify this file. This
+#    file is updated automatically by the Quartus II software
+#    and any changes you make may be lost or overwritten.
+#
+# -------------------------------------------------------------------------- #
+set_global_assignment -name FAMILY "Cyclone IV E"
+set_global_assignment -name DEVICE EP4CE6E22C8
+set_global_assignment -name TOP_LEVEL_ENTITY Quokka_DemoController_TopLevel
+set_global_assignment -name ORIGINAL_QUARTUS_VERSION "9.1 SP2"
+set_global_assignment -name PROJECT_CREATION_TIME_DATE "20:13:14  AUGUST 01, 2018"
+set_global_assignment -name USE_GENERATED_PHYSICAL_CONSTRAINTS OFF -section_id eda_blast_fpga
+set_global_assignment -name LAST_QUARTUS_VERSION "9.1 SP2"
+set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
+set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
+set_global_assignment -name NOMINAL_CORE_SUPPLY_VOLTAGE 1.2V
+set_global_assignment -name USE_CONFIGURATION_DEVICE ON
+set_global_assignment -name STRATIX_DEVICE_IO_STANDARD "2.5 V"
+set_location_assignment PIN_25 -to Clock
+set_location_assignment PIN_67 -to Reset
+set_location_assignment PIN_10 -to AggregatorBank1
+set_location_assignment PIN_28 -to AggregatorDOUT
+set_location_assignment PIN_11 -to AggregatorBank2
+set_location_assignment PIN_49 -to AggregatorK0
+set_location_assignment PIN_46 -to AggregatorK1
+set_location_assignment PIN_44 -to AggregatorK2
+set_location_assignment PIN_42 -to AggregatorK3
+set_location_assignment PIN_39 -to AggregatorK4
+set_location_assignment PIN_38 -to AggregatorK5
+set_location_assignment PIN_34 -to AggregatorK6
+set_location_assignment PIN_33 -to AggregatorK7
+set_location_assignment PIN_113 -to AggregatorADC1NCS
+set_location_assignment PIN_110 -to AggregatorADC1SLCK
+set_location_assignment PIN_112 -to AggregatorADC1DIN
+set_location_assignment PIN_111 -to AggregatorADC1DOUT
+set_location_assignment PIN_106 -to AggregatorRXD
+set_location_assignment PIN_105 -to AggregatorTXD
+set_location_assignment PIN_71 -to AggregatorLED2
+set_location_assignment PIN_70 -to AggregatorLED3
+set_location_assignment PIN_69 -to AggregatorLED4
+set_global_assignment -name SDC_FILE quokka.sdc
+set_global_assignment -name USE_CONFIGURATION_DEVICE OFF
+set_global_assignment -name RESERVE_ALL_UNUSED_PINS_WEAK_PULLUP "AS INPUT TRI-STATED"
+set_global_assignment -name VHDL_FILE fpu100/addsub_28.vhd
+set_global_assignment -name VHDL_FILE fpu100/comppack.vhd
+set_global_assignment -name VHDL_FILE fpu100/fpu.vhd
+set_global_assignment -name VHDL_FILE fpu100/fpupack.vhd
+set_global_assignment -name VHDL_FILE fpu100/mul_24.vhd
+set_global_assignment -name VHDL_FILE fpu100/post_norm_addsub.vhd
+set_global_assignment -name VHDL_FILE fpu100/post_norm_div.vhd
+set_global_assignment -name VHDL_FILE fpu100/post_norm_mul.vhd
+set_global_assignment -name VHDL_FILE fpu100/post_norm_sqrt.vhd
+set_global_assignment -name VHDL_FILE fpu100/pre_norm_addsub.vhd
+set_global_assignment -name VHDL_FILE fpu100/pre_norm_div.vhd
+set_global_assignment -name VHDL_FILE fpu100/pre_norm_mul.vhd
+set_global_assignment -name VHDL_FILE fpu100/pre_norm_sqrt.vhd
+set_global_assignment -name VHDL_FILE fpu100/serial_div.vhd
+set_global_assignment -name VHDL_FILE fpu100/serial_mul.vhd
+set_global_assignment -name VHDL_FILE fpu100/sqrt.vhd
+set_global_assignment -name VHDL_FILE IConcreteExternalPackage1_ExternalEntity.vhd
+set_global_assignment -name VHDL_FILE IConcreteExternalPackage2_ExternalEntity.vhd
+set_global_assignment -name VHDL_FILE IFPU_OP.vhd
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_global_assignment -name LL_ROOT_REGION ON -section_id "Root Region"
+set_global_assignment -name LL_MEMBER_STATE LOCKED -section_id "Root Region"
+set_global_assignment -name VHDL_FILE generated/SnakeGame/Quokka.vhdl
+set_global_assignment -name VHDL_FILE generated/SnakeGame/Quokka_DemoController_TopLevel.vhdl
+set_global_assignment -name VHDL_FILE generated/SnakeGame/Quokka_MainController_TopLevel.vhdl
+set_global_assignment -name VHDL_FILE generated/SnakeGame/Quokka_MainController_TopLevel_Aggregator_JSON_L34F13L39T33_XBD.vhdl
+set_global_assignment -name VHDL_FILE generated/SnakeGame/Quokka_MainController_TopLevel_Aggregator_JSON_L34F13L39T33_XBD_SnakeDBGSerializer_DataConverter.vhdl
+set_global_assignment -name VHDL_FILE generated/SnakeGame/Quokka_MainController_TopLevel_Aggregator_JSON_L34F13L39T33_XBD_SnakeDBGSerializer_DataConverter_UnsignedIntToStringConverter_currentDecimal.vhdl
+set_global_assignment -name VHDL_FILE generated/SnakeGame/Quokka_MainController_TopLevel_Aggregator_JSON_L34F13L39T33_XBD_SnakeDBGSerializer_DataConverter_UnsignedIntToStringConverter_StringBuffer.vhdl
+set_global_assignment -name VHDL_FILE generated/SnakeGame/Quokka_MainController_TopLevel_Aggregator_JSON_L34F13L39T33_XBD_SnakeDBGSerializer_JSONBuffer.vhdl
+set_global_assignment -name VHDL_FILE generated/SnakeGame/Quokka_PeripheralsController_TopLevel.vhdl
+
+set_location_assignment PIN_72 -to AggregatorLED1
+set_location_assignment PIN_31 -to AggregatorServo
+set_global_assignment -name MISC_FILE "C:/code/QuokkaEvaluation/VHDL/Quokka.dpf"
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
