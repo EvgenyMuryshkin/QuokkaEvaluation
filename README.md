@@ -1,7 +1,7 @@
 # QuokkaEvaluation
 
 This repository contains 
-* Basic CLI for running C# => VHDL transformation
+* Basic CLI for running C# => VHDL or Verilog transformation
 * Test examples for toolkit functionality
 * Working implementation of Keccak1600 algorythm
 * SnakeGame for 8x8 LED matrix
@@ -16,7 +16,7 @@ Please refer to framework installation guide for Linux https://www.microsoft.com
 
 * Get code from github repository git clone https://github.com/EvgenyMuryshkin/QuokkaEvaluation.git
 * Open QuokkaCLI location in command line and run "dotnet run -s ..\SnakeGame"
-* Run CLI in watch mode by providing -w argument "dotnet run -s ..\SnakeGame -w"
+* Run CLI in watch mode by providing -w argument "dotnet run -s ..\SnakeGame\vhdl.json -w"
 
 Output should look something like next:
 ```
