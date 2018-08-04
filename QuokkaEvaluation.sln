@@ -31,6 +31,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SensorsBoard", "SensorsBoar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Device", "SensorsBoard\Device\Device.csproj", "{37B612F5-B0A3-4969-B773-6C9FAE0E8EDD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LED", "LED", "{3D0AB5B5-64A9-4E1B-B57F-1B1B332B42CE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LEDFE", "LEDFE", "{E7BA4897-CD9A-46B4-BAD4-CEAD1D869D99}"
+	ProjectSection(SolutionItems) = preProject
+		LED\LEDFE\.gitignore = LED\LEDFE\.gitignore
+		LED\LEDFE\.travis.yml = LED\LEDFE\.travis.yml
+		LED\LEDFE\package.json = LED\LEDFE\package.json
+		LED\LEDFE\README.md = LED\LEDFE\README.md
+		LED\LEDFE\run.js = LED\LEDFE\run.js
+		LED\LEDFE\tsconfig.json = LED\LEDFE\tsconfig.json
+		LED\LEDFE\tslint.json = LED\LEDFE\tslint.json
+		LED\LEDFE\webpack.config.js = LED\LEDFE\webpack.config.js
+		LED\LEDFE\webpack.config.vendor.js = LED\LEDFE\webpack.config.vendor.js
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "server", "LED\LEDFE\server\server.csproj", "{0D874BC7-3048-4EA2-827E-C9AC4B6A63BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LEDDto", "LED\LEDDto\LEDDto.csproj", "{A7CB81CB-158D-4EA2-B515-634E19AB279F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +106,14 @@ Global
 		{37B612F5-B0A3-4969-B773-6C9FAE0E8EDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37B612F5-B0A3-4969-B773-6C9FAE0E8EDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37B612F5-B0A3-4969-B773-6C9FAE0E8EDD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D874BC7-3048-4EA2-827E-C9AC4B6A63BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D874BC7-3048-4EA2-827E-C9AC4B6A63BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D874BC7-3048-4EA2-827E-C9AC4B6A63BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D874BC7-3048-4EA2-827E-C9AC4B6A63BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7CB81CB-158D-4EA2-B515-634E19AB279F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7CB81CB-158D-4EA2-B515-634E19AB279F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7CB81CB-158D-4EA2-B515-634E19AB279F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7CB81CB-158D-4EA2-B515-634E19AB279F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -97,6 +124,9 @@ Global
 		{DB593981-B5D7-483F-99FB-BEB357C97E56} = {AD04F1BA-CCD3-445C-9013-6CC1890E0A30}
 		{CA50F28C-93DD-41F9-B5D0-75DDCC083943} = {AD04F1BA-CCD3-445C-9013-6CC1890E0A30}
 		{37B612F5-B0A3-4969-B773-6C9FAE0E8EDD} = {DC47C8BA-8157-4680-9FD9-24F406D80123}
+		{E7BA4897-CD9A-46B4-BAD4-CEAD1D869D99} = {3D0AB5B5-64A9-4E1B-B57F-1B1B332B42CE}
+		{0D874BC7-3048-4EA2-827E-C9AC4B6A63BB} = {E7BA4897-CD9A-46B4-BAD4-CEAD1D869D99}
+		{A7CB81CB-158D-4EA2-B515-634E19AB279F} = {3D0AB5B5-64A9-4E1B-B57F-1B1B332B42CE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0BE3F9BA-A23D-459E-8A7D-2D9F1612D011}
