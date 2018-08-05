@@ -95,8 +95,11 @@
   },
   "dependencies": {
     "@types/axios": "^0.14.0",
+    "@types/react-webcam": "^0.3.0",
     "axios": "^0.18.0",
     "npm": "^6.2.0",
+    "react-camera": "^0.1.3",
+    "react-webcam": "^1.0.1",
     "rxjs": "^6.2.2"
   }
 }

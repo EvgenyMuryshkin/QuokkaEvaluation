@@ -6,7 +6,11 @@ import * as WeatherForecastsState from '../store/WeatherForecasts';
 import * as Rx from "rxjs";
 import axios from "axios";
 import { debounceTime } from 'rxjs/operators';
-import { ReportDTO } from '../dto/report';
+import { ReportDTO, ImageDTO } from '../dto/report';
+import * as Webcam from "react-webcam";
+import { IFaceAPIResponse } from '../dto/face-api';
+
+console.log(Webcam);
 
 // At runtime, Redux will merge together...
 type WeatherForecastProps =
@@ -22,7 +26,8 @@ interface IState {
     foregroundColor: string;
     backgroundColor: string;
     colors: string[];
-
+    face: IFaceAPIResponse | null;
+    emotion: string;
 }
 class LED extends React.Component<WeatherForecastProps, IState> {
     tasks = new Rx.Subject<{}>();
@@ -33,15 +38,27 @@ class LED extends React.Component<WeatherForecastProps, IState> {
         this.state = {
             foregroundColor: "#FFFFFF",
             backgroundColor: "#000000",
-            colors: [...Array(64).keys()].map(pos => "#000000")
+            colors: [...Array(64).keys()].map(pos => "#000000"),
+            face: null,
+            emotion: ""
         }
 
-        this.subscription = this.tasks.pipe(debounceTime(2000)).subscribe(_ => this.onReport());
+        this.subscription = this.tasks.pipe(debounceTime(100)).subscribe(_ => this.onReport());
+    }
+
+    toColor(value: string): number {
+        return Math.min(1, parseInt(value, 16));
     }
 
     async onReport() {
+        /*
         const dto = new ReportDTO();
-        dto.colors = this.state.colors.map(c => parseInt(c.substring(1), 16));
+        dto.colors = this.state.colors.map(c => {
+            const r = this.toColor(c.substring(1, 3));
+            const g = this.toColor(c.substring(3, 5));
+            const b = this.toColor(c.substring(5, 7));
+            return (r << 16) | (g << 8) | b;
+        });
 
         await axios.request({
             method: "post",
@@ -49,7 +66,7 @@ class LED extends React.Component<WeatherForecastProps, IState> {
             data: dto
         });
 
-        this.tasks.next();
+        this.tasks.next();*/
     }
     
 
@@ -67,7 +84,13 @@ class LED extends React.Component<WeatherForecastProps, IState> {
     }
 
     public render() {
-        const {foregroundColor, backgroundColor, colors} = this.state;
+        const {
+            foregroundColor, 
+            backgroundColor, 
+            colors,
+            face,
+            emotion
+        } = this.state;
 
         const setColor = (pos: number, color: string) => {
             const newColors = [...this.state.colors];
@@ -136,41 +159,61 @@ class LED extends React.Component<WeatherForecastProps, IState> {
                     {rows}
                 </tbody>
             </table>
+            <div>
+                <button onClick={e => this.takePicture()}>Photo</button>
+            </div>
+            { face && <div>
+                    <div>Age: {face.faceAttributes.age}</div>
+                    <div>Emotion: {emotion}</div>
+                </div>
+            }
+            <Webcam 
+                ref={r => this.setRef(r)}
+                audio={false}
+                height={480}
+                screenshotFormat="image/jpeg"
+                width={640}
+            />
         </div>;
     }
 
-    private renderForecastsTable() {
-        return <table className='table'>
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Temp. (C)</th>
-                    <th>Temp. (F)</th>
-                    <th>Summary</th>
-                </tr>
-            </thead>
-            <tbody>
-            {this.props.forecasts.map(forecast =>
-                <tr key={ forecast.dateFormatted }>
-                    <td>{ forecast.dateFormatted }</td>
-                    <td>{ forecast.temperatureC }</td>
-                    <td>{ forecast.temperatureF }</td>
-                    <td>{ forecast.summary }</td>
-                </tr>
-            )}
-            </tbody>
-        </table>;
+    public setRef = (webcam: any) => {
+        this.webcam = webcam;
     }
+    webcam: any;
 
-    private renderPagination() {
-        let prevStartDateIndex = (this.props.startDateIndex || 0) - 5;
-        let nextStartDateIndex = (this.props.startDateIndex || 0) + 5;
+    async takePicture() {
+        const imageSrc: string = this.webcam.getScreenshot();   
+        const base64 = imageSrc.substring(imageSrc.indexOf(",") + 1);
+        const dto = new ImageDTO();
+        dto.Base64Image = base64;
+        
+        const response = await axios.request({
+            method: "post",
+            url: "/api/Report/Image",
+            data: dto
+        });
 
-        return <p className='clearfix text-center'>
-            <Link className='btn btn-default pull-left' to={ `/fetchdata/${ prevStartDateIndex }` }>Previous</Link>
-            <Link className='btn btn-default pull-right' to={ `/fetchdata/${ nextStartDateIndex }` }>Next</Link>
-            { this.props.isLoading ? <span>Loading...</span> : [] }
-        </p>;
+        const apiResponse: IFaceAPIResponse[] = response.data;
+
+        console.log(apiResponse);
+
+        const face = apiResponse[0];
+        if (face) {
+            const keys = Object.keys(face.faceAttributes.emotion);
+            const winner = keys.reduce((p,c) => {
+                if (face.faceAttributes.emotion[c] > face.faceAttributes.emotion[p]) {
+                    return c;
+                }
+
+                return p;
+            }, "neutral");
+
+            this.setState({
+                face: face,
+                emotion: winner
+            })
+        }
     }
 }
 

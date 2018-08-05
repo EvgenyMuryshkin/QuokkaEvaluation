@@ -10,11 +10,11 @@ namespace DTOs
         public ulong Denominator;
     }
 
-    public struct DividerResponse
-    {
-        public ulong Result;
-        public ulong Remainder;
-    }
+	public struct DividerResponse
+	{
+		public ulong Result;
+		public ulong Remainder;
+	}	
 
     public struct RoundTrip
     {

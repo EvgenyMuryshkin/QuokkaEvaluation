@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
@@ -28,6 +29,8 @@ namespace Server
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            Console.WriteLine($"PID: {Process.GetCurrentProcess().Id}");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
