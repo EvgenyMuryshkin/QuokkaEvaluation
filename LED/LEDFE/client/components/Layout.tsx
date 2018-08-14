@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { NavMenu } from './NavMenu';
 
+/*
 export class Layout extends React.Component<{}, {}> {
     public render() {
         return <div className='container-fluid'>
@@ -12,6 +13,15 @@ export class Layout extends React.Component<{}, {}> {
                     { this.props.children }
                 </div>
             </div>
+        </div>;
+    }
+}
+*/
+
+export class Layout extends React.Component<{}, {}> {
+    public render() {
+        return <div>
+            { this.props.children }
         </div>;
     }
 }

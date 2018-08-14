@@ -7,7 +7,10 @@ namespace LEDDto
     {
         [JsonProperty(PropertyName = "colors")]
         public uint[] Colors { get; set; }
-    }
+
+		[JsonProperty(PropertyName = "servos")]
+		public uint[] Servos { get; set; }
+	}
 
 	public class ImageDTO
 	{

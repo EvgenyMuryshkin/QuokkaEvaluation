@@ -9,6 +9,7 @@ import { debounceTime } from 'rxjs/operators';
 import { ReportDTO, ImageDTO } from '../dto/report';
 import * as Webcam from "react-webcam";
 import { IFaceAPIResponse } from '../dto/face-api';
+import { Hand3D } from './Hand3D';
 
 console.log(Webcam);
 
@@ -22,28 +23,121 @@ type WeatherForecastProps =
 enum eMode {
 
 }
+
+interface IEmotionPicture {
+    color: string;
+    rows: string[];
+}
 interface IState {
     foregroundColor: string;
     backgroundColor: string;
-    colors: string[];
+    colors: {[key: string]: string[]};
     face: IFaceAPIResponse | null;
     emotion: string;
+    servos: number[];
 }
 class LED extends React.Component<WeatherForecastProps, IState> {
     tasks = new Rx.Subject<{}>();
     subscription: Rx.Subscription;
+    emotions = [
+        "anger", 
+        "contempt",
+        "disgust",
+        "fear",
+        "happiness",
+        "neutral",
+        "sadness",
+        "surprise",
+    ];
 
     constructor(props: WeatherForecastProps) {
         super(props);
+
         this.state = {
             foregroundColor: "#FFFFFF",
             backgroundColor: "#000000",
-            colors: [...Array(64).keys()].map(pos => "#000000"),
+            colors: this.defaultColors(),
             face: null,
-            emotion: ""
+            emotion: "neutral",
+            servos: [0,0,0,0,0]
         }
 
         this.subscription = this.tasks.pipe(debounceTime(100)).subscribe(_ => this.onReport());
+    }
+
+    defaultEmotions: {[key:string]: IEmotionPicture} = {
+        "neutral": {
+            color: "#0000FF",
+            rows: [
+                "00000000",
+                "11100111",
+                "00000000",
+                "00011000",
+                "00011000",
+                "00000000",
+                "01111110",
+                "00000000",
+            ]
+        },
+        "happiness": {
+            color: "#00FF00",
+            rows: [
+                "10100101",
+                "01000010",
+                "00000000",
+                "00011000",
+                "00011000",
+                "01000010",
+                "00111100",
+                "00000000",
+            ]
+        },
+        "disgust":  {
+            color: "#FF0000",
+            rows: [
+                "01000010",
+                "10100101",
+                "00000000",
+                "00011000",
+                "00011000",
+                "00000000",
+                "00111100",
+                "01000010",
+            ]
+        },
+    }
+
+    selectMany<T>(items: Array<T>[]) : T[] {
+        let merged: T[] = [];
+        for(var item of items.filter(i => i))  {
+            merged = merged.concat(item);
+        }
+        
+        return merged;
+    }
+
+    emotionToArray(picture: IEmotionPicture): string[] {
+        const rowColors = picture.rows.map(row => {
+            const rowColor = [...Array(row.length).keys()]
+                .map(idx => row[idx])
+                .map(c => c == "0" ? "#000000" : picture.color);
+
+            return rowColor;
+        });
+
+        return this.selectMany(rowColors);
+    }
+
+    defaultColors() : {[key: string]: string[]} {
+        return this.emotions.reduce( (p,c) => {
+            if (this.defaultEmotions[c]) {
+                p[c] = this.emotionToArray(this.defaultEmotions[c]);
+            }
+            else {
+                p[c] = [...Array(64).keys()].map(pos => "#000000");
+            }
+            return p;
+        }, {});
     }
 
     toColor(value: string): number {
@@ -51,14 +145,17 @@ class LED extends React.Component<WeatherForecastProps, IState> {
     }
 
     async onReport() {
-        /*
+        const {colors, emotion, servos} = this.state;
+
         const dto = new ReportDTO();
-        dto.colors = this.state.colors.map(c => {
+        dto.colors = colors[emotion].map(c => {
             const r = this.toColor(c.substring(1, 3));
             const g = this.toColor(c.substring(3, 5));
             const b = this.toColor(c.substring(5, 7));
             return (r << 16) | (g << 8) | b;
         });
+
+        dto.servos = servos;
 
         await axios.request({
             method: "post",
@@ -66,7 +163,7 @@ class LED extends React.Component<WeatherForecastProps, IState> {
             data: dto
         });
 
-        this.tasks.next();*/
+        this.tasks.next();
     }
     
 
@@ -83,6 +180,22 @@ class LED extends React.Component<WeatherForecastProps, IState> {
         //this.props.requestWeatherForecasts(startDateIndex);
     }
 
+    servosControl() {
+        const {servos} = this.state;
+        const controls = servos.map((v,idx) => {
+            return <div key={idx}>
+                <span style={{fontSize: "xx-large"}}>Servo: {idx} ({v})</span>
+                <input type="range" min={0} max={180} value={v} onChange={e => {
+                    const newServos = [...servos];
+                    newServos[idx] = parseInt(e.target.value);
+                    this.setState({
+                        servos: newServos
+                    })
+                }}/>
+            </div>
+        })
+        return <div>{controls}</div>
+    }
     public render() {
         const {
             foregroundColor, 
@@ -93,16 +206,17 @@ class LED extends React.Component<WeatherForecastProps, IState> {
         } = this.state;
 
         const setColor = (pos: number, color: string) => {
-            const newColors = [...this.state.colors];
+            const newColors = [...colors[emotion]];
             newColors[pos] = color;
             this.setState({
-                colors: newColors
+                colors: Object.assign(colors, {[emotion]: newColors})
             }) 
         }
 
         const getColor = (pos: number) => {
-            return colors[pos];
+            return colors[emotion][pos];
         }
+
         const dims = [...Array(8).keys()];
         const rows = dims.map(r => {
             return <tr key={r}>
@@ -143,17 +257,48 @@ class LED extends React.Component<WeatherForecastProps, IState> {
                 }
             </tr>
         })
+
+        /*
+        navigator.mediaDevices
+            .enumerateDevices()
+            .then(devices => console.log(devices.filter(d => d.kind === "videoinput" )))
+
+        navigator.mediaDevices.getUserMedia({
+            video: {
+                deviceId: "a83e6286959ad30929fb609ccb444862ff00231b9590b55e3d764d6517e5b3e2"
+            },
+        }).then(c => {
+            console.log(c);
+        })
+    
+
+        navigator.mediaDevices.getUserMedia({
+            video: {
+                deviceId: "8948c4a9a163d604888135b82bc713c651cbc45d32c040a181062b2400f164de"
+            },
+        }).then(c => {
+            console.log(c);
+        })
+        */
+       
         return <div>
-            <input className="color-picker" type="color" value={foregroundColor} onChange={e => {
-                this.setState({
-                    foregroundColor: e.target.value
-                });
-            }}/>
-            <input className="color-picker" type="color" value={backgroundColor} onChange={e => {
-                this.setState({
-                    backgroundColor: e.target.value
-                });
-            }}/>
+            <div>
+                <input className="color-picker" type="color" value={foregroundColor} onChange={e => {
+                    this.setState({
+                        foregroundColor: e.target.value
+                    });
+                }}/>
+                <input className="color-picker" type="color" value={backgroundColor} onChange={e => {
+                    this.setState({
+                        backgroundColor: e.target.value
+                    });
+                }}/>
+            </div>
+            <div>
+                <select value={emotion} onChange={e => this.setState({emotion: this.emotions[e.target.selectedIndex]})}>
+                    {this.emotions.map(e => <option key={e} value={e}>{e}</option>)}
+                </select>
+            </div>
             <table className="led-table">
                 <tbody>
                     {rows}
@@ -164,16 +309,38 @@ class LED extends React.Component<WeatherForecastProps, IState> {
             </div>
             { face && <div>
                     <div>Age: {face.faceAttributes.age}</div>
-                    <div>Emotion: {emotion}</div>
+                    <div>Emotion: {emotion} ({face.faceAttributes.emotion[emotion]})</div>
                 </div>
             }
-            <Webcam 
+
+            { false && <Webcam 
                 ref={r => this.setRef(r)}
                 audio={false}
-                height={480}
+                height={400}
                 screenshotFormat="image/jpeg"
-                width={640}
+                width={535}
+                videoConstraints={
+                    {
+                        deviceId: "a83e6286959ad30929fb609ccb444862ff00231b9590b55e3d764d6517e5b3e2"
+                    }
+                }
             />
+            }
+            { false && <Webcam 
+                ref={r => this.setRef(r)}
+                audio={false}
+                height={400}
+                screenshotFormat="image/jpeg"
+                width={535}
+                videoConstraints={
+                    {
+                        deviceId: "8948c4a9a163d604888135b82bc713c651cbc45d32c040a181062b2400f164de"
+                    }
+                }
+            /> }
+
+            {this.servosControl()}
+            <Hand3D/>
         </div>;
     }
 

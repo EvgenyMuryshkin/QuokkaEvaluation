@@ -27,9 +27,10 @@ namespace SnakeGame
             // banks 
             FPGA.OutputSignal<bool> Bank1,
             FPGA.OutputSignal<bool> Bank2,
+			FPGA.OutputSignal<bool> Bank3,
 
-            // WS2812
-            FPGA.OutputSignal<bool> DOUT,
+			// WS2812
+			FPGA.OutputSignal<bool> DOUT,
 
             // ADC
             FPGA.OutputSignal<bool> ADC1NCS,
@@ -41,12 +42,13 @@ namespace SnakeGame
             FPGA.OutputSignal<bool> Servo,
 			
 			// UART
-			FPGA.InputSignal<bool> RXD
-			//FPGA.OutputSignal<bool> TXD
+			FPGA.InputSignal<bool> RXD,
+			FPGA.OutputSignal<bool> TXD
 			)
         {
             QuokkaBoard.OutputBank(Bank1);
             QuokkaBoard.InputBank(Bank2);
+			QuokkaBoard.OutputBank(Bank3);
 
             GameControlsState controlsState = new GameControlsState();
 
@@ -57,39 +59,110 @@ namespace SnakeGame
                 K7, K6, K5, K4, K3, K2, K1, K0,
                 ref controlsState);
 
-            LEDControl(controlsState.keyCode, DOUT, Servo, RXD);
+            LEDControl(controlsState.keyCode, DOUT, Servo, RXD, TXD);
         }
 
         public static void LEDControl(
             KeypadKeyCode keyCode, 
             FPGA.OutputSignal<bool> DOUT,
             FPGA.OutputSignal<bool> Servo,
-			FPGA.InputSignal<bool> RXD
+			FPGA.InputSignal<bool> RXD,
+			FPGA.OutputSignal<bool> TXD
             )
         {
+			bool internalTXD = true;
+			FPGA.Config.Link(internalTXD, TXD);
+			object commsLock = new object();
+
             bool internalDOUT = false;
             FPGA.Config.Link(internalDOUT, DOUT);
 
             byte servoValue = 0;
-            MG996R.Continuous(servoValue, Servo);
+			bool internalServo = false;
+			FPGA.Config.Link(internalServo, Servo);
+			//MG996R.Continuous(servoValue, Servo);
 
-            uint[] buff = new uint[64];
+			Action testHandler = () =>
+			{
+				servoValue = servoValue == 0 ? (byte)180 : (byte)0;
+				MG996R.Write(servoValue, out internalServo);
+			};
+			FPGA.Config.OnTimer(TimeSpan.FromSeconds(1), testHandler);
 
-            Action ledHandler = () =>
-            {
-				uint data = 0;
-				while(true)
+			const uint baud = 115200;
+
+			FPGA.SyncStream<uint> heartBeat = new FPGA.SyncStream<uint>();
+
+			const int servosCount = 5;
+			byte[] servosBuff = new byte[servosCount];
+
+			Action servosHandler = () =>
+			{
+				FPGA.OutputSignal<bool> ServoItem = new FPGA.OutputSignal<bool>();
+				bool servoOut = false;
+				FPGA.Config.Link(servoOut, ServoItem);
+
+				while (true)
 				{
-					for (int i = 0; i < buff.Length; i++) 
+					uint idx = FPGA.Config.InstanceId();
+					byte servoData = 0;
+					servoData = servosBuff[idx];
+
+					MG996R.Write(servoData, out servoOut);
+				}
+			};
+			FPGA.Config.OnStartup(servosHandler, servosCount);
+
+
+			// SERVOs driver
+			Action<uint> servosDataHandler = (iteration) =>
+			{
+				byte data = 0;
+
+				lock (commsLock)
+				{
+					UART.RegisteredWrite(baud, 2, out internalTXD);
+
+					for (int i = 0; i < servosCount; i++)
 					{
-						UART.ReadUnsigned32(115200, RXD, out data);
+						UART.Read(baud, RXD, out data);
+						servosBuff[i] = data;
+					}
+				}
+			};
+			FPGA.Config.OnStream(heartBeat, servosDataHandler);
+
+			// LED driver
+			Action<uint> ledHandler = (iteration) =>
+			{
+				uint data = 0;
+				uint[] buff = new uint[64];
+
+				lock(commsLock)
+				{
+					UART.RegisteredWrite(baud, 1, out internalTXD);
+
+					for (int i = 0; i < buff.Length; i++)
+					{
+						UART.ReadUnsigned32(baud, RXD, out data);
 						buff[i] = data;
 					}
-					Graphics.Draw(buff, out internalDOUT);
 				}
-            };
 
-            FPGA.Config.OnStartup(ledHandler);
+				Graphics.Draw(buff, out internalDOUT);
+			};
+			FPGA.Config.OnStream(heartBeat, ledHandler);
+
+	
+			// main application driver 
+			uint beat = 0;
+			Action heartBeatHandler = () =>
+			{
+				heartBeat.Write(beat);
+				beat++;
+			};
+
+			FPGA.Config.OnTimer(TimeSpan.FromMilliseconds(100), heartBeatHandler);
         }
     }
 }

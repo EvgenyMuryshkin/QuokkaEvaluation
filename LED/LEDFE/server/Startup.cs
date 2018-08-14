@@ -2,12 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using server.Services;
 
 namespace Server
 {
@@ -24,10 +26,17 @@ namespace Server
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            services.AddSingleton<BufferService>();
+            services.AddSingleton<CommsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(
+            IApplicationBuilder app,
+            IHostingEnvironment env,
+            IServiceProvider serviceProvider
+        )
         {
             Console.WriteLine($"PID: {Process.GetCurrentProcess().Id}");
 
@@ -57,6 +66,11 @@ namespace Server
                     name: "spa-fallback",
                     defaults: new { controller = "Home", action = "Index" });
             });
+
+            var ct = new CancellationTokenSource();
+            var task = serviceProvider.GetRequiredService<CommsService>().Run(ct.Token);
+
+            // TODO: handling of shutdown
         }
     }
 }

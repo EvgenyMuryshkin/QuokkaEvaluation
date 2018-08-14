@@ -1,98 +1,57 @@
-/* eslint-disable */
-const path = require('path');
-const webpack = require('webpack');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
-const merge = require('webpack-merge');
+var path = require('path');
+var webpack = require('webpack');
 
-const isDebug = global.DEBUG === false ? false : !process.argv.includes('--release');
+var ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
-const config = (isDebug) => {
-    const isDevBuild = isDebug;
+var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
-    // Configuration in common to both client-side and server-side bundles
-    const sharedConfig = () => ({
-        mode: isDevBuild ? 'development' : 'production',
-        stats: { modules: false },
-        resolve: { extensions: ['.js', '.jsx', '.ts', '.tsx'] },
-        output: {
-            filename: '[name].js',
-            publicPath: 'dist/' // Webpack dev middleware, if enabled, handles requests for this URL prefix
-        },
-        module: {
-            rules: [
-                { test: /\.tsx?$/, include: /client/,
-                  use: [
-                    {
-                      loader: 'babel-loader',
-                      options: {
-                        babelrc: false,
-                        plugins: ['react-hot-loader/babel'],
-                      },
-                    },
-                    'awesome-typescript-loader?silent=true', // (or awesome-typescript-loader)
-                  ]},
-                { test: /\.(png|jpg|jpeg|gif|svg)$/, use: 'url-loader?limit=25000' }
-            ]
-        },
-        plugins: [new CheckerPlugin()]
-    });
-
-    // Configuration for client-side bundle suitable for running in browsers
-    const clientBundleOutputDir = './wwwroot/dist';
-    const clientBundleConfig = merge(sharedConfig(), {
-        entry: { 'main-client': './client/boot-client.tsx' },
-        module: {
-          rules: [
-            { test: /\.css$/,
-              use: [
-                MiniCssExtractPlugin.loader,
-                {
-                  loader: 'css-loader',
-                  options: {
-                    minimize: isDevBuild,
-                    sourceMap: isDevBuild
-                  }
-                }
-              ]
-            }
-          ]
-        },
-        output: { path: path.join(__dirname, clientBundleOutputDir) },
-        plugins: [
-          new MiniCssExtractPlugin({filename : 'site.css'}),
-          new webpack.DllReferencePlugin({
-              context: __dirname,
-              manifest: require('./wwwroot/dist/vendor-manifest.json')
-          })
-        ],
-        optimization: {
-          minimize: !isDevBuild
-        },
-        devtool: isDevBuild ? 'inline-source-map' : 'source-map'
-    });
-
-    // Configuration for server-side (prerendering) bundle suitable for running in Node
-    const serverBundleConfig = merge(sharedConfig(), {
-        resolve: { mainFields: ['main'] },
-        entry: { 'main-server': './client/boot-server.tsx' },
-        plugins: [
-            new webpack.DllReferencePlugin({
-                context: __dirname,
-                manifest: require('./wwwroot/dist/server/vendor-manifest.json'),
-                sourceType: 'commonjs2',
-                name: './vendor'
-            })
-        ],
-        output: {
-            libraryTarget: 'commonjs',
-            path: path.join(__dirname, 'wwwroot', 'dist', 'server')
-        },
-        target: 'node',
-        devtool: isDevBuild ? 'inline-source-map' : 'source-map'
-    });
-
-    return [clientBundleConfig, serverBundleConfig];
+module.exports = {
+	stats: "errors-only",
+	watchOptions: {	
+		ignored: /node_modules/
+	},
+	//devtool: "eval-source-map",
+	entry: {
+		platform: ["client", "./client/boot-client.tsx"],
+	},
+	output: {
+		path: path.resolve(__dirname,"./wwwroot/dist"),
+		filename: "[name].js"
+	},
+	module: {
+		rules: [
+			{
+				test: /\.tsx?$/,
+				include: [path.resolve(__dirname, "src")],
+            	use: [
+					  { loader: 'babel-loader?presets[]=es2015'},
+					  { loader: 'ts-loader',
+					  options: {
+						transpileOnly: true // IMPORTANT! use transpileOnly mode to speed-up compilation
+					  }
+					}
+				],
+			},
+			{
+				test: /\.css$/,
+				use: [ 'style-loader', 'css-loader' ]
+			},
+			{
+				test: /\.scss$/,
+				use: [ 'style-loader', 'css-loader', 'sass-loader' ]
+			}			
+		]
+	},
+	resolve: {
+		modules: [
+			"node_modules",
+			path.resolve(__dirname, './src')
+		],
+		extensions: ['.jsx', '.js', '.tsx', '.ts']
+	},
+	// TS Checker in a separate thread: TODO: replace with the NON-FORK version as soon as it is available
+	plugins: [
+		new ForkTsCheckerWebpackPlugin(),
+		//new BundleAnalyzerPlugin({openAnalyzer: false}),
+    ]
 };
-
-module.exports = config(isDebug);
