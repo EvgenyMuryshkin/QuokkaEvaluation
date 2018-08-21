@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace server.Cognitive
 {
+    // https://azure.microsoft.com/en-us/services/cognitive-services/emotion/
+    // https://docs.microsoft.com/en-us/azure/cognitive-services/face/quickstarts/csharp
     public class AzureFaceAPI
     {
         static string uriBase => "https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect";

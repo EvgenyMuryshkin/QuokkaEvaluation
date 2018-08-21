@@ -3,8 +3,6 @@ var webpack = require('webpack');
 
 var ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
-var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-
 module.exports = {
 	stats: "errors-only",
 	watchOptions: {	
@@ -12,9 +10,10 @@ module.exports = {
 	},
 	//devtool: "eval-source-map",
 	entry: {
-		platform: ["client", "./client/boot-client.tsx"],
+		client: ['babel-polyfill', "./client/boot-client.tsx"],
 	},
 	output: {
+		publicPath: path.resolve(__dirname,"./wwwroot/dist"),
 		path: path.resolve(__dirname,"./wwwroot/dist"),
 		filename: "[name].js"
 	},
@@ -22,7 +21,7 @@ module.exports = {
 		rules: [
 			{
 				test: /\.tsx?$/,
-				include: [path.resolve(__dirname, "src")],
+				include: [path.resolve(__dirname, "client")],
             	use: [
 					  { loader: 'babel-loader?presets[]=es2015'},
 					  { loader: 'ts-loader',
@@ -45,13 +44,15 @@ module.exports = {
 	resolve: {
 		modules: [
 			"node_modules",
-			path.resolve(__dirname, './src')
+			path.resolve(__dirname, './client')
 		],
 		extensions: ['.jsx', '.js', '.tsx', '.ts']
 	},
 	// TS Checker in a separate thread: TODO: replace with the NON-FORK version as soon as it is available
 	plugins: [
+    new webpack.ProvidePlugin({
+      THREE: 'three'
+    }),
 		new ForkTsCheckerWebpackPlugin(),
-		//new BundleAnalyzerPlugin({openAnalyzer: false}),
     ]
 };

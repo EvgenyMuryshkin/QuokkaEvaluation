@@ -163,7 +163,7 @@ class LED extends React.Component<WeatherForecastProps, IState> {
             data: dto
         });
 
-        this.tasks.next();
+        //this.tasks.next();
     }
     
 
@@ -184,7 +184,7 @@ class LED extends React.Component<WeatherForecastProps, IState> {
         const {servos} = this.state;
         const controls = servos.map((v,idx) => {
             return <div key={idx}>
-                <span style={{fontSize: "xx-large"}}>Servo: {idx} ({v})</span>
+                <span style={{fontSize: "xx-large", display: "block"}}>Servo: {idx} ({v})</span>
                 <input type="range" min={0} max={180} value={v} onChange={e => {
                     const newServos = [...servos];
                     newServos[idx] = parseInt(e.target.value);
@@ -340,7 +340,7 @@ class LED extends React.Component<WeatherForecastProps, IState> {
             /> }
 
             {this.servosControl()}
-            <Hand3D/>
+            <Hand3D rotorsDegrees={this.state.servos}/>
         </div>;
     }
 
