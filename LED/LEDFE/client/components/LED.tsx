@@ -10,8 +10,8 @@ import { ReportDTO, ImageDTO } from '../dto/report';
 import * as Webcam from "react-webcam";
 import { IFaceAPIResponse } from '../dto/face-api';
 import { Hand3D } from './Hand3D';
+import { IStoryboard, Storyboard } from './storyboard';
 
-console.log(Webcam);
 
 // At runtime, Redux will merge together...
 type WeatherForecastProps =
@@ -35,6 +35,8 @@ interface IState {
     face: IFaceAPIResponse | null;
     emotion: string;
     servos: number[];
+    storyboards: IStoryboard[];
+    selectedStoryboardIdx: number;
 }
 class LED extends React.Component<WeatherForecastProps, IState> {
     tasks = new Rx.Subject<{}>();
@@ -59,10 +61,80 @@ class LED extends React.Component<WeatherForecastProps, IState> {
             colors: this.defaultColors(),
             face: null,
             emotion: "neutral",
-            servos: [0,0,0,0,0]
+            servos: [0,0,0,0,0],
+            storyboards: this.defaultStoryboards(),
+            selectedStoryboardIdx: null
         }
 
         this.subscription = this.tasks.pipe(debounceTime(100)).subscribe(_ => this.onReport());
+    }
+
+    defaultStoryboards(): IStoryboard[] {
+        return [
+            {
+                name: "Rotate to 180",
+                Items: [{
+                    servos: [180, 0, 0, 0, 0]
+                }]
+            },
+            {
+                name: "Rotate to 0",
+                Items: [{
+                    servos: [0, 0, 0, 0, 0]
+                }]
+            },
+            {
+                name: "Idle",
+                Items: [{
+                    servos: [0, 90, 10, 0, 0]
+                }]
+            },
+            {
+                name: "Pick",
+                Items: [
+                    {
+                        servos: [0, 10, 10, 0, 0]
+                    },
+                    {
+                        servos: [0, 0, 10, 0, 0]
+                    },
+                    {
+                        servos: [0, 0, 0, 0, 0]
+                    },
+                    {
+                        servos: [0, 10, 0, 0, 0]
+                    }
+                ]
+            },
+            {
+                name: "Deliver",
+                Items: [
+                    {
+                        servos: [0, 10, 0, 0, 0]
+                    },
+                    {
+                        servos: [180, 10, 0, 0, 0]
+                    }
+                ]
+            },
+            {
+                name: "Release",
+                Items: [
+                    {
+                        servos: [180, 10, 0, 0, 0]
+                    },
+                    {
+                        servos: [180, 0, 0, 0, 0]
+                    },
+                    {
+                        servos: [180, 0, 10, 0, 0]
+                    },
+                    {
+                        servos: [180, 10, 10, 0, 0]
+                    }
+                ]
+            },
+        ]
     }
 
     defaultEmotions: {[key:string]: IEmotionPicture} = {
@@ -144,6 +216,20 @@ class LED extends React.Component<WeatherForecastProps, IState> {
         return Math.min(1, parseInt(value, 16));
     }
 
+    async delay(ms: number) {
+        await Rx.timer(ms).toPromise();
+    }
+
+    async runStoryboard(storyboard: IStoryboard) {
+        const sb = new Storyboard();
+        await sb.run(
+            storyboard, 
+            () => this.state.servos, 
+            (data) => this.setState({
+                servos: data
+            }))
+    }
+
     async onReport() {
         const {colors, emotion, servos} = this.state;
 
@@ -181,7 +267,7 @@ class LED extends React.Component<WeatherForecastProps, IState> {
     }
 
     servosControl() {
-        const {servos} = this.state;
+        const {servos, storyboards} = this.state;
         const controls = servos.map((v,idx) => {
             return <div key={idx}>
                 <span style={{fontSize: "xx-large", display: "block"}}>Servo: {idx} ({v})</span>
@@ -196,13 +282,37 @@ class LED extends React.Component<WeatherForecastProps, IState> {
         })
         return <div>{controls}</div>
     }
+
+    async runScenario() {
+        const {storyboards} = this.state;
+
+        const steps = ["Pick", "Deliver", "Release", "Idle"];
+
+        for (const s of steps) {
+            const idx = storyboards.findIndex(sb => sb.name == s);
+            if (idx == -1) {
+                alert(`Storyboard ${s} not found`);
+                return;
+            }
+
+            const storyboard = storyboards[idx];
+            this.setState({
+                selectedStoryboardIdx: idx
+            });
+
+            await this.runStoryboard(storyboard);
+        }
+    }
+
     public render() {
         const {
             foregroundColor, 
             backgroundColor, 
             colors,
             face,
-            emotion
+            emotion,
+            storyboards,
+            selectedStoryboardIdx
         } = this.state;
 
         const setColor = (pos: number, color: string) => {
@@ -340,6 +450,15 @@ class LED extends React.Component<WeatherForecastProps, IState> {
             /> }
 
             {this.servosControl()}
+            <select value={selectedStoryboardIdx} 
+                onChange={e => this.setState({
+                    selectedStoryboardIdx: e.target.selectedIndex > 0 ? e.target.selectedIndex - 1 : null
+                })}>
+                <option value={null}>Select storyboard...</option>
+                {storyboards.map((s, idx) => <option key={s.name} value={idx}>{s.name}</option>)}
+            </select>
+            <button onClick={e => this.runStoryboard(this.state.storyboards[selectedStoryboardIdx])}>Run</button>
+            <button onClick={e => this.runScenario()}>Run scenario</button>
             <Hand3D rotorsDegrees={this.state.servos}/>
         </div>;
     }

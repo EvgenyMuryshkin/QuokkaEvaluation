@@ -80,7 +80,7 @@ export class Hand3D extends React.Component<Props, State> {
             (resolve, reject) => {
                 loader.load(
                     // resource URL
-                    url,
+                    url + "?" + Date.now(),
                     // called when resource is loaded
                     ( geometry ) => {
                         resolve(geometry);
@@ -219,12 +219,10 @@ export class Hand3D extends React.Component<Props, State> {
         servo3.servo.rotateY(this.toRadians(90));
         uBracketTop.add(servo3.servo);
 
-        this.rotors.push([servo3.horn]);
-
         const grasper = await this.loadGrasper();
         uBracketTop.add(grasper.grasper);
 
-        this.rotors.push([grasper.right_rotor, grasper.left_rotor]);
+        this.rotors.push([servo3.horn, grasper.right_rotor, grasper.left_rotor]);
     }
 
     async loadU(): Promise<THREE.Mesh> {
@@ -252,29 +250,25 @@ export class Hand3D extends React.Component<Props, State> {
         const group = new THREE.Group();
 
         const right_rotor = new THREE.Group();
-        right_rotor.translateZ(1.2);
-        right_rotor.translateY(0.4);
+        right_rotor.translateZ(0.8);
+        right_rotor.translateY(0.1);
         right_rotor.translateX(0.05);
         right_rotor.rotateY(this.toRadians(-90));
         this.axes(right_rotor);
 
         const right_jaw = await this.loadMesh('models/grasper_jaw.stl', 0x005555);
-        //right_jaw.rotateY(this.toRadians(-90));
         right_rotor.add(right_jaw);
 
         const left_rotor = new THREE.Group();
-        left_rotor.translateZ(1.2);
-        left_rotor.translateY(-0.4);
+        left_rotor.translateZ(0.8);
+        left_rotor.translateY(-0.1);
         left_rotor.translateX(0.05);
         left_rotor.rotateY(this.toRadians(90));
         this.axes(left_rotor);
 
-
         const left_jaw = await this.loadMesh('models/grasper_jaw.stl', 0x005555);
-        left_jaw.rotateY(this.toRadians(-90));
-        left_jaw.rotateX(this.toRadians(180));
-        //left_rotor.add(left_jaw);
-
+        left_jaw.rotateZ(this.toRadians(180));
+        left_rotor.add(left_jaw);
 
         group.add(base);
         group.add(right_rotor);
