@@ -14,6 +14,18 @@ interface Props {
 interface State { 
 }
 
+interface IServoInfo {
+    servo: THREE.Mesh;
+    horn: THREE.Mesh;
+    top: THREE.Group;
+}
+
+interface IGraspInfo {
+    grasper: THREE.Object3D;
+    right_rotor: THREE.Object3D;
+    left_rotor: THREE.Object3D;
+}
+
 export class Hand3D extends React.Component<Props, State> {
     scene: THREE.Scene | null = null;
     camera: THREE.PerspectiveCamera | null = null;
@@ -21,13 +33,14 @@ export class Hand3D extends React.Component<Props, State> {
     mesh1: THREE.Mesh | null = null;
     mesh2: THREE.Mesh | null = null;
 
-    rotors: THREE.Mesh[] = [];
+    rotors: THREE.Object3D[][] = [];
 
     public constructor(props: Props)
     {
         super(props);
         this.initScene();
-        this.loadModel();
+        //this.loadModel();
+        this.loadArm();
     }
 
     addShadowedLight( x, y, z, color, intensity ) {
@@ -54,10 +67,10 @@ export class Hand3D extends React.Component<Props, State> {
 
     }
 
-    axes() {
+    axes(target: THREE.Object3D) {
         // The X axis is red. The Y axis is green. The Z axis is blue.
         var axesHelper = new THREE.AxesHelper( 5 );
-        this.scene.add( axesHelper );
+        target.add( axesHelper );
     }
 
     async loadGeometry(url: string): Promise<THREE.Geometry> {
@@ -86,7 +99,7 @@ export class Hand3D extends React.Component<Props, State> {
     initScene() {
         this.scene = new THREE.Scene();
 
-        this.axes();
+        this.axes(this.scene);
         //this.scene.background = new THREE.Color( 0x72645b );
         //this.scene.fog = new THREE.Fog( 0x72645b, 2, 15 );
 
@@ -137,11 +150,192 @@ export class Hand3D extends React.Component<Props, State> {
         this.camera.position.y = -10;
         this.camera.position.z = 10;
         const controls = new THREE.OrbitControls( this.camera, this.renderer.domElement );
+
+        // wasd control for pan
+        controls.keys = {
+            LEFT: 65, // a
+            UP: 87, // w
+            RIGHT: 68, // d
+            BOTTOM: 83 // s
+        }
         controls.target.set( 0, 0, 0 )
+    }
+
+    async loadArm() 
+    {
+        // bunch of magic numbers
+        let last: THREE.Object3D = null;
+
+        const baseGeomtry = await this.loadGeometry('models/base.stl');
+        const baseMaterial = new THREE.MeshPhongMaterial( { color: 0x3355FF, specular: 0x111111, shininess: 200 } );
+        const base = new THREE.Mesh( baseGeomtry, baseMaterial );
+        base.translateZ(0.7);
+        this.scene.add(base);
+
+        const top = new THREE.Group();
+        top.translateZ(1.4);
+        base.add(top);
+
+        const mf1 = await this.loadMF();
+        mf1.translateY(1);
+        top.add(mf1);
+        const mf1top = new THREE.Group();
+        mf1top.translateZ(0.2);
+        mf1.add(mf1top);
+
+        const servo1 = await this.loadServo();
+        mf1top.add(servo1.servo);
+        this.rotors.push([servo1.horn]);
+
+        const mf2 = await this.loadMF();
+        mf2.translateY(0.6);
+        mf2.translateZ(0.2);
+        mf2.rotateY(this.toRadians(-90));
+        servo1.top.add(mf2);
+        const mf2top = new THREE.Group();
+        mf2top.translateZ(0.2);
+        mf2.add(mf2top);
+
+        const servo2 = await this.loadServo();
+        mf2top.add(servo2.servo);
+        this.rotors.push([servo2.horn]);
+
+        const uBracket = await this.loadU();
+        const uBracketTop = new THREE.Group();
+        uBracket.add(uBracketTop);
+
+        uBracket.translateZ(-1.8);
+        uBracket.translateY(-2.5);
+        uBracket.rotateX(this.toRadians(-90));
+        servo2.top.add(uBracket);
+
+        uBracketTop.rotateX(this.toRadians(180));
+        this.axes(uBracketTop);
+
+        const servo3 = await this.loadServo();
+        servo3.servo.translateX(-1.5);
+        servo3.servo.translateY(1);
+        servo3.servo.translateZ(1);
+        servo3.servo.rotateY(this.toRadians(90));
+        uBracketTop.add(servo3.servo);
+
+        this.rotors.push([servo3.horn]);
+
+        const grasper = await this.loadGrasper();
+        uBracketTop.add(grasper.grasper);
+
+        this.rotors.push([grasper.right_rotor, grasper.left_rotor]);
+    }
+
+    async loadU(): Promise<THREE.Mesh> {
+        const mfGeometry = await this.loadGeometry('models/u.stl');
+        const mfMaterial = new THREE.MeshPhongMaterial( { color: 0x55FF55, specular: 0x111111, shininess: 200 } );
+        const mf = new THREE.Mesh( mfGeometry, mfMaterial );
+        mf.translateZ(0.2);
+
+        return mf;
+
+    }
+
+    async loadMesh(url: string, color: number): Promise<THREE.Mesh> {
+        const bGeomtry = await this.loadGeometry(url);
+        const bMaterial = new THREE.MeshPhongMaterial( { color: color, specular: 0x111111, shininess: 200 } );
+        const base = new THREE.Mesh( bGeomtry, bMaterial ); 
+        return base;
+    }
+
+    async loadGrasper(): Promise<IGraspInfo> {
+        const bGeomtry = await this.loadGeometry('models/grasper_base.stl');
+        const bMaterial = new THREE.MeshPhongMaterial( { color: 0xeeeeee, specular: 0x111111, shininess: 200 } );
+        const base = new THREE.Mesh( bGeomtry, bMaterial ); 
+
+        const group = new THREE.Group();
+
+        const right_rotor = new THREE.Group();
+        right_rotor.translateZ(1.2);
+        right_rotor.translateY(0.4);
+        right_rotor.translateX(0.05);
+        right_rotor.rotateY(this.toRadians(-90));
+        this.axes(right_rotor);
+
+        const right_jaw = await this.loadMesh('models/grasper_jaw.stl', 0x005555);
+        //right_jaw.rotateY(this.toRadians(-90));
+        right_rotor.add(right_jaw);
+
+        const left_rotor = new THREE.Group();
+        left_rotor.translateZ(1.2);
+        left_rotor.translateY(-0.4);
+        left_rotor.translateX(0.05);
+        left_rotor.rotateY(this.toRadians(90));
+        this.axes(left_rotor);
+
+
+        const left_jaw = await this.loadMesh('models/grasper_jaw.stl', 0x005555);
+        left_jaw.rotateY(this.toRadians(-90));
+        left_jaw.rotateX(this.toRadians(180));
+        //left_rotor.add(left_jaw);
+
+
+        group.add(base);
+        group.add(right_rotor);
+        group.add(left_rotor);
+
+        return {
+            grasper: group,
+            right_rotor,
+            left_rotor,
+        };
+    }
+
+    async loadMF(): Promise<THREE.Mesh> {
+        const mfGeometry = await this.loadGeometry('models/mf.stl');
+        const mfMaterial = new THREE.MeshPhongMaterial( { color: 0x33FF33, specular: 0x111111, shininess: 200 } );
+        const mf = new THREE.Mesh( mfGeometry, mfMaterial );
+        mf.translateZ(0.2);
+
+        return mf;
+    }
+
+    async loadServo(): Promise<IServoInfo> {
+        let servo: THREE.Mesh = null;
+
+        const servoGeomtry = await this.loadGeometry('models/MG996R.stl');
+        const servoMaterial = new THREE.MeshPhongMaterial( { color: 0xff5533, specular: 0x111111, shininess: 200 } );
+        servo = new THREE.Mesh( servoGeomtry, servoMaterial );
+        servo.castShadow = true;
+        servo.receiveShadow = true;
+        servo.translateZ(0.2);
+
+        const hornGeometry = await this.loadGeometry('models/Horn.stl');
+
+        const hornMaterial = new THREE.MeshPhongMaterial( { color: 0x55FF33, specular: 0x111111, shininess: 200 } );
+        const horn = new THREE.Mesh( hornGeometry, hornMaterial );
+        horn.castShadow = true;
+        horn.receiveShadow = true;
+        horn.translateZ(1.3);
+        horn.translateY(-0.6);
+        servo.add(horn);
+
+        const top = new THREE.Group();
+        top.translateZ(0.4);
+        horn.add(top);
+
+        this.axes(top);
+
+        return {
+            servo,
+            horn,
+            top
+        }
     }
 
     async loadModel()
     {
+        const uGeomtry = await this.loadGeometry('models/u.stl');
+        const uMaterial = new THREE.MeshPhongMaterial( { color: 0xFF55FF, specular: 0x111111, shininess: 200 } );
+        const u = new THREE.Mesh( uGeomtry, uMaterial );
+        this.scene.add(u);
+
         const baseGeomtry = await this.loadGeometry('models/base.stl');
         const baseMaterial = new THREE.MeshPhongMaterial( { color: 0x3355FF, specular: 0x111111, shininess: 200 } );
         const base = new THREE.Mesh( baseGeomtry, baseMaterial );
@@ -184,7 +378,7 @@ export class Hand3D extends React.Component<Props, State> {
             horn.translateY(-0.6);
             servo.add(horn);
 
-            this.rotors.push(horn);
+            this.rotors.push([horn]);
 
             lastMesh = horn;
         }
@@ -199,6 +393,9 @@ export class Hand3D extends React.Component<Props, State> {
         }
     }
 
+    toRadians(degrees: number): number {
+        return (degrees || 0) * Math.PI / 180;
+    }
     animate()
     {
         if (this.mesh1 && this.mesh2) {
@@ -208,8 +405,8 @@ export class Hand3D extends React.Component<Props, State> {
 
         const values = this.props.rotorsDegrees;
         for(let i = 0; i < this.rotors.length; i++) {
-            const rads = (values[i] || 0) * Math.PI / 180;
-            this.rotors[i].rotation.z = rads;
+            const rads = this.toRadians(values[i]);
+            this.rotors[i].forEach(r => r.rotation.z = rads);
         }
 
         requestAnimationFrame( this.animate.bind(this) );
