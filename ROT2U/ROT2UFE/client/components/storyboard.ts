@@ -45,7 +45,7 @@ export class Storyboard {
     
                 setter(current);
     
-                await this.delay(10);
+                await this.delay(20);
             }
         }
     }

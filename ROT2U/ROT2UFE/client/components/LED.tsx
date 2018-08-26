@@ -1,8 +1,5 @@
 import * as React from 'react';
-import { Link, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { ApplicationState }  from '../store';
-import * as WeatherForecastsState from '../store/WeatherForecasts';
 import * as Rx from "rxjs";
 import axios from "axios";
 import { debounceTime } from 'rxjs/operators';
@@ -12,18 +9,9 @@ import { IFaceAPIResponse } from '../dto/face-api';
 import { Hand3D } from './Hand3D';
 import { IStoryboard, Storyboard } from './storyboard';
 
-
-// At runtime, Redux will merge together...
-type WeatherForecastProps =
-    WeatherForecastsState.WeatherForecastsState        // ... state we've requested from the Redux store
-    & typeof WeatherForecastsState.actionCreators      // ... plus action creators we've requested
-    & RouteComponentProps<{ startDateIndex: string }>; // ... plus incoming routing parameters
-
-
-enum eMode {
+interface IProps {
 
 }
-
 interface IEmotionPicture {
     color: string;
     rows: string[];
@@ -38,7 +26,7 @@ interface IState {
     storyboards: IStoryboard[];
     selectedStoryboardIdx: number;
 }
-class LED extends React.Component<WeatherForecastProps, IState> {
+class LED extends React.Component<IProps, IState> {
     tasks = new Rx.Subject<{}>();
     subscription: Rx.Subscription;
     emotions = [
@@ -52,7 +40,7 @@ class LED extends React.Component<WeatherForecastProps, IState> {
         "surprise",
     ];
 
-    constructor(props: WeatherForecastProps) {
+    constructor(props: IProps) {
         super(props);
 
         this.state = {
@@ -61,7 +49,7 @@ class LED extends React.Component<WeatherForecastProps, IState> {
             colors: this.defaultColors(),
             face: null,
             emotion: "neutral",
-            servos: [0,0,0,0,0],
+            servos: [0,0,180,0,0],
             storyboards: this.defaultStoryboards(),
             selectedStoryboardIdx: null
         }
@@ -70,39 +58,43 @@ class LED extends React.Component<WeatherForecastProps, IState> {
     }
 
     defaultStoryboards(): IStoryboard[] {
+        const closed = 170;
+        const opened = 120;
+
+        const azimuth = 20;
         return [
             {
                 name: "Rotate to 180",
                 Items: [{
-                    servos: [180, 0, 0, 0, 0]
+                    servos: [180, 0, closed, 0, 0]
                 }]
             },
             {
                 name: "Rotate to 0",
                 Items: [{
-                    servos: [0, 0, 0, 0, 0]
+                    servos: [0, 0, closed, 0, 0]
                 }]
             },
             {
                 name: "Idle",
                 Items: [{
-                    servos: [0, 90, 10, 0, 0]
+                    servos: [0, 90, opened, 0, 0]
                 }]
             },
             {
                 name: "Pick",
                 Items: [
                     {
-                        servos: [0, 10, 10, 0, 0]
+                        servos: [0, azimuth, opened, 0, 0]
                     },
                     {
-                        servos: [0, 0, 10, 0, 0]
+                        servos: [0, 0, opened, 0, 0]
                     },
                     {
-                        servos: [0, 0, 0, 0, 0]
+                        servos: [0, 0, closed, 0, 0]
                     },
                     {
-                        servos: [0, 10, 0, 0, 0]
+                        servos: [0, azimuth, closed, 0, 0]
                     }
                 ]
             },
@@ -110,10 +102,10 @@ class LED extends React.Component<WeatherForecastProps, IState> {
                 name: "Deliver",
                 Items: [
                     {
-                        servos: [0, 10, 0, 0, 0]
+                        servos: [0, azimuth, closed, 0, 0]
                     },
                     {
-                        servos: [180, 10, 0, 0, 0]
+                        servos: [180, azimuth, closed, 0, 0]
                     }
                 ]
             },
@@ -121,16 +113,16 @@ class LED extends React.Component<WeatherForecastProps, IState> {
                 name: "Release",
                 Items: [
                     {
-                        servos: [180, 10, 0, 0, 0]
+                        servos: [180, azimuth, closed, 0, 0]
                     },
                     {
-                        servos: [180, 0, 0, 0, 0]
+                        servos: [180, 0, closed, 0, 0]
                     },
                     {
-                        servos: [180, 0, 10, 0, 0]
+                        servos: [180, 0, opened, 0, 0]
                     },
                     {
-                        servos: [180, 10, 10, 0, 0]
+                        servos: [180, azimuth, opened, 0, 0]
                     }
                 ]
             },
@@ -249,25 +241,20 @@ class LED extends React.Component<WeatherForecastProps, IState> {
             data: dto
         });
 
-        //this.tasks.next();
+        this.tasks.next();
     }
     
 
     componentWillMount() {
-        // This method runs when the component is first added to the page
-        //let startDateIndex = parseInt(this.props.match.params.startDateIndex) || 0;
-        //this.props.requestWeatherForecasts(startDateIndex);
+        // TODO: load state from 
         this.tasks.next();
     }
 
-    componentWillReceiveProps(nextProps: WeatherForecastProps) {
-        // This method runs when incoming props (e.g., route params) change
-        //let startDateIndex = parseInt(nextProps.match.params.startDateIndex) || 0;
-        //this.props.requestWeatherForecasts(startDateIndex);
+    componentWillReceiveProps(nextProps: IProps) {
     }
 
     servosControl() {
-        const {servos, storyboards} = this.state;
+        const {servos} = this.state;
         const controls = servos.map((v,idx) => {
             return <div key={idx}>
                 <span style={{fontSize: "xx-large", display: "block"}}>Servo: {idx} ({v})</span>
@@ -503,7 +490,4 @@ class LED extends React.Component<WeatherForecastProps, IState> {
     }
 }
 
-export default connect(
-    (state: ApplicationState) => state.weatherForecasts, // Selects which state properties are merged into the component's props
-    WeatherForecastsState.actionCreators                 // Selects which action creators are merged into the component's props
-)(LED);
+export default connect()(LED);

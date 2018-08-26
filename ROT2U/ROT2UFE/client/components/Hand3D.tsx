@@ -145,7 +145,7 @@ export class Hand3D extends React.Component<Props, State> {
 
         this.renderer = new THREE.WebGLRenderer();
         //this.renderer.setSize( window.innerWidth, window.innerHeight );
-        this.renderer.setSize( 800, 600 );
+        this.renderer.setSize( 1200, 900 );
 
         this.camera.position.y = -10;
         this.camera.position.z = 10;
@@ -323,61 +323,6 @@ export class Hand3D extends React.Component<Props, State> {
         }
     }
 
-    async loadModel()
-    {
-        const uGeomtry = await this.loadGeometry('models/u.stl');
-        const uMaterial = new THREE.MeshPhongMaterial( { color: 0xFF55FF, specular: 0x111111, shininess: 200 } );
-        const u = new THREE.Mesh( uGeomtry, uMaterial );
-        this.scene.add(u);
-
-        const baseGeomtry = await this.loadGeometry('models/base.stl');
-        const baseMaterial = new THREE.MeshPhongMaterial( { color: 0x3355FF, specular: 0x111111, shininess: 200 } );
-        const base = new THREE.Mesh( baseGeomtry, baseMaterial );
-        this.scene.add(base);
-
-        var lastMesh: THREE.Mesh = null;
-
-        for(let i = 0; i < 5; i++ ) {
-            const mfGeometry = await this.loadGeometry('models/mf.stl');
-            const mfMaterial = new THREE.MeshPhongMaterial( { color: 0x33FF33, specular: 0x111111, shininess: 200 } );
-            const mf = new THREE.Mesh( mfGeometry, mfMaterial );
-            
-            if (lastMesh) {
-                mf.translateY(-0.5);
-                mf.translateZ(1.1);
-                lastMesh.add( mf );
-            }
-            else {
-                mf.translateZ(0.9);
-                this.scene.add( mf );
-            }
-
-            let servo: THREE.Mesh = null;
-
-            const servoGeomtry = await this.loadGeometry('models/MG996R.stl');
-            const servoMaterial = new THREE.MeshPhongMaterial( { color: 0xff5533, specular: 0x111111, shininess: 200 } );
-            servo = new THREE.Mesh( servoGeomtry, servoMaterial );
-            servo.castShadow = true;
-            servo.receiveShadow = true;
-            servo.translateZ(0.2);
-            mf.add( servo );
-
-            const hornGeometry = await this.loadGeometry('models/Horn.stl');
-
-            const hornMaterial = new THREE.MeshPhongMaterial( { color: 0x55FF33, specular: 0x111111, shininess: 200 } );
-            const horn = new THREE.Mesh( hornGeometry, hornMaterial );
-            horn.castShadow = true;
-            horn.receiveShadow = true;
-            horn.translateZ(1.3);
-            horn.translateY(-0.6);
-            servo.add(horn);
-
-            this.rotors.push([horn]);
-
-            lastMesh = horn;
-        }
-    }
-
     componentDidMount()
     {
         const thisNode = ReactDOM.findDOMNode(this);
@@ -390,6 +335,7 @@ export class Hand3D extends React.Component<Props, State> {
     toRadians(degrees: number): number {
         return (degrees || 0) * Math.PI / 180;
     }
+
     animate()
     {
         if (this.mesh1 && this.mesh2) {
@@ -399,7 +345,13 @@ export class Hand3D extends React.Component<Props, State> {
 
         const values = this.props.rotorsDegrees;
         for(let i = 0; i < this.rotors.length; i++) {
-            const rads = this.toRadians(values[i]);
+            let value = values[i];
+            switch(i) {
+                case 2:
+                    value = 180 - value;
+                    break;
+            }
+            const rads = this.toRadians(value);
             this.rotors[i].forEach(r => r.rotation.z = rads);
         }
 

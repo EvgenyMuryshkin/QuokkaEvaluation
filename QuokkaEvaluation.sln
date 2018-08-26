@@ -31,24 +31,24 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SensorsBoard", "SensorsBoar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Device", "SensorsBoard\Device\Device.csproj", "{37B612F5-B0A3-4969-B773-6C9FAE0E8EDD}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LED", "LED", "{3D0AB5B5-64A9-4E1B-B57F-1B1B332B42CE}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ROT2U", "ROT2U", "{3D0AB5B5-64A9-4E1B-B57F-1B1B332B42CE}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LEDFE", "LEDFE", "{E7BA4897-CD9A-46B4-BAD4-CEAD1D869D99}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ROT2UFE", "ROT2UFE", "{E7BA4897-CD9A-46B4-BAD4-CEAD1D869D99}"
 	ProjectSection(SolutionItems) = preProject
-		LED\LEDFE\.gitignore = LED\LEDFE\.gitignore
-		LED\LEDFE\.travis.yml = LED\LEDFE\.travis.yml
-		LED\LEDFE\package.json = LED\LEDFE\package.json
-		LED\LEDFE\README.md = LED\LEDFE\README.md
-		LED\LEDFE\run.js = LED\LEDFE\run.js
-		LED\LEDFE\tsconfig.json = LED\LEDFE\tsconfig.json
-		LED\LEDFE\tslint.json = LED\LEDFE\tslint.json
-		LED\LEDFE\webpack.config.js = LED\LEDFE\webpack.config.js
-		LED\LEDFE\webpack.config.vendor.js = LED\LEDFE\webpack.config.vendor.js
+		ROT2U\ROT2UFE\.gitignore = ROT2U\ROT2UFE\.gitignore
+		ROT2U\ROT2UFE\.travis.yml = ROT2U\ROT2UFE\.travis.yml
+		ROT2U\ROT2UFE\package.json = ROT2U\ROT2UFE\package.json
+		ROT2U\ROT2UFE\README.md = ROT2U\ROT2UFE\README.md
+		ROT2U\ROT2UFE\run.js = ROT2U\ROT2UFE\run.js
+		ROT2U\ROT2UFE\tsconfig.json = ROT2U\ROT2UFE\tsconfig.json
+		ROT2U\ROT2UFE\tslint.json = ROT2U\ROT2UFE\tslint.json
+		ROT2U\ROT2UFE\webpack.config.js = ROT2U\ROT2UFE\webpack.config.js
+		ROT2U\ROT2UFE\webpack.config.vendor.js = ROT2U\ROT2UFE\webpack.config.vendor.js
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "server", "LED\LEDFE\server\server.csproj", "{0D874BC7-3048-4EA2-827E-C9AC4B6A63BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ROT2UServer", "ROT2U\ROT2UFE\server\ROT2UServer.csproj", "{0D874BC7-3048-4EA2-827E-C9AC4B6A63BB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LEDDto", "LED\LEDDto\LEDDto.csproj", "{A7CB81CB-158D-4EA2-B515-634E19AB279F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ROT2UDto", "ROT2U\ROT2UDto\ROT2UDto.csproj", "{A7CB81CB-158D-4EA2-B515-634E19AB279F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Orbiter", "Orbiter", "{6BD1DFDA-B178-48CA-9505-C36D2066056D}"
 EndProject
