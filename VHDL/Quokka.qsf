@@ -36,7 +36,7 @@
 # -------------------------------------------------------------------------- #
 set_global_assignment -name FAMILY "Cyclone IV E"
 set_global_assignment -name DEVICE EP4CE6E22C8
-set_global_assignment -name TOP_LEVEL_ENTITY Quokka_LEDController_TopLevel
+set_global_assignment -name TOP_LEVEL_ENTITY Quokka_OrbiterController_TopLevel
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION "9.1 SP2"
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "20:13:14  AUGUST 01, 2018"
 set_global_assignment -name USE_GENERATED_PHYSICAL_CONSTRAINTS OFF -section_id eda_blast_fpga
@@ -44,7 +44,6 @@ set_global_assignment -name LAST_QUARTUS_VERSION "9.1 SP2"
 set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
 set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
 set_global_assignment -name NOMINAL_CORE_SUPPLY_VOLTAGE 1.2V
-set_global_assignment -name USE_CONFIGURATION_DEVICE ON
 set_global_assignment -name STRATIX_DEVICE_IO_STANDARD "2.5 V"
 set_location_assignment PIN_25 -to Clock
 set_location_assignment PIN_67 -to Reset
@@ -69,7 +68,6 @@ set_location_assignment PIN_71 -to AggregatorLED2
 set_location_assignment PIN_70 -to AggregatorLED3
 set_location_assignment PIN_69 -to AggregatorLED4
 set_global_assignment -name SDC_FILE quokka.sdc
-set_global_assignment -name USE_CONFIGURATION_DEVICE OFF
 set_global_assignment -name RESERVE_ALL_UNUSED_PINS_WEAK_PULLUP "AS INPUT TRI-STATED"
 set_global_assignment -name VHDL_FILE fpu100/addsub_28.vhd
 set_global_assignment -name VHDL_FILE fpu100/comppack.vhd
@@ -93,25 +91,22 @@ set_global_assignment -name VHDL_FILE IFPU_OP.vhd
 set_location_assignment PIN_72 -to AggregatorLED1
 set_location_assignment PIN_31 -to AggregatorServo
 set_global_assignment -name MISC_FILE "C:/code/QuokkaEvaluation/VHDL/Quokka.dpf"
+set_location_assignment PIN_68 -to AggregatorBank3
+set_location_assignment PIN_54 -to AggregatorROTUC_L31F9L39T10_ROTUC_L38F13T42_ROTUC_L76F4T53_servosHandler0_ROTUC_L62F4L75T5_ServoItem
+set_location_assignment PIN_55 -to AggregatorROTUC_L31F9L39T10_ROTUC_L38F13T42_ROTUC_L76F4T53_servosHandler1_ROTUC_L62F4L75T5_ServoItem
+set_location_assignment PIN_58 -to AggregatorROTUC_L31F9L39T10_ROTUC_L38F13T42_ROTUC_L76F4T53_servosHandler2_ROTUC_L62F4L75T5_ServoItem
+set_location_assignment PIN_59 -to AggregatorROTUC_L31F9L39T10_ROTUC_L38F13T42_ROTUC_L76F4T53_servosHandler3_ROTUC_L62F4L75T5_ServoItem
+set_location_assignment PIN_60 -to AggregatorROTUC_L31F9L39T10_ROTUC_L38F13T42_ROTUC_L76F4T53_servosHandler4_ROTUC_L62F4L75T5_ServoItem
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
 set_global_assignment -name LL_ROOT_REGION ON -section_id "Root Region"
 set_global_assignment -name LL_MEMBER_STATE LOCKED -section_id "Root Region"
-set_location_assignment PIN_68 -to AggregatorBank3
-set_location_assignment PIN_54 -to AggregatorLEDC_L48F9L63T10_LEDC_L62F13T69_LEDC_L114F4T53_servosHandler0_LEDC_L100F4L113T5_ServoItem
-set_location_assignment PIN_55 -to AggregatorLEDC_L48F9L63T10_LEDC_L62F13T69_LEDC_L114F4T53_servosHandler1_LEDC_L100F4L113T5_ServoItem
-set_location_assignment PIN_58 -to AggregatorLEDC_L48F9L63T10_LEDC_L62F13T69_LEDC_L114F4T53_servosHandler2_LEDC_L100F4L113T5_ServoItem
-set_location_assignment PIN_59 -to AggregatorLEDC_L48F9L63T10_LEDC_L62F13T69_LEDC_L114F4T53_servosHandler3_LEDC_L100F4L113T5_ServoItem
-set_location_assignment PIN_60 -to AggregatorLEDC_L48F9L63T10_LEDC_L62F13T69_LEDC_L114F4T53_servosHandler4_LEDC_L100F4L113T5_ServoItem
-set_global_assignment -name VHDL_FILE generated/SnakeGame/Quokka.vhdl
-set_global_assignment -name VHDL_FILE generated/SnakeGame/Quokka_DemoController_TopLevel.vhdl
-set_global_assignment -name VHDL_FILE generated/SnakeGame/Quokka_LEDController_TopLevel.vhdl
-set_global_assignment -name VHDL_FILE generated/SnakeGame/Quokka_MainController_TopLevel.vhdl
-set_global_assignment -name VHDL_FILE generated/SnakeGame/Quokka_MainController_TopLevel_Aggregator_JSON_L34F13L39T33_XBD.vhdl
-set_global_assignment -name VHDL_FILE generated/SnakeGame/Quokka_MainController_TopLevel_Aggregator_JSON_L34F13L39T33_XBD_SnakeDBGSerializer_DataConverter.vhdl
-set_global_assignment -name VHDL_FILE generated/SnakeGame/Quokka_MainController_TopLevel_Aggregator_JSON_L34F13L39T33_XBD_SnakeDBGSerializer_DataConverter_UnsignedIntToStringConverter_currentDecimal.vhdl
-set_global_assignment -name VHDL_FILE generated/SnakeGame/Quokka_MainController_TopLevel_Aggregator_JSON_L34F13L39T33_XBD_SnakeDBGSerializer_DataConverter_UnsignedIntToStringConverter_StringBuffer.vhdl
-set_global_assignment -name VHDL_FILE generated/SnakeGame/Quokka_MainController_TopLevel_Aggregator_JSON_L34F13L39T33_XBD_SnakeDBGSerializer_JSONBuffer.vhdl
-set_global_assignment -name VHDL_FILE generated/SnakeGame/Quokka_PeripheralsController_TopLevel.vhdl
+set_global_assignment -name VHDL_FILE generated/Orbiter/Quokka.vhdl
+set_global_assignment -name VHDL_FILE generated/Orbiter/Quokka_OrbiterController_TopLevel.vhdl
+set_global_assignment -name VHDL_FILE generated/Orbiter/Quokka_OrbiterController_TopLevel_Aggregator_JSON_L34F13L39T33_XBD.vhdl
+set_global_assignment -name VHDL_FILE generated/Orbiter/Quokka_OrbiterController_TopLevel_Aggregator_JSON_L34F13L39T33_XBD_KeysDTOSerializer_DataConverter.vhdl
+set_global_assignment -name VHDL_FILE generated/Orbiter/Quokka_OrbiterController_TopLevel_Aggregator_JSON_L34F13L39T33_XBD_KeysDTOSerializer_DataConverter_UnsignedIntToStringConverter_currentDecimal.vhdl
+set_global_assignment -name VHDL_FILE generated/Orbiter/Quokka_OrbiterController_TopLevel_Aggregator_JSON_L34F13L39T33_XBD_KeysDTOSerializer_DataConverter_UnsignedIntToStringConverter_StringBuffer.vhdl
+set_global_assignment -name VHDL_FILE generated/Orbiter/Quokka_OrbiterController_TopLevel_Aggregator_JSON_L34F13L39T33_XBD_KeysDTOSerializer_JSONBuffer.vhdl
 
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
