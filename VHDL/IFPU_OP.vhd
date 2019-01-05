@@ -30,7 +30,6 @@ begin
 	--Repository is available here: https://github.com/freecores/fpu100.git
 	--Integration commit: bab960a0e8c98eb217664d187208d7ede277248d
 
-
 	fpu: entity work.fpu port map
 	(
 		clk_i => Clock,
@@ -42,4 +41,5 @@ begin
 		start_i => Trigger,
 		ready_o => Completed
 	);
+
 end architecture rtl;

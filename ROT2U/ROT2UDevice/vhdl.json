@@ -1,0 +1,15 @@
+﻿{
+	"Project": "ROT2U",
+	"Configurations": [
+		{
+			"Name": "Quokka",
+			"ClockFrequency": 50000000
+		},
+		{
+			"Name": "Test",
+			"ClockFrequency": 50000000
+		}
+	],
+	"HDL": "VHDL",
+	"ProjectLocation": "..\\..\\VHDL"
+}

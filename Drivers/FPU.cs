@@ -34,7 +34,7 @@ namespace Drivers
     public static class FPU
     {
         [Inlined]
-        public static void FPUScope()
+        public static void internalFPUScope()
         {
             float fpuOp1 = 0, fpuOp2 = 0;
             FPGA.Signal<float> fpuResult = 0;
@@ -42,6 +42,32 @@ namespace Drivers
             FPGA.Signal<bool> fpuTrigger = false, fpuCompleted = false;
             FPGA.Config.Entity<IFPU>().Op(fpuTrigger, fpuCompleted, fpuOp1, fpuOp2, fpuOp, fpuResult);
             object fpuLock = new object();
+        }
+
+        [Inlined]
+        public static void FPUScope()
+        {
+            // TODO nestetd inlines not processed correctly
+            float fpuOp1 = 0, fpuOp2 = 0;
+            FPGA.Signal<float> fpuResult = 0;
+            byte fpuOp = 0;
+            FPGA.Signal<bool> fpuTrigger = false, fpuCompleted = false;
+            FPGA.Config.Entity<IFPU>().Op(fpuTrigger, fpuCompleted, fpuOp1, fpuOp2, fpuOp, fpuResult);
+            object fpuLock = new object();
+            FPGA.Const<bool> fpuSync = true;
+        }
+
+        [Inlined]
+        public static void FPUScopeNoSync()
+        {
+            // TODO nestetd inlines not processed correctly
+            float fpuOp1 = 0, fpuOp2 = 0;
+            FPGA.Signal<float> fpuResult = 0;
+            byte fpuOp = 0;
+            FPGA.Signal<bool> fpuTrigger = false, fpuCompleted = false;
+            FPGA.Config.Entity<IFPU>().Op(fpuTrigger, fpuCompleted, fpuOp1, fpuOp2, fpuOp, fpuResult);
+            object fpuLock = new object();
+            FPGA.Const<bool> fpuSync = false;
         }
     }
 }

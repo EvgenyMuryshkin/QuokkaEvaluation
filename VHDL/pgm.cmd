@@ -1,0 +1,1 @@
+C:\altera\91sp2\quartus\bin\quartus_pgm.exe -c 1 -m JTAG -o p;Quokka.sof
