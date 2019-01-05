@@ -9,4 +9,6 @@ dotnet run -s "..\SensorsBoard\Device\vhdl.json"
 dotnet run -s "..\SensorsBoard\Device\verilog.json"
 dotnet run -s "..\BumperHero\BHDevice\vhdl.json"
 dotnet run -s "..\BumperHero\BHDevice\verilog.json"
+dotnet run -s "..\Fourier\vhdl.json"
+dotnet run -s "..\Fourier\verilog.json"
 cd ..

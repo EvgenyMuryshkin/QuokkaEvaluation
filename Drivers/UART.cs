@@ -15,7 +15,7 @@ namespace Drivers
         // module has one non-registered input bit, and one registered output byte
         public static void Read(uint baud, FPGA.InputSignal<bool> RXD, out byte data)
         {
-            FPGA.Static<ulong> delay = 1000000000 / baud;
+            FPGA.Const<ulong> delay = 1000000000 / baud;
 
             byte result = 0;
 
@@ -31,6 +31,7 @@ namespace Drivers
             // read 8 bits
             for (uint i = 0; i < 8; i++)
             {
+                FPGA.Config.SetInclusiveRange(0, 8, i);
                 FPGA.Runtime.Delay(delay);
 
                 // this is assign of combinational expression
@@ -58,7 +59,7 @@ namespace Drivers
 
         public static void RegisteredWrite(uint baud, byte data, out bool TXD)
         {
-            FPGA.Static<ulong> delay = 1000000000 / baud;
+            FPGA.Const<ulong> delay = 1000000000 / baud;
 
             byte stored = data;
 
@@ -69,6 +70,7 @@ namespace Drivers
             // write data bits
             for (byte i = 0; i < 8; i++)
             {
+                FPGA.Config.SetInclusiveRange(0, 8, i);
                 TXD = (stored & 1) > 0;
                 FPGA.Runtime.Delay(delay);
                 stored = (byte)(stored >> 1);
@@ -80,22 +82,21 @@ namespace Drivers
             FPGA.Runtime.Delay(delay);
         }
 
-        public static void ReadUnsigned32(uint baud, FPGA.InputSignal<bool> RXD, out uint data)
+        public static void ReadUnsigned32(uint baud, FPGA.InputSignal<bool> RXD, ref uint data)
         {
-            uint result = 0;
             byte part = 0;
             for (byte i = 0; i < 4; i++)
             {
+                FPGA.Config.SetInclusiveRange(0, 4, i);
                 UART.Read(baud, RXD, out part);
-                result = (uint)((result >> 8) | (part << 24));
+                data = (uint)((data >> 8) | (part << 24));
             }
-            data = result;
         }
 
         public static void ReadFloat(uint baud, FPGA.InputSignal<bool> RXD, out float data)
         {
             uint uns = 0;
-            UART.ReadUnsigned32(baud, RXD, out uns);
+            UART.ReadUnsigned32(baud, RXD, ref uns);
             FPGA.Runtime.Assign(FPGA.Expressions.Unchecked(uns, out data));
         }
 
@@ -112,12 +113,14 @@ namespace Drivers
 
         public static void RegisteredWriteUnsigned32(uint baud, uint data, out bool TXD)
         {
+            // cannot use data direclty as it is used by "ref" in hardware
             uint buff = data;
             Func<byte> lsb = () => (byte)buff;
             FPGA.Config.Default(out TXD, true);
 
             for (byte i = 0; i < 4; i++)
             {
+                FPGA.Config.SetInclusiveRange(0, 4, i);
                 UART.RegisteredWrite(baud, lsb(), out TXD);
                 buff = buff >> 8;
             }

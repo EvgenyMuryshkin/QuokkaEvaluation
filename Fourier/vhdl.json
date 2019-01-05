@@ -1,0 +1,11 @@
+﻿{
+  "Project": "Fourier",
+  "Configurations": [
+    {
+      "Name": "Quokka",
+      "ClockFrequency": 50000000
+    }
+  ],
+  "HDL": "VHDL",
+  "ProjectLocation": "..\\VHDL"
+}

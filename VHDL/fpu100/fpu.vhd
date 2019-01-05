@@ -339,11 +339,14 @@ begin
 	-- Input Register
 	process(clk_i)
 	begin
-		if rising_edge(clk_i) then	
-			s_opa_i <= opa_i;
-			s_opb_i <= opb_i;
-			s_fpu_op_i <= fpu_op_i;
-			s_rmode_i <= rmode_i;
+		if rising_edge(clk_i) then
+			if start_i = '1' then
+				s_opa_i <= opa_i;
+				s_opb_i <= opb_i;
+				s_fpu_op_i <= fpu_op_i;
+				s_rmode_i <= rmode_i;
+			end if;
+
 			s_start_i <= start_i;
 		end if;
 	end process;

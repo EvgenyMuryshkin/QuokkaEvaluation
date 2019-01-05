@@ -106,7 +106,7 @@ namespace SnakeGame
 
 					for (int i = 0; i < buff.Length; i++)
 					{
-						UART.ReadUnsigned32(baud, RXD, out data);
+						UART.ReadUnsigned32(baud, RXD, ref data);
 						buff[i] = data;
 					}
 				}
