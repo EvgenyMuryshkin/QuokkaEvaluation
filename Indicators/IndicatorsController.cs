@@ -44,7 +44,7 @@ namespace Indicators
             QuokkaBoard.OutputBank(Bank1);
             QuokkaBoard.InputBank(Bank2);
 
-            GameControlsState controlsState = new GameControlsState();
+            IndicatorsControlsState controlsState = new IndicatorsControlsState();
 
             IsAlive.Blink(LED1);
 
@@ -53,11 +53,14 @@ namespace Indicators
                 K7, K6, K5, K4, K3, K2, K1, K0,
                 ref controlsState);
 
-            LEDControl(controlsState.keyCode, DOUT, Servo);
+            LEDControl(
+                controlsState,
+                DOUT, 
+                Servo);
         }
 
         public static void LEDControl(
-            KeypadKeyCode keyCode, 
+            IndicatorsControlsState controlState,
             FPGA.OutputSignal<bool> DOUT,
             FPGA.OutputSignal<bool> Servo
             )
@@ -68,74 +71,17 @@ namespace Indicators
             byte servoValue = 0;
             MG996R.Continuous(servoValue, Servo);
 
+            object indicatorLock = new object();
             eIndicatorType indicator = eIndicatorType.None;
+            uint indicatorKeyEventTimeStamp = 0;
 
-            object tickCounterLock = new object();
-            uint msTickCounter = 0;
             uint dim = 1;
-            uint flashSpeedInTicks = 1000;
-
-            Action tickHandler = () =>
-            {
-                lock(tickCounterLock)
-                {
-                    msTickCounter++;
-                }
-            };
-            FPGA.Config.OnTimer(TimeSpan.FromMilliseconds(1), tickHandler);
-
-            Action ledHandler = () =>
-            {
-                byte[] data = new byte[8];
-                uint color = 0;
-                bool isActive = true;
-                uint indicatorSpeed = 0;
-
-                while (true)
-                {
-                    switch (indicator)
-                    {
-                        case eIndicatorType.Left:
-                            Graphics.LeftIndicator(data, dim, out color);
-                            indicatorSpeed = flashSpeedInTicks;
-                            break;
-                        case eIndicatorType.Right:
-                            Graphics.RightIndicator(data, dim, out color);
-                            indicatorSpeed = flashSpeedInTicks;
-                            break;
-                        case eIndicatorType.Break:
-                            Graphics.BreakIndicator(data, dim, out color);
-                            // override indicator settings for break signal
-                            indicatorSpeed = 0;
-                            isActive = true;
-                            break;
-                        default:
-                            Graphics.ClearIndicator(data, dim, out color);
-                            break;
-                    }
-
-                    lock (tickCounterLock)
-                    {
-                        if (indicatorSpeed != 0 && msTickCounter > flashSpeedInTicks)
-                        {
-                            msTickCounter = 0;
-                            isActive = !isActive;
-                        }
-                    }
-
-                    if (!isActive)
-                        color = 0;
-
-                    Graphics.DrawIndicator(data, color, out internalDOUT);
-                }
-            };
-            FPGA.Config.OnStartup(ledHandler);
-
+            uint flashSpeedInTicks = 500;
             Action uiControlsHandler = () =>
             {
-                Func<bool> noKey = () => keyCode == 0;
+                Func<bool> noKey = () => controlState.keyCode == 0;
 
-                switch (keyCode)
+                switch (controlState.keyCode)
                 {
                     case KeypadKeyCode.D2:
                         if (dim < 10)
@@ -157,27 +103,134 @@ namespace Indicators
 
                 FPGA.Runtime.WaitForAllConditions(noKey);
             };
-
             FPGA.Config.OnTimer(TimeSpan.FromMilliseconds(50), uiControlsHandler);
+
+            Action ledHandler = () =>
+            {
+                byte[] data = new byte[8];
+                uint indicatorColor = 0;
+                bool isIndicatorActive = true;
+
+                uint flashIndicatorSpeed = 0;
+                uint flashIndicatorTimeStamp = 0;
+
+                eIndicatorType lastIndicator = eIndicatorType.None;
+                uint lastIndicatorTimeStamp = 0;
+
+                uint autoIndicatorTimeStamp = 0;
+
+                while (true)
+                {
+                    lock(indicatorLock)
+                    {
+                        if (lastIndicator != indicator)
+                        {
+                            if (autoIndicatorTimeStamp != 0)
+                            {
+                                if (indicator == eIndicatorType.None)
+                                {
+                                    if (controlState.msTickCounter - autoIndicatorTimeStamp > 3000)
+                                    {
+                                        // turn off auto indicator after 3 seconds
+                                        autoIndicatorTimeStamp = 0;
+                                    }
+                                }
+                                else
+                                {
+                                    // different indicator
+                                    lastIndicator = indicator;
+                                    autoIndicatorTimeStamp = controlState.msTickCounter;
+                                    lastIndicatorTimeStamp = controlState.msTickCounter;
+
+                                    flashIndicatorTimeStamp = 0;
+                                    isIndicatorActive = false;
+                                    indicatorColor = 0;
+                                }
+                            }
+                            else
+                            {
+                                // turn on auto indicator if key was pressed less then 500 ms
+                                if (indicator == eIndicatorType.None && (controlState.msTickCounter - lastIndicatorTimeStamp) < 500)
+                                {
+                                    autoIndicatorTimeStamp = controlState.msTickCounter;
+                                    lastIndicatorTimeStamp = controlState.msTickCounter;
+                                }
+                                else
+                                {
+                                    lastIndicator = indicator;
+                                    lastIndicatorTimeStamp = controlState.msTickCounter;
+
+                                    flashIndicatorTimeStamp = 0;
+                                    isIndicatorActive = false;
+                                    indicatorColor = 0;
+                                }
+                            }
+                        }
+                    }
+
+                    switch (lastIndicator)
+                    {
+                        case eIndicatorType.Left:
+                            Graphics.LeftIndicator(data, dim, out indicatorColor);
+                            flashIndicatorSpeed = flashSpeedInTicks;
+                            break;
+                        case eIndicatorType.Right:
+                            Graphics.RightIndicator(data, dim, out indicatorColor);
+                            flashIndicatorSpeed = flashSpeedInTicks;
+                            break;
+                        case eIndicatorType.Break:
+                            Graphics.BreakIndicator(data, dim, out indicatorColor);
+                            // override indicator settings for break signal
+                            flashIndicatorSpeed = 0;
+                            isIndicatorActive = true;
+                            break;
+                        default:
+                            // reset state when nothing is selected, so first event will be displayed immediately
+                            Graphics.ClearIndicator(data, dim, out indicatorColor);
+                            break;
+                    }
+
+                    if (flashIndicatorSpeed != 0 && (controlState.msTickCounter - flashIndicatorTimeStamp) > flashIndicatorSpeed)
+                    {
+                        flashIndicatorTimeStamp = controlState.msTickCounter;
+                        isIndicatorActive = !isIndicatorActive;
+                    }
+
+                    if (!isIndicatorActive)
+                        indicatorColor = 0;
+
+                    Graphics.DrawIndicator(data, indicatorColor, out internalDOUT);
+                }
+            };
+            FPGA.Config.OnStartup(ledHandler);
 
             Action keypadHandler = () =>
             {
                 while(true)
                 {
-                    switch (keyCode)
+                    uint keyEventTimeStamp = controlState.msTickCounter;
+                    eIndicatorType nextIndicator = indicator;
+
+                    switch (controlState.keyCode)
                     {
                         case KeypadKeyCode.D6:
-                            indicator = eIndicatorType.Right;
+                            nextIndicator = eIndicatorType.Right;
                             break;
                         case KeypadKeyCode.D4:
-                            indicator = eIndicatorType.Left;
+                            nextIndicator = eIndicatorType.Left;
                             break;
                         case KeypadKeyCode.STOP:
-                            indicator = eIndicatorType.Break;
+                            nextIndicator = eIndicatorType.Break;
                             break;
-                        case KeypadKeyCode.PWR:
-                            indicator = eIndicatorType.None;
+                        default:
+                            nextIndicator = eIndicatorType.None;
                             break;
+                    }
+
+                    lock (indicatorLock)
+                    {
+                        indicator = nextIndicator;
+                        indicatorKeyEventTimeStamp = keyEventTimeStamp;
                     }
                 }
             };

@@ -23,7 +23,7 @@ namespace Indicators
             FPGA.InputSignal<bool> K2,
             FPGA.InputSignal<bool> K1,
             FPGA.InputSignal<bool> K0,
-            ref GameControlsState controlsState)
+            ref IndicatorsControlsState controlsState)
         {
             KeypadKeyCode internalCode = 0;
             FPGA.Config.Link(internalCode, out controlsState.keyCode);
@@ -55,7 +55,6 @@ namespace Indicators
                 msTickCounter++;
             };
             FPGA.Config.OnTimer(TimeSpan.FromMilliseconds(1), tickHandler);
-
         }
     }
 }

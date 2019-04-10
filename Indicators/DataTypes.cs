@@ -13,7 +13,7 @@ namespace Indicators
         Break
     }
 
-    public struct GameControlsState
+    public struct IndicatorsControlsState
     {
         public KeypadKeyCode keyCode;
         public ushort adcChannel1;
