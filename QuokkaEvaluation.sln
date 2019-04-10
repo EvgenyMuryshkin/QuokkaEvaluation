@@ -68,6 +68,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fourier.Tests", "Fourier.Te
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DSP", "DSP", "{7EE97EC4-C185-440E-9BA4-4D3B9DF9D748}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Indicators", "Indicators\Indicators.csproj", "{E52015F9-A796-42A4-9D47-8299C87CEEAE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -160,6 +162,10 @@ Global
 		{78180D24-78B8-4A21-8D0F-0C8D128D9F66}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78180D24-78B8-4A21-8D0F-0C8D128D9F66}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{78180D24-78B8-4A21-8D0F-0C8D128D9F66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E52015F9-A796-42A4-9D47-8299C87CEEAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E52015F9-A796-42A4-9D47-8299C87CEEAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E52015F9-A796-42A4-9D47-8299C87CEEAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E52015F9-A796-42A4-9D47-8299C87CEEAE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
