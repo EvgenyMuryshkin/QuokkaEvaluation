@@ -23,7 +23,7 @@ namespace Indicators
             FPGA.InputSignal<bool> K2,
             FPGA.InputSignal<bool> K1,
             FPGA.InputSignal<bool> K0,
-            ref IndicatorsControlsState controlsState)
+            IndicatorsControlsState controlsState)
         {
             KeypadKeyCode internalCode = 0;
             FPGA.Config.Link(internalCode, out controlsState.keyCode);

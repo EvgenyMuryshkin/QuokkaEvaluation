@@ -19,6 +19,8 @@ namespace Indicators
         public ushort adcChannel1;
         public ushort adcChannel2;
         public uint msTickCounter;
+        public uint dim;
+        public uint flashSpeedInTicks;
     }
 
     public struct IndicatorsDBG

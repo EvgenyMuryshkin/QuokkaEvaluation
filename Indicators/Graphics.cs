@@ -52,14 +52,12 @@ namespace Indicators
             color = dim << 8;
         }
 
-        public static void ClearIndicator(byte[] target, uint dim, out uint color)
+        public static void ClearIndicator(byte[] target)
         {
             for(byte i = 0; i < target.Length; i++)
             {
                 target[i] = 0;
             }
-
-            color = 0;
         }
 
 
@@ -81,7 +79,11 @@ namespace Indicators
             color = dim << 16;
         }
 
-        public static void DrawIndicator(byte[] data, uint color, out bool DOUT)
+        public static void DrawIndicator(
+            byte[] data, 
+            uint color, 
+            bool isActive,
+            out bool DOUT)
         {
             uint[] buff = new uint[data.Length * 8];
             byte value = 0;
@@ -99,7 +101,7 @@ namespace Indicators
                     }
                     else
                     {
-                        buff[idx] = color;
+                        buff[idx] = isActive ? color : 0;
                     }
 
                     bit = (byte)(bit << 1);
