@@ -13,14 +13,27 @@ namespace Indicators
         Break
     }
 
-    public struct IndicatorsControlsState
+    public class IndicatorsControlsState
     {
         public KeypadKeyCode keyCode;
         public ushort adcChannel1;
         public ushort adcChannel2;
-        public uint msTickCounter;
-        public uint dim;
-        public uint flashSpeedInTicks;
+        public uint counterMs;
+        public uint dim;// = 1;
+        public uint flashSpeedMs;// = 500;
+
+        // indicator data
+        public eIndicatorType nextIndicator;
+        public uint nextIndicatorKeyEventTimeStamp;
+
+        public eIndicatorType lastIndicator;
+        public uint lastIndicatorTimeStamp;
+
+        public uint flashIndicatorTimeStamp;
+        public bool isIndicatorActive;
+
+        // auto indicator
+        public uint autoIndicatorTimeStamp;
     }
 
     public struct IndicatorsDBG

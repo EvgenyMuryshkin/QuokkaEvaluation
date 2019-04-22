@@ -64,7 +64,7 @@ namespace Indicators
         public static void LEDControl(IndicatorsControlsState controlState)
         {
             FPGA.Config.Default(out controlState.dim, 1);
-            FPGA.Config.Default(out controlState.flashSpeedInTicks, 500);
+            FPGA.Config.Default(out controlState.flashSpeedMs, 500);
 
             Action uiControlsHandler = () =>
             {
@@ -81,12 +81,12 @@ namespace Indicators
                             controlState.dim--;
                         break;
                     case KeypadKeyCode.D1:
-                        if (controlState.flashSpeedInTicks > 100)
-                            controlState.flashSpeedInTicks -= 100;
+                        if (controlState.flashSpeedMs > 100)
+                            controlState.flashSpeedMs -= 100;
                         break;
                     case KeypadKeyCode.D7:
-                        if (controlState.flashSpeedInTicks < 2000)
-                            controlState.flashSpeedInTicks += 100;
+                        if (controlState.flashSpeedMs < 2000)
+                            controlState.flashSpeedMs += 100;
                         break;
                 }
 
@@ -108,99 +108,27 @@ namespace Indicators
             MG996R.Continuous(servoValue, Servo);
 
             object indicatorLock = new object();
-            eIndicatorType indicator = eIndicatorType.None;
-            uint indicatorKeyEventTimeStamp = 0;
-
-            byte[] buffData = new byte[8];
-            uint indicatorColor = 0;
-            object buffLock = new object();
 
             Action ledHandler = () =>
             {
-                // resetting flashIndicatorTimeStamp to 0 will trigger isIndicatorActive on first run
-                uint flashIndicatorTimeStamp = 0;
-                bool isIndicatorActive = true;
-
-                eIndicatorType lastIndicator = eIndicatorType.None;
-                uint lastIndicatorTimeStamp = 0;
-
-                uint autoIndicatorTimeStamp = 0;
-
-                Action updateIndicator = () =>
+                while (true)
                 {
-                    lastIndicator = indicator;
-                    lastIndicatorTimeStamp = indicatorKeyEventTimeStamp;
-                };
+                    lock (indicatorLock)
+                    {
+                        IndicatorsEngine.Process(controlState);
+                    }
+                }
+            };
+            FPGA.Config.OnStartup(ledHandler);
+
+            Action drawHandler = () =>
+            {
+                byte[] buffData = new byte[8];
+                uint indicatorColor = 0;
 
                 while (true)
                 {
-                    uint currentTimeStamp = controlState.msTickCounter;
-
-                    lock (indicatorLock)
-                    {
-                        if (lastIndicator != indicator)
-                        {
-                            // indicator was changed
-                            if (autoIndicatorTimeStamp != 0)
-                            {
-                                // running on auto indicator
-                                if (indicator == eIndicatorType.None)
-                                {
-                                    // no key pressed
-                                    if (
-                                        // was break signal
-                                        (lastIndicator == eIndicatorType.Break) || 
-                                        // timed out and wait for not active
-                                        (!isIndicatorActive && 
-                                        currentTimeStamp - autoIndicatorTimeStamp > 3000))
-                                    {
-                                        // turn off auto indicator after 3 seconds and when it is off to avoid quick blinks
-                                        autoIndicatorTimeStamp = 0;
-                                        FPGA.Config.GenBreak();
-                                        updateIndicator();
-                                    }
-
-                                    // do nothing if running on auto, and nothing changed
-                                }
-                                else
-                                {
-                                    // different indicator
-                                    autoIndicatorTimeStamp = 0;
-
-                                    updateIndicator();
-
-                                    flashIndicatorTimeStamp = 0;
-                                    isIndicatorActive = false;
-                                    indicatorColor = 0;
-                                }
-                            }
-                            else
-                            {
-                                if (indicator == eIndicatorType.None && (currentTimeStamp - lastIndicatorTimeStamp) < 500)
-                                {
-                                    // turn on auto indicator if key was pressed less then 500 ms
-                                    autoIndicatorTimeStamp = currentTimeStamp;
-                                }
-                                else
-                                {
-                                    updateIndicator();
-
-                                    flashIndicatorTimeStamp = 0;
-                                    isIndicatorActive = false;
-                                    indicatorColor = 0;
-                                }
-                            }
-                        }
-                    }
-
-                    // blinking logic
-                    if (currentTimeStamp - flashIndicatorTimeStamp > controlState.flashSpeedInTicks)
-                    {
-                        flashIndicatorTimeStamp = currentTimeStamp;
-                        isIndicatorActive = !isIndicatorActive;
-                    }
-
-                    switch (lastIndicator)
+                    switch (controlState.lastIndicator)
                     {
                         case eIndicatorType.Left:
                             Graphics.LeftIndicator(buffData, controlState.dim, out indicatorColor);
@@ -210,24 +138,20 @@ namespace Indicators
                             break;
                         case eIndicatorType.Break:
                             Graphics.BreakIndicator(buffData, controlState.dim, out indicatorColor);
-                            isIndicatorActive = true;
-                            break;
-                        default:
-                            isIndicatorActive = false;
                             break;
                     }
 
-                    Graphics.DrawIndicator(buffData, indicatorColor, isIndicatorActive, out internalDOUT);
+                    Graphics.DrawIndicator(buffData, indicatorColor, controlState.isIndicatorActive, out internalDOUT);
                 }
             };
-            FPGA.Config.OnStartup(ledHandler);
+            FPGA.Config.OnStartup(drawHandler);
 
             Action keypadHandler = () =>
             {
                 while(true)
                 {
-                    uint keyEventTimeStamp = controlState.msTickCounter;
-                    eIndicatorType nextIndicator = indicator;
+                    uint keyEventTimeStamp = controlState.counterMs;
+                    eIndicatorType nextIndicator = controlState.nextIndicator;
 
                     switch (controlState.keyCode)
                     {
@@ -245,12 +169,12 @@ namespace Indicators
                             break;
                     }
 
-                    if (nextIndicator != indicator)
+                    if (nextIndicator != controlState.nextIndicator)
                     {
                         lock (indicatorLock)
                         {
-                            indicator = nextIndicator;
-                            indicatorKeyEventTimeStamp = keyEventTimeStamp;
+                            controlState.nextIndicator = nextIndicator;
+                            controlState.nextIndicatorKeyEventTimeStamp = keyEventTimeStamp;
                         }
                     }
                 }

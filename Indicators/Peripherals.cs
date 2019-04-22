@@ -33,7 +33,7 @@ namespace Indicators
 
             FPGA.Config.Link(adcChannel1Value, controlsState.adcChannel1);
             FPGA.Config.Link(adcChannel2Value, controlsState.adcChannel2);
-            FPGA.Config.Link(msTickCounter, controlsState.msTickCounter);
+            FPGA.Config.Link(msTickCounter, controlsState.counterMs);
 
             Action keypadHandler = () =>
             {
