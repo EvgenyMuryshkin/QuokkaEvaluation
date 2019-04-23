@@ -13,6 +13,13 @@ namespace Indicators
         Break
     }
 
+    public enum eIndicatorMode
+    {
+        Solid,
+        Blinking,
+        Sliding
+    }
+
     public class IndicatorsControlsState
     {
         public KeypadKeyCode keyCode;
@@ -23,6 +30,7 @@ namespace Indicators
         public uint flashSpeedMs;// = 500;
 
         // indicator data
+        public eIndicatorMode mode = eIndicatorMode.Blinking;
         public eIndicatorType nextIndicator;
         public uint nextIndicatorKeyEventTimeStamp;
 

@@ -121,30 +121,41 @@ namespace Indicators
             };
             FPGA.Config.OnStartup(ledHandler);
 
+            int maskValue = 0;
             Action drawHandler = () =>
             {
                 byte[] buffData = new byte[8];
+                uint[] buff = new uint[buffData.Length * 8];
+
                 uint indicatorColor = 0;
 
-                while (true)
+                switch (controlState.lastIndicator)
                 {
-                    switch (controlState.lastIndicator)
-                    {
-                        case eIndicatorType.Left:
-                            Graphics.LeftIndicator(buffData, controlState.dim, out indicatorColor);
-                            break;
-                        case eIndicatorType.Right:
-                            Graphics.RightIndicator(buffData, controlState.dim, out indicatorColor);
-                            break;
-                        case eIndicatorType.Break:
-                            Graphics.BreakIndicator(buffData, controlState.dim, out indicatorColor);
-                            break;
-                    }
-
-                    Graphics.DrawIndicator(buffData, indicatorColor, controlState.isIndicatorActive, out internalDOUT);
+                    case eIndicatorType.Left:
+                        Graphics.LeftIndicator(buffData, controlState.dim, out indicatorColor);
+                        break;
+                    case eIndicatorType.Right:
+                        Graphics.RightIndicator(buffData, controlState.dim, out indicatorColor);
+                        break;
+                    case eIndicatorType.Break:
+                        Graphics.BreakIndicator(buffData, controlState.dim, out indicatorColor);
+                        break;
                 }
+
+                Graphics.DrawIndicator(buffData, buff, indicatorColor, controlState.isIndicatorActive);
+
+                //Graphics.ApplyShiftMask(buff, int.MinValue, maskValue);
+
+                Graphics.Draw(buff, out internalDOUT);
+                /*
+                if (maskValue >= 15)
+                    maskValue = 0;
+                else
+                    maskValue++;
+                */
             };
-            FPGA.Config.OnStartup(drawHandler);
+
+            FPGA.Config.OnTimer(TimeSpan.FromMilliseconds(50), drawHandler);
 
             Action keypadHandler = () =>
             {

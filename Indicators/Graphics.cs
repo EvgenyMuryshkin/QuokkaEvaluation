@@ -80,12 +80,11 @@ namespace Indicators
         }
 
         public static void DrawIndicator(
-            byte[] data, 
+            byte[] data,
+            uint[] buff,
             uint color, 
-            bool isActive,
-            out bool DOUT)
+            bool isActive)
         {
-            uint[] buff = new uint[data.Length * 8];
             byte value = 0;
             int idx = 0;
             for (byte i = 0; i < data.Length; i++)
@@ -108,8 +107,21 @@ namespace Indicators
                     idx++;
                 }
             }
+        }
 
-            Draw(buff, out DOUT);
+        public static void ApplyShiftMask(uint[] buff, int min, int max)
+        {
+            // buff[0] contains last color in matrix
+            for (byte row = 0; row < 8; row++)
+            {
+                for(byte col = 0; col < 8; col++)
+                {
+                    int idx = row * 8 + col;
+                    int sum = row + col;
+                    if (sum < min || sum > max)
+                        buff[idx] = 0;
+                }
+            }
         }
 
         public static void Draw(uint[] buff, out bool DOUT)

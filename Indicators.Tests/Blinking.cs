@@ -41,6 +41,7 @@ namespace Indicators.Tests
 
             var sim = Simulate(state, 5001, (i) =>
             {
+                // simulate short button press
                 if (i.Iteration == 100)
                 {
                     i.nextIndicator = eIndicatorType.Left;
