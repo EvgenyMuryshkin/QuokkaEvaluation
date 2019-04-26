@@ -31,7 +31,7 @@ namespace Indicators
             };
 
             Copy(data, target);
-            color = dim;
+            color = dim << 16 | dim << 8;
         }
 
         public static void RightIndicator(byte[] target, uint dim, out uint color)
@@ -49,7 +49,7 @@ namespace Indicators
             };
 
             Copy(data, target);
-            color = dim << 8;
+            color = dim << 16 | dim << 8;
         }
 
         public static void ClearIndicator(byte[] target)

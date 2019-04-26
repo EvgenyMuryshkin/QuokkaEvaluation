@@ -23,11 +23,9 @@ namespace Indicators
     public class IndicatorsControlsState
     {
         public KeypadKeyCode keyCode;
-        public ushort adcChannel1;
-        public ushort adcChannel2;
         public uint counterMs;
-        public uint dim;// = 1;
-        public uint flashSpeedMs;// = 500;
+        public uint dim = 1;
+        public uint flashSpeedMs = 500;
 
         // indicator data
         public eIndicatorMode mode = eIndicatorMode.Blinking;
@@ -39,6 +37,8 @@ namespace Indicators
 
         public uint flashIndicatorTimeStamp;
         public bool isIndicatorActive;
+
+        public int slideValue = 0;
 
         // auto indicator
         public uint autoIndicatorTimeStamp;

@@ -153,15 +153,17 @@ namespace Fourier.Tests
             using (var port = new COMPort())
             {
                 var sourceSignal = _bp.TestSignal();
+                var target = _bp.ZeroSignal;
+
                 port.Send(sourceSignal);
-                DFT.Transform(_bp.Bits, sourceSignal, Direction.Forward);
+                DFT.Transform(_bp.Bits, sourceSignal, target, Direction.Forward);
 
                 port.WaitForData(TimeSpan.FromMinutes(1));
 
                 var receiverSignal = _bp.ZeroSignal;
                 port.Receive(receiverSignal, out uint duration);
 
-                Validation.AssertSpectres(sourceSignal, receiverSignal, true, true);
+                Validation.AssertSpectres(target, receiverSignal, true, true);
             }
         }
 

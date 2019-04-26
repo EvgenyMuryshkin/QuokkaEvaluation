@@ -29,16 +29,7 @@ namespace Indicators
             FPGA.OutputSignal<bool> Bank2,
 
             // WS2812
-            FPGA.OutputSignal<bool> DOUT,
-
-            // ADC
-            FPGA.OutputSignal<bool> ADC1NCS,
-            FPGA.OutputSignal<bool> ADC1SLCK,
-            FPGA.OutputSignal<bool> ADC1DIN,
-            FPGA.InputSignal<bool> ADC1DOUT,
-
-            // SERVO
-            FPGA.OutputSignal<bool> Servo
+            FPGA.OutputSignal<bool> DOUT
             )
         {
             QuokkaBoard.OutputBank(Bank1);
@@ -49,7 +40,6 @@ namespace Indicators
             IsAlive.Blink(LED1);
 
             Peripherals.IndicatorsControls(
-                ADC1NCS, ADC1SLCK, ADC1DIN, ADC1DOUT,
                 K7, K6, K5, K4, K3, K2, K1, K0,
                 controlsState);
 
@@ -57,15 +47,11 @@ namespace Indicators
 
             IndicatorsControl(
                 controlsState,
-                DOUT, 
-                Servo);
+                DOUT);
         }
 
         public static void LEDControl(IndicatorsControlsState controlState)
         {
-            FPGA.Config.Default(out controlState.dim, 1);
-            FPGA.Config.Default(out controlState.flashSpeedMs, 500);
-
             Action uiControlsHandler = () =>
             {
                 Func<bool> noKey = () => controlState.keyCode == 0;
@@ -88,6 +74,15 @@ namespace Indicators
                         if (controlState.flashSpeedMs < 2000)
                             controlState.flashSpeedMs += 100;
                         break;
+                    case KeypadKeyCode.ENT:
+                        controlState.mode = eIndicatorMode.Solid;
+                        break;
+                    case KeypadKeyCode.D0:
+                        controlState.mode = eIndicatorMode.Blinking;
+                        break;
+                    case KeypadKeyCode.ESC:
+                        controlState.mode = eIndicatorMode.Sliding;
+                        break;
                 }
 
                 FPGA.Runtime.WaitForAllConditions(noKey);
@@ -97,15 +92,11 @@ namespace Indicators
 
         public static void IndicatorsControl(
             IndicatorsControlsState controlState,
-            FPGA.OutputSignal<bool> DOUT,
-            FPGA.OutputSignal<bool> Servo
+            FPGA.OutputSignal<bool> DOUT
             )
         {
             bool internalDOUT = false;
             FPGA.Config.Link(internalDOUT, DOUT);
-
-            byte servoValue = 0;
-            MG996R.Continuous(servoValue, Servo);
 
             object indicatorLock = new object();
 
@@ -121,7 +112,6 @@ namespace Indicators
             };
             FPGA.Config.OnStartup(ledHandler);
 
-            int maskValue = 0;
             Action drawHandler = () =>
             {
                 byte[] buffData = new byte[8];
@@ -142,17 +132,37 @@ namespace Indicators
                         break;
                 }
 
-                Graphics.DrawIndicator(buffData, buff, indicatorColor, controlState.isIndicatorActive);
+                Graphics.DrawIndicator(
+                    buffData, 
+                    buff, 
+                    indicatorColor,
+                    controlState.mode == eIndicatorMode.Blinking
+                        ? controlState.isIndicatorActive
+                        : true);
 
-                //Graphics.ApplyShiftMask(buff, int.MinValue, maskValue);
+                if (controlState.mode == eIndicatorMode.Sliding)
+                {
+                    lock(indicatorLock)
+                    {
+                        Graphics.ApplyShiftMask(
+                            buff,
+                            controlState.lastIndicator == eIndicatorType.Right ? controlState.slideValue : int.MinValue,
+                            controlState.lastIndicator == eIndicatorType.Left ? controlState.slideValue : int.MaxValue
+                            );
+
+                        switch (controlState.lastIndicator)
+                        {
+                            case eIndicatorType.Left:
+                                controlState.slideValue = controlState.slideValue >= 15 ? 0 : controlState.slideValue + 1;
+                                break;
+                            case eIndicatorType.Right:
+                                controlState.slideValue = controlState.slideValue <= 0 ? 15 : controlState.slideValue - 1;
+                                break;
+                        }
+                    }
+                }
 
                 Graphics.Draw(buff, out internalDOUT);
-                /*
-                if (maskValue >= 15)
-                    maskValue = 0;
-                else
-                    maskValue++;
-                */
             };
 
             FPGA.Config.OnTimer(TimeSpan.FromMilliseconds(50), drawHandler);

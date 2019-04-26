@@ -15,6 +15,19 @@ namespace Indicators
             {
                 controlState.lastIndicator = controlState.nextIndicator;
                 controlState.lastIndicatorTimeStamp = controlState.nextIndicatorKeyEventTimeStamp;
+
+                switch (controlState.lastIndicator)
+                {
+                    case eIndicatorType.Left:
+                        controlState.slideValue = 0;
+                        break;
+                    case eIndicatorType.Right:
+                        controlState.slideValue = 15;
+                        break;
+                    default:
+                        controlState.slideValue = 0;
+                        break;
+                }
             };
 
             Action resetBlinker = () =>
@@ -59,6 +72,7 @@ namespace Indicators
                             (controlState.lastIndicator == eIndicatorType.Break) ||
                             // timed out and wait for not active
                             (!controlState.isIndicatorActive &&
+                            (controlState.slideValue == 0 || controlState.slideValue == 15) &&
                             currentTimeStamp - controlState.autoIndicatorTimeStamp >= 3000))
                         {
                             // turn off auto indicator after 3 seconds and when it is off to avoid quick blinks
