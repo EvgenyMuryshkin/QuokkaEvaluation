@@ -1,5 +1,6 @@
 ﻿using BHDto;
 using Drivers;
+using FPGA;
 using FPGA.Attributes;
 using System;
 using System.Threading.Tasks;
@@ -56,7 +57,7 @@ namespace BHDevice
             int addr = 0;
             bool filled = false;
 
-            Action measureHandler = () =>
+            Sequential measureHandler = () =>
             {
                 ushort distance = 0;
                 HCSR04.Measure(echo, trigger, out distance);
@@ -124,7 +125,7 @@ namespace BHDevice
             object stateLock,
             FPGA.Signal<bool> TXD)
         {
-            Action reportState = () =>
+            Sequential reportState = () =>
             {
                 var dto = new ReportDTO();
                 dto.Idx = state.Index;

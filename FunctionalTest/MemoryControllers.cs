@@ -1,4 +1,5 @@
 ﻿using Drivers;
+using FPGA;
 using FPGA.Attributes;
 using System;
 using System.Collections.Generic;
@@ -14,8 +15,8 @@ namespace Controllers
             FPGA.InputSignal<bool> RXD,
             FPGA.OutputSignal<bool> TXD
             )
-        {            
-            Action mainHandler = () =>
+        {
+            Sequential mainHandler = () =>
             {
                 byte data = 0;
                 byte[] buff = new byte[1000];
@@ -79,7 +80,7 @@ namespace Controllers
             FPGA.OutputSignal<bool> TXD
             )
         {
-            Action mainHandler = () =>
+            Sequential mainHandler = () =>
             {
                 byte seed = 0;
                 UART.Read(115200, RXD, out seed);
@@ -103,7 +104,7 @@ namespace Controllers
             FPGA.OutputSignal<bool> TXD
             )
         {
-            Action mainHandler = () =>
+            Sequential mainHandler = () =>
             {
                 const uint buffLength = 1000;
                 byte data = 0;
@@ -141,7 +142,7 @@ namespace Controllers
             bool internalTXD = true;
             FPGA.Config.Link(internalTXD, TXD);
 
-            Action mainHandler = () =>
+            Sequential mainHandler = () =>
             {
                 byte data = 0;
                 byte[] buff = new byte[] { 1, 2, 3, 4, 5 };
@@ -172,7 +173,7 @@ namespace Controllers
             bool internalTXD = true;
             FPGA.Config.Link(internalTXD, TXD);
 
-            Action mainHandler = () =>
+            Sequential mainHandler = () =>
             {
                 byte data = 0;
                 byte[] buff = new byte[] { 0, 1, 2, 3, 4 };
@@ -220,7 +221,7 @@ namespace Controllers
             bool internalTXD = true;
             FPGA.Config.Link(internalTXD, TXD);
 
-            Action mainHandler = () =>
+            Sequential mainHandler = () =>
             {
                 byte data = 0;
                 byte[] buff = new byte[] { 0, 1, 2, 3, 4, 5, 6, 7 };

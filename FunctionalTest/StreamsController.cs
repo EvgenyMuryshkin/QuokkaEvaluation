@@ -1,4 +1,5 @@
 ﻿using Drivers;
+using FPGA;
 using FPGA.Attributes;
 using System;
 using System.Collections.Generic;
@@ -16,14 +17,14 @@ namespace Controllers
         {
             var stream = new FPGA.SyncStream<byte>();
 
-            Action<byte> streamHandler = (value) =>
+            Sequential<byte> streamHandler = (value) =>
             {
                 UART.Write(115200, value, TXD);
             };
 
             FPGA.Config.OnStream(stream, streamHandler);
 
-            Action handler = () =>
+            Sequential handler = () =>
             {
                 byte data = 0;
                 UART.Read(115200, RXD, out data);
@@ -50,7 +51,7 @@ namespace Controllers
             FPGA.Config.Link(internalTXD, TXD);
             object txdLock = new object();
 
-            Action<byte> streamHandler = (value) =>
+            Sequential<byte> streamHandler = (value) =>
             {
                 lock(txdLock)
                 {
@@ -60,7 +61,7 @@ namespace Controllers
 
             FPGA.Config.OnStream(stream, streamHandler, 2);
 
-            Action handler = () =>
+            Sequential handler = () =>
             {
                 byte data = 0;
                 UART.Read(115200, RXD, out data);
@@ -90,7 +91,7 @@ namespace Controllers
             object counterLock = new object();
 
             var transmitterStream = new FPGA.SyncStream<byte>();
-            Action<byte> transmitterStreamHandler = (value) =>
+            Sequential<byte> transmitterStreamHandler = (value) =>
             {
                 lock (txdLock)
                 {
@@ -100,7 +101,7 @@ namespace Controllers
             FPGA.Config.OnStream(transmitterStream, transmitterStreamHandler, 2);
 
             var receiverStream = new FPGA.SyncStream<byte>();
-            Action<byte> receiverStreamHandler = (value) =>
+            Sequential<byte> receiverStreamHandler = (value) =>
             {
                 Func<uint> instanceId = () => FPGA.Config.InstanceId();
 
@@ -114,7 +115,7 @@ namespace Controllers
             };
             FPGA.Config.OnStream(receiverStream, receiverStreamHandler, 3);
 
-            Action handler = () =>
+            Sequential handler = () =>
             {
                 byte data = 0;
                 UART.Read(115200, RXD, out data);

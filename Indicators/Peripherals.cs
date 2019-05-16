@@ -1,4 +1,5 @@
 ﻿using Drivers;
+using FPGA;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,13 +20,13 @@ namespace Indicators
             FPGA.InputSignal<bool> K0,
             IndicatorsControlsState controlsState)
         {
-            Action keypadHandler = () =>
+            Sequential keypadHandler = () =>
             {
                 Keypad4x4.ReadASCIICode(K7, K6, K5, K4, K3, K2, K1, K0, out controlsState.keyCode);
             };
             FPGA.Config.OnTimer(TimeSpan.FromMilliseconds(20), keypadHandler);
 
-            Action tickHandler = () =>
+            Sequential tickHandler = () =>
             {
                 controlsState.counterMs++;
             };

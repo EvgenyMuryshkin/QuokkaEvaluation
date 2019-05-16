@@ -1,4 +1,5 @@
 ﻿using Drivers;
+using FPGA;
 using FPGA.Attributes;
 using System;
 using System.Collections.Generic;
@@ -58,7 +59,7 @@ namespace SnakeGame
 			const int servosCount = 5;
 			byte[] servosBuff = new byte[servosCount];
 
-			Action servosHandler = () =>
+            Sequential servosHandler = () =>
 			{
 				FPGA.OutputSignal<bool> ServoItem = new FPGA.OutputSignal<bool>();
 				bool servoOut = false;
@@ -76,8 +77,8 @@ namespace SnakeGame
 			FPGA.Config.OnStartup(servosHandler, servosCount);
 
 
-			// SERVOs driver
-			Action<uint> servosDataHandler = (iteration) =>
+            // SERVOs driver
+            Sequential<uint> servosDataHandler = (iteration) =>
 			{
 				byte data = 0;
 
@@ -94,8 +95,8 @@ namespace SnakeGame
 			};
 			FPGA.Config.OnStream(heartBeat, servosDataHandler);
 
-			// LED driver
-			Action<uint> ledHandler = (iteration) =>
+            // LED driver
+            Sequential<uint> ledHandler = (iteration) =>
 			{
 				uint data = 0;
 				uint[] buff = new uint[64];
@@ -118,7 +119,7 @@ namespace SnakeGame
 	
 			// main application driver 
 			uint beat = 0;
-			Action heartBeatHandler = () =>
+            Sequential heartBeatHandler = () =>
 			{
 				heartBeat.Write(beat);
 				beat++;

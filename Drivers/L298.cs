@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FPGA;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -17,7 +18,7 @@ namespace Drivers
             FPGA.Config.Link(internalPin2, out pin2);
             FPGA.Config.Link(internalEnabled, out enabled);
 
-            Action pwm = () =>
+            Sequential pwm = () =>
             {
                 while (true)
                 {

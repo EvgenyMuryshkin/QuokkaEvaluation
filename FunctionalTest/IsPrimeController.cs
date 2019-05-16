@@ -1,4 +1,5 @@
-﻿using FPGA.Attributes;
+﻿using FPGA;
+using FPGA.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,7 +19,7 @@ namespace Controllers
             FPGA.Signal<bool> deserialized = new FPGA.Signal<bool>();
             Drivers.JSON.DeserializeFromUART<DTOs.IsPrimeRequest>(request, RXD, deserialized);
 
-            Action handler = () =>
+            Sequential handler = () =>
             {
                 bool result = false;
                 uint source = request.value;

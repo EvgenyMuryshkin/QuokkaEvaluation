@@ -1,4 +1,5 @@
 ﻿using Drivers;
+using FPGA;
 using FPGA.Attributes;
 using System;
 using System.Collections.Generic;
@@ -94,7 +95,7 @@ namespace SnakeGame
 
             uint[] buff = new uint[5];
 
-            Action autoPilotHandler = () =>
+            Sequential autoPilotHandler = () =>
             {
                 if (!autoPilotEnabled)
                     return;
@@ -104,7 +105,7 @@ namespace SnakeGame
 
             FPGA.Config.OnTimer(TimeSpan.FromMilliseconds(300), autoPilotHandler);
 
-            Action codeHandler = () =>
+            Sequential codeHandler = () =>
             {
                 // there is race condition possible - code can go down while handler is executed
                 
@@ -145,7 +146,7 @@ namespace SnakeGame
 
             FPGA.Config.OnSignal(hasCode(), codeHandler);
 
-            Action ledHandler = () =>
+            Sequential ledHandler = () =>
             {
                 for (byte i = 0; i < buff.Length; i++)
                 {
@@ -165,7 +166,7 @@ namespace SnakeGame
             FPGA.Config.OnSignal(trigger, ledHandler);
 
 
-            Action onStartup = () =>
+            Sequential onStartup = () =>
             {
                 var outerRow = new FPGA.OutputSignal<byte>();
                 var outerCol = new FPGA.OutputSignal<byte>();

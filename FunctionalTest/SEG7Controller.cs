@@ -1,4 +1,5 @@
 ﻿using Drivers;
+using FPGA;
 using FPGA.Attributes;
 using System;
 using System.Collections.Generic;
@@ -63,7 +64,7 @@ namespace Controllers
                 0x00,// ' '
             };
 
-            Action segmentHandler = () =>
+            Sequential segmentHandler = () =>
             {
                 currentaData = data[counter];
                 counter = (byte)(counter < data.Length - 1 ? counter + 1 : 0);

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FPGA;
+using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
@@ -78,7 +79,7 @@ namespace SequentialMath
             bool foundDivider = false;
             FPGA.Config.Suppress("W0003", foundDivider);
 
-            Action worker = () =>
+            Sequential worker = () =>
             {
                 while(!foundDivider)
                 {

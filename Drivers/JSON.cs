@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FPGA;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -15,7 +16,7 @@ namespace Drivers
             FPGA.Config.JSONDeserializer(obj, data, deserialized);
 
             const bool trigger = true;
-            Action uartHandler = () =>
+            Sequential uartHandler = () =>
             {
                 while(true)
                 {

@@ -1,4 +1,5 @@
 ﻿using Drivers;
+using FPGA;
 using FPGA.Attributes;
 using System;
 using System.Collections.Generic;
@@ -17,13 +18,13 @@ namespace Controllers
         {
             object testLock = new object();
             byte data = 0;
-            Action dataHandler = () => 
+            Sequential dataHandler = () => 
             {
                 UART.Write(115200, data, TXD);
             };
             FPGA.Config.OnRegisterWritten(data, dataHandler);
-            
-            Action mainHandler1 = () =>
+
+            Sequential mainHandler1 = () =>
             {
                 lock(testLock)
                 {
@@ -35,7 +36,7 @@ namespace Controllers
                 }
             };
 
-            Action mainHandler2 = () =>
+            Sequential mainHandler2 = () =>
             {
                 lock (testLock)
                 {
@@ -51,12 +52,12 @@ namespace Controllers
             FPGA.Config.OnSignal(trigger, mainHandler1);
             FPGA.Config.OnSignal(trigger, mainHandler2);
 
-            Action resetHandler1 = () =>
+            Sequential resetHandler1 = () =>
             {
                 FPGA.Runtime.ResetSequence(mainHandler1);
             };
 
-            Action resetHandler2 = () =>
+            Sequential resetHandler2 = () =>
             {
                 FPGA.Runtime.ResetSequence(mainHandler2);
             };

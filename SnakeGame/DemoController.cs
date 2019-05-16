@@ -1,4 +1,5 @@
 ﻿using Drivers;
+using FPGA;
 using FPGA.Attributes;
 using System;
 using System.Collections.Generic;
@@ -91,7 +92,7 @@ namespace SnakeGame
 
             uint[] buff = new uint[64];
             byte baseColor = 5;
-            Action ledHandler = () =>
+            Sequential ledHandler = () =>
             {
                 uint color = 0;
 

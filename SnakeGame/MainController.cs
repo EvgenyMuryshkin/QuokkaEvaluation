@@ -1,4 +1,5 @@
 ﻿using Drivers;
+using FPGA;
 using FPGA.Attributes;
 using System;
 using System.Collections.Generic;
@@ -79,7 +80,7 @@ namespace SnakeGame
             eGameMode gameMode = eGameMode.Setup;
 
             // drawing
-            Action drawHandler = () =>
+            Sequential drawHandler = () =>
             {
                 try
                 {

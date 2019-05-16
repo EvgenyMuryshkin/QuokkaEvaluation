@@ -1,4 +1,5 @@
 ﻿using Drivers;
+using FPGA;
 using FPGA.Attributes;
 using System;
 using System.Threading.Tasks;
@@ -23,7 +24,7 @@ namespace SensorsBoard
             bool internalTXD = true;
             FPGA.Config.Link(internalTXD, TXD);
 
-            Action onStartup = () =>
+            Sequential onStartup = () =>
             {
                 while(true)
                 {
@@ -49,7 +50,7 @@ namespace SensorsBoard
 
             FPGA.Config.OnStartup(onStartup);
 
-            Action taskHandler = () =>
+            Sequential taskHandler = () =>
             {
                 uint taskIndex = FPGA.Config.InstanceId();
 

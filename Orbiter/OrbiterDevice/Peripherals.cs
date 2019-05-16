@@ -1,4 +1,5 @@
 ﻿using Drivers;
+using FPGA;
 using OrbiterDTO;
 using System;
 using System.Collections.Generic;
@@ -34,14 +35,14 @@ namespace OrbiterDevice
             FPGA.Config.Link(adcChannel1Value, controlsState.X);
             FPGA.Config.Link(adcChannel2Value, controlsState.Y);
 
-            Action keypadHandler = () =>
+            Sequential keypadHandler = () =>
             {
                 Keypad4x4.ReadASCIICode(K7, K6, K5, K4, K3, K2, K1, K0, out internalCode);
             };
 
             FPGA.Config.OnTimer(TimeSpan.FromMilliseconds(20), keypadHandler);
 
-            Action joystickHandler = () =>
+            Sequential joystickHandler = () =>
             {
 				while(true)
 				{

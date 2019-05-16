@@ -1,4 +1,5 @@
-﻿using FPGA.Attributes;
+﻿using FPGA;
+using FPGA.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,7 +20,7 @@ namespace Controllers
 
             Drivers.JSON.DeserializeFromUART<DTOs.DividerRequest>(request, RXD, deserialized);
 
-            Action processingHandler = () =>
+            Sequential processingHandler = () =>
             {
                 ulong result, remainder;
                 SequentialMath.Divider.Unsigned<ulong>(request.Numerator, request.Denominator, out result, out remainder);

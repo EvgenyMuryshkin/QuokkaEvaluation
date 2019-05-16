@@ -1,4 +1,5 @@
 ﻿using Drivers;
+using FPGA;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,13 +17,13 @@ namespace Controllers
             const int baud = 115200;
 
             var stream = new FPGA.SyncStream<byte>();
-            Action<byte> streamHandler = (data) =>
+            Sequential<byte> streamHandler = (data) =>
             {
                 UART.Write(baud, data, TXD);
             };
             FPGA.Config.OnStream<byte>(stream, streamHandler);
 
-            Action handler = () =>
+            Sequential handler = () =>
             {
                 byte data = 0;
                 UART.Read(baud, RXD, out data);

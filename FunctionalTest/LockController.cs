@@ -1,4 +1,5 @@
 ﻿using Drivers;
+using FPGA;
 using FPGA.Attributes;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace Controllers
             // TODO: const handlers count
             Func<bool> completed = () => counter == 2;
 
-            Action handler = () =>
+            Sequential handler = () =>
             {
                 lock(l)
                 {
@@ -43,7 +44,7 @@ namespace Controllers
             FPGA.OutputSignal<bool> TXD
             )
         {
-            Action handler = () =>
+            Sequential handler = () =>
             {
                 byte data = 0;
                 UART.Read(115200, RXD, out data);

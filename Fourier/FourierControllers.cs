@@ -1,4 +1,5 @@
 ﻿using Drivers;
+using FPGA;
 using FPGA.Attributes;
 using System;
 using System.Collections.Generic;
@@ -43,7 +44,7 @@ namespace Fourier
             FPGA.Config.Link(internalTXD, TXD);
 
             FPGA.SyncStream<uint> streamWriter = new FPGA.SyncStream<uint>();
-            Action<uint> streamHandler = (d) =>
+            Sequential<uint> streamHandler = (d) =>
             {
                 UART.RegisteredWriteUnsigned32(baud, d, out internalTXD);
             };
@@ -100,7 +101,7 @@ namespace Fourier
             byte testOp;
             float op1, op2, res = 0;
 
-            Action handler = () =>
+            Sequential handler = () =>
             {
                 FPU.FPUScope();
 
@@ -158,7 +159,7 @@ namespace Fourier
             FPGA.OutputSignal<bool> TXD
         )
         {
-            Action handler = () =>
+            Sequential handler = () =>
             {
                 FPU.FPUScope();
 
@@ -190,7 +191,7 @@ namespace Fourier
             FPGA.OutputSignal<bool> TXD
         )
         {
-            Action handler = () =>
+            Sequential handler = () =>
             {
                 FPU.FPUScope();
 
@@ -226,7 +227,7 @@ namespace Fourier
             FPGA.OutputSignal<bool> TXD
         )
         {
-            Action handler = () =>
+            Sequential handler = () =>
             {
                 FPU.FPUScope();
 
@@ -269,7 +270,7 @@ namespace Fourier
             FPGA.OutputSignal<bool> TXD
         )
         {
-            Action handler = () =>
+            Sequential handler = () =>
             {
                 FPU.FPUScope();
 
@@ -304,7 +305,7 @@ namespace Fourier
             FPGA.OutputSignal<bool> TXD
         )
         {
-            Action handler = () =>
+            Sequential handler = () =>
             {
                 FPU.FPUScope();
 
@@ -341,7 +342,7 @@ namespace Fourier
             uint clockCounter = 0;
             Diag.ClockCounter(clockCounter);
 
-            Action handler = () =>
+            Sequential handler = () =>
             {
                 FPU.FPUScopeNoSync();
 

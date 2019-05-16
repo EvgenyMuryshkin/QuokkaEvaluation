@@ -1,4 +1,5 @@
 ﻿using Drivers;
+using FPGA;
 using FPGA.Attributes;
 using OrbiterDTO;
 using System;
@@ -62,7 +63,7 @@ namespace OrbiterDevice
 			FPGA.Signal<bool> TXD,
 			FPGA.Signal<bool> LED)
 		{
-			Action reportHandler = () =>
+            Sequential reportHandler = () =>
 			{
 				FPGA.Config.Suppress("W0002", LED);
 				/*

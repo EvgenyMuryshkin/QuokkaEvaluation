@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FPGA;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -18,7 +19,7 @@ namespace Drivers
             bool internalTrigger = false;
             FPGA.Config.Link(internalTrigger, Trigger);
 
-            Action measureHandler = () =>
+            Sequential measureHandler = () =>
             {
                 if (Echo)
                 {

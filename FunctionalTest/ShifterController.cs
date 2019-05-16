@@ -1,4 +1,5 @@
 ﻿using Drivers;
+using FPGA;
 using FPGA.Attributes;
 using System;
 using System.Collections.Generic;
@@ -63,7 +64,7 @@ namespace Controllers
         {
             Controllers.eShiftCommand cmd = 0;
 
-            Action readHandler = () =>
+            Sequential readHandler = () =>
             {
                 byte data = 0;
                 UART.Read(115200, RXD, out data);
@@ -75,14 +76,14 @@ namespace Controllers
             byte write = 0;
             FPGA.Signal<bool> dataWritten = false;
 
-            Action writeHandler = () =>
+            Sequential writeHandler = () =>
             {
                 UART.Write(115200, write, TXD);
                 dataWritten = true;
             };
             FPGA.Config.OnRegisterWritten(write, writeHandler);
 
-            Action cmdHandler = () =>
+            Sequential cmdHandler = () =>
             {
                 byte result = 0;
                 ValueForCommand(cmd, out result);

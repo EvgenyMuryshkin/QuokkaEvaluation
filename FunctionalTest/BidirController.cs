@@ -1,4 +1,5 @@
-﻿using FPGA.Attributes;
+﻿using FPGA;
+using FPGA.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,7 +16,7 @@ namespace Controllers
             )
         {
             const bool trigger = true;
-            Action handler = () =>
+            Sequential handler = () =>
             {
                 bidir1 = false;
                 bidir2 = false;

@@ -1,4 +1,5 @@
 ﻿using Drivers;
+using FPGA;
 using FPGA.Attributes;
 using System;
 using System.Collections.Generic;
@@ -52,7 +53,7 @@ namespace Indicators
 
         public static void LEDControl(IndicatorsControlsState controlState)
         {
-            Action uiControlsHandler = () =>
+            Sequential uiControlsHandler = () =>
             {
                 Func<bool> noKey = () => controlState.keyCode == 0;
 
@@ -100,7 +101,7 @@ namespace Indicators
 
             object indicatorLock = new object();
 
-            Action ledHandler = () =>
+            Sequential ledHandler = () =>
             {
                 while (true)
                 {
@@ -112,7 +113,7 @@ namespace Indicators
             };
             FPGA.Config.OnStartup(ledHandler);
 
-            Action drawHandler = () =>
+            Sequential drawHandler = () =>
             {
                 byte[] buffData = new byte[8];
                 uint[] buff = new uint[buffData.Length * 8];
@@ -167,7 +168,7 @@ namespace Indicators
 
             FPGA.Config.OnTimer(TimeSpan.FromMilliseconds(50), drawHandler);
 
-            Action keypadHandler = () =>
+            Sequential keypadHandler = () =>
             {
                 while(true)
                 {

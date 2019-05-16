@@ -1,4 +1,5 @@
 ﻿using Drivers;
+using FPGA;
 using FPGA.Attributes;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace Controllers
             FPGA.OutputSignal<bool> TXD
             )
         {
-            Action handler = () =>
+            Sequential handler = () =>
             {
                 while (true)
                 {

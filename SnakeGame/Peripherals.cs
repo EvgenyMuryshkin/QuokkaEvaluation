@@ -1,4 +1,5 @@
 ﻿using Drivers;
+using FPGA;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -33,14 +34,14 @@ namespace SnakeGame
             FPGA.Config.Link(adcChannel1Value, controlsState.adcChannel1);
             FPGA.Config.Link(adcChannel2Value, controlsState.adcChannel2);
 
-            Action keypadHandler = () =>
+            Sequential keypadHandler = () =>
             {
                 Keypad4x4.ReadASCIICode(K7, K6, K5, K4, K3, K2, K1, K0, out internalCode);
             };
 
             FPGA.Config.OnTimer(TimeSpan.FromMilliseconds(20), keypadHandler);
 
-            Action joystickHandler = () =>
+            Sequential joystickHandler = () =>
             {
                 ADC102S021.Read(out adcChannel1Value, out adcChannel2Value, ADC1NCS, ADC1SLCK, ADC1DIN, ADC1DOUT);
             };

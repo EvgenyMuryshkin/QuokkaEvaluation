@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FPGA;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -11,7 +12,7 @@ namespace Drivers
             bool internalAlive = false;
             FPGA.Config.Link(internalAlive, LED);
 
-            Action aliveHandler = () =>
+            Sequential aliveHandler = () =>
             {
                 internalAlive = !internalAlive;
             };

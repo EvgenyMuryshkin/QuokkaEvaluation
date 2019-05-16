@@ -1,4 +1,5 @@
 ﻿using Drivers;
+using FPGA;
 using FPGA.Attributes;
 using System;
 using System.Collections.Generic;
@@ -82,7 +83,7 @@ namespace Controllers
                 Func<ulong> bc304 = () => bc3 ^ (bc0 & (bc4 ^ ulongMax));
                 Func<ulong> bc410 = () => bc4 ^ (bc1 & (bc0 ^ ulongMax));
 
-                Action round1 = () =>
+                Sequential round1 = () =>
                 {
                     FPGA.Runtime.Assign(
                         FPGA.Expressions.Assign(x0, (v) => bc0 = v),
@@ -199,7 +200,7 @@ namespace Controllers
                 FPGA.Runtime.WaitForAllConditions(round1Completed);
 
                 // Round 2
-                Action round2 = () =>
+                Sequential round2 = () =>
                 {
                     FPGA.Runtime.Assign(
                         FPGA.Expressions.Assign(x0, (v) => bc0 = v),
@@ -315,7 +316,7 @@ namespace Controllers
                 FPGA.Runtime.WaitForAllConditions(round2Completed);
 
                 // Round 3
-                Action round3 = () =>
+                Sequential round3 = () =>
                 {
                     FPGA.Runtime.Assign(
                         FPGA.Expressions.Assign(x0, (v) => bc0 = v),
@@ -432,7 +433,7 @@ namespace Controllers
                 FPGA.Runtime.WaitForAllConditions(round3Completed);
 
                 // Round 4
-                Action round4 = () =>
+                Sequential round4 = () =>
                 {
                     FPGA.Runtime.Assign(
                         FPGA.Expressions.Assign(x0, (v) => bc0 = v),
@@ -660,14 +661,14 @@ namespace Controllers
                 a15, a16, a17, a18, a19, 
                 a20, a21, a22, a23, a24);
 
-            Action handler = () =>
+            Sequential handler = () =>
             {
                 while (true)
                 {
                     FPGA.Signal<bool> readTrigger = false;
                     FPGA.Signal<bool> readCompleted = false;
 
-                    Action readHandler = () =>
+                    Sequential readHandler = () =>
                     {
                         ReadData(
                             ref a00, ref a01, ref a02, ref a03, ref a04,
@@ -694,7 +695,7 @@ namespace Controllers
                     FPGA.Signal<bool> writeTrigger = false;
                     FPGA.Signal<bool> writeCompleted = false;
 
-                    Action writeHandler = () =>
+                    Sequential writeHandler = () =>
                     {
                         WriteData(
                             a00, a01, a02, a03, a04,

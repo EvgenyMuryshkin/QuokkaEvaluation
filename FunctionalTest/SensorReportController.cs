@@ -1,4 +1,5 @@
 ﻿using Drivers;
+using FPGA;
 using FPGA.Attributes;
 using System;
 using System.Collections.Generic;
@@ -31,7 +32,7 @@ namespace Controllers
             FPGA.InputSignal<bool> ADC1DOUT
             )
         {
-            Action handler = () =>
+            Sequential handler = () =>
             {
                 ushort adcChannel1Value = 0, adcChannel2Value = 0;
                 ADC102S021.Read(

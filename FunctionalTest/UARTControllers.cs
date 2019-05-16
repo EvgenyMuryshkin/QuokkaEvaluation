@@ -1,4 +1,5 @@
 ﻿using Drivers;
+using FPGA;
 using FPGA.Attributes;
 using System;
 using System.Collections.Generic;
@@ -18,14 +19,14 @@ namespace Controllers
             byte data = 0;
             FPGA.Signal<bool> completed = false;
 
-            Action dataHandler = () => 
+            Sequential dataHandler = () => 
             {
                 UART.Write(115200, data, TXD);
                 completed = true;
             };
             FPGA.Config.OnRegisterWritten(data, dataHandler);
-            
-            Action mainHandler = () =>
+
+            Sequential mainHandler = () =>
             {
                 data = 48;
                 FPGA.Runtime.WaitForAllConditions(completed);
@@ -50,7 +51,7 @@ namespace Controllers
             FPGA.Signal<bool> deserialized = new FPGA.Signal<bool>();
             Drivers.JSON.DeserializeFromUART<DTOs.RoundTrip>(request, RXD, deserialized);
 
-            Action processingHandler = () =>
+            Sequential processingHandler = () =>
             {
                 Drivers.JSON.SerializeToUART<DTOs.RoundTrip>(request, TXD);
             };

@@ -1,4 +1,5 @@
 ﻿using Drivers;
+using FPGA;
 using FPGA.Attributes;
 using System;
 using System.Collections.Generic;
@@ -52,7 +53,7 @@ namespace FloatControllers
             float res0 = 0, res1 = 0;
             FPGA.Config.Suppress("W0003", handler0, handler1, res0, res1);
 
-            Action handler = () =>
+            Sequential handler = () =>
             {
                 uint idx = FPGA.Config.InstanceId();
 
@@ -83,7 +84,7 @@ namespace FloatControllers
             // expect to be completed at exactly the same time as they should not share FPU
             Func<bool> trigger = () => handler0 && handler1;
 
-            Action onTigger = () =>
+            Sequential onTigger = () =>
             {
                 UART.RegisteredWriteFloat(baud, res0, out internalTXD);
                 UART.RegisteredWriteFloat(baud, res1, out internalTXD);
@@ -101,7 +102,7 @@ namespace FloatControllers
             FPGA.OutputSignal<bool> TXD
             )
         {
-            Action handler = () =>
+            Sequential handler = () =>
             {
                 FPU.FPUScope();
 
@@ -139,7 +140,7 @@ namespace FloatControllers
             byte value = 100;
             FPGA.Config.Link(value, OutWithDefault);
 
-            Action handler = () =>
+            Sequential handler = () =>
             {
                 FPU.FPUScope();
 
@@ -176,7 +177,7 @@ namespace FloatControllers
 
             FPGA.Config.Link(result, OutResult);
 
-            Action handler = () =>
+            Sequential handler = () =>
             {
                 f1 = 20;
                 f2 = 10;
@@ -203,7 +204,7 @@ namespace FloatControllers
             FPGA.Signal<bool> fpuTrigger = false, fpuCompleted = false;
             FPGA.Config.Entity<IFPU>().Op(fpuTrigger, fpuCompleted, f1, f2, fpuOp, result);
 
-            Action handler = () =>
+            Sequential handler = () =>
             {
                 const int baud = 115200;
                 
@@ -235,13 +236,13 @@ namespace FloatControllers
 
             var stream = new FPGA.SyncStream<float>();
 
-            Action<float> streamHandler = (data) =>
+            Sequential<float> streamHandler = (data) =>
             {
                 UART.WriteFloat(baud, data, TXD);
             };
             FPGA.Config.OnStream(stream, streamHandler);
 
-            Action handler = () =>
+            Sequential handler = () =>
             {
                 float f1 = 0, f2 = 1.234f;
                 

@@ -1,4 +1,5 @@
 ﻿using Drivers;
+using FPGA;
 using FPGA.Attributes;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ namespace Controllers
             FPGA.OutputSignal<bool> TXD
             )
         {
-            Action handler = () =>
+            Sequential handler = () =>
             {
                 byte data = 0;
                 UART.Read(115200, RXD, out data);
@@ -60,7 +61,7 @@ namespace Controllers
             FPGA.OutputSignal<bool> TXD
             )
         {
-            Action handler = () =>
+            Sequential handler = () =>
             {
                 byte data = 0;
                 UART.Read(115200, RXD, out data);
@@ -94,7 +95,7 @@ namespace Controllers
             FPGA.OutputSignal<bool> TXD
             )
         {
-            Action handler = () =>
+            Sequential handler = () =>
             {
                 byte data = 0;
                 UART.Read(115200, RXD, out data);
@@ -128,7 +129,7 @@ namespace Controllers
             FPGA.OutputSignal<bool> TXD
             )
         {
-            Action handler = () =>
+            Sequential handler = () =>
             {
                 byte data = 0;
                 UART.Read(115200, RXD, out data);
@@ -162,7 +163,7 @@ namespace Controllers
             FPGA.OutputSignal<bool> TXD
             )
         {
-            Action handler = () =>
+            Sequential handler = () =>
             {
                 byte data = 0;
                 UART.Read(115200, RXD, out data);
@@ -201,7 +202,7 @@ namespace Controllers
             FPGA.OutputSignal<bool> TXD
             )
         {
-            Action handler = () =>
+            Sequential handler = () =>
             {
                 byte data = 0;
                 UART.Read(115200, RXD, out data);
@@ -243,7 +244,7 @@ namespace Controllers
             FPGA.OutputSignal<bool> TXD
             )
         {
-            Action handler = () =>
+            Sequential handler = () =>
             {
                 byte data = 0;
                 UART.Read(115200, RXD, out data);
@@ -296,7 +297,7 @@ namespace Controllers
             FPGA.OutputSignal<bool> TXD
             )
         {
-            Action handler = () =>
+            Sequential handler = () =>
             {
                 byte data = 0;
                 UART.Read(115200, RXD, out data);
@@ -331,7 +332,7 @@ namespace Controllers
             FPGA.OutputSignal<bool> TXD
             )
         {
-            Action handler = () =>
+            Sequential handler = () =>
             {
                 byte data = 0;
                 UART.Read(115200, RXD, out data);
@@ -372,7 +373,7 @@ namespace Controllers
             FPGA.OutputSignal<bool> TXD
             )
         {
-            Action handler = () =>
+            Sequential handler = () =>
             {
                 byte data = 0;
                 UART.Read(115200, RXD, out data);
@@ -408,7 +409,7 @@ namespace Controllers
             FPGA.OutputSignal<bool> TXD
             )
         {
-            Action handler = () =>
+            Sequential handler = () =>
             {
                 byte data = 0;
                 UART.Read(115200, RXD, out data);

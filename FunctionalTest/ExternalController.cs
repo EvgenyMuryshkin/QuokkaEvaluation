@@ -1,4 +1,5 @@
 ﻿using Drivers;
+using FPGA;
 using FPGA.Attributes;
 using System;
 using System.Collections.Generic;
@@ -61,7 +62,7 @@ namespace Controllers
             FPGA.Signal<bool> externalTrigger = new FPGA.Signal<bool>();
             FPGA.Signal<bool> externalReady = new FPGA.Signal<bool>();
 
-            Action handler = () =>
+            Sequential handler = () =>
             {
                 UART.Read(115200, RXD, out data);
 

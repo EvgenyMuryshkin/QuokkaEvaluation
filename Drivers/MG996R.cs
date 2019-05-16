@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FPGA;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -29,7 +30,7 @@ namespace Drivers
             bool internalDOUT = false;
             FPGA.Config.Link(internalDOUT, out DOUT);
 
-            Action worker = () =>
+            Sequential worker = () =>
             {
 				while(true)
 				{

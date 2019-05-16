@@ -1,4 +1,5 @@
 ﻿using Drivers;
+using FPGA;
 using FPGA.Attributes;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace Controllers
             bool internalTXD = true;
             FPGA.Config.Link(internalTXD, TXD);
 
-            Action handler = () =>
+            Sequential handler = () =>
             {
                 byte prev = 100, next = 0;
                 while (true)
@@ -45,7 +46,7 @@ namespace Controllers
             )
         {
             const bool trigger = true;
-            Action handler = () =>
+            Sequential handler = () =>
             {
                 byte data = 0;
                 UART.Read(115200, RXD, out data);
@@ -67,7 +68,7 @@ namespace Controllers
         {
             const bool trigger = false;
             // this should never be triggered
-            Action handler = () =>
+            Sequential handler = () =>
             {
                 byte data = 0;
                 UART.Read(115200, RXD, out data);
@@ -88,7 +89,7 @@ namespace Controllers
             bool state = false;
             FPGA.Config.Link(state, LED);
 
-            Action blinkerHandler = () =>
+            Sequential blinkerHandler = () =>
             {
                 state = !state;
             };
@@ -106,14 +107,14 @@ namespace Controllers
             FPGA.OutputSignal<bool> TXD)
         {
             FPGA.SyncStream<byte> tdxStream = new FPGA.SyncStream<byte>();
-            Action<byte> txdHandler = (value) =>
+            Sequential<byte> txdHandler = (value) =>
             {
                 UART.Write(115200, value, TXD);
             };
             FPGA.Config.OnStream(tdxStream, txdHandler);
 
             byte data = 0;
-            Action mainHandler = () =>
+            Sequential mainHandler = () =>
             {
                 UART.Read(115200, RXD, out data);
             };
@@ -121,7 +122,7 @@ namespace Controllers
             const bool trigger = true;
             FPGA.Config.OnSignal(trigger, mainHandler);
 
-            Action handler1 = () =>
+            Sequential handler1 = () =>
             {
                 if (data == 0)
                     return;
@@ -129,7 +130,7 @@ namespace Controllers
                 tdxStream.Write(1);
             };
 
-            Action handler2 = () =>
+            Sequential handler2 = () =>
             {
                 if (data == 0)
                     return;
@@ -149,7 +150,7 @@ namespace Controllers
             FPGA.OutputSignal<bool> TXD)
         {
             byte data = 0;
-            Action mainHandler = () =>
+            Sequential mainHandler = () =>
             {
                 const uint baud = 115200;
                 UART.Read(baud, RXD, out data);
@@ -172,7 +173,7 @@ namespace Controllers
             FPGA.InputSignal<bool> RXD,
             FPGA.OutputSignal<bool> TXD)
         {
-            Action mainHandler = () =>
+            Sequential mainHandler = () =>
             {
                 Handler(TXD);
             };
