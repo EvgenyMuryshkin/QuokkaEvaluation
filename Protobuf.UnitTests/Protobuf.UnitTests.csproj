@@ -11,7 +11,7 @@
     <PackageReference Include="MSTest.TestAdapter" Version="1.3.2" />
     <PackageReference Include="MSTest.TestFramework" Version="1.3.2" />
     <PackageReference Include="protobuf-net" Version="2.4.0" />
-    <PackageReference Include="Quokka.FPGA" Version="0.0.0.17" />
+    <PackageReference Include="Quokka.FPGA" Version="0.0.0.18" />
   </ItemGroup>
 
   <ItemGroup>
