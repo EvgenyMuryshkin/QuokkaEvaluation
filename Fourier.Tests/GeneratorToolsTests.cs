@@ -15,13 +15,13 @@ namespace Fourier.Tests
         [TestMethod]
         public void Length10bits()
         {
-            Assert.AreEqual(1024, GeneratorTools.ArrayLength(10));
+            Assert.AreEqual(1024u, GeneratorTools.ArrayLength(10));
         }
 
         [TestMethod]
         public void Length16bits()
         {
-            Assert.AreEqual(65536, GeneratorTools.ArrayLength(16));
+            Assert.AreEqual(65536u, GeneratorTools.ArrayLength(16));
         }
 
         [TestMethod]
@@ -34,13 +34,13 @@ namespace Fourier.Tests
         [TestMethod]
         public void Mask10bits()
         {
-            Assert.AreEqual(1023, GeneratorTools.Mask(10));
+            Assert.AreEqual(1023u, GeneratorTools.Mask(10));
         }
 
         [TestMethod]
         public void Mask16bits()
         {
-            Assert.AreEqual(65535, GeneratorTools.Mask(16));
+            Assert.AreEqual(65535u, GeneratorTools.Mask(16));
         }
 
         [TestMethod]
