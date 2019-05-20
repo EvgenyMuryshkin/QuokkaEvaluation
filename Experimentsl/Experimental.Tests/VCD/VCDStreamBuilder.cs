@@ -1,11 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace Experimental.Tests
 {
     public class VCDStreamBuilder
     {
-        StringBuilder _sb = new StringBuilder();
+        StringWriter _sb;
+        Stack<VCDScope> _scopes = new Stack<VCDScope>();
+
+        public VCDStreamBuilder(StringWriter sb)
+        {
+            _sb = sb;
+        }
 
         internal string Underscored(string value)
         {
@@ -14,17 +23,17 @@ namespace Experimental.Tests
 
         internal void SectionStart(string section)
         {
-            _sb.AppendLine($"${section}");
+            _sb.WriteLine($"${section}");
         }
 
         internal void SectionEnd()
         {
-            _sb.AppendLine($"$end");
+            _sb.WriteLine($"$end");
         }
 
         internal void Line(string value)
         {
-            _sb.AppendLine(value);
+            _sb.WriteLine(value);
         }
 
         internal void Section(string section, string value = "")
@@ -57,27 +66,31 @@ namespace Experimental.Tests
             Section("enddefinitions", "");
         }
 
-        internal void BeginScope(string name)
+        internal void BeginScope(VCDScope scope)
         {
-            name = Underscored(name);
+            _scopes.Push(scope);
+            var name = Underscored(scope.Name);
             Section("scope module", name);
         }
 
         internal void EndScope()
         {
             Section("upscope");
+            _scopes.Pop();
         }
 
         internal void Variable(string name, int size)
         {
+            var parentName = string.Join("_", _scopes.Reverse().Select(s => s.Name));
+
             name = Underscored(name);
-            var reference = size > 1 ? $"{name}[{size - 1}:0]" : name;
+            var reference = $"{parentName}_" + (size > 1 ? $"{name}[{size - 1}:0]" : name);
             Section("var", $"wire {size} {name} {reference}");
         }
 
         public void Scope(VCDScope scope)
         {
-            BeginScope(scope.Name);
+            BeginScope(scope);
 
             foreach (var s in scope.Scopes)
             {
@@ -95,11 +108,6 @@ namespace Experimental.Tests
         public void SetTime(int value)
         {
             Line($"#{value}");
-        }
-
-        public override string ToString()
-        {
-            return _sb.ToString();
         }
     }
 }

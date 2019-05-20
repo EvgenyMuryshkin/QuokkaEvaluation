@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Experimental.Tests
 {
@@ -13,22 +14,29 @@ namespace Experimental.Tests
 
         public override string ToString()
         {
-            var vcd = new VCDStreamBuilder();
-            vcd.Date(Date);
-            vcd.Version(Version);
-            vcd.Timescale(Timescale);
-
-            foreach (var s in Scopes)
+            using (var sw = new StringWriter())
             {
-                vcd.Scope(s);
+                var vcdStream = new VCDStreamBuilder(sw);
+                vcdStream.Date(Date);
+                vcdStream.Version(Version);
+                vcdStream.Timescale(Timescale);
+
+                foreach (var s in Scopes)
+                {
+                    vcdStream.Scope(s);
+                }
+
+                vcdStream.EndDefinitions();
+
+                vcdStream.SetTime(0);
+
+                return sw.ToString();
             }
+        }
 
-            vcd.EndDefinitions();
-
-            vcd.SetTime(0);
-            vcd.SetTime(100);
-
-            return vcd.ToString();
+        public void Save(string path)
+        {
+            File.WriteAllText(path, ToString());
         }
     }
 }

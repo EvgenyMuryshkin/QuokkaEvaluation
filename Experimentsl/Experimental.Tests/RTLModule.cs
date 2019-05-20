@@ -1,16 +1,33 @@
 ﻿using Quokka.Public.Tools;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace QuokkaTests.Experimental
 {
+    public class MaxStageIterationReachedException : Exception
+    {
+    }
+
     public interface IRTLModule
     {
-        void Stage();
+        Type StateType { get; }
+        Type InputsType { get; }
+
+        List<MemberInfo> StateProps { get; }
+        List<MemberInfo> InputProps { get; }
+        List<MemberInfo> OutputProps { get; }
+
+        bool IsTraceEnabled { get; set; }
+        bool Stage(int iteration);
         void Commit();
+    }
+
+    public class RTLModuleTrace<TState, TInput>
+    {
     }
 
     /// <summary>
@@ -21,6 +38,15 @@ namespace QuokkaTests.Experimental
     public abstract class RTLModule<TState, TInput> : IRTLModule
         where TState : class, new()
     {
+        public bool IsTraceEnabled { get; set; }
+
+        public Type StateType => typeof(TState);
+        public Type InputsType => typeof(TInput);
+
+        public List<MemberInfo> StateProps => RTLModuleHelper.SignalProperties(StateType);
+        public List<MemberInfo> InputProps => RTLModuleHelper.SignalProperties(InputsType);
+        public List<MemberInfo> OutputProps => RTLModuleHelper.SignalProperties(GetType());
+
         internal TState State = new TState();
         internal TState NextState;
         internal TInput Inputs;
@@ -37,11 +63,28 @@ namespace QuokkaTests.Experimental
             InputsFactory = inputsFactory;
         }
 
-        public void Stage()
+        protected TInput previousStageInputs;
+
+        public bool Stage(int iteration)
         {
+            if (iteration > 0)
+                previousStageInputs = Inputs;
+
             NextState = QuokkaJson.Copy(State);
+
             Inputs = InputsFactory();
+            /*
+            var prevJson = QuokkaJson.SerializeObject(previousStageInputs);
+            var nextJson = QuokkaJson.SerializeObject(Inputs);
+
+            // check if given set of inputs was already processed on prevoous iteration
+            if (prevJson == nextJson)
+                return false;
+            */
+            //NextState = QuokkaJson.Copy(State);
             OnStage();
+            // inducated processed inputs
+            return true;
         }
 
         public void Commit()
@@ -53,7 +96,7 @@ namespace QuokkaTests.Experimental
         public void Cycle(TInput inputs)
         {
             Schedule(() => inputs);
-            Stage();
+            Stage(0);
             Commit();
         }
     }

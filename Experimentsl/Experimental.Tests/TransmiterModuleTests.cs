@@ -24,7 +24,7 @@ namespace QuokkaTests.Experimental
             Assert.IsTrue(module.IsReady);
 
             module.Schedule(() => new TransmitterInputs() { Trigger = true, Data = sourceData } );
-            module.Stage();
+            module.Stage(0);
 
             // property depends on state change
             Assert.IsTrue(module.IsTransmissionStarted);
