@@ -7,60 +7,16 @@ using System.Reflection;
 
 namespace QuokkaTests.Experimental
 {
-    public class TopLevel
-    {
-        public EmitterModule Emitter = new EmitterModule();
-        public TransmitterModule Transmitter = new TransmitterModule();
-        public ReceiverModule Receiver = new ReceiverModule();
-
-        public List<IRTLModule> AllModules => new List<IRTLModule>() {
-            Emitter,
-            Transmitter,
-            Receiver
-        };
-
-        public TopLevel()
-        {
-            Emitter.Schedule(() => new EmitterInputs()
-            {
-                Ack = Transmitter.IsReady
-            });
-
-            Transmitter.Schedule(() => new TransmitterInputs()
-            {
-                Data = Emitter.Data,
-                Trigger = Emitter.HasData,
-                Ack = Receiver.HasData
-            });
-
-            Receiver.Schedule(() => new ReceiverInputs()
-            {
-                Bit = Transmitter.Bit,
-                IsValid = Transmitter.IsTransmitting,
-                Ack = true
-            });
-        }
-    }
-
     [TestClass]
     public class CompositionTests
     {
-        VCDScope MakeScope(string name, IRTLModule module)
+        VCDScope MakeScope(string name, ICombinationalRTLModule module)
         {
-            return new VCDScope()
+            var scope = new VCDScope()
             {
                 Name = name,
                 Scopes = new List<VCDScope>()
                 {
-                    new VCDScope()
-                    {
-                        Name = "State",
-                        Variables = module.StateProps.Select(p => new VCDVariable()
-                        {
-                            Name = p.Name,
-                            Size = 1,
-                        }).ToList()
-                    },
                     new VCDScope()
                     {
                         Name = "Inputs",
@@ -81,63 +37,112 @@ namespace QuokkaTests.Experimental
                     }
                 }
             };
+
+            switch (module)
+            {
+                case IRTLModule sync:
+                    scope.Scopes.Add(new VCDScope()
+                    {
+                        Name = "State",
+                        Variables = sync.StateProps.Select(p => new VCDVariable()
+                        {
+                            Name = p.Name,
+                            Size = 1,
+                        }).ToList()
+                    });
+                    break;
+            }
+
+            scope.Scopes.AddRange(module.ModuleProps.Select(child => MakeScope(child.Name, (ICombinationalRTLModule)child.GetValue(module))));
+
+            return scope;
         }
 
-        VCDScope MakeScope(TopLevel topLevel)
+        VCDScope ControlScope()
         {
             return new VCDScope()
             {
-                Name = "TopLevel",
-                Scopes = RTLModuleHelper
-                    .ModuleProperties(topLevel.GetType())
-                    .Select(p => MakeScope(p.Name, (IRTLModule)p.GetValue(topLevel))).ToList()
+                Name = "Control",
+                Variables = new List<VCDVariable>()
+                {
+                    new VCDVariable()
+                    {
+                        Name = "Clock",
+                        Size = 1,
+                    }
+                }
             };
             
         }
-
         [TestMethod]
         public void Combined()
         {
-            var topLevel = new TopLevel();
+            var topLevel = new CompositionModule();
+            topLevel.Schedule(() => new CompositionInputs() { IsEnabled = true });
 
-            var topLevelScope = MakeScope(topLevel);
-            var vcdBuilder = new VCDBuilder()
+            var topLevelScope = MakeScope("TOP", topLevel);
+            var vcdBuilder = new VCDBuilder(@"c:\tmp\combined.vcd")
             {
-                Scopes = new List<VCDScope>() { topLevelScope }
+                Scopes = new List<VCDScope>()
+                {
+                    topLevelScope,
+                    ControlScope()
+                }
             };
-            vcdBuilder.Save(@"c:\tmp\combined.vcd");
+            vcdBuilder.Init();
 
             var receivedData = new List<byte>();
             var clock = 0;
             var stageIteration = 0;
 
             var bytesToProcess = 256;
-            var maxCycles = 1000000;
+            var maxCycles = 100000;
             var maxStageIterations = 1000;
+
+            var controlClockName = "Control_Clock";
+            var signalsSnapshot = new Dictionary<string, object>()
+                {
+                    { controlClockName, true }
+                };
+
+            vcdBuilder.Snapshot(0, signalsSnapshot);
 
             while (receivedData.Count < bytesToProcess && clock < maxCycles)
             {
+                var currentTime = clock * 2 * maxStageIterations;
+                signalsSnapshot[controlClockName] = true;
+
                 stageIteration = 0;
-                while (stageIteration++ < maxStageIterations)
+                do
                 {
-                    var modified = topLevel
-                        .AllModules
-                        .Aggregate(false, (prev, module) => prev || module.Stage(stageIteration));
+                    currentTime++;
+
+                    var modified = topLevel.Stage(stageIteration);
+
+                    topLevel.PopulateSnapshot(topLevelScope.Name, signalsSnapshot);
+                    vcdBuilder.Snapshot(currentTime, signalsSnapshot);
 
                     // no modules were modified during stage iteration, all converged
-                    //if (!modified)
+                    if (!modified)
                         break;
                 }
+                while (++stageIteration < maxStageIterations);
 
                 if (stageIteration >= maxStageIterations)
                     throw new MaxStageIterationReachedException();
 
-                if (topLevel.Receiver.HasData)
+                if (topLevel.HasData)
                 {
-                    receivedData.Add(topLevel.Receiver.Data);
+                    receivedData.Add(topLevel.Data);
                 }
 
-                topLevel.AllModules.ForEach(m => m.Commit());
+                currentTime = clock * 2 * maxStageIterations + maxStageIterations;
+
+                signalsSnapshot[controlClockName] = false;
+                topLevel.PopulateSnapshot(topLevelScope.Name, signalsSnapshot);
+                vcdBuilder.Snapshot(currentTime, signalsSnapshot);
+
+                topLevel.Commit();
                 clock++;
             }
 

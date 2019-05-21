@@ -28,12 +28,12 @@ namespace QuokkaTests.Experimental
         {
             var properties = type
                 .GetProperties()
-                .Where(p => typeof(IRTLModule).IsAssignableFrom(p.PropertyType))
+                .Where(p => typeof(ICombinationalRTLModule).IsAssignableFrom(p.PropertyType))
                 .OfType<MemberInfo>();
 
             var fields = type
                 .GetFields()
-                .Where(f => typeof(IRTLModule).IsAssignableFrom(f.FieldType))
+                .Where(f => typeof(ICombinationalRTLModule).IsAssignableFrom(f.FieldType))
                 .OfType<MemberInfo>();
 
             return properties.Concat(fields).ToList();

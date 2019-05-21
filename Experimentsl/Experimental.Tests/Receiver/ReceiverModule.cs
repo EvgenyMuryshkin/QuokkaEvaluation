@@ -1,6 +1,6 @@
 ﻿namespace QuokkaTests.Experimental
 {
-    public class ReceiverModule : RTLModule<ReceiverState, ReceiverInputs>
+    public class ReceiverModule : SynchronizedRTLModule<ReceiverState, ReceiverInputs>
     {
         // public data points
         public bool HasData => State.FSM  == ReceiverFSM.WaitingForAck;

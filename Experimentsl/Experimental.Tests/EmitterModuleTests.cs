@@ -20,7 +20,9 @@ namespace QuokkaTests.Experimental
             {
                 Assert.AreEqual(EmitterFSM.Emitting, module.State.FSM);
 
-                module.Cycle(new EmitterInputs());
+                module.Cycle(new EmitterInputs() {
+                    IsEnabled = true
+                });
                 Assert.AreEqual(EmitterFSM.WaitingForAck, module.State.FSM);
 
                 actual.Add(module.Data);

@@ -1,6 +1,6 @@
 ﻿namespace QuokkaTests.Experimental
 {
-    public class EmitterModule : RTLModule<EmitterState, EmitterInputs>
+    public class EmitterModule : SynchronizedRTLModule<EmitterState, EmitterInputs>
     {
         public byte Data => State.Data;
         public bool HasData => State.FSM == EmitterFSM.Emitting;
@@ -10,7 +10,8 @@
             switch(State.FSM)
             {
                 case EmitterFSM.Emitting:
-                    NextState.FSM = EmitterFSM.WaitingForAck;
+                    if (Inputs.IsEnabled)
+                        NextState.FSM = EmitterFSM.WaitingForAck;
                     break;
                 case EmitterFSM.WaitingForAck:
                     if (Inputs.Ack)

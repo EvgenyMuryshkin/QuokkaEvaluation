@@ -15,20 +15,20 @@ namespace Experimental.Tests
         [TestMethod]
         public void Test()
         {
-            var vcd = new VCDBuilder();
+            var vcd = new VCDBuilder(@"C:\tmp\1.vcd");
             vcd.Scopes.Add(new VCDScope()
             {
-                Name = "TOP Module 1",
+                Name = "TOP",
                 Scopes = new List<VCDScope>()
                 {
                     new VCDScope()
                     {
-                        Name = "Child Scope 1",
+                        Name = "ChildScope1",
                         Variables = new List<VCDVariable>()
                         {
                             new VCDVariable()
                             {
-                                Name = "Signal 1",
+                                Name = "Signal1",
                                 Size = 1
                             }
                         }
@@ -46,7 +46,11 @@ namespace Experimental.Tests
                 }
             });
 
-            File.WriteAllText(@"C:\tmp\1.vcd", vcd.ToString());
+            vcd.Init();
+            vcd.Snapshot(0, new Dictionary<string, object>()
+            {
+                { "TOP_Data", "1" }
+            });
         }
     }
 }

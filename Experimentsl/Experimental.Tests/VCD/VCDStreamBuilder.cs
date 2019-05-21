@@ -83,9 +83,9 @@ namespace Experimental.Tests
         {
             var parentName = string.Join("_", _scopes.Reverse().Select(s => s.Name));
 
-            name = Underscored(name);
-            var reference = $"{parentName}_" + (size > 1 ? $"{name}[{size - 1}:0]" : name);
-            Section("var", $"wire {size} {name} {reference}");
+            var identifier = Underscored(name);
+            var reference = $"{parentName}_" + (size > 1 ? $"{identifier}[{size - 1}:0]" : identifier);
+            Section("var", $"wire {size} {reference} {reference}");
         }
 
         public void Scope(VCDScope scope)
@@ -108,6 +108,11 @@ namespace Experimental.Tests
         public void SetTime(int value)
         {
             Line($"#{value}");
+        }
+
+        public void SetValue(string signal, string value)
+        {
+            Line($"{value}{signal}");
         }
     }
 }

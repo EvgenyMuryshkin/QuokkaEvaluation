@@ -11,8 +11,14 @@ namespace Experimental.Tests
         public string Comments = "";
         public string Timescale = "1s";
         public List<VCDScope> Scopes = new List<VCDScope>();
+        public string FileName;
 
-        public override string ToString()
+        public VCDBuilder(string fileName)
+        {
+            FileName = fileName;
+        }
+
+        public void Init()
         {
             using (var sw = new StringWriter())
             {
@@ -30,13 +36,40 @@ namespace Experimental.Tests
 
                 vcdStream.SetTime(0);
 
-                return sw.ToString();
+                File.WriteAllText(FileName, sw.ToString());
             }
         }
 
-        public void Save(string path)
+        public void Snapshot(int time, Dictionary<string, object> signals)
         {
-            File.WriteAllText(path, ToString());
+            using (var sw = new StringWriter())
+            {
+                var vcdStream = new VCDStreamBuilder(sw);
+                vcdStream.SetTime(time);
+                foreach (var pair in signals)
+                {
+                    string value = null;
+
+                    switch (pair.Value)
+                    {
+                        case bool b:
+                            value = b ? "1" : "0";
+                            break;
+                        case string s:
+                            value = s;
+                            break;
+                        default:
+                            //value = rawValue.ToString();
+                            break;
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(value))
+                    {
+                        vcdStream.SetValue(pair.Key, value);
+                    }
+                }
+                File.AppendAllText(FileName, sw.ToString());
+            }
         }
     }
 }

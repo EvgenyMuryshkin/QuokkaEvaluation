@@ -1,6 +1,6 @@
 ﻿namespace QuokkaTests.Experimental
 {
-    public class TransmitterModule : RTLModule<TransmitterState, TransmitterInputs>
+    public class TransmitterModule : SynchronizedRTLModule<TransmitterState, TransmitterInputs>
     {
         // public data points
         public bool Bit => State.Data[0];
