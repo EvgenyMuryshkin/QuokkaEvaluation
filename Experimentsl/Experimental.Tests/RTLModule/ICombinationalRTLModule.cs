@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Quokka.VCD;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 
@@ -18,12 +19,7 @@ namespace QuokkaTests.Experimental
         bool Stage(int iteration);
         void Commit();
 
-        void PopulateSnapshot(string prefix, Dictionary<string, object> snapshot);
-    }
-
-    public interface IRTLModule : ICombinationalRTLModule
-    {
-        Type StateType { get; }
-        List<MemberInfo> StateProps { get; }
+        VCDScope CreateScope(string prefix);
+        void PopulateSnapshot(VCDSignalsSnapshot snapshot);
     }
 }

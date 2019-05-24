@@ -1,6 +1,7 @@
 ﻿using Experimental.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Quokka.RTL;
+using Quokka.VCD;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -40,10 +41,20 @@ namespace QuokkaTests.Experimental
 
             switch (module)
             {
-                case IRTLModule sync:
+                case ISynchronousRTLModule sync:
                     scope.Scopes.Add(new VCDScope()
                     {
                         Name = "State",
+                        Variables = sync.StateProps.Select(p => new VCDVariable()
+                        {
+                            Name = p.Name,
+                            Size = 1,
+                        }).ToList()
+                    });
+
+                    scope.Scopes.Add(new VCDScope()
+                    {
+                        Name = "NextState",
                         Variables = sync.StateProps.Select(p => new VCDVariable()
                         {
                             Name = p.Name,
@@ -78,9 +89,14 @@ namespace QuokkaTests.Experimental
         public void Combined()
         {
             var topLevel = new CompositionModule();
-            topLevel.Schedule(() => new CompositionInputs() { IsEnabled = true });
+            var topLevelScope = topLevel.CreateScope("TOP");
 
-            var topLevelScope = MakeScope("TOP", topLevel);
+            var controlClockName = "Control_Clock";
+            var signalsSnapshot = new VCDSignalsSnapshot("TOP")
+                {
+                    { controlClockName, true }
+                };
+
             var vcdBuilder = new VCDBuilder(@"c:\tmp\combined.vcd")
             {
                 Scopes = new List<VCDScope>()
@@ -90,6 +106,7 @@ namespace QuokkaTests.Experimental
                 }
             };
             vcdBuilder.Init();
+            vcdBuilder.Snapshot(0, signalsSnapshot);
 
             var receivedData = new List<byte>();
             var clock = 0;
@@ -99,13 +116,7 @@ namespace QuokkaTests.Experimental
             var maxCycles = 100000;
             var maxStageIterations = 1000;
 
-            var controlClockName = "Control_Clock";
-            var signalsSnapshot = new Dictionary<string, object>()
-                {
-                    { controlClockName, true }
-                };
-
-            vcdBuilder.Snapshot(0, signalsSnapshot);
+            topLevel.Schedule(() => new CompositionInputs() { IsEnabled = true });
 
             while (receivedData.Count < bytesToProcess && clock < maxCycles)
             {
@@ -119,7 +130,7 @@ namespace QuokkaTests.Experimental
 
                     var modified = topLevel.Stage(stageIteration);
 
-                    topLevel.PopulateSnapshot(topLevelScope.Name, signalsSnapshot);
+                    topLevel.PopulateSnapshot(signalsSnapshot);
                     vcdBuilder.Snapshot(currentTime, signalsSnapshot);
 
                     // no modules were modified during stage iteration, all converged
@@ -139,7 +150,7 @@ namespace QuokkaTests.Experimental
                 currentTime = clock * 2 * maxStageIterations + maxStageIterations;
 
                 signalsSnapshot[controlClockName] = false;
-                topLevel.PopulateSnapshot(topLevelScope.Name, signalsSnapshot);
+                topLevel.PopulateSnapshot(signalsSnapshot);
                 vcdBuilder.Snapshot(currentTime, signalsSnapshot);
 
                 topLevel.Commit();

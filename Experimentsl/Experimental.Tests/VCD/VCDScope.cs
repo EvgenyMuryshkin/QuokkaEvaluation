@@ -1,17 +1,16 @@
 ﻿using System.Collections.Generic;
 
-namespace Experimental.Tests
+namespace Quokka.VCD
 {
-    public class VCDVariable
-    {
-        public string Name { get; set; }
-        public int Size { get; set; }
-    }
-
     public class VCDScope
     {
         public string Name { get; set; } = "TOP";
         public List<VCDVariable> Variables { get; set; } = new List<VCDVariable>();
         public List<VCDScope> Scopes = new List<VCDScope>();
+
+        public override string ToString()
+        {
+            return $"{Name}, {Variables.Count} Vars, {Scopes.Count} Scopes";
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Quokka.Public.Tools;
+using Quokka.VCD;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,16 +8,24 @@ using System.Reflection;
 namespace QuokkaTests.Experimental
 {
     public abstract class CombinationalRTLModule<TInput> : ICombinationalRTLModule
+        where TInput : new()
     {
         public bool IsTraceEnabled { get; set; }
-        public Type InputsType => typeof(TInput);
-        public List<MemberInfo> InputProps => RTLModuleHelper.SignalProperties(InputsType);
-        public List<MemberInfo> OutputProps => RTLModuleHelper.SignalProperties(GetType());
-        public List<MemberInfo> ModuleProps => RTLModuleHelper.ModuleProperties(GetType());
+        public Type InputsType { get; } = typeof(TInput);
+        public List<MemberInfo> InputProps { get; }
+        public List<MemberInfo> OutputProps { get; }
+        public List<MemberInfo> ModuleProps { get; }
+        public List<ICombinationalRTLModule> Modules { get; }
 
-        public List<ICombinationalRTLModule> Modules => ModuleProps.Select(m => (ICombinationalRTLModule) m.GetValue(this)).ToList();
+        public CombinationalRTLModule()
+        {
+            InputProps = RTLModuleHelper.SignalProperties(InputsType);
+            OutputProps = RTLModuleHelper.SignalProperties(GetType());
+            ModuleProps = RTLModuleHelper.ModuleProperties(GetType());
+            Modules = ModuleProps.Select(m => (ICombinationalRTLModule)m.GetValue(this)).ToList();
+        }
 
-        internal TInput Inputs;
+        internal TInput Inputs = new TInput();
         internal Func<TInput> InputsFactory;
 
         public virtual void Schedule(Func<TInput> inputsFactory)
@@ -24,20 +33,27 @@ namespace QuokkaTests.Experimental
             InputsFactory = inputsFactory;
         }
 
+        protected virtual bool ShouldStage(TInput nextInputs)
+        {
+            // check if given set of inputs was already processed on previous iteration
+            foreach (var prop in InputProps)
+            {
+                var currentValue = prop.GetValue(Inputs);
+                var nextVaue = prop.GetValue(nextInputs);
+
+                if (!currentValue.Equals(nextVaue))
+                    return true;
+            }
+
+            return false;
+        }
+
         public virtual bool Stage(int iteration)
         {
-            bool selfModified = true, childrenModified = false;
             var nextInputs = InputsFactory();
-            if (iteration != 0)
-            {
-                // TODO: faster inputs comparison
-                var prevJson = QuokkaJson.SerializeObject(Inputs);
-                var nextJson = QuokkaJson.SerializeObject(nextInputs);
 
-                // check if given set of inputs was already processed on previous iteration
-                if (prevJson == nextJson)
-                    return selfModified = false;
-            }
+            bool selfModified = iteration == 0 || ShouldStage(nextInputs);
+            bool childrenModified = false;
 
             Inputs = nextInputs;
 
@@ -57,24 +73,68 @@ namespace QuokkaTests.Experimental
             }
         }
 
-        public virtual void PopulateSnapshot(string prefix, Dictionary<string, object> snapshot)
+        protected virtual void PopulateSelfScope(VCDScope scope)
         {
-            foreach (var prop in OutputProps)
+            var inputsScope = new VCDScope()
             {
-                var propName = $"{prefix}_Outputs_{prop.Name}";
-                snapshot[propName] = prop.GetValue(this);
-            }
+                Name = "Inputs",
+                Variables = InputProps.Select(p => new VCDVariable()
+                {
+                    Name = p.Name,
+                    Size = 1,
+                }).ToList()
+            };
+            var outputsScope = new VCDScope()
+            {
+                Name = "Outputs",
+                Variables = OutputProps.Select(p => new VCDVariable()
+                {
+                    Name = p.Name,
+                    Size = 1,
+                }).ToList()
+            };
 
+            scope.Scopes.AddRange(new[] { inputsScope, outputsScope });
+        }
+
+        protected virtual void PopulateChildrenScopes(VCDScope scope)
+        {
+            scope.Scopes.AddRange(ModuleProps.Select(child => ((ICombinationalRTLModule)child.GetValue(this)).CreateScope(child.Name)));
+        }
+
+        public virtual VCDScope CreateScope(string prefix)
+        {
+            var scope = new VCDScope()
+            {
+                Name = prefix,
+            };
+
+            PopulateSelfScope(scope);
+            PopulateChildrenScopes(scope);
+
+            return scope;
+        }
+
+        public virtual void PopulateSnapshot(VCDSignalsSnapshot snapshot)
+        {
+            var inputs = snapshot.Scope("Inputs");
             foreach (var prop in InputProps)
             {
-                var propName = $"{prefix}_Inputs_{prop.Name}";
-                snapshot[propName] = prop.GetValue(Inputs);
+                inputs[prop.Name] = prop.GetValue(Inputs);
+            }
+
+            var outputs = snapshot.Scope("Outputs");
+            foreach (var prop in OutputProps)
+            {
+                outputs[prop.Name] = prop.GetValue(this);
             }
 
             foreach (var m in ModuleProps)
             {
                 var module = (ICombinationalRTLModule)m.GetValue(this);
-                module.PopulateSnapshot($"{prefix}_{m.Name}", snapshot);
+                var moduleScope = snapshot.Scope(m.Name);
+
+                module.PopulateSnapshot(moduleScope);
             }
         }
     }

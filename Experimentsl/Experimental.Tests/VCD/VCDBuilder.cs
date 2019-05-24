@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace Experimental.Tests
+namespace Quokka.VCD
 {
     public class VCDBuilder
     {
@@ -40,7 +40,7 @@ namespace Experimental.Tests
             }
         }
 
-        public void Snapshot(int time, Dictionary<string, object> signals)
+        public void Snapshot(int time, VCDSignalsSnapshot signals)
         {
             using (var sw = new StringWriter())
             {

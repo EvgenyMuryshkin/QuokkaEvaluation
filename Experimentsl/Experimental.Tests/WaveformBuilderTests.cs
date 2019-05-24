@@ -1,4 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Quokka.VCD;
+using QuokkaTests.Experimental;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using System;
@@ -47,7 +49,7 @@ namespace Experimental.Tests
             });
 
             vcd.Init();
-            vcd.Snapshot(0, new Dictionary<string, object>()
+            vcd.Snapshot(0, new VCDSignalsSnapshot()
             {
                 { "TOP_Data", "1" }
             });

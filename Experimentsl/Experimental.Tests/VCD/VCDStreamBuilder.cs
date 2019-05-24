@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace Experimental.Tests
+namespace Quokka.VCD
 {
     public class VCDStreamBuilder
     {
