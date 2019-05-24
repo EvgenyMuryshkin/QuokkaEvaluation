@@ -19,7 +19,6 @@ namespace QuokkaTests.Experimental
         bool Stage(int iteration);
         void Commit();
 
-        VCDScope CreateScope(string prefix);
         void PopulateSnapshot(VCDSignalsSnapshot snapshot);
     }
 }

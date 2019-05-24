@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Quokka.RTL;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace Quokka.VCD
     public class VCDStreamBuilder
     {
         StringWriter _sb;
-        Stack<VCDScope> _scopes = new Stack<VCDScope>();
+        Stack<VCDSignalsSnapshot> _scopes = new Stack<VCDSignalsSnapshot>();
 
         public VCDStreamBuilder(StringWriter sb)
         {
@@ -66,9 +67,19 @@ namespace Quokka.VCD
             Section("enddefinitions", "");
         }
 
-        internal void BeginScope(VCDScope scope)
+        internal void PushScope(VCDSignalsSnapshot scope)
         {
             _scopes.Push(scope);
+        }
+
+        internal void PopScope()
+        {
+            _scopes.Pop();
+        }
+
+        internal void BeginScope(VCDSignalsSnapshot scope)
+        {
+            PushScope(scope);
             var name = Underscored(scope.Name);
             Section("scope module", name);
         }
@@ -76,19 +87,61 @@ namespace Quokka.VCD
         internal void EndScope()
         {
             Section("upscope");
-            _scopes.Pop();
+            PopScope();
         }
 
-        internal void Variable(string name, int size)
+        internal string ScopeName => string.Join("_", _scopes.Reverse().Select(s => s.Name));
+
+        internal void Variable(VCDVariableType type, string name, int size)
         {
-            var parentName = string.Join("_", _scopes.Reverse().Select(s => s.Name));
-
-            var identifier = Underscored(name);
-            var reference = $"{parentName}_" + (size > 1 ? $"{identifier}[{size - 1}:0]" : identifier);
-            Section("var", $"wire {size} {reference} {reference}");
+            name = Underscored(name);
+            var identifier = $"{ScopeName}_{name}";
+            var reference = $"{ScopeName}_" + (size > 1 ? $"{name}[{size - 1}:0]" : name);
+            Section("var", $"{type.ToString().ToLower()} {size} {identifier} {reference}");
         }
 
-        public void Scope(VCDScope scope)
+        public void Snapshot(VCDSignalsSnapshot snapshot)
+        {
+            if (snapshot == null)
+                return;
+
+            PushScope(snapshot);
+
+            foreach (var variable in snapshot.Variables)
+            {
+                string value = null;
+
+                switch (variable.Value)
+                {
+                    case bool b:
+                        value = b ? "1" : "0";
+                        break;
+                    case string s:
+                        value = s;
+                        break;
+                    case RTLBitArray ba:
+                        value = ba.AsBinaryString();
+                        break;
+                    default:
+                        //value = rawValue.ToString();
+                        break;
+                }
+
+                if (!string.IsNullOrWhiteSpace(value))
+                {
+                    SetValue(variable.Type, variable.Size, variable.Name, value);
+                }
+            }
+
+            foreach (var child in snapshot.Scopes)
+            {
+                Snapshot(child);
+            }
+
+            PopScope();
+        }
+
+        public void Scope(VCDSignalsSnapshot scope)
         {
             BeginScope(scope);
 
@@ -99,7 +152,7 @@ namespace Quokka.VCD
 
             foreach (var v in scope.Variables)
             {
-                Variable(v.Name, v.Size);
+                Variable(v.Type, v.Name, v.Size);
             }
 
             EndScope();
@@ -110,9 +163,20 @@ namespace Quokka.VCD
             Line($"#{value}");
         }
 
-        public void SetValue(string signal, string value)
+        public void SetValue(VCDVariableType type, int size, string signal, string value)
         {
-            Line($"{value}{signal}");
+            switch (type)
+            {
+                case VCDVariableType.String:
+                    Line($"s{value} {ScopeName}_{signal}");
+                    break;
+                case VCDVariableType.Wire:
+                    if (size == 1)
+                        Line($"{value}{ScopeName}_{signal}");
+                    else
+                        Line($"b{value} {ScopeName}_{signal}");
+                    break;
+            }
         }
     }
 }

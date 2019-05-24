@@ -18,6 +18,13 @@ namespace Quokka.VCD
 
         public static int SizeOf(object value)
         {
+            var type = value.GetType();
+            if (type.IsEnum)
+            {
+                // default enum type is int
+                return 32;
+            }
+
             switch (value)
             {
                 case bool v: return 1;

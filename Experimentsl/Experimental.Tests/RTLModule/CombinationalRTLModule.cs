@@ -73,60 +73,18 @@ namespace QuokkaTests.Experimental
             }
         }
 
-        protected virtual void PopulateSelfScope(VCDScope scope)
-        {
-            var inputsScope = new VCDScope()
-            {
-                Name = "Inputs",
-                Variables = InputProps.Select(p => new VCDVariable()
-                {
-                    Name = p.Name,
-                    Size = 1,
-                }).ToList()
-            };
-            var outputsScope = new VCDScope()
-            {
-                Name = "Outputs",
-                Variables = OutputProps.Select(p => new VCDVariable()
-                {
-                    Name = p.Name,
-                    Size = 1,
-                }).ToList()
-            };
-
-            scope.Scopes.AddRange(new[] { inputsScope, outputsScope });
-        }
-
-        protected virtual void PopulateChildrenScopes(VCDScope scope)
-        {
-            scope.Scopes.AddRange(ModuleProps.Select(child => ((ICombinationalRTLModule)child.GetValue(this)).CreateScope(child.Name)));
-        }
-
-        public virtual VCDScope CreateScope(string prefix)
-        {
-            var scope = new VCDScope()
-            {
-                Name = prefix,
-            };
-
-            PopulateSelfScope(scope);
-            PopulateChildrenScopes(scope);
-
-            return scope;
-        }
-
         public virtual void PopulateSnapshot(VCDSignalsSnapshot snapshot)
         {
             var inputs = snapshot.Scope("Inputs");
             foreach (var prop in InputProps)
             {
-                inputs[prop.Name] = prop.GetValue(Inputs);
+                inputs.Variable(prop.Name, prop.GetValue(Inputs));
             }
 
             var outputs = snapshot.Scope("Outputs");
             foreach (var prop in OutputProps)
             {
-                outputs[prop.Name] = prop.GetValue(this);
+                outputs.Variable(prop.Name, prop.GetValue(this));
             }
 
             foreach (var m in ModuleProps)

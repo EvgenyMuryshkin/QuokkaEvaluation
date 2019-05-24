@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Quokka.RTL;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -10,7 +11,6 @@ namespace Quokka.VCD
         public string Version = "Quokka VCD Generator";
         public string Comments = "";
         public string Timescale = "1s";
-        public List<VCDScope> Scopes = new List<VCDScope>();
         public string FileName;
 
         public VCDBuilder(string fileName)
@@ -18,7 +18,7 @@ namespace Quokka.VCD
             FileName = fileName;
         }
 
-        public void Init()
+        public void Init(VCDSignalsSnapshot snapshot)
         {
             using (var sw = new StringWriter())
             {
@@ -27,14 +27,12 @@ namespace Quokka.VCD
                 vcdStream.Version(Version);
                 vcdStream.Timescale(Timescale);
 
-                foreach (var s in Scopes)
-                {
-                    vcdStream.Scope(s);
-                }
+                vcdStream.Scope(snapshot);
 
                 vcdStream.EndDefinitions();
 
                 vcdStream.SetTime(0);
+                vcdStream.Snapshot(snapshot);
 
                 File.WriteAllText(FileName, sw.ToString());
             }
@@ -46,28 +44,7 @@ namespace Quokka.VCD
             {
                 var vcdStream = new VCDStreamBuilder(sw);
                 vcdStream.SetTime(time);
-                foreach (var pair in signals)
-                {
-                    string value = null;
-
-                    switch (pair.Value)
-                    {
-                        case bool b:
-                            value = b ? "1" : "0";
-                            break;
-                        case string s:
-                            value = s;
-                            break;
-                        default:
-                            //value = rawValue.ToString();
-                            break;
-                    }
-
-                    if (!string.IsNullOrWhiteSpace(value))
-                    {
-                        vcdStream.SetValue(pair.Key, value);
-                    }
-                }
+                vcdStream.Snapshot(signals);
                 File.AppendAllText(FileName, sw.ToString());
             }
         }

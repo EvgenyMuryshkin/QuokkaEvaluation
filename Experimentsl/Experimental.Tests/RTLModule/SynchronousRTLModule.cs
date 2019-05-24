@@ -33,31 +33,6 @@ namespace QuokkaTests.Experimental
         {
         }
 
-        protected override void PopulateSelfScope(VCDScope scope)
-        {
-            base.PopulateSelfScope(scope);
-
-            scope.Scopes.Add(new VCDScope()
-            {
-                Name = "State",
-                Variables = StateProps.Select(p => new VCDVariable()
-                {
-                    Name = p.Name,
-                    Size = 1,
-                }).ToList()
-            });
-
-            scope.Scopes.Add(new VCDScope()
-            {
-                Name = "NextState",
-                Variables = StateProps.Select(p => new VCDVariable()
-                {
-                    Name = p.Name,
-                    Size = 1,
-                }).ToList()
-            });
-        }
-
         public override void PopulateSnapshot(VCDSignalsSnapshot snapshot)
         {
             base.PopulateSnapshot(snapshot);
@@ -65,13 +40,13 @@ namespace QuokkaTests.Experimental
             var state = snapshot.Scope("State");
             foreach (var prop in StateProps)
             {
-                state[prop.Name] = prop.GetValue(State);
+                state.Variable(prop.Name, prop.GetValue(State));
             }
 
             var nextState = snapshot.Scope("NextState");
             foreach (var prop in StateProps)
             {
-                nextState[prop.Name] = prop.GetValue(NextState);
+                nextState.Variable(prop.Name, prop.GetValue(NextState));
             }
         }
 

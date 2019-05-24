@@ -18,41 +18,19 @@ namespace Experimental.Tests
         public void Test()
         {
             var vcd = new VCDBuilder(@"C:\tmp\1.vcd");
-            vcd.Scopes.Add(new VCDScope()
-            {
-                Name = "TOP",
-                Scopes = new List<VCDScope>()
-                {
-                    new VCDScope()
-                    {
-                        Name = "ChildScope1",
-                        Variables = new List<VCDVariable>()
-                        {
-                            new VCDVariable()
-                            {
-                                Name = "Signal1",
-                                Size = 1
-                            }
-                        }
+            var topScope = new VCDSignalsSnapshot("TOP");
+            topScope.Variable("data", (byte)0);
 
-                    }
-                },
+            var childScope = topScope.Scope("ChildScope1");
+            var signal1 = childScope.Variable("Signal1", true);
+            var signal2 = childScope.Variable("Signal2", "Value");
 
-                Variables = new List<VCDVariable>()
-                {
-                    new VCDVariable()
-                    {
-                        Name = "Data",
-                        Size = 8
-                    }
-                }
-            });
+            vcd.Init(topScope);
 
-            vcd.Init();
-            vcd.Snapshot(0, new VCDSignalsSnapshot()
-            {
-                { "TOP_Data", "1" }
-            });
+            signal1.Value = false;
+            signal2.Value = "NewValue";
+            vcd.Snapshot(10, topScope);
+            vcd.Snapshot(20, null);
         }
     }
 }
