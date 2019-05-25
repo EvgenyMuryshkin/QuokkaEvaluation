@@ -47,6 +47,11 @@ namespace Quokka.VCD
             SectionEnd();
         }
 
+        internal void InlineSection(string section, string value)
+        {
+            Line($"${section} {value} $end");
+        }
+
         public void Date(DateTime value)
         {
             Section("date", $"{value.ToLongDateString()} {value.ToLongTimeString()}");
@@ -81,7 +86,7 @@ namespace Quokka.VCD
         {
             PushScope(scope);
             var name = Underscored(scope.Name);
-            Section("scope module", name);
+            InlineSection("scope module", name);
         }
 
         internal void EndScope()
@@ -97,7 +102,7 @@ namespace Quokka.VCD
             name = Underscored(name);
             var identifier = $"{ScopeName}_{name}";
             var reference = $"{ScopeName}_" + (size > 1 ? $"{name}[{size - 1}:0]" : name);
-            Section("var", $"{type.ToString().ToLower()} {size} {identifier} {reference}");
+            InlineSection("var", $"{type.ToString().ToLower()} {size} {identifier} {reference}");
         }
 
         public void Snapshot(VCDSignalsSnapshot snapshot)
@@ -113,18 +118,23 @@ namespace Quokka.VCD
 
                 switch (variable.Value)
                 {
-                    case bool b:
-                        value = b ? "1" : "0";
+                    case Enum v:
+                        value = new RTLBitArray((uint)Convert.ChangeType(variable.Value, typeof(uint)))
+                            .Resized(variable.Size)
+                            .AsBinaryString();
                         break;
-                    case string s:
-                        value = s;
-                        break;
-                    case RTLBitArray ba:
-                        value = ba.AsBinaryString();
-                        break;
-                    default:
-                        //value = rawValue.ToString();
-                        break;
+                    case bool b: value = b ? "1" : "0"; break;
+                    case string s: value = s; break;
+                    case byte v: value = new RTLBitArray(v).AsBinaryString(); break;
+                    case sbyte v: value = new RTLBitArray(v).AsBinaryString(); break;
+                    case int v: value = new RTLBitArray(v).AsBinaryString(); break;
+                    case uint v: value = new RTLBitArray(v).AsBinaryString(); break;
+                    case long v: value = new RTLBitArray(v).AsBinaryString(); break;
+                    case ulong v: value = new RTLBitArray(v).AsBinaryString(); break;
+                    case short v: value = new RTLBitArray(v).AsBinaryString(); break;
+                    case ushort v: value = new RTLBitArray(v).AsBinaryString(); break;
+                    case RTLBitArray ba: value = ba.AsBinaryString(); break;
+                    default: throw new Exception($"Unsupported data type: {variable.Value.GetType()}");
                 }
 
                 if (!string.IsNullOrWhiteSpace(value))

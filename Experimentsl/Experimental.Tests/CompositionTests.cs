@@ -14,66 +14,23 @@ namespace QuokkaTests.Experimental
         [TestMethod]
         public void Combined()
         {
-            var topLevel = new CompositionModule();
-            topLevel.Schedule(() => new CompositionInputs() { IsEnabled = true });
-
-            var topLevelSnapshot = new VCDSignalsSnapshot("TOP");
-
-            var controlScope = topLevelSnapshot.Scope("Control");
-            var clockSignal = controlScope.Variable("Clock", true);
-
-            topLevel.PopulateSnapshot(topLevelSnapshot);
-
-
-            var vcdBuilder = new VCDBuilder(@"c:\tmp\combined.vcd");
-            vcdBuilder.Init(topLevelSnapshot);
-
-            var receivedData = new List<byte>();
-            var clock = 0;
-            var stageIteration = 0;
-
             var bytesToProcess = 256;
-            var maxCycles = 100000;
-            var maxStageIterations = 1000;
+            var receivedData = new List<byte>();
 
-            while (receivedData.Count < bytesToProcess && clock < maxCycles)
+            var sim = new RTLSynchronousSimulator<CompositionModule>();
+            sim.Trace(PathTools.VCDOutputPath());
+
+            sim.IsRunning = (topLevel) => receivedData.Count < bytesToProcess;
+
+            sim.OnPostStage = (topLevel) =>
             {
-                var currentTime = clock * 2 * maxStageIterations;
-                clockSignal.Value = true;
-
-                stageIteration = 0;
-                do
-                {
-                    currentTime++;
-
-                    var modified = topLevel.Stage(stageIteration);
-
-                    topLevel.PopulateSnapshot(topLevelSnapshot);
-                    vcdBuilder.Snapshot(currentTime, topLevelSnapshot);
-
-                    // no modules were modified during stage iteration, all converged
-                    if (!modified)
-                        break;
-                }
-                while (++stageIteration < maxStageIterations);
-
-                if (stageIteration >= maxStageIterations)
-                    throw new MaxStageIterationReachedException();
-
                 if (topLevel.HasData)
                 {
                     receivedData.Add(topLevel.Data);
                 }
+            };
 
-                currentTime = clock * 2 * maxStageIterations + maxStageIterations;
-
-                clockSignal.Value = false;
-                topLevel.PopulateSnapshot(topLevelSnapshot);
-                vcdBuilder.Snapshot(currentTime, topLevelSnapshot);
-
-                topLevel.Commit();
-                clock++;
-            }
+            sim.Run();
 
             Assert.AreEqual(bytesToProcess, receivedData.Count);
             var missing = Enumerable

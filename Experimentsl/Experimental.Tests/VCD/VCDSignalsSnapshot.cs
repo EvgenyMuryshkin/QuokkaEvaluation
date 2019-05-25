@@ -45,10 +45,18 @@ namespace Quokka.VCD
             return _childScopes[name];
         }
 
-        public VCDVariable Variable(string name, object value)
+        public void SetVariables(IEnumerable<VCDVariable> variables)
+        {
+            foreach (var v in variables)
+            {
+                _mapSignals[v.Name] = v;
+            }
+        }
+
+        public VCDVariable Variable(string name, object value, int size)
         {
             if (!_mapSignals.ContainsKey(name))
-                _mapSignals[name] = new VCDVariable(name, value);
+                _mapSignals[name] = new VCDVariable(name, value, size);
             else
                 _mapSignals[name].Value = value;
 

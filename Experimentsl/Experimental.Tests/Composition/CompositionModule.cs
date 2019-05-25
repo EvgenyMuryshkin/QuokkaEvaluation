@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Quokka.RTL;
+using System;
 
 namespace QuokkaTests.Experimental
 {
-    public class CompositionModule : CombinationalRTLModule<CompositionInputs>
+    public class CompositionModule : RTLCombinationalModule<CompositionInputs>
     {
         public EmitterModule Emitter = new EmitterModule();
         public TransmitterModule Transmitter = new TransmitterModule();
@@ -10,6 +11,8 @@ namespace QuokkaTests.Experimental
 
         public bool HasData => Receiver.HasData;
         public byte Data => Receiver.Data;
+        public byte Fixed1 => 10;
+        public byte Fixed2 => 20;
 
         public override void Schedule(Func<CompositionInputs> inputsFactory)
         {

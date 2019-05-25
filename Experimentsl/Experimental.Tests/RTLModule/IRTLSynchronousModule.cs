@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace QuokkaTests.Experimental
+namespace Quokka.RTL
 {
-    public interface ISynchronousRTLModule : ICombinationalRTLModule
+    public interface IRTLSynchronousModule : IRTLCombinationalModule
     {
         Type StateType { get; }
         List<MemberInfo> StateProps { get; }

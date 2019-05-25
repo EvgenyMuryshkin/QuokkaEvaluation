@@ -283,3 +283,4 @@ __pycache__/
 *.tan.rpt
 *.tan.summary
 /VHDL/db/*
+/Experimentsl/Experimental.Tests/SimResults/*

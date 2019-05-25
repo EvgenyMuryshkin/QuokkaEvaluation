@@ -7,8 +7,8 @@ namespace QuokkaTests.Experimental
     /// <summary>
     /// Inputs declarations, names, types and sizes;
     /// </summary>
-    public class CompositionInputs
+    public class InverterInputs
     {
-        public bool IsEnabled = true;
+        public bool Input = false;
     }
 }

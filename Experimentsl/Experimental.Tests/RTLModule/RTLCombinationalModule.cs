@@ -5,24 +5,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace QuokkaTests.Experimental
+namespace Quokka.RTL
 {
-    public abstract class CombinationalRTLModule<TInput> : ICombinationalRTLModule
+    public abstract class RTLCombinationalModule<TInput> : IRTLCombinationalModule
         where TInput : new()
     {
-        public bool IsTraceEnabled { get; set; }
         public Type InputsType { get; } = typeof(TInput);
         public List<MemberInfo> InputProps { get; }
         public List<MemberInfo> OutputProps { get; }
         public List<MemberInfo> ModuleProps { get; }
-        public List<ICombinationalRTLModule> Modules { get; }
+        public List<IRTLCombinationalModule> Modules { get; }
 
-        public CombinationalRTLModule()
+        public RTLCombinationalModule()
         {
             InputProps = RTLModuleHelper.SignalProperties(InputsType);
             OutputProps = RTLModuleHelper.SignalProperties(GetType());
             ModuleProps = RTLModuleHelper.ModuleProperties(GetType());
-            Modules = ModuleProps.Select(m => (ICombinationalRTLModule)m.GetValue(this)).ToList();
+            Modules = ModuleProps.Select(m => (IRTLCombinationalModule)m.GetValue(this)).ToList();
+        }
+
+        public void Setup()
+        {
+            Schedule(() => new TInput());
         }
 
         internal TInput Inputs = new TInput();
@@ -73,23 +77,54 @@ namespace QuokkaTests.Experimental
             }
         }
 
+        protected virtual int SizeOf(object value)
+        {
+            switch (value)
+            {
+                case Enum v:
+                    return RTLModuleHelper.SizeOfEnum(value.GetType());
+                default:
+                    return VCDTools.SizeOf(value);
+            }
+        }
+
+        protected virtual IEnumerable<VCDVariable> ToVCDVariables(MemberInfo memberInfo, object value)
+        {
+            switch(value)
+            {
+                case Enum v:
+                    return new[]
+                    {
+                        new VCDVariable($"{memberInfo.Name}ToString", value.ToString(), SizeOf("")),
+                        new VCDVariable(memberInfo.Name, value, SizeOf(value))
+                    };
+                default:
+                    return new[]
+                    {
+                        new VCDVariable(memberInfo.Name, value, SizeOf(value))
+                    };
+            }
+        }
+
         public virtual void PopulateSnapshot(VCDSignalsSnapshot snapshot)
         {
             var inputs = snapshot.Scope("Inputs");
             foreach (var prop in InputProps)
             {
-                inputs.Variable(prop.Name, prop.GetValue(Inputs));
+                var value = prop.GetValue(Inputs);
+                inputs.SetVariables(ToVCDVariables(prop, value));
             }
 
             var outputs = snapshot.Scope("Outputs");
             foreach (var prop in OutputProps)
             {
-                outputs.Variable(prop.Name, prop.GetValue(this));
+                var value = prop.GetValue(this);
+                outputs.SetVariables(ToVCDVariables(prop, value));
             }
 
             foreach (var m in ModuleProps)
             {
-                var module = (ICombinationalRTLModule)m.GetValue(this);
+                var module = (IRTLCombinationalModule)m.GetValue(this);
                 var moduleScope = snapshot.Scope(m.Name);
 
                 module.PopulateSnapshot(moduleScope);

@@ -19,11 +19,11 @@ namespace Experimental.Tests
         {
             var vcd = new VCDBuilder(@"C:\tmp\1.vcd");
             var topScope = new VCDSignalsSnapshot("TOP");
-            topScope.Variable("data", (byte)0);
+            topScope.Variable("data", (byte)0, 1);
 
             var childScope = topScope.Scope("ChildScope1");
-            var signal1 = childScope.Variable("Signal1", true);
-            var signal2 = childScope.Variable("Signal2", "Value");
+            var signal1 = childScope.Variable("Signal1", true, 1);
+            var signal2 = childScope.Variable("Signal2", "Value", 1);
 
             vcd.Init(topScope);
 

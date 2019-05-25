@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace QuokkaTests.Experimental
+namespace Quokka.RTL
 {
     public class MaxStageIterationReachedException : Exception
     {

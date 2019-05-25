@@ -21,8 +21,7 @@ namespace Quokka.VCD
             var type = value.GetType();
             if (type.IsEnum)
             {
-                // default enum type is int
-                return 32;
+                return SizeOf(Activator.CreateInstance(type.GetEnumUnderlyingType()));
             }
 
             switch (value)

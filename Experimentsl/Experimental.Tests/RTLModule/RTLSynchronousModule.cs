@@ -8,7 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QuokkaTests.Experimental
+namespace Quokka.RTL
 {
     public class RTLModuleTrace<TState, TInput>
     {
@@ -19,7 +19,7 @@ namespace QuokkaTests.Experimental
     /// </summary>
     /// <typeparam name="TInput"></typeparam>
     /// <typeparam name="TState"></typeparam>
-    public abstract class SynchronousRTLModule<TState, TInput> : CombinationalRTLModule<TInput>, ISynchronousRTLModule
+    public abstract class RTLSynchronousModule<TState, TInput> : RTLCombinationalModule<TInput>, IRTLSynchronousModule
         where TInput : new()
         where TState : class, new()
     {
@@ -29,7 +29,7 @@ namespace QuokkaTests.Experimental
         internal TState State = new TState();
         internal TState NextState = new TState();
 
-        public SynchronousRTLModule()
+        public RTLSynchronousModule()
         {
         }
 
@@ -40,13 +40,15 @@ namespace QuokkaTests.Experimental
             var state = snapshot.Scope("State");
             foreach (var prop in StateProps)
             {
-                state.Variable(prop.Name, prop.GetValue(State));
+                var value = prop.GetValue(State);
+                state.SetVariables(ToVCDVariables(prop, value));
             }
 
             var nextState = snapshot.Scope("NextState");
             foreach (var prop in StateProps)
             {
-                nextState.Variable(prop.Name, prop.GetValue(NextState));
+                var value = prop.GetValue(NextState);
+                nextState.SetVariables(ToVCDVariables(prop, value));
             }
         }
 
