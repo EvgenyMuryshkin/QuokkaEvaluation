@@ -74,7 +74,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Indicators.Tests", "Indicat
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Experimental", "Experimental", "{49F137C7-01F3-4899-A365-F5E93A128425}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Experimental.Tests", "Experimentsl\Experimental.Tests\Experimental.Tests.csproj", "{44E47688-AB6C-4CED-A3A0-65716C4BA0FC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Experimental.Tests", "Experimental\Experimental.Tests\Experimental.Tests.csproj", "{44E47688-AB6C-4CED-A3A0-65716C4BA0FC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
