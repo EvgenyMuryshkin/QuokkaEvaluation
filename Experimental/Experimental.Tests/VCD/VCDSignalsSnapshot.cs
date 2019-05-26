@@ -22,9 +22,10 @@ namespace Quokka.VCD
             _mapSignals = new Dictionary<string, VCDVariable>(collection);
         }
 
-        public void Add(string key, VCDVariable value)
+        public VCDVariable Add(VCDVariable value)
         {
-            _mapSignals[key] = value;
+            _mapSignals[value.Name] = value;
+            return value;
         }
 
         public IEnumerator<KeyValuePair<string, VCDVariable>> GetEnumerator()
@@ -51,16 +52,6 @@ namespace Quokka.VCD
             {
                 _mapSignals[v.Name] = v;
             }
-        }
-
-        public VCDVariable Variable(string name, object value, int size)
-        {
-            if (!_mapSignals.ContainsKey(name))
-                _mapSignals[name] = new VCDVariable(name, value, size);
-            else
-                _mapSignals[name].Value = value;
-
-            return _mapSignals[name];
         }
 
         public override string ToString()

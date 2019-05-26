@@ -44,7 +44,7 @@ namespace Quokka.RTL
         {
             VCDSignalsSnapshot topLevelSnapshot = new VCDSignalsSnapshot("TOP");
             var controlScope = topLevelSnapshot.Scope("Control");
-            var clockSignal = controlScope.Variable("Clock", true, 1);
+            var clockSignal = controlScope.Add(new VCDVariable("Clock", true, 1));
 
             _topLevel.PopulateSnapshot(topLevelSnapshot);
 

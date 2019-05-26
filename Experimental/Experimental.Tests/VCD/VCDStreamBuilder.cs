@@ -95,14 +95,27 @@ namespace Quokka.VCD
             PopScope();
         }
 
-        internal string ScopeName => string.Join("_", _scopes.Reverse().Select(s => s.Name));
+        internal string ScopeName => VCDTools.FormatScopePrefix(_scopes);
 
         internal void Variable(VCDVariableType type, string name, int size)
         {
             name = Underscored(name);
-            var identifier = $"{ScopeName}_{name}";
-            var reference = $"{ScopeName}_" + (size > 1 ? $"{name}[{size - 1}:0]" : name);
+            var identifier = $"{ScopeName}{name}";
+            var reference = $"{ScopeName}" + (size > 1 ? $"{name}[{size - 1}:0]" : name);
             InlineSection("var", $"{type.ToString().ToLower()} {size} {identifier} {reference}");
+        }
+
+        public void Snapshot(IEnumerable<VCDVariable> snapshot)
+        {
+            foreach (var variable in snapshot)
+            {
+                var value = VCDTools.VCDValue(variable);
+
+                if (!string.IsNullOrWhiteSpace(value))
+                {
+                    SetValue(variable.Type, variable.Size, variable.Name, value);
+                }
+            }
         }
 
         public void Snapshot(VCDSignalsSnapshot snapshot)
@@ -112,36 +125,7 @@ namespace Quokka.VCD
 
             PushScope(snapshot);
 
-            foreach (var variable in snapshot.Variables)
-            {
-                string value = null;
-
-                switch (variable.Value)
-                {
-                    case Enum v:
-                        value = new RTLBitArray((uint)Convert.ChangeType(variable.Value, typeof(uint)))
-                            .Resized(variable.Size)
-                            .AsBinaryString();
-                        break;
-                    case bool b: value = b ? "1" : "0"; break;
-                    case string s: value = s; break;
-                    case byte v: value = new RTLBitArray(v).AsBinaryString(); break;
-                    case sbyte v: value = new RTLBitArray(v).AsBinaryString(); break;
-                    case int v: value = new RTLBitArray(v).AsBinaryString(); break;
-                    case uint v: value = new RTLBitArray(v).AsBinaryString(); break;
-                    case long v: value = new RTLBitArray(v).AsBinaryString(); break;
-                    case ulong v: value = new RTLBitArray(v).AsBinaryString(); break;
-                    case short v: value = new RTLBitArray(v).AsBinaryString(); break;
-                    case ushort v: value = new RTLBitArray(v).AsBinaryString(); break;
-                    case RTLBitArray ba: value = ba.AsBinaryString(); break;
-                    default: throw new Exception($"Unsupported data type: {variable.Value.GetType()}");
-                }
-
-                if (!string.IsNullOrWhiteSpace(value))
-                {
-                    SetValue(variable.Type, variable.Size, variable.Name, value);
-                }
-            }
+            Snapshot(snapshot.Variables);
 
             foreach (var child in snapshot.Scopes)
             {
@@ -178,13 +162,13 @@ namespace Quokka.VCD
             switch (type)
             {
                 case VCDVariableType.String:
-                    Line($"s{value} {ScopeName}_{signal}");
+                    Line($"s{value} {ScopeName}{signal}");
                     break;
                 case VCDVariableType.Wire:
                     if (size == 1)
-                        Line($"{value}{ScopeName}_{signal}");
+                        Line($"{value}{ScopeName}{signal}");
                     else
-                        Line($"b{value} {ScopeName}_{signal}");
+                        Line($"b{value} {ScopeName}{signal}");
                     break;
             }
         }

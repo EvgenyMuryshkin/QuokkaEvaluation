@@ -4,12 +4,12 @@ namespace Quokka.VCD
 {
     public class VCDVariable
     {
-        public VCDVariable(string name, object value, int size = 0)
+        public VCDVariable(string name, object value, int size = 0, VCDVariableType type = VCDVariableType.Undefined )
         {
             Name = name;
             Value = value;
             Size = size == 0 ? VCDTools.SizeOf(value) : size;
-            Type = VCDTools.VarType(value);
+            Type = type == VCDVariableType.Undefined ? VCDTools.VarType(value) : type;
         }
 
         public string Name { get; }
