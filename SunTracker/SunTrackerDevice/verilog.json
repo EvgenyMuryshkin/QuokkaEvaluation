@@ -1,0 +1,11 @@
+﻿{
+  "Project": "Sun",
+  "Configurations": [
+    {
+      "Name": "Quokka",
+      "ClockFrequency": 50000000
+    }
+  ],
+  "HDL": "Verilog",
+  "ProjectLocation": "../../Verilog"
+}

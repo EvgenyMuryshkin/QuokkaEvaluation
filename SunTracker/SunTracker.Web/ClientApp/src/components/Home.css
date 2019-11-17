@@ -1,0 +1,15 @@
+﻿.servo-value-slider {
+    width: 700px;
+    height: 25px;
+    padding: 5px;
+}
+
+.servo-value {
+    width: 50px;
+    height: 25px;
+    padding: 5px;
+}
+
+.script-run {
+    display: block;
+}
