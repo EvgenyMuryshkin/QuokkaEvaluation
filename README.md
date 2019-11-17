@@ -5,12 +5,13 @@ This repository contains
 * Test examples for toolkit functionality
 * Working implementation of Keccak1600 algorythm
 * SnakeGame for 8x8 LED matrix
+* SunTracker Demo
 
 ## Brief
 Please read brief statement about the product here https://github.com/EvgenyMuryshkin/QuokkaEvaluation/raw/master/Docs/Quokka%20Whitepaper.pdf
 
 ## Setup 
-Toolkit runs on all OS, where .NET Core 2.0 or higher is installed.
+Toolkit runs on all OS, where .NET Core 3.0 or higher is installed.
 
 Please refer to framework installation guide for Linux https://www.microsoft.com/net/download/linux-package-manager/centos/sdk-current
 
