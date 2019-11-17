@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27428.2043
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29209.62
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SnakeGame", "SnakeGame\SnakeGame.csproj", "{5670E3B7-E161-4F38-A75C-CDB503537663}"
 EndProject
@@ -74,7 +74,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Indicators.Tests", "Indicat
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Experimental", "Experimental", "{49F137C7-01F3-4899-A365-F5E93A128425}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Experimental.Tests", "Experimental\Experimental.Tests\Experimental.Tests.csproj", "{44E47688-AB6C-4CED-A3A0-65716C4BA0FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Experimental.Tests", "Experimental\Experimental.Tests\Experimental.Tests.csproj", "{44E47688-AB6C-4CED-A3A0-65716C4BA0FC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Experimental.LowLevel", "Experimental\Experimental.LowLevel\Experimental.LowLevel.csproj", "{67E209B5-FC41-40BE-ACC2-49D991037F66}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VRCamera", "VRCamera", "{A5E1BA5C-7BBF-437C-A550-0E08139AEACF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VRCameraController", "VRCamera\VRCameraController\VRCameraController.csproj", "{64B92D3E-B7CB-45CE-8403-E36EF6BA37C5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SunTracker", "SunTracker", "{72179056-9713-4EDB-A6E3-E5913E5DC76D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SunTrackerDevice", "SunTracker\SunTrackerDevice\SunTrackerDevice.csproj", "{A1B54077-6637-4358-B74D-79C43D022754}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SunTracker.Calibrate", "SunTracker\SunTracker.Calibrate\SunTracker.Calibrate.csproj", "{176A9E02-AA59-4344-A33B-9530BC8464CE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SunTracker.Web", "SunTracker\SunTracker.Web\SunTracker.Web.csproj", "{71020B20-9626-4B63-88EC-3B0CC4E2BADA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -180,6 +194,26 @@ Global
 		{44E47688-AB6C-4CED-A3A0-65716C4BA0FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44E47688-AB6C-4CED-A3A0-65716C4BA0FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44E47688-AB6C-4CED-A3A0-65716C4BA0FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67E209B5-FC41-40BE-ACC2-49D991037F66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67E209B5-FC41-40BE-ACC2-49D991037F66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67E209B5-FC41-40BE-ACC2-49D991037F66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67E209B5-FC41-40BE-ACC2-49D991037F66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64B92D3E-B7CB-45CE-8403-E36EF6BA37C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64B92D3E-B7CB-45CE-8403-E36EF6BA37C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64B92D3E-B7CB-45CE-8403-E36EF6BA37C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64B92D3E-B7CB-45CE-8403-E36EF6BA37C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1B54077-6637-4358-B74D-79C43D022754}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1B54077-6637-4358-B74D-79C43D022754}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1B54077-6637-4358-B74D-79C43D022754}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1B54077-6637-4358-B74D-79C43D022754}.Release|Any CPU.Build.0 = Release|Any CPU
+		{176A9E02-AA59-4344-A33B-9530BC8464CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{176A9E02-AA59-4344-A33B-9530BC8464CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{176A9E02-AA59-4344-A33B-9530BC8464CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{176A9E02-AA59-4344-A33B-9530BC8464CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71020B20-9626-4B63-88EC-3B0CC4E2BADA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71020B20-9626-4B63-88EC-3B0CC4E2BADA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71020B20-9626-4B63-88EC-3B0CC4E2BADA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71020B20-9626-4B63-88EC-3B0CC4E2BADA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -200,6 +234,11 @@ Global
 		{808D0577-B95E-433D-BADD-B385BE43CD1B} = {7EE97EC4-C185-440E-9BA4-4D3B9DF9D748}
 		{78180D24-78B8-4A21-8D0F-0C8D128D9F66} = {7EE97EC4-C185-440E-9BA4-4D3B9DF9D748}
 		{44E47688-AB6C-4CED-A3A0-65716C4BA0FC} = {49F137C7-01F3-4899-A365-F5E93A128425}
+		{67E209B5-FC41-40BE-ACC2-49D991037F66} = {49F137C7-01F3-4899-A365-F5E93A128425}
+		{64B92D3E-B7CB-45CE-8403-E36EF6BA37C5} = {A5E1BA5C-7BBF-437C-A550-0E08139AEACF}
+		{A1B54077-6637-4358-B74D-79C43D022754} = {72179056-9713-4EDB-A6E3-E5913E5DC76D}
+		{176A9E02-AA59-4344-A33B-9530BC8464CE} = {72179056-9713-4EDB-A6E3-E5913E5DC76D}
+		{71020B20-9626-4B63-88EC-3B0CC4E2BADA} = {72179056-9713-4EDB-A6E3-E5913E5DC76D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0BE3F9BA-A23D-459E-8A7D-2D9F1612D011}
