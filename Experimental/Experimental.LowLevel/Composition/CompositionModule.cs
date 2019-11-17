@@ -13,6 +13,7 @@ namespace QuokkaTests.Experimental
         public byte Data => Receiver.Data;
         public byte Fixed1 => 10;
         public byte Fixed2 => 20;
+        public byte Fixed3 = 20;
 
         public override void Schedule(Func<CompositionInputs> inputsFactory)
         {

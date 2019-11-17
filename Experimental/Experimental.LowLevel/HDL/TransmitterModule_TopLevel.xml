@@ -1,0 +1,88 @@
+<ControllerConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" SuppressWarnings="W0002" Name="TransmitterModule_TopLevel" xmlns="http://schemas.itmaywork.com/2012/07/UserModule">
+  <ControllerInfo ClockFrequency="1" IsTopLevel="true" IsSynchronous="true" />
+  <UserModules>
+    <UserModule SuppressWarnings="W0002" Name="TransmitterModule">
+      <Parameters />
+      <Constants>
+        <Constant Name="Zero" Value="0">
+          <SignalType>Unsigned</SignalType>
+        </Constant>
+        <Constant Name="One" Value="1">
+          <SignalType>Unsigned</SignalType>
+        </Constant>
+        <Constant Name="true" Value="1">
+          <SignalType>Unsigned</SignalType>
+        </Constant>
+        <Constant Name="false" Value="0">
+          <SignalType>Unsigned</SignalType>
+        </Constant>
+      </Constants>
+      <Mutexes />
+      <MemoryBlocks />
+      <Variables />
+      <Registers>
+        <Register Name="State_FSM" Bits="32">
+          <SignalType>Unsigned</SignalType>
+        </Register>
+        <Register Name="NextState_FSM" Bits="32">
+          <SignalType>Unsigned</SignalType>
+        </Register>
+        <Register Name="State_Data" Bits="8">
+          <SignalType>Unsigned</SignalType>
+        </Register>
+        <Register Name="NextState_Data" Bits="8">
+          <SignalType>Unsigned</SignalType>
+        </Register>
+        <Register Name="State_Counter" Bits="8">
+          <SignalType>Unsigned</SignalType>
+        </Register>
+        <Register Name="NextState_Counter" Bits="8">
+          <SignalType>Unsigned</SignalType>
+        </Register>
+      </Registers>
+      <ExternalSignals>
+        <ExternalSignal Name="Trigger" Type="Input" Bits="1">
+          <SignalType>Unsigned</SignalType>
+          <PassThrough>true</PassThrough>
+        </ExternalSignal>
+        <ExternalSignal Name="Ack" Type="Input" Bits="1">
+          <SignalType>Unsigned</SignalType>
+          <PassThrough>true</PassThrough>
+        </ExternalSignal>
+        <ExternalSignal Name="Data" Type="Input" Bits="8">
+          <SignalType>Unsigned</SignalType>
+          <PassThrough>true</PassThrough>
+        </ExternalSignal>
+        <ExternalSignal Name="Bit" Type="Output" Bits="1">
+          <SignalType>Unsigned</SignalType>
+          <PassThrough>true</PassThrough>
+        </ExternalSignal>
+        <ExternalSignal Name="IsReady" Type="Output" Bits="1">
+          <SignalType>Unsigned</SignalType>
+          <PassThrough>true</PassThrough>
+        </ExternalSignal>
+        <ExternalSignal Name="IsTransmitting" Type="Output" Bits="1">
+          <SignalType>Unsigned</SignalType>
+          <PassThrough>true</PassThrough>
+        </ExternalSignal>
+        <ExternalSignal Name="IsTransmissionStarted" Type="Output" Bits="1">
+          <SignalType>Unsigned</SignalType>
+          <PassThrough>true</PassThrough>
+        </ExternalSignal>
+      </ExternalSignals>
+      <RegisteredSignals />
+      <LogicalFunctions />
+      <MathematicalFunctions />
+      <ComparisonFunctions />
+      <Maps />
+      <Lookups />
+      <XBDs />
+      <HardLinks />
+      <Streams>
+        <Items />
+      </Streams>
+      <CustomVHDL />
+      <ExternalEntities />
+    </UserModule>
+  </UserModules>
+</ControllerConfiguration>

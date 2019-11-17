@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Quokka.FPGA" Version="0.0.0.18" />
+    <PackageReference Include="Quokka.RTL" Version="0.0.0.8" />
+  </ItemGroup>
+
+</Project>
