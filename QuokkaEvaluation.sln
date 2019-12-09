@@ -84,11 +84,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VRCameraController", "VRCam
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SunTracker", "SunTracker", "{72179056-9713-4EDB-A6E3-E5913E5DC76D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SunTrackerDevice", "SunTracker\SunTrackerDevice\SunTrackerDevice.csproj", "{A1B54077-6637-4358-B74D-79C43D022754}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SunTrackerDevice", "SunTracker\SunTrackerDevice\SunTrackerDevice.csproj", "{A1B54077-6637-4358-B74D-79C43D022754}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SunTracker.Calibrate", "SunTracker\SunTracker.Calibrate\SunTracker.Calibrate.csproj", "{176A9E02-AA59-4344-A33B-9530BC8464CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SunTracker.Calibrate", "SunTracker\SunTracker.Calibrate\SunTracker.Calibrate.csproj", "{176A9E02-AA59-4344-A33B-9530BC8464CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SunTracker.Web", "SunTracker\SunTracker.Web\SunTracker.Web.csproj", "{71020B20-9626-4B63-88EC-3B0CC4E2BADA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SunTracker.Web", "SunTracker\SunTracker.Web\SunTracker.Web.csproj", "{71020B20-9626-4B63-88EC-3B0CC4E2BADA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Trigonometry", "Trigonometry", "{D8133AB5-E6CA-490E-B708-FDA87F7393BF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FPGA.Trigonometry", "Trigonometry\FPGA.Trigonometry\FPGA.Trigonometry.csproj", "{A6E0919D-A4C0-4E3A-902C-CC59C2D34A84}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FPGA.Trigonometry.Controllers", "Trigonometry\FPGA.Trigonometry.Controllers\FPGA.Trigonometry.Controllers.csproj", "{536D68CF-62A6-4F09-A650-BD992676324B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FPGA.Trigonometry.Tests", "Trigonometry\FPGA.Trigonometry.Tests\FPGA.Trigonometry.Tests.csproj", "{1BA9379D-204E-4433-A19A-A05F59784963}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -214,6 +222,18 @@ Global
 		{71020B20-9626-4B63-88EC-3B0CC4E2BADA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{71020B20-9626-4B63-88EC-3B0CC4E2BADA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{71020B20-9626-4B63-88EC-3B0CC4E2BADA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6E0919D-A4C0-4E3A-902C-CC59C2D34A84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6E0919D-A4C0-4E3A-902C-CC59C2D34A84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6E0919D-A4C0-4E3A-902C-CC59C2D34A84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6E0919D-A4C0-4E3A-902C-CC59C2D34A84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{536D68CF-62A6-4F09-A650-BD992676324B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{536D68CF-62A6-4F09-A650-BD992676324B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{536D68CF-62A6-4F09-A650-BD992676324B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{536D68CF-62A6-4F09-A650-BD992676324B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BA9379D-204E-4433-A19A-A05F59784963}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BA9379D-204E-4433-A19A-A05F59784963}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BA9379D-204E-4433-A19A-A05F59784963}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BA9379D-204E-4433-A19A-A05F59784963}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -239,6 +259,9 @@ Global
 		{A1B54077-6637-4358-B74D-79C43D022754} = {72179056-9713-4EDB-A6E3-E5913E5DC76D}
 		{176A9E02-AA59-4344-A33B-9530BC8464CE} = {72179056-9713-4EDB-A6E3-E5913E5DC76D}
 		{71020B20-9626-4B63-88EC-3B0CC4E2BADA} = {72179056-9713-4EDB-A6E3-E5913E5DC76D}
+		{A6E0919D-A4C0-4E3A-902C-CC59C2D34A84} = {D8133AB5-E6CA-490E-B708-FDA87F7393BF}
+		{536D68CF-62A6-4F09-A650-BD992676324B} = {D8133AB5-E6CA-490E-B708-FDA87F7393BF}
+		{1BA9379D-204E-4433-A19A-A05F59784963} = {D8133AB5-E6CA-490E-B708-FDA87F7393BF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0BE3F9BA-A23D-459E-8A7D-2D9F1612D011}

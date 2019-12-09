@@ -1,0 +1,19 @@
+﻿{
+  "Project": "TrigTests",
+  "Configurations": [
+    {
+      "Name": "Quokka",
+      "ClockFrequency": 50000000
+    },
+    {
+      "Name": "Sim",
+      "ClockFrequency": 100000
+    },
+    {
+      "Name": "NEB",
+      "ClockFrequency": 24000000
+    }
+  ],
+  "HDL": "VHDL",
+  "ProjectLocation": "..\\..\\MyProjects\\VHDLFunctional"
+}
