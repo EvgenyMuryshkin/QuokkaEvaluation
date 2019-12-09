@@ -2,6 +2,7 @@ using Fourier.Tests.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.IO.Ports;
 using System.Linq;
 
@@ -9,7 +10,7 @@ namespace Fourier.Tests
 {
     class COMPort : TestCOMPort
     {
-        public COMPort() : base("COM7", 115200)
+        public COMPort() : base("COM3", 115200)
         {
 
         }
@@ -153,17 +154,15 @@ namespace Fourier.Tests
             using (var port = new COMPort())
             {
                 var sourceSignal = _bp.TestSignal();
-                var target = _bp.ZeroSignal;
-
                 port.Send(sourceSignal);
-                DFT.Transform(_bp.Bits, sourceSignal, target, Direction.Forward);
+                DFT.Transform(_bp.Bits, sourceSignal, Direction.Forward);
 
                 port.WaitForData(TimeSpan.FromMinutes(1));
 
                 var receiverSignal = _bp.ZeroSignal;
                 port.Receive(receiverSignal, out uint duration);
 
-                Validation.AssertSpectres(target, receiverSignal, true, true);
+                Validation.AssertSpectres(sourceSignal, receiverSignal, true, true);
             }
         }
 

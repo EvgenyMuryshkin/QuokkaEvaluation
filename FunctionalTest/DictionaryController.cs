@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Controllers
 {
-    [BoardConfig(Name = "NEB")]
+    /*[BoardConfig(Name = "NEB")]*/[BoardConfig(Name = "Quokka")]
     public static class Runtime_DictionaryController
     {
         public static void Lookpup(byte key, out byte value)

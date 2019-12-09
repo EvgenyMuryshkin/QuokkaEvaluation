@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Controllers
 {
-    [BoardConfig(Name = "NEB")]
+    /*[BoardConfig(Name = "NEB")]*/[BoardConfig(Name = "Quokka")]
     public static class Math_Divider
     {
         public static async Task Aggregator(

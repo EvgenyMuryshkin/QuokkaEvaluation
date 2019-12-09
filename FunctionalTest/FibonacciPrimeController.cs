@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Controllers
 {
-    [BoardConfig(Name = "NEB")]
+    /*[BoardConfig(Name = "NEB")]*/[BoardConfig(Name = "Quokka")]
     public static class Math_FibonacciPrime
     {
         public static async Task Aggregator(

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Controllers
 {
-    [BoardConfig(Name = "NEB")]
+    /*[BoardConfig(Name = "NEB")]*/[BoardConfig(Name = "Quokka")]
     public static class Streams_SyncStream_Single
     {
         public static async Task Aggregator(
@@ -39,7 +39,7 @@ namespace Controllers
         }
     }
 
-    [BoardConfig(Name = "NEB")]
+    /*[BoardConfig(Name = "NEB")]*/[BoardConfig(Name = "Quokka")]
     public static class Streams_SyncStream_Multiple
     {
         public static async Task Aggregator(
@@ -76,7 +76,7 @@ namespace Controllers
         }
     }
 
-    [BoardConfig(Name = "NEB")]
+    /*[BoardConfig(Name = "NEB")]*/[BoardConfig(Name = "Quokka")]
     public static class Streams_SyncStream_Chained
     {
         public static async Task Aggregator(

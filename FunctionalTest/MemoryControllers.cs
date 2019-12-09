@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Controllers
 {
-    [BoardConfig(Name = "NEB")]
+    /*[BoardConfig(Name = "NEB")]*/[BoardConfig(Name = "Quokka")]
     public static class Memory_ReadWrite
     {
         public static async Task Aggregator(
@@ -49,7 +49,7 @@ namespace Controllers
         public short shortValue;
     }
 
-    [BoardConfig(Name = "NEB")]
+    /*[BoardConfig(Name = "NEB")]*/[BoardConfig(Name = "Quokka")]
     public static class Memory_ReadWriteDTO
     {
         public static void Handler(byte seed, out int sum)
@@ -96,7 +96,7 @@ namespace Controllers
         }
     }
 
-    [BoardConfig(Name = "NEB")]
+    /*[BoardConfig(Name = "NEB")]*/[BoardConfig(Name = "Quokka")]
     public static class Memory_ConstLength
     {
         public static async Task Aggregator(
@@ -131,7 +131,7 @@ namespace Controllers
         }
     }
 
-    [BoardConfig(Name = "NEB")]
+    /*[BoardConfig(Name = "NEB")]*/[BoardConfig(Name = "Quokka")]
     public static class Memory_DefaultInit
     {
         public static async Task Aggregator(
@@ -162,7 +162,7 @@ namespace Controllers
         }
     }
 
-    [BoardConfig(Name = "NEB")]
+    /*[BoardConfig(Name = "NEB")]*/[BoardConfig(Name = "Quokka")]
     public static class Memory_InlineInit
     {
         public static async Task Aggregator(
@@ -210,7 +210,7 @@ namespace Controllers
         }
     }
 
-    [BoardConfig(Name = "NEB")]
+    /*[BoardConfig(Name = "NEB")]*/[BoardConfig(Name = "Quokka")]
     public static class Memory_Reinit
     {
         public static async Task Aggregator(
@@ -238,9 +238,9 @@ namespace Controllers
                     UART.RegisteredWrite(115200, tmp, out internalTXD);
                 }
 
-                for (byte j = 0; j < buff.Length; j++)
+                for (byte jjj = 0; jjj < buff.Length; jjj++)
                 {
-                    buff[j] = j;
+                    buff[jjj] = jjj;
                 };
             };
 

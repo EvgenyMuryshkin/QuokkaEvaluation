@@ -29,15 +29,14 @@ namespace Fourier.Tests
         public void ForwardQuokkaDFT()
         {
             var sourceSignal = _bp.TestSignal();
-            var target = _bp.ZeroSignal;
 
             var referenceDFT = sourceSignal.ToArray();
             Reference.DFT(referenceDFT, Direction.Forward);
 
             var quokkaDFT = sourceSignal.ToArray();
-            Fourier.DFT.Transform(_bp.Bits, quokkaDFT, target, Direction.Forward);
+            Fourier.DFT.Transform(_bp.Bits, quokkaDFT, Direction.Forward);
 
-            Validation.AssertSpectres(referenceDFT, target, true, false);
+            Validation.AssertSpectres(referenceDFT, quokkaDFT, true, false);
         }
     }
 }

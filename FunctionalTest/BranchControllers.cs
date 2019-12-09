@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Controllers
 {
-    [BoardConfig(Name = "NEB")]
+    /*[BoardConfig(Name = "NEB")]*/[BoardConfig(Name = "Quokka")]
     public static class Branch_Switch
     {
         public static void TestMethod(byte max, out byte result)
@@ -50,7 +50,7 @@ namespace Controllers
         }
     }
 
-    [BoardConfig(Name = "NEB")]
+    /*[BoardConfig(Name = "NEB")]*/[BoardConfig(Name = "Quokka")]
     public static class Branch_IfElse
     {
         public static void TestMethod(byte max, out byte result)
@@ -93,7 +93,7 @@ namespace Controllers
         }
     }
 
-    [BoardConfig(Name = "NEB")]
+    /*[BoardConfig(Name = "NEB")]*/[BoardConfig(Name = "Quokka")]
     public static class Branch_Switch_IfElse_Break
     {
         public static void TestMethod(byte max, out byte result)
@@ -139,7 +139,7 @@ namespace Controllers
         }
     }
 
-    [BoardConfig(Name = "NEB")]
+    /*[BoardConfig(Name = "NEB")]*/[BoardConfig(Name = "Quokka")]
     public static class Branch_Switch_For_While_IfElse_Break
     {
         public static void TestMethod(byte max, out byte result)

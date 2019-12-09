@@ -17,7 +17,7 @@ namespace Controllers
         Rol
     }
 
-    [BoardConfig(Name = "NEB")]
+    /*[BoardConfig(Name = "NEB")]*/[BoardConfig(Name = "Quokka")]
     public static class Math_Shifter
     {
         public static void ValueForCommand(eShiftCommand cmd, out byte value)

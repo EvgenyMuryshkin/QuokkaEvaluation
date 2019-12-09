@@ -8,7 +8,85 @@ using System.Threading.Tasks;
 
 namespace Controllers
 {
-    [BoardConfig(Name = "NEB")]
+    /*[BoardConfig(Name = "NEB")]*/[BoardConfig(Name = "Quokka")]
+    public static class Counter
+    {
+        public static async Task Aggregator(
+            FPGA.OutputSignal<byte> Tens,
+            FPGA.OutputSignal<byte> Ones,
+            FPGA.OutputSignal<byte> Tenths
+            )
+        {
+            byte internalTens = 0, internalOnes = 0, internalTenths = 0;
+            FPGA.Config.Link(internalTens, Tens);
+            FPGA.Config.Link(internalOnes, Ones);
+            FPGA.Config.Link(internalTenths, Tenths);
+
+            Func<byte> nextTenths = () => (byte)(
+                internalTenths == 9 
+                    ? 0 
+                    : internalTenths + 1);
+
+            Func<byte> nextOnes = () => (byte)(
+                internalTenths == 9 
+                    ?   internalOnes == 9 
+                            ? 0 
+                            : internalOnes + 1
+                    :   internalOnes);
+
+            Func<byte> nextTens = () => (byte)(
+                internalTenths == 9
+                    ? internalOnes == 9
+                        ? internalTens == 5
+                            ? 0
+                            : internalTens + 1
+                        : internalTens
+                    : internalTens);
+
+            Sequential handler = () =>
+            {
+                while (true)
+                {
+                    FPGA.Runtime.Assign(
+                        FPGA.Expressions.Assign(() => nextTenths(), (v) => internalTenths = v),
+                        FPGA.Expressions.Assign(() => nextOnes(), (v) => internalOnes = v),
+                        FPGA.Expressions.Assign(() => nextTens(), (v) => internalTens = v)
+                        );
+
+                    /*
+                    if (internalTenths == 9)
+                    {
+                        internalTenths = 0;
+                        if (internalOnes == 9)
+                        {
+                            internalOnes = 0;
+                            if (internalTens == 5 )
+                            {
+                                internalTens = 0;
+                            }
+                            else
+                            {
+                                internalTens++;
+                            }
+                        }
+                        else
+                        {
+                            internalOnes++;
+                        }
+                    }
+                    else
+                    {
+                        internalTenths++;
+                    }
+                    */
+                }
+            };
+
+            FPGA.Config.OnStartup(handler);
+        }
+    }
+
+    /*[BoardConfig(Name = "NEB")]*/[BoardConfig(Name = "Quokka")]
     public static class Defaults_DefaultRegisterValue
     {
         public static async Task Aggregator(
@@ -37,7 +115,7 @@ namespace Controllers
         }
     }
 
-    [BoardConfig(Name = "NEB")]
+    /*[BoardConfig(Name = "NEB")]*/[BoardConfig(Name = "Quokka")]
     public static class Triggers_ConstTrueTrigger
     {
         public static async Task Aggregator(
@@ -58,7 +136,7 @@ namespace Controllers
         }
     }
 
-    [BoardConfig(Name = "NEB")]
+    /*[BoardConfig(Name = "NEB")]*/[BoardConfig(Name = "Quokka")]
     public static class Triggers_ConstFalseTrigger
     {
         public static async Task Aggregator(
@@ -81,7 +159,7 @@ namespace Controllers
     }
 
 
-    [BoardConfig(Name = "NEB")]
+    /*[BoardConfig(Name = "NEB")]*/[BoardConfig(Name = "Quokka")]
     public static class Triggers_Timer
     {
         public static async Task Aggregator(FPGA.OutputSignal<bool> LED)
@@ -99,7 +177,7 @@ namespace Controllers
     }
 
 
-    [BoardConfig(Name = "NEB")]
+    /*[BoardConfig(Name = "NEB")]*/[BoardConfig(Name = "Quokka")]
     public static class Triggers_Timer_Multiple
     {
         public static async Task Aggregator(
@@ -142,7 +220,7 @@ namespace Controllers
         }
     }
 
-    [BoardConfig(Name = "NEB")]
+    /*[BoardConfig(Name = "NEB")]*/[BoardConfig(Name = "Quokka")]
     public static class Triggers_Startup
     {
         public static async Task Aggregator(
@@ -161,7 +239,7 @@ namespace Controllers
         }
     }
 
-    [BoardConfig(Name = "NEB")]
+    /*[BoardConfig(Name = "NEB")]*/[BoardConfig(Name = "Quokka")]
     public static class Triggers_Signal
     {
         public static void Handler(FPGA.OutputSignal<bool> TXD)

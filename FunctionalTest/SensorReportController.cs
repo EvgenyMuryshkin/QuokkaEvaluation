@@ -17,7 +17,7 @@ namespace Controllers
         public ushort C2;
     }
 
-    [BoardConfig(Name = "NEB")]
+    /*[BoardConfig(Name = "NEB")]*/[BoardConfig(Name = "Quokka")]
     public static class Misc_SensorReportController
     {
         public static async Task Aggregator(

@@ -24,11 +24,11 @@ namespace SnakeGame.Tests
             field[0] = eCellType.SnakeHead;
             eDirectionType currentDirection = eDirectionType.None, nextDirection = eDirectionType.None;
 
-            GameEngine.ApplyChange(field, ref head, ref tail, currentDirection, nextDirection, out bool expanded);
+            GameEngine.ApplyChange(field, head, tail, currentDirection, nextDirection, out bool expanded);
             Assert.AreEqual(eCellType.SnakeHead, field[0], "Head should not move");
 
             nextDirection = eDirectionType.Right;
-            GameEngine.ApplyChange(field, ref head, ref tail, currentDirection, nextDirection, out expanded);
+            GameEngine.ApplyChange(field, head, tail, currentDirection, nextDirection, out expanded);
 
             Assert.AreEqual(eCellType.None, field[0], "Tail did not move");
             Assert.AreEqual(eCellType.SnakeHead, field[1], "Head did not move");
@@ -40,10 +40,10 @@ namespace SnakeGame.Tests
             Position head = new Position(), tail = new Position();
             eCellType[] field = new eCellType[64];
 
-            FieldMatrix.Seed(field, ref head, ref tail);
+            FieldMatrix.Seed(field, head, tail);
             eDirectionType currentDirection = eDirectionType.None, nextDirection = eDirectionType.Right;
 
-            GameEngine.ApplyChange(field, ref head, ref tail, currentDirection, nextDirection, out bool expanded);
+            GameEngine.ApplyChange(field, head, tail, currentDirection, nextDirection, out bool expanded);
 
             Assert.AreEqual(3, field.Count(c => c != eCellType.None));
 
@@ -58,10 +58,10 @@ namespace SnakeGame.Tests
             Position head = new Position(), tail = new Position();
             eCellType[] field = new eCellType[64];
 
-            FieldMatrix.Seed(field, ref head, ref tail);
+            FieldMatrix.Seed(field, head, tail);
             eDirectionType currentDirection = eDirectionType.None, nextDirection = eDirectionType.Up;
 
-            GameEngine.ApplyChange(field, ref head, ref tail, currentDirection, nextDirection, out bool expanded);
+            GameEngine.ApplyChange(field, head, tail, currentDirection, nextDirection, out bool expanded);
 
             Assert.AreEqual(3, field.Count(c => c != eCellType.None));
 
@@ -76,12 +76,12 @@ namespace SnakeGame.Tests
             Position head = new Position(), tail = new Position();
             eCellType[] field = new eCellType[64];
 
-            FieldMatrix.Seed(field, ref head, ref tail);
+            FieldMatrix.Seed(field, head, tail);
 
             field[TestOffset(3, 5)] = eCellType.NextPart;
             eDirectionType currentDirection = eDirectionType.None, nextDirection = eDirectionType.Right;
 
-            GameEngine.ApplyChange(field, ref head, ref tail, currentDirection, nextDirection, out bool expanded);
+            GameEngine.ApplyChange(field, head, tail, currentDirection, nextDirection, out bool expanded);
 
             Assert.IsTrue(expanded, "Snake did not expand");
 
@@ -99,10 +99,10 @@ namespace SnakeGame.Tests
             Position head = new Position(), tail = new Position();
             eCellType[] field = new eCellType[64];
 
-            FieldMatrix.Seed(field, ref head, ref tail);
+            FieldMatrix.Seed(field, head, tail);
             eDirectionType currentDirection = eDirectionType.None, nextDirection = eDirectionType.Down;
 
-            GameEngine.ApplyChange(field, ref head, ref tail, currentDirection, nextDirection, out bool expanded);
+            GameEngine.ApplyChange(field, head, tail, currentDirection, nextDirection, out bool expanded);
 
             Assert.AreEqual(3, field.Count(c => c != eCellType.None));
 
@@ -117,19 +117,19 @@ namespace SnakeGame.Tests
             Position head = new Position(), tail = new Position();
             eCellType[] field = new eCellType[64];
 
-            FieldMatrix.Seed(field, ref head, ref tail);
+            FieldMatrix.Seed(field, head, tail);
             eDirectionType currentDirection = eDirectionType.None, nextDirection = eDirectionType.Right;
 
             FieldMatrix.SetCellTypeByPosition(field, new Position() { row = head.row, col = (byte)(head.col + 1) }, eCellType.SnakeDown);
 
-            Assert.ThrowsException<CrashedInSnakeException>(() => GameEngine.ApplyChange(field, ref head, ref tail, currentDirection, nextDirection, out bool expanded), "Did not crash moving to the right");
+            Assert.ThrowsException<CrashedInSnakeException>(() => GameEngine.ApplyChange(field, head, tail, currentDirection, nextDirection, out bool expanded), "Did not crash moving to the right");
 
-            FieldMatrix.Seed(field, ref head, ref tail);
+            FieldMatrix.Seed(field, head, tail);
 
             FieldMatrix.SetCellTypeByPosition(field, new Position() { row = (byte)(head.row + 1), col = head.col }, eCellType.SnakeHead);
             nextDirection = eDirectionType.Down;
 
-            Assert.ThrowsException<CrashedInSnakeException>(() => GameEngine.ApplyChange(field, ref head, ref tail, currentDirection, nextDirection, out bool expanded), "Did not crash moving down");
+            Assert.ThrowsException<CrashedInSnakeException>(() => GameEngine.ApplyChange(field, head, tail, currentDirection, nextDirection, out bool expanded), "Did not crash moving down");
         }
 
         [DataTestMethod]
@@ -148,7 +148,7 @@ namespace SnakeGame.Tests
             Lookups.PositionToOffset(head, ref offset);
             field[offset] = eCellType.SnakeHead;
 
-            Assert.ThrowsException<CrashedInWallException>(() => GameEngine.ApplyChange(field, ref head, ref tail, eDirectionType.None, direction, out bool expanded));
+            Assert.ThrowsException<CrashedInWallException>(() => GameEngine.ApplyChange(field, head, tail, eDirectionType.None, direction, out bool expanded));
         }
 
         [TestMethod]
@@ -157,7 +157,7 @@ namespace SnakeGame.Tests
             Position head = new Position(), tail = new Position();
             eCellType[] field = new eCellType[64];
 
-            FieldMatrix.Seed(field, ref head, ref tail);
+            FieldMatrix.Seed(field, head, tail);
             var rnd = new Random();
 
             while(field.Any(f => f == eCellType.None))

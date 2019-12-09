@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Controllers
 {
-    [BoardConfig(Name = "NEB")]
+    /*[BoardConfig(Name = "NEB")]*/[BoardConfig(Name = "Quokka")]
     public static class TryControllers_TryCatchExplicit
     {
         public static async Task Aggregator(

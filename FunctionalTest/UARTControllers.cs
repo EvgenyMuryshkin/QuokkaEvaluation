@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Controllers
 {
-    [BoardConfig(Name = "NEB")]
+    /*[BoardConfig(Name = "NEB")]*/[BoardConfig(Name = "Quokka")]
     public static class UART_MaxSpeed
     {
         public static async Task Aggregator(
@@ -39,7 +39,7 @@ namespace Controllers
         }
     }
 
-    [BoardConfig(Name = "NEB")]
+    /*[BoardConfig(Name = "NEB")]*/[BoardConfig(Name = "Quokka")]
     public static class UART_RoundTripController
     {
         public static async Task Aggregator(

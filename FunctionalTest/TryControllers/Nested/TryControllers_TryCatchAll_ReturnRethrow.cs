@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Controllers
 {
-    [BoardConfig(Name = "NEB")]
+    /*[BoardConfig(Name = "NEB")]*/[BoardConfig(Name = "Quokka")]
     public static class TryControllers_TryCatchAll_ReturnRethrow
     {
         public static async Task Aggregator(

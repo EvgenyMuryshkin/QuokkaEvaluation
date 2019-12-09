@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Controllers
 {
-    [BoardConfig(Name = "NEB")]
+    /*[BoardConfig(Name = "NEB")]*/[BoardConfig(Name = "Quokka")]
     public static class Loop_ForLoop_Decl_ConstCond_Inc
     {
         public static void TestMethod(out byte result)
@@ -42,7 +42,7 @@ namespace Controllers
         }
     }
 
-    [BoardConfig(Name = "NEB")]
+    /*[BoardConfig(Name = "NEB")]*/[BoardConfig(Name = "Quokka")]
     public static class Loop_ForLoop_Decl_VarCond_Inc
     {
         public static void TestMethod(byte max, out byte result)
@@ -76,7 +76,7 @@ namespace Controllers
         }
     }
 
-    [BoardConfig(Name = "NEB")]
+    /*[BoardConfig(Name = "NEB")]*/[BoardConfig(Name = "Quokka")]
     public static class Loop_ForLoop_VarCond_Inc
     {
         public static void TestMethod(byte max, out byte result)
@@ -110,7 +110,7 @@ namespace Controllers
         }
     }
 
-    [BoardConfig(Name = "NEB")]
+    /*[BoardConfig(Name = "NEB")]*/[BoardConfig(Name = "Quokka")]
     public static class Loop_ForLoop_Init_VarCond_Inc
     {
         public static void TestMethod(byte max, out byte result)
@@ -144,7 +144,7 @@ namespace Controllers
         }
     }
 
-    [BoardConfig(Name = "NEB")]
+    /*[BoardConfig(Name = "NEB")]*/[BoardConfig(Name = "Quokka")]
     public static class Loop_ForLoop_Init_VarCond_MultiExprInc
     {
         public static void TestMethod(byte max, out byte result)
@@ -178,7 +178,7 @@ namespace Controllers
         }
     }
 
-    [BoardConfig(Name = "NEB")]
+    /*[BoardConfig(Name = "NEB")]*/[BoardConfig(Name = "Quokka")]
     public static class Loop_ForLoop_Redeclaration
     {
         public static void TestMethod(byte max, out byte result)
@@ -217,7 +217,7 @@ namespace Controllers
         }
     }
 
-    [BoardConfig(Name = "NEB")]
+    /*[BoardConfig(Name = "NEB")]*/[BoardConfig(Name = "Quokka")]
     public static class Loop_ForLoop_BreakContinue
     {
         public static void TestMethod(byte max, out byte result)
@@ -259,7 +259,7 @@ namespace Controllers
         }
     }
 
-    [BoardConfig(Name = "NEB")]
+    /*[BoardConfig(Name = "NEB")]*/[BoardConfig(Name = "Quokka")]
     public static class Loop_ForLoop_NestedBreakContinue
     {
         public static void TestMethod(byte max, out byte result)
@@ -312,7 +312,7 @@ namespace Controllers
         }
     }
 
-    [BoardConfig(Name = "NEB")]
+    /*[BoardConfig(Name = "NEB")]*/[BoardConfig(Name = "Quokka")]
     public static class Loop_WhileLoop_VarCond
     {
         public static void TestMethod(byte max, out byte result)
@@ -347,7 +347,7 @@ namespace Controllers
         }
     }
 
-    [BoardConfig(Name = "NEB")]
+    /*[BoardConfig(Name = "NEB")]*/[BoardConfig(Name = "Quokka")]
     public static class Loop_WhileLoop_BreakContinue
     {
         public static void TestMethod(byte max, out byte result)
@@ -388,7 +388,7 @@ namespace Controllers
         }
     }
 
-    [BoardConfig(Name = "NEB")]
+    /*[BoardConfig(Name = "NEB")]*/[BoardConfig(Name = "Quokka")]
     public static class Loop_DoLoop_VarCond
     {
         public static void TestMethod(byte max, out byte result)
@@ -424,7 +424,8 @@ namespace Controllers
         }
     }
     /*
-    [BoardConfig(Name = "NEB")]
+    //[BoardConfig(Name = "NEB")]
+    [BoardConfig(Name = "Quokka")]
     public static class Loop_WhileLoop_PrefixOp
     {
         public static void TestMethod(byte max, out byte result)
