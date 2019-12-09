@@ -52,7 +52,7 @@ namespace SnakeGame
             Peripherals.GameControls(
                 ADC1NCS, ADC1SLCK, ADC1DIN, ADC1DOUT,
                 K7, K6, K5, K4, K3, K2, K1, K0,
-                ref controlsState);
+                controlsState);
 
             LEDControl(controlsState.keyCode, DOUT, Servo);
         }

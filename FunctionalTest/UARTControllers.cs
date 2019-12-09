@@ -49,11 +49,11 @@ namespace Controllers
         {
             DTOs.RoundTrip request = new DTOs.RoundTrip();
             FPGA.Signal<bool> deserialized = new FPGA.Signal<bool>();
-            Drivers.JSON.DeserializeFromUART<DTOs.RoundTrip>(request, RXD, deserialized);
+            Drivers.JSON.DeserializeFromUART<DTOs.RoundTrip>(ref request, RXD, deserialized);
 
             Sequential processingHandler = () =>
             {
-                Drivers.JSON.SerializeToUART<DTOs.RoundTrip>(request, TXD);
+                Drivers.JSON.SerializeToUART<DTOs.RoundTrip>(ref request, TXD);
             };
 
             FPGA.Config.OnSignal(deserialized, processingHandler);

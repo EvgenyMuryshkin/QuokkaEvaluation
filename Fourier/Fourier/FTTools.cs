@@ -8,7 +8,7 @@ namespace Fourier
         public static void RotateAndAdd(
             float[] cosMap,
             uint bits,
-            ComplexFloat source,
+            ref ComplexFloat source,
             ref ComplexFloat target,
             uint arg)
         {
@@ -40,7 +40,7 @@ namespace Fourier
         public static void Rotate(
             float[] cosMap, 
             uint bits, 
-            ComplexFloat source, 
+            ref ComplexFloat source, 
             ref ComplexFloat target, 
             uint arg)
         {

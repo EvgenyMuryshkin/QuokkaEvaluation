@@ -113,10 +113,10 @@ namespace SnakeGame
 
         public static void ApplyDirection(
             Position current, 
-            ref Position next, 
+            Position next, 
             eDirectionType direction)
         {
-            next = current;
+            FPGA.Runtime.DeepCopy(next, current);
 
             switch (direction)
             {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FPGA.Attributes;
+using System;
 using System.Linq;
 
 namespace Fourier
@@ -6,6 +7,7 @@ namespace Fourier
     /// <summary>
     /// Non-synthesizable, evaluated at translation time
     /// </summary>
+    [OnTranslation]
     public static class GeneratorTools
     {
         public static float[] CosArray(uint arrayLength, Direction direction)

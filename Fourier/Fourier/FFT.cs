@@ -47,7 +47,7 @@ namespace Fourier
                         eK = target[idx];
                         oK = target[idx + m];
 
-                        FTTools.Rotate(cosMap, bits, oK, ref rotated, arg);
+                        FTTools.Rotate(cosMap, bits, ref oK, ref rotated, arg);
 
                         tmp.Re = eK.Re + rotated.Re;
                         tmp.Im = eK.Im + rotated.Im;

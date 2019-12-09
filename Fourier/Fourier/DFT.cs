@@ -2,17 +2,14 @@
 {
     public static class DFT
     {
-        public static void Transform(
-            uint bits, 
-            ComplexFloat[] source,
-            ComplexFloat[] target,
-            Direction direction)
+        public static void Transform(uint bits, ComplexFloat[] data, Direction direction)
         {
             FPGA.Const<uint> n = GeneratorTools.ArrayLength(bits);
             FPGA.Const<float> nFloat = GeneratorTools.FloatArrayLength(bits);
 
             uint mask = GeneratorTools.Mask(bits);
 
+            ComplexFloat[] transformed = new ComplexFloat[data.Length];
             float[] cosMap = GeneratorTools.CosArray(n, direction);
 
             var tmp = new ComplexFloat();
@@ -26,16 +23,16 @@
                 // sum source elements
                 for (uint j = 0; j < n; j++)
                 {
-                    ComplexFloat data = new ComplexFloat();
-                    data = source[j];
+                    ComplexFloat source = new ComplexFloat();
+                    source = data[j];
 
-                    FTTools.RotateAndAdd(cosMap, bits, data, ref tmp, i * j);
+                    FTTools.RotateAndAdd(cosMap, bits, ref source, ref tmp, i * j);
                 }
 
-                target[i] = tmp;
+                transformed[i] = tmp;
             }
             
-            FTTools.CopyAndNormalize(bits, target, target, direction, ref tmp);
+            FTTools.CopyAndNormalize(bits, transformed, data, direction, ref tmp);
         }
     }
 }

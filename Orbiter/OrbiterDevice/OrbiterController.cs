@@ -78,7 +78,7 @@ namespace OrbiterDevice
 					//UART.RegisteredWrite(115200, 64, out internalTXD);
 					FPGA.Runtime.Delay(TimeSpan.FromMilliseconds(20));
 
-					JSON.SerializeToUART(controlsState, TXD);
+					JSON.SerializeToUART(ref controlsState, TXD);
 				}
 			};
 

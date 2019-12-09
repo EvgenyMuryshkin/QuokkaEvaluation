@@ -42,20 +42,20 @@ namespace SnakeGame
 
         public static void Seed(
             eCellType[] fieldMatrix,
-            ref Position head,
-            ref Position tail)
+            Position head,
+            Position tail)
         {
             Reset(fieldMatrix);
 
             tail.row = 3;
             tail.col = 2;
-            head = tail;
+            FPGA.Runtime.DeepCopy(head, tail);
 
             const byte seedSnakeLength = 3;
             for (byte i = 0; i < seedSnakeLength - 1; i++)
             {
                 SetCellTypeByPosition(fieldMatrix, head, eCellType.SnakeRight);
-                Lookups.ApplyDirection(head, ref head, eDirectionType.Right);
+                Lookups.ApplyDirection(head, head, eDirectionType.Right);
             }
 
             SetCellTypeByPosition(fieldMatrix, head, eCellType.SnakeHead);

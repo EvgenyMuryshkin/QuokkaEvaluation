@@ -8,7 +8,7 @@ namespace Drivers
     public static class JSON
     {
         public static void DeserializeFromUART<T>(
-            T obj, 
+            ref T obj, 
             FPGA.InputSignal<bool> RXD, 
             FPGA.Signal<bool> deserialized) where T : new()
         {
@@ -27,7 +27,7 @@ namespace Drivers
             FPGA.Config.OnSignal(trigger, uartHandler);
         }
 
-        public static void SerializeToUART<T>(T data, FPGA.Signal<bool> TXD)
+        public static void SerializeToUART<T>(ref T data, FPGA.Signal<bool> TXD)
         {
             FPGA.Signal<bool> hasMoreData, triggerDequeue, dataDequeued;
             FPGA.Signal<byte> currentByte;

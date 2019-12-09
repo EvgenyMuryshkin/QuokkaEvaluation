@@ -89,7 +89,7 @@ namespace Drivers
             {
                 FPGA.Config.SetInclusiveRange(0, 4, i);
                 UART.Read(baud, RXD, out part);
-                data = (uint)((data >> 8) | (part << 24));
+                data = (data >> 8) | ((uint)part << 24);
             }
         }
 
@@ -142,6 +142,43 @@ namespace Drivers
             FPGA.Runtime.Assign(FPGA.Expressions.Unchecked(data, out uns));
 
             UART.RegisteredWriteUnsigned32(baud, uns, out TXD);
+        }
+
+        public static void WriteUnsigned64(uint baud, ulong data, FPGA.Signal<bool> TXD)
+        {
+            // default TXD is high
+            bool internalTXD = true;
+
+            // hardlink from register to output signal, it has to hold its value
+            FPGA.Config.Link(internalTXD, TXD);
+
+            UART.RegisteredWriteUnsigned64(baud, data, out internalTXD);
+        }
+
+        public static void RegisteredWriteUnsigned64(uint baud, ulong data, out bool TXD)
+        {
+            // cannot use data direclty as it is used by "ref" in hardware
+            ulong buff = data;
+            Func<byte> lsb = () => (byte)buff;
+            FPGA.Config.Default(out TXD, true);
+
+            for (byte i = 0; i < 8; i++)
+            {
+                FPGA.Config.SetInclusiveRange(0, 8, i);
+                UART.RegisteredWrite(baud, lsb(), out TXD);
+                buff = buff >> 8;
+            }
+        }
+
+        public static void ReadUnsigned64(uint baud, FPGA.InputSignal<bool> RXD, ref ulong data)
+        {
+            byte part = 0;
+            for (byte i = 0; i < 8; i++)
+            {
+                FPGA.Config.SetInclusiveRange(0, 8, i);
+                UART.Read(baud, RXD, out part);
+                data = (data >> 8) | ((ulong)part << 56);
+            }
         }
     }
 }

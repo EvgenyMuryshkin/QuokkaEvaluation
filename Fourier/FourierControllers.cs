@@ -312,16 +312,15 @@ namespace Fourier
                 const int width = 10;
                 const int baud = 115200;
 
-                ComplexFloat[] source = new ComplexFloat[GeneratorTools.ArrayLength(width)];
-                ComplexFloat[] target = new ComplexFloat[GeneratorTools.ArrayLength(width)];
+                ComplexFloat[] data = new ComplexFloat[GeneratorTools.ArrayLength(width)];
 
-                while (true)
+                while(true)
                 {
-                    RTX.ReadData(baud, RXD, source);
+                    RTX.ReadData(baud, RXD, data);
 
-                    DFT.Transform(width, source, target, Direction.Forward);
+                    DFT.Transform(width, data, Direction.Forward);
 
-                    RTX.WriteData(baud, TXD, target, 0);
+                    RTX.WriteData(baud, TXD, data, 0);
                 }
             };
 

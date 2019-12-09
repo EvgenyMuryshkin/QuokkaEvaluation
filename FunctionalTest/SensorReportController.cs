@@ -47,7 +47,7 @@ namespace Controllers
                 response.C1 = adcChannel1Value;
                 response.C2 = adcChannel2Value;
 
-                Drivers.JSON.SerializeToUART<Controllers.SRDTO>(response, TXD);
+                Drivers.JSON.SerializeToUART<Controllers.SRDTO>(ref response, TXD);
             };
 
             FPGA.Config.OnTimer(TimeSpan.FromSeconds(1), handler);

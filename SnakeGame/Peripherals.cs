@@ -24,7 +24,7 @@ namespace SnakeGame
             FPGA.InputSignal<bool> K2,
             FPGA.InputSignal<bool> K1,
             FPGA.InputSignal<bool> K0,
-            ref GameControlsState controlsState)
+            GameControlsState controlsState)
         {
             KeypadKeyCode internalCode = 0;
             FPGA.Config.Link(internalCode, out controlsState.keyCode);

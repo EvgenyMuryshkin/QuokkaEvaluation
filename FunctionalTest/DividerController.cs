@@ -18,7 +18,7 @@ namespace Controllers
             DTOs.DividerRequest request = new DTOs.DividerRequest();
             FPGA.Signal<bool> deserialized = new FPGA.Signal<bool>();
 
-            Drivers.JSON.DeserializeFromUART<DTOs.DividerRequest>(request, RXD, deserialized);
+            Drivers.JSON.DeserializeFromUART<DTOs.DividerRequest>(ref request, RXD, deserialized);
 
             Sequential processingHandler = () =>
             {
@@ -27,7 +27,7 @@ namespace Controllers
                 DTOs.DividerResponse response = new DTOs.DividerResponse();
                 response.Result = result;
                 response.Remainder = remainder;
-                Drivers.JSON.SerializeToUART<DTOs.DividerResponse>(response, TXD);
+                Drivers.JSON.SerializeToUART<DTOs.DividerResponse>(ref response, TXD);
             };
 
             FPGA.Config.OnSignal(deserialized, processingHandler);

@@ -23,7 +23,7 @@ namespace SnakeGame
             dbg.JD = nextDirectionFromJoystick;
             dbg.ND = nextDirection;
 
-            JSON.SerializeToUART(dbg, TXD);
+            JSON.SerializeToUART(ref dbg, TXD);
         }
     }
 }

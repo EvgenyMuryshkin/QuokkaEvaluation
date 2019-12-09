@@ -35,13 +35,13 @@ namespace SnakeGame
         GreenCross,
     }
 
-    public struct Position
+    public class Position
     {
         public byte row;
         public byte col;
     }
 
-    public struct GameControlsState
+    public class GameControlsState
     {
         public KeypadKeyCode keyCode;
         public ushort adcChannel1;

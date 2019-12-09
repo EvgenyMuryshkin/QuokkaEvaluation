@@ -10,15 +10,15 @@ namespace SnakeGame
         public static void Setup(
             GameControlsState controlsState,
             eCellType[] fieldMatrix,
-            ref Position head,
-            ref Position tail,
+            Position head,
+            Position tail,
             ref eDirectionType currentDirection,
             int randomValue,
             ref eGameMode gameMode,
             ref byte baseColor)
         {
             // seed initial state
-            FieldMatrix.Seed(fieldMatrix, ref head, ref tail);
+            FieldMatrix.Seed(fieldMatrix, head, tail);
             currentDirection = eDirectionType.None;
 
             switch (controlsState.keyCode)
@@ -39,8 +39,8 @@ namespace SnakeGame
         public static void GameIteration(
             GameControlsState controlsState,
             eCellType[] fieldMatrix,
-            ref Position head,
-            ref Position tail,
+            Position head,
+            Position tail,
             ref eDirectionType currentDirection,
             int randomValue,
             FPGA.Signal<bool> TXD)
@@ -81,7 +81,8 @@ namespace SnakeGame
             bool expanded = false;
             ApplyChange(
                 fieldMatrix,
-                ref head, ref tail,
+                head, 
+                tail,
                 currentDirection, nextDirection,
                 out expanded);
 
@@ -93,8 +94,8 @@ namespace SnakeGame
 
         public static void ApplyChange(
             eCellType[] fieldMatrix,
-            ref Position head,
-            ref Position tail,
+            Position head,
+            Position tail,
             eDirectionType currentDirection,
             eDirectionType nextDirection,
             out bool expanded)
@@ -110,7 +111,7 @@ namespace SnakeGame
             Lookups.DirectionTypeToCellType(nextDirection, ref nextDirectionCellType);
 
             Position nextHeadPosition = new Position();
-            Lookups.ApplyDirection(head, ref nextHeadPosition, nextDirection);
+            Lookups.ApplyDirection(head, nextHeadPosition, nextDirection);
             
             ThrowIfCrashed(fieldMatrix, nextHeadPosition);
             
@@ -121,7 +122,8 @@ namespace SnakeGame
             // move head
             FieldMatrix.SetCellTypeByPosition(fieldMatrix, head, nextDirectionCellType);
             FieldMatrix.SetCellTypeByPosition(fieldMatrix, nextHeadPosition, eCellType.SnakeHead);
-            head = nextHeadPosition;
+
+            FPGA.Runtime.DeepCopy(head, nextHeadPosition);
             
             if (nextHeadCellType == eCellType.NextPart)
             {
@@ -139,7 +141,7 @@ namespace SnakeGame
             FieldMatrix.SetCellTypeByPosition(fieldMatrix, tail, eCellType.None);
 
             // move tail
-            Lookups.ApplyDirection(tail, ref tail, tailDirection);
+            Lookups.ApplyDirection(tail, tail, tailDirection);
         }
 
         public static void ThrowIfCrashed(eCellType[] fieldMatrix, Position position)

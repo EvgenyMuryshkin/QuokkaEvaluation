@@ -158,7 +158,7 @@ namespace SunTrackerDevice
             
             SetServos request = new SetServos();
             FPGA.Signal<bool> requestDeserialized = new FPGA.Signal<bool>();
-            JSON.DeserializeFromUART<SetServos>(request, RXD, requestDeserialized);
+            JSON.DeserializeFromUART<SetServos>(ref request, RXD, requestDeserialized);
 
             Sequential onRequest = () =>
             {

@@ -8,6 +8,20 @@ namespace SequentialMath
 {
     public static class Calculators
     {
+        public static long Factorial(int n)
+        {
+            if (n == 0)
+                return 1;
+
+            long r = n;
+            while (n-- > 1)
+            {
+                r *= n;
+            }
+
+            return r;
+        }
+
         public static void Fibonacci(uint n, out ulong result)
         {
             if(n == 0 )

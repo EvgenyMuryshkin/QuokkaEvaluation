@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BHDevice
 {
-    public struct State
+    public class State
     {
         public ushort Index;
         public ushort Current;
@@ -139,7 +139,7 @@ namespace BHDevice
                     dto.Gone = (byte)(state.RaiseGoneNotification ? 1 : 0);
                     state.RaiseGoneNotification = false;
                 }
-                JSON.SerializeToUART(dto, TXD);
+                JSON.SerializeToUART(ref dto, TXD);
             };
 
             FPGA.Config.OnTimer(TimeSpan.FromMilliseconds(500), reportState);

@@ -22,7 +22,7 @@ namespace Controllers
             {
                 DTOs.RoundTrip response = new DTOs.RoundTrip();
                 response.b = data;
-                Drivers.JSON.SerializeToUART<DTOs.RoundTrip>(response, TXD);
+                Drivers.JSON.SerializeToUART<DTOs.RoundTrip>(ref response, TXD);
             };
 
             FPGA.Config.OnRegisterWritten(data, processingHandler);
@@ -47,7 +47,7 @@ namespace Controllers
         {
             DTOs.RoundTrip request = new DTOs.RoundTrip();
             FPGA.Signal<bool> deserialized = new FPGA.Signal<bool>();
-            Drivers.JSON.DeserializeFromUART<DTOs.RoundTrip>(request, RXD, deserialized);
+            Drivers.JSON.DeserializeFromUART<DTOs.RoundTrip>(ref request, RXD, deserialized);
 
             Sequential processingHandler = () =>
             {

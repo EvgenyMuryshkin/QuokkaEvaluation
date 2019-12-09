@@ -17,7 +17,7 @@ namespace Controllers
         {
             DTOs.IsPrimeRequest request = new DTOs.IsPrimeRequest();
             FPGA.Signal<bool> deserialized = new FPGA.Signal<bool>();
-            Drivers.JSON.DeserializeFromUART<DTOs.IsPrimeRequest>(request, RXD, deserialized);
+            Drivers.JSON.DeserializeFromUART<DTOs.IsPrimeRequest>(ref request, RXD, deserialized);
 
             Sequential handler = () =>
             {
@@ -30,7 +30,7 @@ namespace Controllers
                 response.value = request.value;
                 response.result = (byte)((result == true) ? 1 : 0);
 
-                Drivers.JSON.SerializeToUART<DTOs.IsPrimeResponse>(response, TXD);
+                Drivers.JSON.SerializeToUART<DTOs.IsPrimeResponse>(ref response, TXD);
             };
 
             FPGA.Config.OnSignal(deserialized, handler);

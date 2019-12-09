@@ -8,13 +8,259 @@ using System.Threading.Tasks;
 
 namespace SnakeGame
 {
+    [BoardConfig(Name = "Quokka")]
+    public static class LEDController
+    {
+        public static async Task Aggregator(
+            // blinker
+            FPGA.OutputSignal<bool> LED1,
+            FPGA.OutputSignal<bool> LED2,
+            FPGA.OutputSignal<bool> LED3,
+            FPGA.OutputSignal<bool> LED4
+            )
+        {
+            IsAlive.Blink(LED1);
+            IsAlive.Blink(LED2);
+            IsAlive.Blink(LED3);
+            IsAlive.Blink(LED4);
+        }
+    }
+
+    [BoardConfig(Name = "Quokka")]
+    public static class JSONTxController
+    {
+        public static async Task Aggregator(
+            // blinker
+            FPGA.OutputSignal<bool> LED1,
+
+            // UART
+            FPGA.InputSignal<bool> RXD,
+            FPGA.OutputSignal<bool> TXD
+
+            )
+        {
+            IsAlive.Blink(LED1);
+
+            SnakeDBG dbg = new SnakeDBG();
+            Sequential handler = () =>
+            {
+                dbg.C1++;
+                JSON.SerializeToUART(ref dbg, TXD);
+            };
+
+            FPGA.Config.OnTimer(TimeSpan.FromSeconds(1), handler);
+        }
+    }
+
+
+    [BoardConfig(Name = "Test")]
+    public static class JSONTxControllerTest
+    {
+        public static async Task Aggregator(
+            // blinker
+            FPGA.OutputSignal<bool> LED1,
+
+            // UART
+            FPGA.InputSignal<bool> RXD,
+            FPGA.OutputSignal<bool> TXD
+
+            )
+        {
+            IsAlive.Blink(LED1);
+
+            SnakeDBG dbg = new SnakeDBG();
+            Sequential handler = () =>
+            {
+                dbg.C1++;
+                JSON.SerializeToUART(ref dbg, TXD);
+            };
+
+            FPGA.Config.OnStartup(handler);
+        }
+    }
+
+    [BoardConfig(Name = "Quokka")]
+    public static class UARTTxController
+    {
+        public static async Task Aggregator(
+            // blinker
+            FPGA.OutputSignal<bool> LED1,
+
+            // UART
+            FPGA.InputSignal<bool> RXD,
+            FPGA.OutputSignal<bool> TXD
+
+            )
+        {
+            bool internalTXD = true;
+            FPGA.Config.Link(internalTXD, TXD);
+
+            IsAlive.Blink(LED1);
+
+            Sequential handler = () =>
+            {
+                for (byte b = 0; b < 10; b++)
+                {
+                    UART.RegisteredWrite(115200, b, out internalTXD);
+                }
+
+                UART.RegisteredWrite(115200, 255, out internalTXD);
+            };
+
+            FPGA.Config.OnTimer(TimeSpan.FromSeconds(1), handler);
+        }
+    }
+
+    [BoardConfig(Name = "Quokka")]
+    public static class UARTTxMemController
+    {
+        public static async Task Aggregator(
+            // blinker
+            FPGA.OutputSignal<bool> LED1,
+
+            // UART
+            FPGA.InputSignal<bool> RXD,
+            FPGA.OutputSignal<bool> TXD
+
+            )
+        {
+            IsAlive.Blink(LED1);
+
+            Sequential handler = () =>
+            {
+                byte[] buff = new byte[11];
+                for (byte b = 0; b < 10; b++)
+                {
+                    buff[b] = b;
+                }
+                buff[10] = 255;
+
+                for (byte i = 0; i < buff.Length; i++)
+                {
+                    byte data = 0; // TODO: initializer from memory not supported yet
+                    data = buff[i];
+                    UART.Write(115200, data, TXD);
+                }
+            };
+
+            FPGA.Config.OnTimer(TimeSpan.FromSeconds(1), handler);
+        }
+    }
+
+    [BoardConfig(Name = "Quokka")]
+    public static class LED8x8Controller
+    {
+        public static async Task Aggregator(
+            // banks 
+            FPGA.OutputSignal<bool> Bank1,
+            FPGA.OutputSignal<bool> Bank2,
+
+            // blinker
+            FPGA.OutputSignal<bool> LED1,
+
+            // WS2812
+            FPGA.OutputSignal<bool> DOUT
+            )
+        {
+            QuokkaBoard.OutputBank(Bank1);
+            QuokkaBoard.InputBank(Bank2);
+
+            IsAlive.Blink(LED1);
+
+            bool internalDOUT = false;
+            FPGA.Config.Link(internalDOUT, DOUT);
+
+            byte state = 0;
+            eCellType[] fieldMatrix = new eCellType[64];
+
+            Sequential handler = () =>
+            {
+                state++;
+                FieldMatrix.Reset(fieldMatrix);
+
+                switch (state)
+                {
+                    case 1:
+                        fieldMatrix[0] = eCellType.RedCross;
+                        fieldMatrix[63] = eCellType.GreenCross;
+                        break;
+                    case 2:
+                        FieldMatrix.DrawCross(fieldMatrix, eCellType.GreenCross);
+                        break;
+                    case 3:
+                        FieldMatrix.DrawCross(fieldMatrix, eCellType.RedCross);
+                        break;
+                    case 4:
+                        Position head = new Position(), tail = new Position();
+                        FieldMatrix.Seed(fieldMatrix, head, tail);
+                        break;
+                    default:
+                        state = 0;
+                        break;
+                }
+
+                Graphics.DrawFieldMatrix(1, fieldMatrix, out internalDOUT);
+            };
+
+            FPGA.Config.OnTimer(TimeSpan.FromSeconds(1), handler);
+        }
+    }
+
+
+    [BoardConfig(Name = "Test")]
+    public static class FuncController
+    {
+        public static async Task Aggregator(
+            FPGA.OutputSignal<byte> outRow,
+            FPGA.OutputSignal<byte> outCol,
+            FPGA.OutputSignal<byte> outOffset,
+            FPGA.OutputSignal<bool> tick,
+            FPGA.OutputSignal<bool> setColor
+            )
+        {
+            Sequential handler = () =>
+            {
+                for (byte row = 0; row < 8; row++)
+                {
+                    for (byte col = 0; col < 8; col++)
+                    {
+                        tick = true;
+                        byte offset = 0;
+                        Lookups.RowColToOffset(row, col, ref offset);
+
+                        FPGA.Config.Link(row, outRow);
+                        FPGA.Config.Link(col, outCol);
+                        FPGA.Config.Link(offset, outOffset);
+
+                        if (row == col || (7 - row) == col)
+                        {
+                            setColor = true;
+                        }
+                    }
+                }
+            };
+
+            FPGA.Config.OnStartup(handler);
+        }
+    }
+
     [BoardConfig(Name = "Test")]
     [BoardConfig(Name = "Quokka")]
     public static class PeripheralsController
     {
         public static async Task Aggregator(
+            // banks 
+            FPGA.OutputSignal<bool> Bank1,
+            FPGA.OutputSignal<bool> Bank2,
+
             // blinker
             FPGA.OutputSignal<bool> LED1,
+            FPGA.OutputSignal<bool> LED2,
+            FPGA.OutputSignal<bool> LED3,
+            FPGA.OutputSignal<bool> LED4,
+
+			// WS2812
+			FPGA.OutputSignal<bool> DOUT,
 
             // keypad
             FPGA.OutputSignal<bool> K7,
@@ -26,18 +272,15 @@ namespace SnakeGame
             FPGA.InputSignal<bool> K1,
             FPGA.InputSignal<bool> K0,
 
-            // banks 
-            FPGA.OutputSignal<bool> Bank1,
-            FPGA.OutputSignal<bool> Bank2,
-
-            // WS2812
-            FPGA.OutputSignal<bool> DOUT,
-
             // ADC
             FPGA.OutputSignal<bool> ADC1NCS,
             FPGA.OutputSignal<bool> ADC1SLCK,
             FPGA.OutputSignal<bool> ADC1DIN,
-            FPGA.InputSignal<bool> ADC1DOUT
+            FPGA.InputSignal<bool> ADC1DOUT,
+
+			// UART
+			FPGA.InputSignal<bool> RXD,
+            FPGA.OutputSignal<bool> TXD
 
             )
         {
@@ -48,12 +291,25 @@ namespace SnakeGame
 
             IsAlive.Blink(LED1);
 
+            IsAlive.Blink(LED2);
+            IsAlive.Blink(LED3);
+            IsAlive.Blink(LED4);
+
             Peripherals.GameControls(
                 ADC1NCS, ADC1SLCK, ADC1DIN, ADC1DOUT,
                 K7, K6, K5, K4, K3, K2, K1, K0,
-                ref controlsState);
+                controlsState);
 
             LEDControl(controlsState.keyCode, DOUT);
+
+            byte data = 0;
+            Sequential handler = () =>
+            {
+                UART.Write(115200, data, TXD);
+                data++;
+            };
+
+            FPGA.Config.OnTimer(TimeSpan.FromSeconds(1), handler);
         }
 
         public static void HandlePosition(
