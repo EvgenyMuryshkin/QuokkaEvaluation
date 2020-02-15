@@ -1,3 +1,4 @@
+using FPGA.Fourier;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Fourier
+namespace FPGA.Fourier
 {
     public enum FPUTimingType : byte
     {

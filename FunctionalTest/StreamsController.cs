@@ -26,9 +26,8 @@ namespace Controllers
 
             Sequential handler = () =>
             {
-                byte data = 0;
-                UART.Read(115200, RXD, out data);
-                for(ushort i = 0; i < data; i++)
+                byte data = UART.Read(115200, RXD);
+                for (ushort i = 0; i < data; i++)
                 {
                     stream.Write((byte)i);
                 }
@@ -63,8 +62,7 @@ namespace Controllers
 
             Sequential handler = () =>
             {
-                byte data = 0;
-                UART.Read(115200, RXD, out data);
+                byte data = UART.Read(115200, RXD);
                 for (ushort i = 0; i < data; i++)
                 {
                     stream.Write((byte)i);
@@ -117,8 +115,7 @@ namespace Controllers
 
             Sequential handler = () =>
             {
-                byte data = 0;
-                UART.Read(115200, RXD, out data);
+                byte data = UART.Read(115200, RXD);
                 for (ushort i = 0; i < data; i++)
                 {
                     receiverStream.Write((byte)i);

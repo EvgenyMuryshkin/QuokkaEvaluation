@@ -102,7 +102,7 @@ namespace Controllers
                 byte prev = 100, next = 0;
                 while (true)
                 {
-                    UART.Read(115200, RXD, out next);
+                    next = UART.Read(115200, RXD);
 
                     UART.RegisteredWrite(115200, prev, out internalTXD);
                     UART.RegisteredWrite(115200, next, out internalTXD);
@@ -126,8 +126,7 @@ namespace Controllers
             const bool trigger = true;
             Sequential handler = () =>
             {
-                byte data = 0;
-                UART.Read(115200, RXD, out data);
+                byte data = UART.Read(115200, RXD);
 
                 UART.Write(115200, data, TXD);
             };
@@ -148,8 +147,7 @@ namespace Controllers
             // this should never be triggered
             Sequential handler = () =>
             {
-                byte data = 0;
-                UART.Read(115200, RXD, out data);
+                byte data = UART.Read(115200, RXD);
 
                 UART.Write(115200, data, TXD);
             };
@@ -194,7 +192,7 @@ namespace Controllers
             byte data = 0;
             Sequential mainHandler = () =>
             {
-                UART.Read(115200, RXD, out data);
+                data = UART.Read(115200, RXD);
             };
 
             const bool trigger = true;
@@ -227,11 +225,10 @@ namespace Controllers
             FPGA.InputSignal<bool> RXD,
             FPGA.OutputSignal<bool> TXD)
         {
-            byte data = 0;
             Sequential mainHandler = () =>
             {
                 const uint baud = 115200;
-                UART.Read(baud, RXD, out data);
+                byte data = UART.Read(115200, RXD);
                 UART.Write(baud, data, TXD);
             };
 

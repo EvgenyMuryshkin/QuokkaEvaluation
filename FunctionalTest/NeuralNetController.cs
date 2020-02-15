@@ -24,8 +24,7 @@ namespace Controllers
 
                 for (int i = 0; i < buff.Length; i++)
                 {
-                    byte data = 0;
-                    UART.Read(baud, RXD, out data);
+                    byte data = UART.Read(baud, RXD);
                     buff[i] = data;
                 }
 

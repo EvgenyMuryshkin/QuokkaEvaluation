@@ -28,8 +28,7 @@ namespace SensorsBoard
             {
                 while(true)
                 {
-                    byte cmd = 0;
-                    UART.Read(baud, RXD, out cmd);
+                    byte cmd = UART.Read(baud, RXD);
                     lock(buffLock)
                     {
                         completedTasks = 0;

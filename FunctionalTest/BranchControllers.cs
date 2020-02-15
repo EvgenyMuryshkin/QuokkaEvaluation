@@ -37,8 +37,7 @@ namespace Controllers
         {
             Sequential handler = () =>
             {
-                byte data = 0;
-                UART.Read(115200, RXD, out data);
+                byte data = UART.Read(115200, RXD);
 
                 byte result = 0;
                 TestMethod(data, out result);
@@ -80,8 +79,7 @@ namespace Controllers
         {
             Sequential handler = () =>
             {
-                byte data = 0;
-                UART.Read(115200, RXD, out data);
+                byte data = UART.Read(115200, RXD);
 
                 byte result = 0;
                 TestMethod(data, out result);
@@ -126,8 +124,7 @@ namespace Controllers
         {
             Sequential handler = () =>
             {
-                byte data = 0;
-                UART.Read(115200, RXD, out data);
+                byte data = UART.Read(115200, RXD);
 
                 byte result = 0;
                 TestMethod(data, out result);
@@ -187,8 +184,7 @@ namespace Controllers
         {
             Sequential handler = () =>
             {
-                byte data = 0;
-                UART.Read(115200, RXD, out data);
+                byte data = UART.Read(115200, RXD);
 
                 byte result = 0;
                 TestMethod(data, out result);

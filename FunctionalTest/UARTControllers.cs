@@ -1,6 +1,6 @@
 ﻿using Drivers;
 using FPGA;
-using FPGA.Attributes;
+using FPGA.Attributes;using FPGA.Optimizers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -57,6 +57,31 @@ namespace Controllers
             };
 
             FPGA.Config.OnSignal(deserialized, processingHandler);
+        }
+    }
+
+    /*[BoardConfig(Name = "NEB")]*/
+    [BoardConfig(Name = "Quokka")]
+    public static class UART_ByteRoundTripController
+    {
+        public static async Task Aggregator(
+            FPGA.InputSignal<bool> RXD,
+            FPGA.OutputSignal<bool> TXD
+            )
+        {
+            Sequential handler = () =>
+            {
+                const uint baud = 115200;
+
+                while (true)
+                {
+                    FPGA.Optimizations.AddOptimizer<DefaultOptimizer>();
+                    byte data = UART.Read(115200, RXD);
+                    UART.Write(baud, data, TXD);
+                }
+            };
+
+            FPGA.Config.OnStartup(handler);
         }
     }
 }

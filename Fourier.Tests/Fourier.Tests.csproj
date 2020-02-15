@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Compat\EvaluationCompat\EvaluationCompat.csproj" />
     <ProjectReference Include="..\Fourier\Fourier.csproj" />
   </ItemGroup>
 

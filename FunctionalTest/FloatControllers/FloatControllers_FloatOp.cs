@@ -25,7 +25,7 @@ namespace FloatControllers
                 
                 UART.ReadFloat(baud, RXD, out f1);
                 UART.ReadFloat(baud, RXD, out f2);
-                UART.Read(baud, RXD, out fpuOp);
+                fpuOp = UART.Read(baud, RXD);
 
                 fpuTrigger = true;
 

@@ -24,7 +24,7 @@ namespace Controllers
                 bool result = false;
                 uint source = request.value;
                 // TODO: member access is not supported in function call
-                SequentialMath.Calculators.IsPrime((uint)source, out result);
+                SequentialMath.IsPrime((uint)source, out result);
 
                 DTOs.IsPrimeResponse response = new DTOs.IsPrimeResponse();
                 response.value = request.value;

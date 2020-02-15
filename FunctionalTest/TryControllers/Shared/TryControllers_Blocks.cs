@@ -25,8 +25,7 @@ namespace Controllers
 
             Sequential handler = () =>
             {
-                byte data = 0;
-                UART.Read(baud, RXD, out data);
+                byte data = UART.Read(115200, RXD);
                 testAction(data, stream);
             };
 

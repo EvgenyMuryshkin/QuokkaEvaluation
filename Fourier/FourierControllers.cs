@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fourier
+namespace FPGA.Fourier.Controllers
 {
     public static class RTX
     {
@@ -98,7 +98,6 @@ namespace Fourier
             bool internalTXD = true;
             FPGA.Config.Link(internalTXD, TXD);
 
-            byte testOp;
             float op1, op2, res = 0;
 
             Sequential handler = () =>
@@ -110,7 +109,7 @@ namespace Fourier
                     uint start = 0, end = 0;
                     res = 0;
 
-                    UART.Read(baud, RXD, out testOp);
+                    var testOp = UART.Read(baud, RXD);
                     UART.ReadFloat(baud, RXD, out op1);
                     UART.ReadFloat(baud, RXD, out op2);
 
@@ -200,8 +199,7 @@ namespace Fourier
 
                 while (true)
                 {
-                    byte data = 0;
-                    UART.Read(baud, RXD, out data);
+                    byte data = UART.Read(baud, RXD);
 
                     uint length = GeneratorTools.ArrayLength(width);
                     for(uint i = 0; i < length; i++)

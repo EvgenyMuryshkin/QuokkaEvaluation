@@ -1,3 +1,4 @@
+using FPGA.Fourier;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
@@ -34,7 +35,7 @@ namespace Fourier.Tests
             Reference.DFT(referenceDFT, Direction.Forward);
 
             var quokkaDFT = sourceSignal.ToArray();
-            Fourier.DFT.Transform(_bp.Bits, quokkaDFT, Direction.Forward);
+            FPGA.Fourier.DFT.Transform(_bp.Bits, quokkaDFT, Direction.Forward);
 
             Validation.AssertSpectres(referenceDFT, quokkaDFT, true, false);
         }

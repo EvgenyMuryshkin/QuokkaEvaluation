@@ -1,7 +1,7 @@
-﻿using System;
-
+﻿using FPGA.Attributes;
 namespace FPGA.Trigonometry
 {
+    [CanOptimize]
     public static class FPGATrigonometry
     {
         public static float Sin(float rad)

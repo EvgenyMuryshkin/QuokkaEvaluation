@@ -75,7 +75,7 @@ namespace VRCamera
                 byte counter = 0;
                 while (true)
                 {
-                    UART.Read(115200, RXD, out data);
+                    data = UART.Read(115200, RXD);
                     if (data == 255 || counter == 255)
                     {
                         // begin of packet or overflow

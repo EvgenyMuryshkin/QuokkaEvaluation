@@ -150,7 +150,7 @@ namespace Controllers
 
             Sequential handler = () =>
             {
-                UART.Read(115200, RXD, out data);
+                data = UART.Read(115200, RXD);
 
                 for(var i = 0; i < 3; i++)
                 {

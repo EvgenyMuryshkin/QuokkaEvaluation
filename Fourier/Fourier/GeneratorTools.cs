@@ -2,7 +2,7 @@
 using System;
 using System.Linq;
 
-namespace Fourier
+namespace FPGA.Fourier
 {
     /// <summary>
     /// Non-synthesizable, evaluated at translation time

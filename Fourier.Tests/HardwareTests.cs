@@ -1,5 +1,6 @@
-using Fourier.Tests.Tools;
+using FPGA.Fourier;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using QuokkaIntegrationTests;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,7 +9,7 @@ using System.Linq;
 
 namespace Fourier.Tests
 {
-    class COMPort : TestCOMPort
+    class COMPort : QuokkaPort
     {
         public COMPort() : base("COM3", 115200)
         {

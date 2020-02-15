@@ -26,7 +26,7 @@ namespace FloatControllers
                 {
                     UART.ReadFloat(baud, RXD, out op1);
                     UART.ReadFloat(baud, RXD, out op2);
-                    UART.Read(baud, RXD, out command);
+                    command = UART.Read(baud, RXD);
 
                     FloatControllersOps.TestHandler(op1, op2, command, out res);
 

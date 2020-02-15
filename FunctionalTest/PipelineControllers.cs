@@ -18,8 +18,7 @@ namespace FunctionalTest
         {
             Sequential handler = () =>
             {
-                byte data = 0;
-                UART.Read(115200, RXD, out data);
+                byte data = UART.Read(115200, RXD);
 
                 Func<byte> dFunc = () => (byte)(data * 2);
                 FPGA.Signal<bool> writeEnable = false;
@@ -47,7 +46,6 @@ namespace FunctionalTest
         {
             Sequential handler = () =>
             {
-                byte data = 0;
                 ulong tmp = 0;
                 ulong op1 = 0, op2 = 0;
 
@@ -55,7 +53,7 @@ namespace FunctionalTest
                 {
                     for(byte j = 0; j < 8; j++)
                     {
-                        UART.Read(115200, RXD, out data);
+                        byte data = UART.Read(115200, RXD);
                         tmp = ((ulong)data << 56) | (tmp >> 8);
                     }
 
@@ -110,7 +108,6 @@ namespace FunctionalTest
         {
             Sequential handler = () =>
             {
-                byte data = 0;
                 ulong tmp = 0;
                 ulong op1 = 0, op2 = 0;
 
@@ -118,7 +115,7 @@ namespace FunctionalTest
                 {
                     for (byte j = 0; j < 8; j++)
                     {
-                        UART.Read(115200, RXD, out data);
+                        byte data = UART.Read(115200, RXD);
                         tmp = ((ulong)data << 56) | (tmp >> 8);
                     }
 

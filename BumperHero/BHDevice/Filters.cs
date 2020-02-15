@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FPGA;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -19,7 +20,7 @@ namespace BHDevice
             uint result = 0, remainder = 0;
             // TODO: length accessor in cast
             //uint denominator = (uint)buff.Length;
-            SequentialMath.Divider.Unsigned<uint>(sum, 10, out result, out remainder);
+            SequentialMath.DivideUnsigned<uint>(sum, 10, out result, out remainder);
             average = (ushort)result;
         }
     }

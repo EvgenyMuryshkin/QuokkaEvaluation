@@ -1,12 +1,13 @@
 ﻿using FPGA;
+using FPGA.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
 
-namespace SequentialMath
+namespace FPGA
 {
-    public static class Calculators
+    public static class SequentialMath
     {
         public static long Factorial(int n)
         {
@@ -118,7 +119,7 @@ namespace SequentialMath
                     }
 
                     uint divResult = 0, divRemainder = 0;
-                    SequentialMath.Divider.Unsigned<uint>(value, workerValue, out divResult, out divRemainder);
+                    DivideUnsigned<uint>(value, workerValue, out divResult, out divRemainder);
 
                     if(divRemainder == 0)
                     {
@@ -140,11 +141,43 @@ namespace SequentialMath
 
             result = !foundDivider;
         }
-    }
 
-    public static class Divider
-    {
-        public static void Unsigned<T>(T inNumerator, T inDenominator, out T outResult, out T outRemainder) where T : struct
+        /// <summary>
+        /// https://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Approximations_that_depend_on_the_floating_point_representation
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        [Inlined]
+        public static float InitialApproximation(float value)
+        {
+            var bits = FPGA.Runtime.BitwiseAssign<uint>(value);
+            bits = ((bits - (1 << 23)) >> 1) + (1 << 29);
+            return FPGA.Runtime.BitwiseAssign<float>(bits);
+        }
+
+        public static float Sqrt(float value)
+        {
+            if (value == 0)
+                return 0;
+
+            float x0 = InitialApproximation(value), x1;
+
+            byte iter = 0;
+            // usually, it converges over 4 iterations
+            while (++iter < 10)
+            {
+                x1 = (x0 + value / x0) / 2;
+
+                if (x0 == x1)
+                    break;
+
+                x0 = x1;
+            }
+
+            return x0;
+        }
+
+        public static void DivideUnsigned<T>(T inNumerator, T inDenominator, out T outResult, out T outRemainder) where T : struct
         {
             byte size = FPGA.Config.SizeOf(inNumerator);
             T num = inNumerator, den = inDenominator, res = default(T), rem = default(T);

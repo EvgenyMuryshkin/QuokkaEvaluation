@@ -20,19 +20,18 @@ namespace Controllers
             {
                 while (true)
                 {
-                    byte start = 0;
-                    UART.Read(115200, RXD, out start);
+                    byte start = UART.Read(115200, RXD);
 
-                    for(uint counter = 0; counter < 100; counter++)
+                    for (uint counter = 0; counter < 100; counter++)
                     {
                         ulong fib = 0;
-                        SequentialMath.Calculators.Fibonacci(counter, out fib);
+                        SequentialMath.Fibonacci(counter, out fib);
 
                         if (fib > uint.MaxValue)
                             break;
 
                         bool isPrime = false;
-                        SequentialMath.Calculators.IsPrime((uint)fib, out isPrime);
+                        SequentialMath.IsPrime((uint)fib, out isPrime);
 
                         if (isPrime)
                         {

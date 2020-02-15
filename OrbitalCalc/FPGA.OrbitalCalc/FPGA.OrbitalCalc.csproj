@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Drivers\Drivers.csproj" />
+    <ProjectReference Include="..\..\Trigonometry\FPGA.Trigonometry\FPGA.Trigonometry.csproj" />
+  </ItemGroup>
+
+</Project>

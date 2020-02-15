@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Fourier
+namespace FPGA.Fourier
 {
     public struct ComplexFloat
     {

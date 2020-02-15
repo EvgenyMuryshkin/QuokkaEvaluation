@@ -1,5 +1,4 @@
 ﻿using FPGA.Attributes;
-using SequentialMath;
 using System;
 using System.Linq;
 
@@ -10,7 +9,7 @@ namespace FPGA.Trigonometry
     {
         public static float[] FactorialArray()
         {
-            return Enumerable.Range(0, 10).Select(i => (float)Calculators.Factorial(i)).ToArray();
+            return Enumerable.Range(0, 10).Select(i => (float)SequentialMath.Factorial(i)).ToArray();
         }
     }
 }

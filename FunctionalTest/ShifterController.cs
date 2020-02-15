@@ -66,8 +66,7 @@ namespace Controllers
 
             Sequential readHandler = () =>
             {
-                byte data = 0;
-                UART.Read(115200, RXD, out data);
+                byte data = UART.Read(115200, RXD);
                 cmd = (eShiftCommand)data;
             };
             const bool trigger = true;

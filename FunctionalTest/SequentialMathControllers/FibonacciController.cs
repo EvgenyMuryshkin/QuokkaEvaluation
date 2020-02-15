@@ -20,11 +20,10 @@ namespace Controllers
             {
                 while (true)
                 {
-                    byte start = 0;
-                    UART.Read(115200, RXD, out start);
+                    byte start = UART.Read(115200, RXD);
 
                     ulong result = 0;
-                    SequentialMath.Calculators.Fibonacci(start, out result);
+                    SequentialMath.Fibonacci(start, out result);
 
                     for(byte i = 0; i < 8; i++ )
                     {

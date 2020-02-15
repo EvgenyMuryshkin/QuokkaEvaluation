@@ -49,7 +49,7 @@ namespace Drivers
                 }
             }
 
-            FPGA.Runtime.Delay(TimeSpan.FromMilliseconds(10));
+            FPGA.Runtime.Delay(TimeSpan.FromMilliseconds(50));
         }
     }
 }

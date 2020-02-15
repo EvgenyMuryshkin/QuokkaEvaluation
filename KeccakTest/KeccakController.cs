@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Controllers
 {
-    [BoardConfig(Name = "NEB")]
+    /*[BoardConfig(Name = "NEB")]*/
     [BoardConfig(Name = "BIG")]
     public static class Misc_KeccakController
     {
@@ -566,8 +566,7 @@ namespace Controllers
                 ulong data = 0;
                 for (byte i = 0; i < 8; i++)
                 {
-                    byte part = 0;
-                    UART.Read(115200, RXD, out part);
+                    byte part = UART.Read(115200, RXD);
                     data = ((ulong)part << 56) | (data >> 8);
                 }
 

@@ -18,19 +18,18 @@ namespace Controllers
         {
             Sequential mainHandler = () =>
             {
-                byte data = 0;
                 byte[] buff = new byte[1000];
 
                 for( int i = 0; i < 1000; i++ )
                 {
-                    UART.Read(115200, RXD, out data);
+                    var data = UART.Read(115200, RXD);
                     buff[i] = data;
                 }
 
                 byte sum = 0;
                 for (int i = 0; i < 1000; i++)
                 {
-                    data = buff[i];
+                    var data = buff[i];
                     sum += data;
                 }
 
@@ -82,8 +81,7 @@ namespace Controllers
         {
             Sequential mainHandler = () =>
             {
-                byte seed = 0;
-                UART.Read(115200, RXD, out seed);
+                byte seed = UART.Read(115200, RXD);
 
                 int sum = 0;
                 Handler(seed, out sum);
@@ -107,19 +105,18 @@ namespace Controllers
             Sequential mainHandler = () =>
             {
                 const uint buffLength = 1000;
-                byte data = 0;
                 byte[] buff = new byte[buffLength];
 
                 for (int i = 0; i < buff.Length; i++)
                 {
-                    UART.Read(115200, RXD, out data);
+                    var data = UART.Read(115200, RXD);
                     buff[i] = data;
                 }
 
                 byte sum = 0;
                 for (int i = 0; i < buffLength; i++)
                 {
-                    data = buff[i];
+                    var data = buff[i];
                     sum += data;
                 }
 
@@ -144,10 +141,9 @@ namespace Controllers
 
             Sequential mainHandler = () =>
             {
-                byte data = 0;
                 byte[] buff = new byte[] { 1, 2, 3, 4, 5 };
 
-                UART.Read(115200, RXD, out data);
+                var data = UART.Read(115200, RXD);
 
                 for (int i = 0; i < buff.Length; i++)
                 {
@@ -155,7 +151,6 @@ namespace Controllers
                     existing = buff[i];
                     UART.RegisteredWrite(115200, existing, out internalTXD);
                 }
-
             };
 
             FPGA.Config.OnStartup(mainHandler);
@@ -175,12 +170,11 @@ namespace Controllers
 
             Sequential mainHandler = () =>
             {
-                byte data = 0;
                 byte[] buff = new byte[] { 0, 1, 2, 3, 4 };
 
                 for (int i = 0; i < buff.Length; i++)
                 {
-                    UART.Read(115200, RXD, out data);
+                    var data = UART.Read(115200, RXD);
                     UART.RegisteredWrite(115200, data, out internalTXD);
                     byte existing = 0;
                     existing = buff[i];
@@ -191,14 +185,14 @@ namespace Controllers
 
                 for (int i = 0; i < buff.Length; i++)
                 {
-                    data = buff[i];
+                    var data = buff[i];
                     UART.RegisteredWrite(115200, data, out internalTXD);
                 }
 
                 byte sum = 0;
                 for (int i = 0; i < buff.Length; i++)
                 {
-                    data = buff[i];
+                    var data = buff[i];
                     sum += data;
                 }
 
@@ -223,10 +217,9 @@ namespace Controllers
 
             Sequential mainHandler = () =>
             {
-                byte data = 0;
                 byte[] buff = new byte[] { 0, 1, 2, 3, 4, 5, 6, 7 };
 
-                UART.Read(115200, RXD, out data);
+                var data = UART.Read(115200, RXD);
 
                 for (byte i = 0; i < buff.Length; i++)
                 {

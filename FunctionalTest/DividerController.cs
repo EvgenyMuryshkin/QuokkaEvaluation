@@ -23,7 +23,7 @@ namespace Controllers
             Sequential processingHandler = () =>
             {
                 ulong result, remainder;
-                SequentialMath.Divider.Unsigned<ulong>(request.Numerator, request.Denominator, out result, out remainder);
+                SequentialMath.DivideUnsigned<ulong>(request.Numerator, request.Denominator, out result, out remainder);
                 DTOs.DividerResponse response = new DTOs.DividerResponse();
                 response.Result = result;
                 response.Remainder = remainder;

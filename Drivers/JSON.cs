@@ -20,7 +20,7 @@ namespace Drivers
             {
                 while(true)
                 {
-                    UART.Read(115200, RXD, out data);
+                    data = UART.Read(115200, RXD);
                 }
             };
 

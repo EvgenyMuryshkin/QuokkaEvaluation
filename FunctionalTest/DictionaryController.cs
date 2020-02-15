@@ -11,7 +11,7 @@ namespace Controllers
     /*[BoardConfig(Name = "NEB")]*/[BoardConfig(Name = "Quokka")]
     public static class Runtime_DictionaryController
     {
-        public static void Lookpup(byte key, out byte value)
+        public static void Lookup(byte key, out byte value)
         {
             FPGA.Collections.ReadOnlyDictionary<byte, byte> items = new FPGA.Collections.ReadOnlyDictionary<byte, byte>()
             {
@@ -34,11 +34,10 @@ namespace Controllers
 
             Sequential handler = () =>
             {
-                byte data = 0;
-                UART.Read(115200, RXD, out data);
+                byte data = UART.Read(115200, RXD);
 
                 byte result = 0;
-                Lookpup(data, out result);
+                Lookup(data, out result);
 
                 UART.Write(115200, result, TXD);
             };

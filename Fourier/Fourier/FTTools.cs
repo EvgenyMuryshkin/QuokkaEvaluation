@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Fourier
+namespace FPGA.Fourier
 {
     public static class FTTools
     {

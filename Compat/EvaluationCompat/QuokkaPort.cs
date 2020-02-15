@@ -7,14 +7,14 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Fourier.Tests.Tools
+namespace QuokkaIntegrationTests
 {
-    public class TestCOMPort : IDisposable
+    public class QuokkaPort : IDisposable
     {
         protected SerialPort mPort = null;
         public TimeSpan DefaultTimeout = TimeSpan.FromSeconds(1);
 
-        public TestCOMPort(string portName = "COM3", int baud = 9600)
+        public QuokkaPort(string portName = "COM3", int baud = 9600)
         {
             mPort = new SerialPort();
             mPort.PortName = portName;

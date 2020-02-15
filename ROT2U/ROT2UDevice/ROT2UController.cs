@@ -88,7 +88,7 @@ namespace SnakeGame
 
 					for (int i = 0; i < servosCount; i++)
 					{
-						UART.Read(baud, RXD, out data);
+						data = UART.Read(baud, RXD);
 						servosBuff[i] = data;
 					}
 				}

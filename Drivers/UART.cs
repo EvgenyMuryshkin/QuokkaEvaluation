@@ -13,7 +13,7 @@ namespace Drivers
         }
 
         // module has one non-registered input bit, and one registered output byte
-        public static void Read(uint baud, FPGA.InputSignal<bool> RXD, out byte data)
+        public static byte Read(uint baud, FPGA.InputSignal<bool> RXD)
         {
             FPGA.Const<ulong> delay = 1000000000 / baud;
 
@@ -42,8 +42,7 @@ namespace Drivers
             // stop bit
             FPGA.Runtime.Delay(delay);
 
-            // assign result and complete method call
-            data = result;
+            return result;
         }
 
         public static void Write(uint baud, byte data, FPGA.Signal<bool> TXD)
@@ -84,11 +83,10 @@ namespace Drivers
 
         public static void ReadUnsigned32(uint baud, FPGA.InputSignal<bool> RXD, ref uint data)
         {
-            byte part = 0;
             for (byte i = 0; i < 4; i++)
             {
                 FPGA.Config.SetInclusiveRange(0, 4, i);
-                UART.Read(baud, RXD, out part);
+                var part = UART.Read(baud, RXD);
                 data = (data >> 8) | ((uint)part << 24);
             }
         }
@@ -172,11 +170,10 @@ namespace Drivers
 
         public static void ReadUnsigned64(uint baud, FPGA.InputSignal<bool> RXD, ref ulong data)
         {
-            byte part = 0;
             for (byte i = 0; i < 8; i++)
             {
                 FPGA.Config.SetInclusiveRange(0, 8, i);
-                UART.Read(baud, RXD, out part);
+                var part = UART.Read(baud, RXD);
                 data = (data >> 8) | ((ulong)part << 56);
             }
         }

@@ -25,7 +25,7 @@ namespace Controllers
             {
                 while(true)
                 {
-                    UART.Read(115200, RXD, out byte data);
+                    byte data = UART.Read(115200, RXD);
                     switch (data)
                     {
                         case 0:

@@ -37,8 +37,7 @@ namespace FunctionalTest.ExpressionsControllers
             {
                 while(true)
                 {
-                    byte op = 0;
-                    UART.Read(baud, RXD, out op);
+                    byte op = UART.Read(baud, RXD);
 
                     uint op1 = 0, op2 = 0;
                     UART.ReadUnsigned32(baud, RXD, ref op1);

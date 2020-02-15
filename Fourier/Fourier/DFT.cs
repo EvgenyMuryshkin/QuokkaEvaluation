@@ -1,4 +1,4 @@
-﻿namespace Fourier
+﻿namespace FPGA.Fourier
 {
     public static class DFT
     {
