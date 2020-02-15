@@ -106,7 +106,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FPGA.OrbitalCalc.Controller
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FPGA.OrbitalCalc.Tests", "OrbitalCalc\FPGA.OrbitalCalc.Tests\FPGA.OrbitalCalc.Tests.csproj", "{CAC5E557-CB17-4177-9BF0-7A41BC65CC52}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EvaluationCompat", "Compat\EvaluationCompat\EvaluationCompat.csproj", "{A76063D4-A240-482D-B7E2-A4069BAFBFC4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EvaluationCompat", "Compat\EvaluationCompat\EvaluationCompat.csproj", "{A76063D4-A240-482D-B7E2-A4069BAFBFC4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{82964BFC-D39B-436E-8943-0462B3663C2D}"
+	ProjectSection(SolutionItems) = preProject
+		run-all.cmd = run-all.cmd
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
