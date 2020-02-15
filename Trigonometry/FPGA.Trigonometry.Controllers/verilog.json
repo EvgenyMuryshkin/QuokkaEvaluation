@@ -1,5 +1,5 @@
 ﻿{
-  "Project": "OrbitalCalc",
+  "Project": "TrigTests",
   "Configurations": [
     {
       "Name": "Quokka",
@@ -14,6 +14,6 @@
       "ClockFrequency": 24000000
     }
   ],
-  "HDL": "VHDL",
-  "ProjectLocation": "../../VHDL"
+  "HDL": "Verilog",
+  "ProjectLocation": "../../Verilog"
 }

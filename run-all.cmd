@@ -11,4 +11,6 @@ dotnet run -s "..\BumperHero\BHDevice\vhdl.json"
 dotnet run -s "..\BumperHero\BHDevice\verilog.json"
 dotnet run -s "..\Fourier\vhdl.json"
 dotnet run -s "..\Fourier\verilog.json"
+dotnet run -s "..\OrbitalCalc\FPGA.OrbitalCalc.Controllers\vhdl.json"
+dotnet run -s "..\OrbitalCalc\FPGA.OrbitalCalc.Controllers\verilog.json"
 cd ..
