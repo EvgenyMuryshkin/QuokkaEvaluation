@@ -2,7 +2,7 @@
 
 namespace QuokkaTests.Experimental
 {
-    public class TransmitterModule : RTLSynchronousModule<TransmitterState, TransmitterInputs>
+    public class TransmitterModule : RTLSynchronousModule<TransmitterInputs, TransmitterState>
     {
         // public data points
         public bool Bit => State.Data[0];

@@ -20,24 +20,24 @@ namespace QuokkaTests.Experimental
             base.Schedule(inputsFactory);
 
             Emitter.Schedule(() => new EmitterInputs()
-            {
-                IsEnabled = Inputs.IsEnabled,
-                Ack = Transmitter.IsReady
-            });
+                {
+                    IsEnabled = Inputs.IsEnabled,
+                    Ack = Transmitter.IsReady
+                });
 
             Transmitter.Schedule(() => new TransmitterInputs()
-            {
-                Data = Emitter.Data,
-                Trigger = Emitter.HasData,
-                Ack = Receiver.HasData
-            });
+                {
+                    Trigger = Emitter.HasData,
+                    Ack = Receiver.HasData,
+                    Data = Receiver.Data
+               });
 
             Receiver.Schedule(() => new ReceiverInputs()
-            {
-                Bit = Transmitter.Bit,
-                IsValid = Transmitter.IsTransmitting,
-                Ack = true
-            });
+                {
+                    IsValid = Transmitter.IsTransmitting,
+                    Bit = Transmitter.Bit,
+                    Ack = true
+                });
         }
     }
 }

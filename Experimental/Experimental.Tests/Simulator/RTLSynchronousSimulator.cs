@@ -4,6 +4,13 @@ using System.IO;
 
 namespace Quokka.RTL
 {
+    public class RTLSimulatorCallback<TModule>
+    {
+        public TModule TopLevel;
+        public int Clock;
+        public int StageIteration;
+    }
+
     public class RTLSynchronousSimulator<TModule>
         where TModule : IRTLCombinationalModule, new()
     {
@@ -15,7 +22,7 @@ namespace Quokka.RTL
 
         public TModule TopLevel => _topLevel;
         public Action<TModule> OnPostStage { get; set; }
-        public Func<TModule, bool> IsRunning { get; set; }
+        public Func<RTLSimulatorCallback<TModule>, bool> IsRunning { get; set; }
 
         public RTLSynchronousSimulator()
         {
@@ -53,7 +60,12 @@ namespace Quokka.RTL
             var clock = 0;
             var stageIteration = 0;
 
-            while (clock < MaxClockCycles && (IsRunning?.Invoke(_topLevel) ?? true))
+            while (clock < MaxClockCycles && (IsRunning?.Invoke( new RTLSimulatorCallback<TModule>()
+            {
+                TopLevel = _topLevel,
+                Clock = clock,
+                StageIteration = stageIteration
+            }) ?? true))
             {
                 var currentTime = clock * 2 * MaxStageIterations;
                 clockSignal.Value = true;

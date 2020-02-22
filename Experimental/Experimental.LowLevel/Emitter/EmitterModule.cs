@@ -2,7 +2,7 @@
 
 namespace QuokkaTests.Experimental
 {
-    public class EmitterModule : RTLSynchronousModule<EmitterState, EmitterInputs>
+    public class EmitterModule : RTLSynchronousModule<EmitterInputs, EmitterState>
     {
         public byte Data => State.Data;
         public bool HasData => State.FSM == EmitterFSM.Emitting;

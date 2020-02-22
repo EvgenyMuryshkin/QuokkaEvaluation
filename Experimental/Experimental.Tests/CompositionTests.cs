@@ -20,7 +20,7 @@ namespace QuokkaTests.Experimental
             var sim = new RTLSynchronousSimulator<CompositionModule>();
             sim.Trace(PathTools.VCDOutputPath());
 
-            sim.IsRunning = (topLevel) => receivedData.Count < bytesToProcess;
+            sim.IsRunning = (simulatorCallback) => receivedData.Count < bytesToProcess;
 
             sim.OnPostStage = (topLevel) =>
             {

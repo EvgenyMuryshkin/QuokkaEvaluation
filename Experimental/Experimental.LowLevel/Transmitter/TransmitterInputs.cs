@@ -9,6 +9,8 @@ namespace QuokkaTests.Experimental
     /// </summary>
     public class TransmitterInputs
     {
+        public TransmitterInputs() { }
+
         public RTLBitArray Trigger = false;
         public RTLBitArray Ack = false;
         public RTLBitArray Data = byte.MinValue;

@@ -2,6 +2,10 @@
   "Project": "FncTests",
   "Configurations": [
     {
+      "Name": "Quokka",
+      "ClockFrequency": 50000000
+    },
+    {
       "Name": "NEB",
       "ClockFrequency": 24000000
     }
