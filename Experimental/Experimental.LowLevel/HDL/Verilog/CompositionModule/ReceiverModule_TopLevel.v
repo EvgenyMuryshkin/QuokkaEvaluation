@@ -61,19 +61,15 @@ wire  ReceiverModule_TopLevel_ReceiverModule_ReceiverModule_L10F63T64_Expr = 1'b
 wire  ReceiverModule_TopLevel_ReceiverModule_Inputs_IsValid;
 wire  ReceiverModule_TopLevel_ReceiverModule_Inputs_Ack;
 wire  ReceiverModule_TopLevel_ReceiverModule_Inputs_Bit;
+reg signed  [32:1] ReceiverModule_TopLevel_ReceiverModule_NextState_FSM = 32'b00000000000000000000000000000000;
+reg  [8:1] ReceiverModule_TopLevel_ReceiverModule_NextState_Data = 8'b00000000;
 wire  [8:1] ReceiverModule_TopLevel_ReceiverModule_ReceiverModule_L10F36T65_Expr;
 wire signed  [32:1] ReceiverModule_TopLevel_ReceiverModule_State_FSM;
 wire signed  [32:1] ReceiverModule_TopLevel_ReceiverModule_State_FSMDefault = 32'b00000000000000000000000000000000;
-reg  ReceiverModule_TopLevel_ReceiverModule_State_FSMWriteEnable = 1'b0;
-wire signed  [32:1] ReceiverModule_TopLevel_ReceiverModule_NextState_FSM;
-wire signed  [32:1] ReceiverModule_TopLevel_ReceiverModule_NextState_FSMDefault = 32'b00000000000000000000000000000000;
-reg  ReceiverModule_TopLevel_ReceiverModule_NextState_FSMWriteEnable = 1'b0;
+wire  ReceiverModule_TopLevel_ReceiverModule_State_FSMWriteEnable;
 wire  [8:1] ReceiverModule_TopLevel_ReceiverModule_State_Data;
 wire  [8:1] ReceiverModule_TopLevel_ReceiverModule_State_DataDefault = 8'b00000000;
-reg  ReceiverModule_TopLevel_ReceiverModule_State_DataWriteEnable = 1'b0;
-wire  [8:1] ReceiverModule_TopLevel_ReceiverModule_NextState_Data;
-wire  [8:1] ReceiverModule_TopLevel_ReceiverModule_NextState_DataDefault = 8'b00000000;
-reg  ReceiverModule_TopLevel_ReceiverModule_NextState_DataWriteEnable = 1'b0;
+wire  ReceiverModule_TopLevel_ReceiverModule_State_DataWriteEnable;
 wire  ReceiverModule_TopLevel_ReceiverModule_ReceiverModule_L8F32T71_Expr;
 wire signed  [33:1] ReceiverModule_TopLevel_ReceiverModule_ReceiverModule_L8F32T71_ExprLhs;
 wire signed  [33:1] ReceiverModule_TopLevel_ReceiverModule_ReceiverModule_L8F32T71_ExprRhs;
@@ -88,13 +84,9 @@ wire  BoardSignals_Starting;
 wire  BoardSignals_Started;
 reg  InternalReset = 1'b0;
 reg signed  [32:1] ReceiverModule_TopLevel_ReceiverModule_State_FSMQ = 32'b00000000000000000000000000000000;
-reg signed  [32:1] ReceiverModule_TopLevel_ReceiverModule_State_FSMD = 32'b00000000000000000000000000000000;
-reg signed  [32:1] ReceiverModule_TopLevel_ReceiverModule_NextState_FSMQ = 32'b00000000000000000000000000000000;
-reg signed  [32:1] ReceiverModule_TopLevel_ReceiverModule_NextState_FSMD = 32'b00000000000000000000000000000000;
+wire signed  [32:1] ReceiverModule_TopLevel_ReceiverModule_State_FSMD;
 reg  [8:1] ReceiverModule_TopLevel_ReceiverModule_State_DataQ = 8'b00000000;
-reg  [8:1] ReceiverModule_TopLevel_ReceiverModule_State_DataD = 8'b00000000;
-reg  [8:1] ReceiverModule_TopLevel_ReceiverModule_NextState_DataQ = 8'b00000000;
-reg  [8:1] ReceiverModule_TopLevel_ReceiverModule_NextState_DataD = 8'b00000000;
+wire  [8:1] ReceiverModule_TopLevel_ReceiverModule_State_DataD;
 work_Quokka_BoardSignalsProc ReceiverModule_TopLevel_ReceiverModule_BoardSignalsConnection(BoardSignals_Clock,BoardSignals_Reset,BoardSignals_Running,BoardSignals_Starting,BoardSignals_Started,ReceiverModule_TopLevel_ReceiverModule_Clock,ReceiverModule_TopLevel_ReceiverModule_Reset,InternalReset);
 always @(posedge BoardSignals_Clock)
 begin
@@ -111,18 +103,6 @@ end
 always @(posedge BoardSignals_Clock)
 begin
 if ( BoardSignals_Reset == 1 ) begin
-ReceiverModule_TopLevel_ReceiverModule_NextState_FSMQ <= ReceiverModule_TopLevel_ReceiverModule_NextState_FSMDefault;
-end
-else if ( ReceiverModule_TopLevel_ReceiverModule_NextState_FSMWriteEnable == 1 ) begin
-ReceiverModule_TopLevel_ReceiverModule_NextState_FSMQ <= ReceiverModule_TopLevel_ReceiverModule_NextState_FSMD;
-end
-else begin
-ReceiverModule_TopLevel_ReceiverModule_NextState_FSMQ <= ReceiverModule_TopLevel_ReceiverModule_NextState_FSMQ;
-end
-end
-always @(posedge BoardSignals_Clock)
-begin
-if ( BoardSignals_Reset == 1 ) begin
 ReceiverModule_TopLevel_ReceiverModule_State_DataQ <= ReceiverModule_TopLevel_ReceiverModule_State_DataDefault;
 end
 else if ( ReceiverModule_TopLevel_ReceiverModule_State_DataWriteEnable == 1 ) begin
@@ -130,18 +110,6 @@ ReceiverModule_TopLevel_ReceiverModule_State_DataQ <= ReceiverModule_TopLevel_Re
 end
 else begin
 ReceiverModule_TopLevel_ReceiverModule_State_DataQ <= ReceiverModule_TopLevel_ReceiverModule_State_DataQ;
-end
-end
-always @(posedge BoardSignals_Clock)
-begin
-if ( BoardSignals_Reset == 1 ) begin
-ReceiverModule_TopLevel_ReceiverModule_NextState_DataQ <= ReceiverModule_TopLevel_ReceiverModule_NextState_DataDefault;
-end
-else if ( ReceiverModule_TopLevel_ReceiverModule_NextState_DataWriteEnable == 1 ) begin
-ReceiverModule_TopLevel_ReceiverModule_NextState_DataQ <= ReceiverModule_TopLevel_ReceiverModule_NextState_DataD;
-end
-else begin
-ReceiverModule_TopLevel_ReceiverModule_NextState_DataQ <= ReceiverModule_TopLevel_ReceiverModule_NextState_DataQ;
 end
 end
 assign ReceiverModule_TopLevel_ReceiverModule_ReceiverModule_L8F32T71_Expr = ReceiverModule_TopLevel_ReceiverModule_ReceiverModule_L8F32T71_ExprLhs == ReceiverModule_TopLevel_ReceiverModule_ReceiverModule_L8F32T71_ExprRhs ? 1'b1 : 1'b0;
@@ -157,6 +125,11 @@ ReceiverModule_TopLevel_ReceiverModule_ReceiverModule_L10F43T64_Lookup = 'b00000
 endcase
 
 end
+always @(posedge ReceiverModule_TopLevel_ReceiverModule_Clock)
+begin
+ReceiverModule_TopLevel_ReceiverModule_State_FSM <= ReceiverModule_TopLevel_ReceiverModule_NextState_FSM/*cast*/;
+ReceiverModule_TopLevel_ReceiverModule_State_Data <= ReceiverModule_TopLevel_ReceiverModule_NextState_Data/*cast*/;
+end
 	assign ReceiverModule_TopLevel_ReceiverModuleIsValid = ReceiverModuleIsValid;
 	assign ReceiverModule_TopLevel_ReceiverModuleAck = ReceiverModuleAck;
 	assign ReceiverModule_TopLevel_ReceiverModuleBit = ReceiverModuleBit;
@@ -168,9 +141,11 @@ assign ReceiverModuleData = ReceiverModule_TopLevel_ReceiverModuleData;
 assign ReceiverModulePartialData = ReceiverModule_TopLevel_ReceiverModulePartialData;
 assign ReceiverModule_TopLevel_ReceiverModule_ReceiverModule_L10F43T64_LookupMultiplexerAddress = ReceiverModule_TopLevel_ReceiverModule_Inputs_Bit;
 assign ReceiverModule_TopLevel_ReceiverModule_State_FSM = ReceiverModule_TopLevel_ReceiverModule_State_FSMQ;
-assign ReceiverModule_TopLevel_ReceiverModule_NextState_FSM = ReceiverModule_TopLevel_ReceiverModule_NextState_FSMQ;
+assign ReceiverModule_TopLevel_ReceiverModule_State_FSMD = ReceiverModule_TopLevel_ReceiverModule_NextState_FSM;
+assign ReceiverModule_TopLevel_ReceiverModule_State_FSMWriteEnable = HiSignal;
 assign ReceiverModule_TopLevel_ReceiverModule_State_Data = ReceiverModule_TopLevel_ReceiverModule_State_DataQ;
-assign ReceiverModule_TopLevel_ReceiverModule_NextState_Data = ReceiverModule_TopLevel_ReceiverModule_NextState_DataQ;
+assign ReceiverModule_TopLevel_ReceiverModule_State_DataD = ReceiverModule_TopLevel_ReceiverModule_NextState_Data;
+assign ReceiverModule_TopLevel_ReceiverModule_State_DataWriteEnable = HiSignal;
 assign ReceiverModule_TopLevel_ReceiverModule_Clock = ReceiverModule_TopLevel_Clock;
 assign ReceiverModule_TopLevel_ReceiverModule_Reset = ReceiverModule_TopLevel_Reset;
 assign ReceiverModule_TopLevel_ReceiverModule_IsValid = ReceiverModule_TopLevel_ReceiverModuleIsValid;

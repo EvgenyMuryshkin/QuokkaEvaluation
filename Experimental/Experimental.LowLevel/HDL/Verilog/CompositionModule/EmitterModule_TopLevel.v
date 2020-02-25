@@ -52,18 +52,14 @@ wire  EmitterModule_TopLevel_EmitterModule_false = 1'b0;
 wire  EmitterModule_TopLevel_EmitterModule_EmitterModule_L8F45T64_Expr = 1'b0;
 wire  EmitterModule_TopLevel_EmitterModule_Inputs_IsEnabled;
 wire  EmitterModule_TopLevel_EmitterModule_Inputs_Ack;
+reg signed  [32:1] EmitterModule_TopLevel_EmitterModule_NextState_FSM = 32'b00000000000000000000000000000000;
+reg  [8:1] EmitterModule_TopLevel_EmitterModule_NextState_Data = 8'b00000000;
 wire signed  [32:1] EmitterModule_TopLevel_EmitterModule_State_FSM;
 wire signed  [32:1] EmitterModule_TopLevel_EmitterModule_State_FSMDefault = 32'b00000000000000000000000000000000;
-reg  EmitterModule_TopLevel_EmitterModule_State_FSMWriteEnable = 1'b0;
-wire signed  [32:1] EmitterModule_TopLevel_EmitterModule_NextState_FSM;
-wire signed  [32:1] EmitterModule_TopLevel_EmitterModule_NextState_FSMDefault = 32'b00000000000000000000000000000000;
-reg  EmitterModule_TopLevel_EmitterModule_NextState_FSMWriteEnable = 1'b0;
+wire  EmitterModule_TopLevel_EmitterModule_State_FSMWriteEnable;
 wire  [8:1] EmitterModule_TopLevel_EmitterModule_State_Data;
 wire  [8:1] EmitterModule_TopLevel_EmitterModule_State_DataDefault = 8'b00000000;
-reg  EmitterModule_TopLevel_EmitterModule_State_DataWriteEnable = 1'b0;
-wire  [8:1] EmitterModule_TopLevel_EmitterModule_NextState_Data;
-wire  [8:1] EmitterModule_TopLevel_EmitterModule_NextState_DataDefault = 8'b00000000;
-reg  EmitterModule_TopLevel_EmitterModule_NextState_DataWriteEnable = 1'b0;
+wire  EmitterModule_TopLevel_EmitterModule_State_DataWriteEnable;
 wire  EmitterModule_TopLevel_EmitterModule_EmitterModule_L8F32T64_Expr;
 wire signed  [33:1] EmitterModule_TopLevel_EmitterModule_EmitterModule_L8F32T64_ExprLhs;
 wire signed  [33:1] EmitterModule_TopLevel_EmitterModule_EmitterModule_L8F32T64_ExprRhs;
@@ -74,13 +70,9 @@ wire  BoardSignals_Starting;
 wire  BoardSignals_Started;
 reg  InternalReset = 1'b0;
 reg signed  [32:1] EmitterModule_TopLevel_EmitterModule_State_FSMQ = 32'b00000000000000000000000000000000;
-reg signed  [32:1] EmitterModule_TopLevel_EmitterModule_State_FSMD = 32'b00000000000000000000000000000000;
-reg signed  [32:1] EmitterModule_TopLevel_EmitterModule_NextState_FSMQ = 32'b00000000000000000000000000000000;
-reg signed  [32:1] EmitterModule_TopLevel_EmitterModule_NextState_FSMD = 32'b00000000000000000000000000000000;
+wire signed  [32:1] EmitterModule_TopLevel_EmitterModule_State_FSMD;
 reg  [8:1] EmitterModule_TopLevel_EmitterModule_State_DataQ = 8'b00000000;
-reg  [8:1] EmitterModule_TopLevel_EmitterModule_State_DataD = 8'b00000000;
-reg  [8:1] EmitterModule_TopLevel_EmitterModule_NextState_DataQ = 8'b00000000;
-reg  [8:1] EmitterModule_TopLevel_EmitterModule_NextState_DataD = 8'b00000000;
+wire  [8:1] EmitterModule_TopLevel_EmitterModule_State_DataD;
 work_Quokka_BoardSignalsProc EmitterModule_TopLevel_EmitterModule_BoardSignalsConnection(BoardSignals_Clock,BoardSignals_Reset,BoardSignals_Running,BoardSignals_Starting,BoardSignals_Started,EmitterModule_TopLevel_EmitterModule_Clock,EmitterModule_TopLevel_EmitterModule_Reset,InternalReset);
 always @(posedge BoardSignals_Clock)
 begin
@@ -97,18 +89,6 @@ end
 always @(posedge BoardSignals_Clock)
 begin
 if ( BoardSignals_Reset == 1 ) begin
-EmitterModule_TopLevel_EmitterModule_NextState_FSMQ <= EmitterModule_TopLevel_EmitterModule_NextState_FSMDefault;
-end
-else if ( EmitterModule_TopLevel_EmitterModule_NextState_FSMWriteEnable == 1 ) begin
-EmitterModule_TopLevel_EmitterModule_NextState_FSMQ <= EmitterModule_TopLevel_EmitterModule_NextState_FSMD;
-end
-else begin
-EmitterModule_TopLevel_EmitterModule_NextState_FSMQ <= EmitterModule_TopLevel_EmitterModule_NextState_FSMQ;
-end
-end
-always @(posedge BoardSignals_Clock)
-begin
-if ( BoardSignals_Reset == 1 ) begin
 EmitterModule_TopLevel_EmitterModule_State_DataQ <= EmitterModule_TopLevel_EmitterModule_State_DataDefault;
 end
 else if ( EmitterModule_TopLevel_EmitterModule_State_DataWriteEnable == 1 ) begin
@@ -118,19 +98,12 @@ else begin
 EmitterModule_TopLevel_EmitterModule_State_DataQ <= EmitterModule_TopLevel_EmitterModule_State_DataQ;
 end
 end
-always @(posedge BoardSignals_Clock)
-begin
-if ( BoardSignals_Reset == 1 ) begin
-EmitterModule_TopLevel_EmitterModule_NextState_DataQ <= EmitterModule_TopLevel_EmitterModule_NextState_DataDefault;
-end
-else if ( EmitterModule_TopLevel_EmitterModule_NextState_DataWriteEnable == 1 ) begin
-EmitterModule_TopLevel_EmitterModule_NextState_DataQ <= EmitterModule_TopLevel_EmitterModule_NextState_DataD;
-end
-else begin
-EmitterModule_TopLevel_EmitterModule_NextState_DataQ <= EmitterModule_TopLevel_EmitterModule_NextState_DataQ;
-end
-end
 assign EmitterModule_TopLevel_EmitterModule_EmitterModule_L8F32T64_Expr = EmitterModule_TopLevel_EmitterModule_EmitterModule_L8F32T64_ExprLhs == EmitterModule_TopLevel_EmitterModule_EmitterModule_L8F32T64_ExprRhs ? 1'b1 : 1'b0;
+always @(posedge EmitterModule_TopLevel_EmitterModule_Clock)
+begin
+EmitterModule_TopLevel_EmitterModule_State_FSM <= EmitterModule_TopLevel_EmitterModule_NextState_FSM/*cast*/;
+EmitterModule_TopLevel_EmitterModule_State_Data <= EmitterModule_TopLevel_EmitterModule_NextState_Data/*cast*/;
+end
 	assign EmitterModule_TopLevel_EmitterModuleIsEnabled = EmitterModuleIsEnabled;
 	assign EmitterModule_TopLevel_EmitterModuleAck = EmitterModuleAck;
 // Top-level entity connections
@@ -139,9 +112,11 @@ work_Quokka_Metastability EmitterModule_TopLevel_Reset_mtsb (BoardSignals_Clock,
 assign EmitterModuleData = EmitterModule_TopLevel_EmitterModuleData;
 assign EmitterModuleHasData = EmitterModule_TopLevel_EmitterModuleHasData;
 assign EmitterModule_TopLevel_EmitterModule_State_FSM = EmitterModule_TopLevel_EmitterModule_State_FSMQ;
-assign EmitterModule_TopLevel_EmitterModule_NextState_FSM = EmitterModule_TopLevel_EmitterModule_NextState_FSMQ;
+assign EmitterModule_TopLevel_EmitterModule_State_FSMD = EmitterModule_TopLevel_EmitterModule_NextState_FSM;
+assign EmitterModule_TopLevel_EmitterModule_State_FSMWriteEnable = HiSignal;
 assign EmitterModule_TopLevel_EmitterModule_State_Data = EmitterModule_TopLevel_EmitterModule_State_DataQ;
-assign EmitterModule_TopLevel_EmitterModule_NextState_Data = EmitterModule_TopLevel_EmitterModule_NextState_DataQ;
+assign EmitterModule_TopLevel_EmitterModule_State_DataD = EmitterModule_TopLevel_EmitterModule_NextState_Data;
+assign EmitterModule_TopLevel_EmitterModule_State_DataWriteEnable = HiSignal;
 assign EmitterModule_TopLevel_EmitterModule_Clock = EmitterModule_TopLevel_Clock;
 assign EmitterModule_TopLevel_EmitterModule_Reset = EmitterModule_TopLevel_Reset;
 assign EmitterModule_TopLevel_EmitterModule_IsEnabled = EmitterModule_TopLevel_EmitterModuleIsEnabled;

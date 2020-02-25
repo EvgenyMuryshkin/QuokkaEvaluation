@@ -65,25 +65,19 @@ wire  TransmitterModule_TopLevel_TransmitterModule_TransmitterModule_L11F99T126_
 wire  TransmitterModule_TopLevel_TransmitterModule_Inputs_Trigger;
 wire  TransmitterModule_TopLevel_TransmitterModule_Inputs_Ack;
 wire  [8:1] TransmitterModule_TopLevel_TransmitterModule_Inputs_Data;
+reg signed  [32:1] TransmitterModule_TopLevel_TransmitterModule_NextState_FSM = 32'b00000000000000000000000000000000;
+reg  [8:1] TransmitterModule_TopLevel_TransmitterModule_NextState_Data = 8'b00000000;
+reg  [8:1] TransmitterModule_TopLevel_TransmitterModule_NextState_Counter = 8'b00000000;
 wire  TransmitterModule_TopLevel_TransmitterModule_TransmitterModule_L8F28T41_Index;
 wire signed  [32:1] TransmitterModule_TopLevel_TransmitterModule_State_FSM;
 wire signed  [32:1] TransmitterModule_TopLevel_TransmitterModule_State_FSMDefault = 32'b00000000000000000000000000000000;
-reg  TransmitterModule_TopLevel_TransmitterModule_State_FSMWriteEnable = 1'b0;
-wire signed  [32:1] TransmitterModule_TopLevel_TransmitterModule_NextState_FSM;
-wire signed  [32:1] TransmitterModule_TopLevel_TransmitterModule_NextState_FSMDefault = 32'b00000000000000000000000000000000;
-reg  TransmitterModule_TopLevel_TransmitterModule_NextState_FSMWriteEnable = 1'b0;
+wire  TransmitterModule_TopLevel_TransmitterModule_State_FSMWriteEnable;
 wire  [8:1] TransmitterModule_TopLevel_TransmitterModule_State_Data;
 wire  [8:1] TransmitterModule_TopLevel_TransmitterModule_State_DataDefault = 8'b00000000;
-reg  TransmitterModule_TopLevel_TransmitterModule_State_DataWriteEnable = 1'b0;
-wire  [8:1] TransmitterModule_TopLevel_TransmitterModule_NextState_Data;
-wire  [8:1] TransmitterModule_TopLevel_TransmitterModule_NextState_DataDefault = 8'b00000000;
-reg  TransmitterModule_TopLevel_TransmitterModule_NextState_DataWriteEnable = 1'b0;
+wire  TransmitterModule_TopLevel_TransmitterModule_State_DataWriteEnable;
 wire  [8:1] TransmitterModule_TopLevel_TransmitterModule_State_Counter;
 wire  [8:1] TransmitterModule_TopLevel_TransmitterModule_State_CounterDefault = 8'b00000000;
-reg  TransmitterModule_TopLevel_TransmitterModule_State_CounterWriteEnable = 1'b0;
-wire  [8:1] TransmitterModule_TopLevel_TransmitterModule_NextState_Counter;
-wire  [8:1] TransmitterModule_TopLevel_TransmitterModule_NextState_CounterDefault = 8'b00000000;
-reg  TransmitterModule_TopLevel_TransmitterModule_NextState_CounterWriteEnable = 1'b0;
+wire  TransmitterModule_TopLevel_TransmitterModule_State_CounterWriteEnable;
 wire  TransmitterModule_TopLevel_TransmitterModule_TransmitterModule_L11F46T126_Expr;
 wire  TransmitterModule_TopLevel_TransmitterModule_TransmitterModule_L11F46T126_Expr_1;
 wire  TransmitterModule_TopLevel_TransmitterModule_TransmitterModule_L11F46T126_Expr_2;
@@ -106,17 +100,11 @@ wire  BoardSignals_Starting;
 wire  BoardSignals_Started;
 reg  InternalReset = 1'b0;
 reg signed  [32:1] TransmitterModule_TopLevel_TransmitterModule_State_FSMQ = 32'b00000000000000000000000000000000;
-reg signed  [32:1] TransmitterModule_TopLevel_TransmitterModule_State_FSMD = 32'b00000000000000000000000000000000;
-reg signed  [32:1] TransmitterModule_TopLevel_TransmitterModule_NextState_FSMQ = 32'b00000000000000000000000000000000;
-reg signed  [32:1] TransmitterModule_TopLevel_TransmitterModule_NextState_FSMD = 32'b00000000000000000000000000000000;
+wire signed  [32:1] TransmitterModule_TopLevel_TransmitterModule_State_FSMD;
 reg  [8:1] TransmitterModule_TopLevel_TransmitterModule_State_DataQ = 8'b00000000;
-reg  [8:1] TransmitterModule_TopLevel_TransmitterModule_State_DataD = 8'b00000000;
-reg  [8:1] TransmitterModule_TopLevel_TransmitterModule_NextState_DataQ = 8'b00000000;
-reg  [8:1] TransmitterModule_TopLevel_TransmitterModule_NextState_DataD = 8'b00000000;
+wire  [8:1] TransmitterModule_TopLevel_TransmitterModule_State_DataD;
 reg  [8:1] TransmitterModule_TopLevel_TransmitterModule_State_CounterQ = 8'b00000000;
-reg  [8:1] TransmitterModule_TopLevel_TransmitterModule_State_CounterD = 8'b00000000;
-reg  [8:1] TransmitterModule_TopLevel_TransmitterModule_NextState_CounterQ = 8'b00000000;
-reg  [8:1] TransmitterModule_TopLevel_TransmitterModule_NextState_CounterD = 8'b00000000;
+wire  [8:1] TransmitterModule_TopLevel_TransmitterModule_State_CounterD;
 work_Quokka_BoardSignalsProc TransmitterModule_TopLevel_TransmitterModule_BoardSignalsConnection(BoardSignals_Clock,BoardSignals_Reset,BoardSignals_Running,BoardSignals_Starting,BoardSignals_Started,TransmitterModule_TopLevel_TransmitterModule_Clock,TransmitterModule_TopLevel_TransmitterModule_Reset,InternalReset);
 always @(posedge BoardSignals_Clock)
 begin
@@ -128,18 +116,6 @@ TransmitterModule_TopLevel_TransmitterModule_State_FSMQ <= TransmitterModule_Top
 end
 else begin
 TransmitterModule_TopLevel_TransmitterModule_State_FSMQ <= TransmitterModule_TopLevel_TransmitterModule_State_FSMQ;
-end
-end
-always @(posedge BoardSignals_Clock)
-begin
-if ( BoardSignals_Reset == 1 ) begin
-TransmitterModule_TopLevel_TransmitterModule_NextState_FSMQ <= TransmitterModule_TopLevel_TransmitterModule_NextState_FSMDefault;
-end
-else if ( TransmitterModule_TopLevel_TransmitterModule_NextState_FSMWriteEnable == 1 ) begin
-TransmitterModule_TopLevel_TransmitterModule_NextState_FSMQ <= TransmitterModule_TopLevel_TransmitterModule_NextState_FSMD;
-end
-else begin
-TransmitterModule_TopLevel_TransmitterModule_NextState_FSMQ <= TransmitterModule_TopLevel_TransmitterModule_NextState_FSMQ;
 end
 end
 always @(posedge BoardSignals_Clock)
@@ -157,18 +133,6 @@ end
 always @(posedge BoardSignals_Clock)
 begin
 if ( BoardSignals_Reset == 1 ) begin
-TransmitterModule_TopLevel_TransmitterModule_NextState_DataQ <= TransmitterModule_TopLevel_TransmitterModule_NextState_DataDefault;
-end
-else if ( TransmitterModule_TopLevel_TransmitterModule_NextState_DataWriteEnable == 1 ) begin
-TransmitterModule_TopLevel_TransmitterModule_NextState_DataQ <= TransmitterModule_TopLevel_TransmitterModule_NextState_DataD;
-end
-else begin
-TransmitterModule_TopLevel_TransmitterModule_NextState_DataQ <= TransmitterModule_TopLevel_TransmitterModule_NextState_DataQ;
-end
-end
-always @(posedge BoardSignals_Clock)
-begin
-if ( BoardSignals_Reset == 1 ) begin
 TransmitterModule_TopLevel_TransmitterModule_State_CounterQ <= TransmitterModule_TopLevel_TransmitterModule_State_CounterDefault;
 end
 else if ( TransmitterModule_TopLevel_TransmitterModule_State_CounterWriteEnable == 1 ) begin
@@ -178,23 +142,17 @@ else begin
 TransmitterModule_TopLevel_TransmitterModule_State_CounterQ <= TransmitterModule_TopLevel_TransmitterModule_State_CounterQ;
 end
 end
-always @(posedge BoardSignals_Clock)
-begin
-if ( BoardSignals_Reset == 1 ) begin
-TransmitterModule_TopLevel_TransmitterModule_NextState_CounterQ <= TransmitterModule_TopLevel_TransmitterModule_NextState_CounterDefault;
-end
-else if ( TransmitterModule_TopLevel_TransmitterModule_NextState_CounterWriteEnable == 1 ) begin
-TransmitterModule_TopLevel_TransmitterModule_NextState_CounterQ <= TransmitterModule_TopLevel_TransmitterModule_NextState_CounterD;
-end
-else begin
-TransmitterModule_TopLevel_TransmitterModule_NextState_CounterQ <= TransmitterModule_TopLevel_TransmitterModule_NextState_CounterQ;
-end
-end
 assign TransmitterModule_TopLevel_TransmitterModule_TransmitterModule_L9F32T65_Expr = TransmitterModule_TopLevel_TransmitterModule_TransmitterModule_L9F32T65_ExprLhs == TransmitterModule_TopLevel_TransmitterModule_TransmitterModule_L9F32T65_ExprRhs ? 1'b1 : 1'b0;
 assign TransmitterModule_TopLevel_TransmitterModule_TransmitterModule_L10F39T79_Expr = TransmitterModule_TopLevel_TransmitterModule_TransmitterModule_L10F39T79_ExprLhs == TransmitterModule_TopLevel_TransmitterModule_TransmitterModule_L10F39T79_ExprRhs ? 1'b1 : 1'b0;
 assign TransmitterModule_TopLevel_TransmitterModule_TransmitterModule_L11F46T78_Expr = TransmitterModule_TopLevel_TransmitterModule_TransmitterModule_L11F46T78_ExprLhs == TransmitterModule_TopLevel_TransmitterModule_TransmitterModule_L11F46T78_ExprRhs ? 1'b1 : 1'b0;
 assign TransmitterModule_TopLevel_TransmitterModule_TransmitterModule_L11F82T126_Expr = TransmitterModule_TopLevel_TransmitterModule_TransmitterModule_L11F82T126_ExprLhs == TransmitterModule_TopLevel_TransmitterModule_TransmitterModule_L11F82T126_ExprRhs ? 1'b1 : 1'b0;
 assign TransmitterModule_TopLevel_TransmitterModule_TransmitterModule_L11F46T126_Expr = TransmitterModule_TopLevel_TransmitterModule_TransmitterModule_L11F46T126_Expr_1 & TransmitterModule_TopLevel_TransmitterModule_TransmitterModule_L11F46T126_Expr_2;
+always @(posedge TransmitterModule_TopLevel_TransmitterModule_Clock)
+begin
+TransmitterModule_TopLevel_TransmitterModule_State_FSM <= TransmitterModule_TopLevel_TransmitterModule_NextState_FSM/*cast*/;
+TransmitterModule_TopLevel_TransmitterModule_State_Data <= TransmitterModule_TopLevel_TransmitterModule_NextState_Data/*cast*/;
+TransmitterModule_TopLevel_TransmitterModule_State_Counter <= TransmitterModule_TopLevel_TransmitterModule_NextState_Counter/*cast*/;
+end
 	assign TransmitterModule_TopLevel_TransmitterModuleTrigger = TransmitterModuleTrigger;
 	assign TransmitterModule_TopLevel_TransmitterModuleAck = TransmitterModuleAck;
 	assign TransmitterModule_TopLevel_TransmitterModuleData = TransmitterModuleData;
@@ -206,11 +164,14 @@ assign TransmitterModuleIsReady = TransmitterModule_TopLevel_TransmitterModuleIs
 assign TransmitterModuleIsTransmitting = TransmitterModule_TopLevel_TransmitterModuleIsTransmitting;
 assign TransmitterModuleIsTransmissionStarted = TransmitterModule_TopLevel_TransmitterModuleIsTransmissionStarted;
 assign TransmitterModule_TopLevel_TransmitterModule_State_FSM = TransmitterModule_TopLevel_TransmitterModule_State_FSMQ;
-assign TransmitterModule_TopLevel_TransmitterModule_NextState_FSM = TransmitterModule_TopLevel_TransmitterModule_NextState_FSMQ;
+assign TransmitterModule_TopLevel_TransmitterModule_State_FSMD = TransmitterModule_TopLevel_TransmitterModule_NextState_FSM;
+assign TransmitterModule_TopLevel_TransmitterModule_State_FSMWriteEnable = HiSignal;
 assign TransmitterModule_TopLevel_TransmitterModule_State_Data = TransmitterModule_TopLevel_TransmitterModule_State_DataQ;
-assign TransmitterModule_TopLevel_TransmitterModule_NextState_Data = TransmitterModule_TopLevel_TransmitterModule_NextState_DataQ;
+assign TransmitterModule_TopLevel_TransmitterModule_State_DataD = TransmitterModule_TopLevel_TransmitterModule_NextState_Data;
+assign TransmitterModule_TopLevel_TransmitterModule_State_DataWriteEnable = HiSignal;
 assign TransmitterModule_TopLevel_TransmitterModule_State_Counter = TransmitterModule_TopLevel_TransmitterModule_State_CounterQ;
-assign TransmitterModule_TopLevel_TransmitterModule_NextState_Counter = TransmitterModule_TopLevel_TransmitterModule_NextState_CounterQ;
+assign TransmitterModule_TopLevel_TransmitterModule_State_CounterD = TransmitterModule_TopLevel_TransmitterModule_NextState_Counter;
+assign TransmitterModule_TopLevel_TransmitterModule_State_CounterWriteEnable = HiSignal;
 assign TransmitterModule_TopLevel_TransmitterModule_Clock = TransmitterModule_TopLevel_Clock;
 assign TransmitterModule_TopLevel_TransmitterModule_Reset = TransmitterModule_TopLevel_Reset;
 assign TransmitterModule_TopLevel_TransmitterModule_Trigger = TransmitterModule_TopLevel_TransmitterModuleTrigger;
