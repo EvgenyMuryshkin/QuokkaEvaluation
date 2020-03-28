@@ -14,9 +14,11 @@ namespace QuokkaTests.Experimental
 
     public class CounterModule : RTLSynchronousModule<CounterInputs, CounterState>
     {
+        public byte Value => State.Value;
+
         protected override void OnStage()
         {
-            NextState.Value = (byte)(State.Value + 1);
+            NextState.Value = Inputs.InReset ? byte.MinValue : (byte)(State.Value + 1);
         }
     }
 }

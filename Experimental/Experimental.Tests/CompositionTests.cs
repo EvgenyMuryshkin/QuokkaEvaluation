@@ -17,7 +17,7 @@ namespace QuokkaTests.Experimental
             var bytesToProcess = 256;
             var receivedData = new List<byte>();
 
-            var sim = new RTLSynchronousSimulator<CompositionModule>();
+            var sim = new RTLSimulator<CompositionModule>();
             sim.Trace(PathTools.VCDOutputPath());
 
             sim.IsRunning = (simulatorCallback) => receivedData.Count < bytesToProcess;

@@ -32,7 +32,7 @@ namespace QuokkaTests.Experimental
         [TestMethod]
         public void InverterFeedback()
         {
-            var sim = new RTLSynchronousSimulator<InverterFeedback>();
+            var sim = new RTLSimulator<InverterFeedback>();
             sim.Trace(PathTools.VCDOutputPath());
 
             Assert.ThrowsException<MaxStageIterationReachedException>(() =>
@@ -44,7 +44,7 @@ namespace QuokkaTests.Experimental
         [TestMethod]
         public void InverterTest()
         {
-            var sim = new RTLSynchronousSimulator<InverterModule>();
+            var sim = new RTLSimulator<InverterModule>();
             sim.IsRunning = (cb) => cb.Clock == 0;
             sim.Trace(PathTools.VCDOutputPath());
             sim.TopLevel.Schedule(() => new InverterInputs() { Input = true }); ;
@@ -57,7 +57,7 @@ namespace QuokkaTests.Experimental
         [TestMethod]
         public void AndGateTest()
         {
-            var sim = new RTLSynchronousSimulator<AndGateModule>();
+            var sim = new RTLSimulator<AndGateModule>();
             sim.IsRunning = (cb) => cb.Clock == 0;
             Assert.AreEqual(false, sim.TopLevel.O);
 
@@ -73,7 +73,7 @@ namespace QuokkaTests.Experimental
         [TestMethod]
         public void OrGateTest()
         {
-            var sim = new RTLSynchronousSimulator<OrGateModule>();
+            var sim = new RTLSimulator<OrGateModule>();
             sim.IsRunning = (cb) => cb.Clock == 0;
             Assert.AreEqual(false, sim.TopLevel.O);
 
@@ -89,7 +89,7 @@ namespace QuokkaTests.Experimental
         [TestMethod]
         public void XorGateTest()
         {
-            var sim = new RTLSynchronousSimulator<XorGateModule>();
+            var sim = new RTLSimulator<XorGateModule>();
             sim.IsRunning = (cb) => cb.Clock == 0;
             Assert.AreEqual(false, sim.TopLevel.O);
 

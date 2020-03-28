@@ -3,6 +3,11 @@ using System;
 
 namespace QuokkaTests.Experimental
 {
+    public class CompositionInputs
+    {
+        public bool IsEnabled = true;
+    }
+
     public class CompositionModule : RTLCombinationalModule<CompositionInputs>
     {
         public EmitterModule Emitter = new EmitterModule();
@@ -11,9 +16,6 @@ namespace QuokkaTests.Experimental
 
         public bool HasData => Receiver.HasData;
         public byte Data => Receiver.Data;
-        public byte Fixed1 => 10;
-        public byte Fixed2 => 20;
-        public byte Fixed3 = 20;
 
         public override void Schedule(Func<CompositionInputs> inputsFactory)
         {
@@ -28,8 +30,8 @@ namespace QuokkaTests.Experimental
             Transmitter.Schedule(() => new TransmitterInputs()
                 {
                     Trigger = Emitter.HasData,
-                    Ack = Receiver.HasData,
-                    Data = Receiver.Data
+                    Data = Emitter.Data,
+                    Ack = Receiver.HasData
                });
 
             Receiver.Schedule(() => new ReceiverInputs()

@@ -26,7 +26,7 @@ namespace QuokkaTests.Experimental
 
             foreach (var set in values)
             {
-                var sim = new RTLSynchronousSimulator<FullAdderModule>();
+                var sim = new RTLSimulator<FullAdderModule>();
                 sim.IsRunning = (cb) => cb.Clock == 0;
                 sim.TopLevel.Schedule(() => new FullAdderInputs() { A = toBool(set.A), B = toBool(set.B), CIn = toBool(set.CIn) });
                 sim.Run();
