@@ -27,14 +27,14 @@ entity BitArrayModule_TopLevel is
 -- [BEGIN USER PORTS]
 -- [END USER PORTS]
 
-BitArrayModuleValue : in  unsigned(8 downto 1);
-BitArrayModuleDirect : out  unsigned(8 downto 1);
-BitArrayModuleHigh : out  unsigned(4 downto 1);
-BitArrayModuleLow : out  unsigned(4 downto 1);
-BitArrayModuleReversed : out  unsigned(8 downto 1);
-BitArrayModuleReversedHigh : out  unsigned(4 downto 1);
-BitArrayModuleReversedLow : out  unsigned(4 downto 1);
-BitArrayModulePicks : out  unsigned(4 downto 1)
+BitArrayModuleValue : in  unsigned(7 downto 0);
+BitArrayModuleDirect : out  unsigned(7 downto 0);
+BitArrayModuleHigh : out  unsigned(3 downto 0);
+BitArrayModuleLow : out  unsigned(3 downto 0);
+BitArrayModuleReversed : out  unsigned(7 downto 0);
+BitArrayModuleReversedHigh : out  unsigned(3 downto 0);
+BitArrayModuleReversedLow : out  unsigned(3 downto 0);
+BitArrayModulePicks : out  unsigned(3 downto 0)
     );
 end entity;
 

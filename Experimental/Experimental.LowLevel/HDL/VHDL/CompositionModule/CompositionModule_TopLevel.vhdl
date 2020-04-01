@@ -31,7 +31,7 @@ Clock : in  std_logic;
 Reset : in  std_logic;
 CompositionModuleIsEnabled : in  std_logic;
 CompositionModuleHasData : out  std_logic;
-CompositionModuleData : out  unsigned(8 downto 1)
+CompositionModuleData : out  unsigned(7 downto 0)
     );
 end entity;
 

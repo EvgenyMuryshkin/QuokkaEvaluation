@@ -31,7 +31,7 @@ Clock : in  std_logic;
 Reset : in  std_logic;
 TransmitterModuleTrigger : in  std_logic;
 TransmitterModuleAck : in  std_logic;
-TransmitterModuleData : in  unsigned(8 downto 1);
+TransmitterModuleData : in  unsigned(7 downto 0);
 TransmitterModuleBit : out  std_logic;
 TransmitterModuleIsReady : out  std_logic;
 TransmitterModuleIsTransmitting : out  std_logic;

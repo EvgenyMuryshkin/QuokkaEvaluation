@@ -38,7 +38,7 @@
 
 set_global_assignment -name FAMILY "Cyclone II"
 set_global_assignment -name DEVICE AUTO
-set_global_assignment -name TOP_LEVEL_ENTITY BitArrayModule_TopLevel
+set_global_assignment -name TOP_LEVEL_ENTITY CombinationalROMModule_TopLevel
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION "9.1 SP2"
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "20:45:17  JUNE 07, 2019"
 set_global_assignment -name LAST_QUARTUS_VERSION "9.1 SP2"
@@ -47,6 +47,7 @@ set_global_assignment -name LL_ROOT_REGION ON -entity Test -section_id "Root Reg
 set_global_assignment -name LL_MEMBER_STATE LOCKED -entity Test -section_id "Root Region"
 set_global_assignment -name USE_CONFIGURATION_DEVICE OFF
 set_global_assignment -name STRATIX_DEVICE_IO_STANDARD "2.5 V"
+set_global_assignment -name VERILOG_FILE Verilog/CombinationalROMModule/CombinationalROMModule_TopLevel.v
 set_global_assignment -name VERILOG_FILE Verilog/BitArrayModule/BitArrayModule_TopLevel.v
 set_global_assignment -name VERILOG_FILE Verilog/CompositionModule/CompositionModule_TopLevel.v
 set_global_assignment -name VERILOG_FILE Verilog/CompositionModule/CompositionModule_TopLevel_CompositionModule_Emitter.v
@@ -61,10 +62,11 @@ set_global_assignment -name VECTOR_WAVEFORM_FILE FullAdder.vwf
 set_global_assignment -name VECTOR_WAVEFORM_FILE Counter.vwf
 set_global_assignment -name VECTOR_WAVEFORM_FILE Emitter.vwf
 set_global_assignment -name VECTOR_WAVEFORM_FILE Composition.vwf
+set_global_assignment -name VECTOR_WAVEFORM_FILE BitArray.vwf
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
 set_global_assignment -name LL_ROOT_REGION ON -section_id "Root Region"
 set_global_assignment -name LL_MEMBER_STATE LOCKED -section_id "Root Region"
-set_global_assignment -name VECTOR_WAVEFORM_FILE BitArray.vwf
-set_global_assignment -name INCREMENTAL_VECTOR_INPUT_SOURCE BitArray.vwf
+set_global_assignment -name VECTOR_WAVEFORM_FILE CombinationalROMModule.vwf
+set_global_assignment -name INCREMENTAL_VECTOR_INPUT_SOURCE CombinationalROMModule.vwf
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

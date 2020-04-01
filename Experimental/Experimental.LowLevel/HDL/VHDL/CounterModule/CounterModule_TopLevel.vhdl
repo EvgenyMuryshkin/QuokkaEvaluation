@@ -30,7 +30,7 @@ entity CounterModule_TopLevel is
 Clock : in  std_logic;
 Reset : in  std_logic;
 CounterModuleInReset : in  std_logic;
-CounterModuleValue : out  unsigned(8 downto 1)
+CounterModuleValue : out  unsigned(7 downto 0)
     );
 end entity;
 

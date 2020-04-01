@@ -33,8 +33,8 @@ ReceiverModuleIsValid : in  std_logic;
 ReceiverModuleAck : in  std_logic;
 ReceiverModuleBit : in  std_logic;
 ReceiverModuleHasData : out  std_logic;
-ReceiverModuleData : out  unsigned(8 downto 1);
-ReceiverModulePartialData : out  unsigned(8 downto 1)
+ReceiverModuleData : out  unsigned(7 downto 0);
+ReceiverModulePartialData : out  unsigned(7 downto 0)
     );
 end entity;
 

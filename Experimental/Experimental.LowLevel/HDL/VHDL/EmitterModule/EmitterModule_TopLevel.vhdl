@@ -31,7 +31,7 @@ Clock : in  std_logic;
 Reset : in  std_logic;
 EmitterModuleIsEnabled : in  std_logic;
 EmitterModuleAck : in  std_logic;
-EmitterModuleData : out  unsigned(8 downto 1);
+EmitterModuleData : out  unsigned(7 downto 0);
 EmitterModuleHasData : out  std_logic
     );
 end entity;

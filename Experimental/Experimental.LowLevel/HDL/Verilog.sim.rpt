@@ -1,5 +1,5 @@
 Simulator report for Verilog
-Sat Mar 28 17:59:47 2020
+Wed Apr 01 20:36:50 2020
 Quartus II Version 9.1 Build 350 03/24/2010 Service Pack 2 SJ Web Edition
 
 
@@ -44,43 +44,43 @@ applicable agreement for further details.
 ; Type                        ; Value        ;
 +-----------------------------+--------------+
 ; Simulation Start Time       ; 0 ps         ;
-; Simulation End Time         ; 1.0 us       ;
-; Simulation Netlist Size     ; 44 nodes     ;
-; Simulation Coverage         ;       0.00 % ;
-; Total Number of Transitions ; 0            ;
+; Simulation End Time         ; 1.0 ms       ;
+; Simulation Netlist Size     ; 72 nodes     ;
+; Simulation Coverage         ;     100.00 % ;
+; Total Number of Transitions ; 7290         ;
 ; Simulation Breakpoints      ; 0            ;
 ; Family                      ; Cyclone II   ;
 ; Device                      ; EP2C5T144C6  ;
 +-----------------------------+--------------+
 
 
-+---------------------------------------------------------------------------------------------------------------------------+
-; Simulator Settings                                                                                                        ;
-+--------------------------------------------------------------------------------------------+--------------+---------------+
-; Option                                                                                     ; Setting      ; Default Value ;
-+--------------------------------------------------------------------------------------------+--------------+---------------+
-; Simulation mode                                                                            ; Timing       ; Timing        ;
-; Start time                                                                                 ; 0 ns         ; 0 ns          ;
-; Simulation results format                                                                  ; CVWF         ;               ;
-; Vector input source                                                                        ; BitArray.vwf ;               ;
-; Add pins automatically to simulation output waveforms                                      ; On           ; On            ;
-; Check outputs                                                                              ; Off          ; Off           ;
-; Report simulation coverage                                                                 ; On           ; On            ;
-; Display complete 1/0 value coverage report                                                 ; On           ; On            ;
-; Display missing 1-value coverage report                                                    ; On           ; On            ;
-; Display missing 0-value coverage report                                                    ; On           ; On            ;
-; Detect setup and hold time violations                                                      ; Off          ; Off           ;
-; Detect glitches                                                                            ; Off          ; Off           ;
-; Disable timing delays in Timing Simulation                                                 ; Off          ; Off           ;
-; Generate Signal Activity File                                                              ; Off          ; Off           ;
-; Generate VCD File for PowerPlay Power Analyzer                                             ; Off          ; Off           ;
-; Group bus channels in simulation results                                                   ; Off          ; Off           ;
-; Preserve fewer signal transitions to reduce memory requirements                            ; On           ; On            ;
-; Trigger vector comparison with the specified mode                                          ; INPUT_EDGE   ; INPUT_EDGE    ;
-; Disable setup and hold time violations detection in input registers of bi-directional pins ; Off          ; Off           ;
-; Overwrite Waveform Inputs With Simulation Outputs                                          ; Off          ;               ;
-; Perform Glitch Filtering in Timing Simulation                                              ; Auto         ; Auto          ;
-+--------------------------------------------------------------------------------------------+--------------+---------------+
++-----------------------------------------------------------------------------------------------------------------------------------------+
+; Simulator Settings                                                                                                                      ;
++--------------------------------------------------------------------------------------------+----------------------------+---------------+
+; Option                                                                                     ; Setting                    ; Default Value ;
++--------------------------------------------------------------------------------------------+----------------------------+---------------+
+; Simulation mode                                                                            ; Timing                     ; Timing        ;
+; Start time                                                                                 ; 0 ns                       ; 0 ns          ;
+; Simulation results format                                                                  ; CVWF                       ;               ;
+; Vector input source                                                                        ; CombinationalROMModule.vwf ;               ;
+; Add pins automatically to simulation output waveforms                                      ; On                         ; On            ;
+; Check outputs                                                                              ; Off                        ; Off           ;
+; Report simulation coverage                                                                 ; On                         ; On            ;
+; Display complete 1/0 value coverage report                                                 ; On                         ; On            ;
+; Display missing 1-value coverage report                                                    ; On                         ; On            ;
+; Display missing 0-value coverage report                                                    ; On                         ; On            ;
+; Detect setup and hold time violations                                                      ; Off                        ; Off           ;
+; Detect glitches                                                                            ; Off                        ; Off           ;
+; Disable timing delays in Timing Simulation                                                 ; Off                        ; Off           ;
+; Generate Signal Activity File                                                              ; Off                        ; Off           ;
+; Generate VCD File for PowerPlay Power Analyzer                                             ; Off                        ; Off           ;
+; Group bus channels in simulation results                                                   ; Off                        ; Off           ;
+; Preserve fewer signal transitions to reduce memory requirements                            ; On                         ; On            ;
+; Trigger vector comparison with the specified mode                                          ; INPUT_EDGE                 ; INPUT_EDGE    ;
+; Disable setup and hold time violations detection in input registers of bi-directional pins ; Off                        ; Off           ;
+; Overwrite Waveform Inputs With Simulation Outputs                                          ; Off                        ;               ;
+; Perform Glitch Filtering in Timing Simulation                                              ; Auto                       ; Auto          ;
++--------------------------------------------------------------------------------------------+----------------------------+---------------+
 
 
 +----------------------+
@@ -95,128 +95,111 @@ Please use Quartus II to view the waveform report data.
 +-----------------------------------------------------+--------------+
 ; Type                                                ; Value        ;
 +-----------------------------------------------------+--------------+
-; Total coverage as a percentage                      ;       0.00 % ;
-; Total nodes checked                                 ; 44           ;
-; Total output ports checked                          ; 44           ;
-; Total output ports with complete 1/0-value coverage ; 0            ;
-; Total output ports with no 1/0-value coverage       ; 44           ;
-; Total output ports with no 1-value coverage         ; 44           ;
-; Total output ports with no 0-value coverage         ; 44           ;
+; Total coverage as a percentage                      ;     100.00 % ;
+; Total nodes checked                                 ; 72           ;
+; Total output ports checked                          ; 72           ;
+; Total output ports with complete 1/0-value coverage ; 72           ;
+; Total output ports with no 1/0-value coverage       ; 0            ;
+; Total output ports with no 1-value coverage         ; 0            ;
+; Total output ports with no 0-value coverage         ; 0            ;
 +-----------------------------------------------------+--------------+
 
 
 The following table displays output ports that toggle between 1 and 0 during simulation.
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Complete 1/0-Value Coverage                                                                                                                                                                                                                                              ;
++---------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------+------------------+
+; Node Name                                                                                                                 ; Output Port Name                                                                                                          ; Output Port Type ;
++---------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------+------------------+
+; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2048 ; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2048 ; combout          ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2049 ; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2049 ; combout          ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2050 ; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2050 ; combout          ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2051 ; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2051 ; combout          ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2052 ; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2052 ; combout          ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2053 ; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2053 ; combout          ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2054 ; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2054 ; combout          ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2055 ; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2055 ; combout          ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2056 ; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2056 ; combout          ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2057 ; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2057 ; combout          ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2058 ; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2058 ; combout          ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2059 ; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2059 ; combout          ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2060 ; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2060 ; combout          ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2061 ; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2061 ; combout          ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2062 ; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2062 ; combout          ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2063 ; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2063 ; combout          ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2064 ; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2064 ; combout          ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2065 ; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2065 ; combout          ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2066 ; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2066 ; combout          ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2067 ; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2067 ; combout          ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2068 ; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2068 ; combout          ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2069 ; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2069 ; combout          ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2070 ; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2070 ; combout          ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2071 ; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2071 ; combout          ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2072 ; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2072 ; combout          ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2073 ; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2073 ; combout          ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2074 ; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2074 ; combout          ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2075 ; |CombinationalROMModule_TopLevel|CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock~2075 ; combout          ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModuleValue1[0]                                                          ; |CombinationalROMModule_TopLevel|CombinationalROMModuleValue1[0]                                                          ; padio            ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModuleValue1[1]                                                          ; |CombinationalROMModule_TopLevel|CombinationalROMModuleValue1[1]                                                          ; padio            ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModuleValue1[2]                                                          ; |CombinationalROMModule_TopLevel|CombinationalROMModuleValue1[2]                                                          ; padio            ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModuleValue1[3]                                                          ; |CombinationalROMModule_TopLevel|CombinationalROMModuleValue1[3]                                                          ; padio            ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModuleValue1[4]                                                          ; |CombinationalROMModule_TopLevel|CombinationalROMModuleValue1[4]                                                          ; padio            ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModuleValue1[5]                                                          ; |CombinationalROMModule_TopLevel|CombinationalROMModuleValue1[5]                                                          ; padio            ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModuleValue1[6]                                                          ; |CombinationalROMModule_TopLevel|CombinationalROMModuleValue1[6]                                                          ; padio            ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModuleValue1[7]                                                          ; |CombinationalROMModule_TopLevel|CombinationalROMModuleValue1[7]                                                          ; padio            ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModuleValue2[0]                                                          ; |CombinationalROMModule_TopLevel|CombinationalROMModuleValue2[0]                                                          ; padio            ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModuleValue2[1]                                                          ; |CombinationalROMModule_TopLevel|CombinationalROMModuleValue2[1]                                                          ; padio            ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModuleValue2[2]                                                          ; |CombinationalROMModule_TopLevel|CombinationalROMModuleValue2[2]                                                          ; padio            ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModuleValue2[3]                                                          ; |CombinationalROMModule_TopLevel|CombinationalROMModuleValue2[3]                                                          ; padio            ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModuleValue2[4]                                                          ; |CombinationalROMModule_TopLevel|CombinationalROMModuleValue2[4]                                                          ; padio            ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModuleValue2[5]                                                          ; |CombinationalROMModule_TopLevel|CombinationalROMModuleValue2[5]                                                          ; padio            ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModuleValue2[6]                                                          ; |CombinationalROMModule_TopLevel|CombinationalROMModuleValue2[6]                                                          ; padio            ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModuleValue2[7]                                                          ; |CombinationalROMModule_TopLevel|CombinationalROMModuleValue2[7]                                                          ; padio            ;
+; |CombinationalROMModule_TopLevel|outHigh[0]                                                                               ; |CombinationalROMModule_TopLevel|outHigh[0]                                                                               ; padio            ;
+; |CombinationalROMModule_TopLevel|outHigh[1]                                                                               ; |CombinationalROMModule_TopLevel|outHigh[1]                                                                               ; padio            ;
+; |CombinationalROMModule_TopLevel|outHigh[2]                                                                               ; |CombinationalROMModule_TopLevel|outHigh[2]                                                                               ; padio            ;
+; |CombinationalROMModule_TopLevel|outHigh[3]                                                                               ; |CombinationalROMModule_TopLevel|outHigh[3]                                                                               ; padio            ;
+; |CombinationalROMModule_TopLevel|outHigh[4]                                                                               ; |CombinationalROMModule_TopLevel|outHigh[4]                                                                               ; padio            ;
+; |CombinationalROMModule_TopLevel|outHigh[5]                                                                               ; |CombinationalROMModule_TopLevel|outHigh[5]                                                                               ; padio            ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModuleReadAddress1[2]                                                    ; |CombinationalROMModule_TopLevel|CombinationalROMModuleReadAddress1[2]~corein                                             ; combout          ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModuleReadAddress1[0]                                                    ; |CombinationalROMModule_TopLevel|CombinationalROMModuleReadAddress1[0]~corein                                             ; combout          ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModuleReadAddress1[1]                                                    ; |CombinationalROMModule_TopLevel|CombinationalROMModuleReadAddress1[1]~corein                                             ; combout          ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModuleReadAddress1[3]                                                    ; |CombinationalROMModule_TopLevel|CombinationalROMModuleReadAddress1[3]~corein                                             ; combout          ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModuleReadAddress1[4]                                                    ; |CombinationalROMModule_TopLevel|CombinationalROMModuleReadAddress1[4]~corein                                             ; combout          ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModuleReadAddress1[5]                                                    ; |CombinationalROMModule_TopLevel|CombinationalROMModuleReadAddress1[5]~corein                                             ; combout          ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModuleReadAddress1[6]                                                    ; |CombinationalROMModule_TopLevel|CombinationalROMModuleReadAddress1[6]~corein                                             ; combout          ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModuleReadAddress1[7]                                                    ; |CombinationalROMModule_TopLevel|CombinationalROMModuleReadAddress1[7]~corein                                             ; combout          ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModuleReadAddress2[2]                                                    ; |CombinationalROMModule_TopLevel|CombinationalROMModuleReadAddress2[2]~corein                                             ; combout          ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModuleReadAddress2[0]                                                    ; |CombinationalROMModule_TopLevel|CombinationalROMModuleReadAddress2[0]~corein                                             ; combout          ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModuleReadAddress2[1]                                                    ; |CombinationalROMModule_TopLevel|CombinationalROMModuleReadAddress2[1]~corein                                             ; combout          ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModuleReadAddress2[3]                                                    ; |CombinationalROMModule_TopLevel|CombinationalROMModuleReadAddress2[3]~corein                                             ; combout          ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModuleReadAddress2[4]                                                    ; |CombinationalROMModule_TopLevel|CombinationalROMModuleReadAddress2[4]~corein                                             ; combout          ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModuleReadAddress2[5]                                                    ; |CombinationalROMModule_TopLevel|CombinationalROMModuleReadAddress2[5]~corein                                             ; combout          ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModuleReadAddress2[6]                                                    ; |CombinationalROMModule_TopLevel|CombinationalROMModuleReadAddress2[6]~corein                                             ; combout          ;
+; |CombinationalROMModule_TopLevel|CombinationalROMModuleReadAddress2[7]                                                    ; |CombinationalROMModule_TopLevel|CombinationalROMModuleReadAddress2[7]~corein                                             ; combout          ;
+; |CombinationalROMModule_TopLevel|inHigh[5]                                                                                ; |CombinationalROMModule_TopLevel|inHigh[5]~corein                                                                         ; combout          ;
+; |CombinationalROMModule_TopLevel|inHigh[6]                                                                                ; |CombinationalROMModule_TopLevel|inHigh[6]~corein                                                                         ; combout          ;
+; |CombinationalROMModule_TopLevel|inHigh[7]                                                                                ; |CombinationalROMModule_TopLevel|inHigh[7]~corein                                                                         ; combout          ;
+; |CombinationalROMModule_TopLevel|inHigh[8]                                                                                ; |CombinationalROMModule_TopLevel|inHigh[8]~corein                                                                         ; combout          ;
+; |CombinationalROMModule_TopLevel|inHigh[9]                                                                                ; |CombinationalROMModule_TopLevel|inHigh[9]~corein                                                                         ; combout          ;
+; |CombinationalROMModule_TopLevel|inHigh[10]                                                                               ; |CombinationalROMModule_TopLevel|inHigh[10]~corein                                                                        ; combout          ;
++---------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------+------------------+
+
+
+The following table displays output ports that do not toggle to 1 during simulation.
 +-------------------------------------------------+
-; Complete 1/0-Value Coverage                     ;
+; Missing 1-Value Coverage                        ;
 +-----------+------------------+------------------+
 ; Node Name ; Output Port Name ; Output Port Type ;
 +-----------+------------------+------------------+
 
 
-The following table displays output ports that do not toggle to 1 during simulation.
-+------------------------------------------------------------------------------------------------------------------------------------+
-; Missing 1-Value Coverage                                                                                                           ;
-+--------------------------------------------------------+--------------------------------------------------------+------------------+
-; Node Name                                              ; Output Port Name                                       ; Output Port Type ;
-+--------------------------------------------------------+--------------------------------------------------------+------------------+
-; |BitArrayModule_TopLevel|BitArrayModuleDirect[1]       ; |BitArrayModule_TopLevel|BitArrayModuleDirect[1]       ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleDirect[2]       ; |BitArrayModule_TopLevel|BitArrayModuleDirect[2]       ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleDirect[3]       ; |BitArrayModule_TopLevel|BitArrayModuleDirect[3]       ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleDirect[4]       ; |BitArrayModule_TopLevel|BitArrayModuleDirect[4]       ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleDirect[5]       ; |BitArrayModule_TopLevel|BitArrayModuleDirect[5]       ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleDirect[6]       ; |BitArrayModule_TopLevel|BitArrayModuleDirect[6]       ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleDirect[7]       ; |BitArrayModule_TopLevel|BitArrayModuleDirect[7]       ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleDirect[8]       ; |BitArrayModule_TopLevel|BitArrayModuleDirect[8]       ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleHigh[1]         ; |BitArrayModule_TopLevel|BitArrayModuleHigh[1]         ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleHigh[2]         ; |BitArrayModule_TopLevel|BitArrayModuleHigh[2]         ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleHigh[3]         ; |BitArrayModule_TopLevel|BitArrayModuleHigh[3]         ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleHigh[4]         ; |BitArrayModule_TopLevel|BitArrayModuleHigh[4]         ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleLow[1]          ; |BitArrayModule_TopLevel|BitArrayModuleLow[1]          ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleLow[2]          ; |BitArrayModule_TopLevel|BitArrayModuleLow[2]          ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleLow[3]          ; |BitArrayModule_TopLevel|BitArrayModuleLow[3]          ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleLow[4]          ; |BitArrayModule_TopLevel|BitArrayModuleLow[4]          ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleReversed[1]     ; |BitArrayModule_TopLevel|BitArrayModuleReversed[1]     ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleReversed[2]     ; |BitArrayModule_TopLevel|BitArrayModuleReversed[2]     ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleReversed[3]     ; |BitArrayModule_TopLevel|BitArrayModuleReversed[3]     ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleReversed[4]     ; |BitArrayModule_TopLevel|BitArrayModuleReversed[4]     ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleReversed[5]     ; |BitArrayModule_TopLevel|BitArrayModuleReversed[5]     ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleReversed[6]     ; |BitArrayModule_TopLevel|BitArrayModuleReversed[6]     ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleReversed[7]     ; |BitArrayModule_TopLevel|BitArrayModuleReversed[7]     ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleReversed[8]     ; |BitArrayModule_TopLevel|BitArrayModuleReversed[8]     ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleReversedHigh[1] ; |BitArrayModule_TopLevel|BitArrayModuleReversedHigh[1] ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleReversedHigh[2] ; |BitArrayModule_TopLevel|BitArrayModuleReversedHigh[2] ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleReversedHigh[3] ; |BitArrayModule_TopLevel|BitArrayModuleReversedHigh[3] ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleReversedHigh[4] ; |BitArrayModule_TopLevel|BitArrayModuleReversedHigh[4] ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleReversedLow[1]  ; |BitArrayModule_TopLevel|BitArrayModuleReversedLow[1]  ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleReversedLow[2]  ; |BitArrayModule_TopLevel|BitArrayModuleReversedLow[2]  ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleReversedLow[3]  ; |BitArrayModule_TopLevel|BitArrayModuleReversedLow[3]  ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleReversedLow[4]  ; |BitArrayModule_TopLevel|BitArrayModuleReversedLow[4]  ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModulePicks[1]        ; |BitArrayModule_TopLevel|BitArrayModulePicks[1]        ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModulePicks[2]        ; |BitArrayModule_TopLevel|BitArrayModulePicks[2]        ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModulePicks[3]        ; |BitArrayModule_TopLevel|BitArrayModulePicks[3]        ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModulePicks[4]        ; |BitArrayModule_TopLevel|BitArrayModulePicks[4]        ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleValue[1]        ; |BitArrayModule_TopLevel|BitArrayModuleValue[1]~corein ; combout          ;
-; |BitArrayModule_TopLevel|BitArrayModuleValue[2]        ; |BitArrayModule_TopLevel|BitArrayModuleValue[2]~corein ; combout          ;
-; |BitArrayModule_TopLevel|BitArrayModuleValue[3]        ; |BitArrayModule_TopLevel|BitArrayModuleValue[3]~corein ; combout          ;
-; |BitArrayModule_TopLevel|BitArrayModuleValue[4]        ; |BitArrayModule_TopLevel|BitArrayModuleValue[4]~corein ; combout          ;
-; |BitArrayModule_TopLevel|BitArrayModuleValue[5]        ; |BitArrayModule_TopLevel|BitArrayModuleValue[5]~corein ; combout          ;
-; |BitArrayModule_TopLevel|BitArrayModuleValue[6]        ; |BitArrayModule_TopLevel|BitArrayModuleValue[6]~corein ; combout          ;
-; |BitArrayModule_TopLevel|BitArrayModuleValue[7]        ; |BitArrayModule_TopLevel|BitArrayModuleValue[7]~corein ; combout          ;
-; |BitArrayModule_TopLevel|BitArrayModuleValue[8]        ; |BitArrayModule_TopLevel|BitArrayModuleValue[8]~corein ; combout          ;
-+--------------------------------------------------------+--------------------------------------------------------+------------------+
-
-
 The following table displays output ports that do not toggle to 0 during simulation.
-+------------------------------------------------------------------------------------------------------------------------------------+
-; Missing 0-Value Coverage                                                                                                           ;
-+--------------------------------------------------------+--------------------------------------------------------+------------------+
-; Node Name                                              ; Output Port Name                                       ; Output Port Type ;
-+--------------------------------------------------------+--------------------------------------------------------+------------------+
-; |BitArrayModule_TopLevel|BitArrayModuleDirect[1]       ; |BitArrayModule_TopLevel|BitArrayModuleDirect[1]       ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleDirect[2]       ; |BitArrayModule_TopLevel|BitArrayModuleDirect[2]       ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleDirect[3]       ; |BitArrayModule_TopLevel|BitArrayModuleDirect[3]       ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleDirect[4]       ; |BitArrayModule_TopLevel|BitArrayModuleDirect[4]       ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleDirect[5]       ; |BitArrayModule_TopLevel|BitArrayModuleDirect[5]       ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleDirect[6]       ; |BitArrayModule_TopLevel|BitArrayModuleDirect[6]       ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleDirect[7]       ; |BitArrayModule_TopLevel|BitArrayModuleDirect[7]       ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleDirect[8]       ; |BitArrayModule_TopLevel|BitArrayModuleDirect[8]       ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleHigh[1]         ; |BitArrayModule_TopLevel|BitArrayModuleHigh[1]         ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleHigh[2]         ; |BitArrayModule_TopLevel|BitArrayModuleHigh[2]         ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleHigh[3]         ; |BitArrayModule_TopLevel|BitArrayModuleHigh[3]         ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleHigh[4]         ; |BitArrayModule_TopLevel|BitArrayModuleHigh[4]         ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleLow[1]          ; |BitArrayModule_TopLevel|BitArrayModuleLow[1]          ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleLow[2]          ; |BitArrayModule_TopLevel|BitArrayModuleLow[2]          ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleLow[3]          ; |BitArrayModule_TopLevel|BitArrayModuleLow[3]          ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleLow[4]          ; |BitArrayModule_TopLevel|BitArrayModuleLow[4]          ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleReversed[1]     ; |BitArrayModule_TopLevel|BitArrayModuleReversed[1]     ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleReversed[2]     ; |BitArrayModule_TopLevel|BitArrayModuleReversed[2]     ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleReversed[3]     ; |BitArrayModule_TopLevel|BitArrayModuleReversed[3]     ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleReversed[4]     ; |BitArrayModule_TopLevel|BitArrayModuleReversed[4]     ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleReversed[5]     ; |BitArrayModule_TopLevel|BitArrayModuleReversed[5]     ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleReversed[6]     ; |BitArrayModule_TopLevel|BitArrayModuleReversed[6]     ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleReversed[7]     ; |BitArrayModule_TopLevel|BitArrayModuleReversed[7]     ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleReversed[8]     ; |BitArrayModule_TopLevel|BitArrayModuleReversed[8]     ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleReversedHigh[1] ; |BitArrayModule_TopLevel|BitArrayModuleReversedHigh[1] ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleReversedHigh[2] ; |BitArrayModule_TopLevel|BitArrayModuleReversedHigh[2] ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleReversedHigh[3] ; |BitArrayModule_TopLevel|BitArrayModuleReversedHigh[3] ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleReversedHigh[4] ; |BitArrayModule_TopLevel|BitArrayModuleReversedHigh[4] ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleReversedLow[1]  ; |BitArrayModule_TopLevel|BitArrayModuleReversedLow[1]  ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleReversedLow[2]  ; |BitArrayModule_TopLevel|BitArrayModuleReversedLow[2]  ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleReversedLow[3]  ; |BitArrayModule_TopLevel|BitArrayModuleReversedLow[3]  ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleReversedLow[4]  ; |BitArrayModule_TopLevel|BitArrayModuleReversedLow[4]  ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModulePicks[1]        ; |BitArrayModule_TopLevel|BitArrayModulePicks[1]        ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModulePicks[2]        ; |BitArrayModule_TopLevel|BitArrayModulePicks[2]        ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModulePicks[3]        ; |BitArrayModule_TopLevel|BitArrayModulePicks[3]        ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModulePicks[4]        ; |BitArrayModule_TopLevel|BitArrayModulePicks[4]        ; padio            ;
-; |BitArrayModule_TopLevel|BitArrayModuleValue[1]        ; |BitArrayModule_TopLevel|BitArrayModuleValue[1]~corein ; combout          ;
-; |BitArrayModule_TopLevel|BitArrayModuleValue[2]        ; |BitArrayModule_TopLevel|BitArrayModuleValue[2]~corein ; combout          ;
-; |BitArrayModule_TopLevel|BitArrayModuleValue[3]        ; |BitArrayModule_TopLevel|BitArrayModuleValue[3]~corein ; combout          ;
-; |BitArrayModule_TopLevel|BitArrayModuleValue[4]        ; |BitArrayModule_TopLevel|BitArrayModuleValue[4]~corein ; combout          ;
-; |BitArrayModule_TopLevel|BitArrayModuleValue[5]        ; |BitArrayModule_TopLevel|BitArrayModuleValue[5]~corein ; combout          ;
-; |BitArrayModule_TopLevel|BitArrayModuleValue[6]        ; |BitArrayModule_TopLevel|BitArrayModuleValue[6]~corein ; combout          ;
-; |BitArrayModule_TopLevel|BitArrayModuleValue[7]        ; |BitArrayModule_TopLevel|BitArrayModuleValue[7]~corein ; combout          ;
-; |BitArrayModule_TopLevel|BitArrayModuleValue[8]        ; |BitArrayModule_TopLevel|BitArrayModuleValue[8]~corein ; combout          ;
-+--------------------------------------------------------+--------------------------------------------------------+------------------+
++-------------------------------------------------+
+; Missing 0-Value Coverage                        ;
++-----------+------------------+------------------+
+; Node Name ; Output Port Name ; Output Port Type ;
++-----------+------------------+------------------+
 
 
 +---------------------+
@@ -232,17 +215,17 @@ The following table displays output ports that do not toggle to 0 during simulat
 Info: *******************************************************************
 Info: Running Quartus II Simulator
     Info: Version 9.1 Build 350 03/24/2010 Service Pack 2 SJ Web Edition
-    Info: Processing started: Sat Mar 28 17:59:47 2020
+    Info: Processing started: Wed Apr 01 20:36:50 2020
 Info: Command: quartus_sim --read_settings_files=on --write_settings_files=off Verilog -c Verilog
-Info: Using vector source file "C:/code/QuokkaEvaluation/Experimental/Experimental.LowLevel/HDL/BitArray.vwf"
+Info: Using vector source file "C:/code/QuokkaEvaluation/Experimental/Experimental.LowLevel/HDL/CombinationalROMModule.vwf"
 Info: Option to preserve fewer signal transitions to reduce memory requirements is enabled
     Info: Simulation has been partitioned into sub-simulations according to the maximum transition count determined by the engine. Transitions from memory will be flushed out to disk at the end of each sub-simulation to reduce memory requirements.
 Info: Simulation partitioned into 1 sub-simulations
-Info: Simulation coverage is       0.00 %
-Info: Number of transitions in simulation is 0
+Info: Simulation coverage is     100.00 %
+Info: Number of transitions in simulation is 7290
 Info: Quartus II Simulator was successful. 0 errors, 0 warnings
     Info: Peak virtual memory: 164 megabytes
-    Info: Processing ended: Sat Mar 28 17:59:47 2020
+    Info: Processing ended: Wed Apr 01 20:36:50 2020
     Info: Elapsed time: 00:00:00
     Info: Total CPU time (on all processors): 00:00:00
 
