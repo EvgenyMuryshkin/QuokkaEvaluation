@@ -4,7 +4,7 @@ namespace QuokkaTests.Experimental
 {
     public class CounterInputs
     {
-        public bool InReset { get; set; }
+        public bool Enabled { get; set; }
     }
 
     public class CounterState 
@@ -18,7 +18,7 @@ namespace QuokkaTests.Experimental
 
         protected override void OnStage()
         {
-            NextState.Value = Inputs.InReset ? byte.MinValue : (byte)(State.Value + 1);
+            NextState.Value = (byte)(Inputs.Enabled ? State.Value + 1 : State.Value);
         }
     }
 }

@@ -1,0 +1,5 @@
+	always @ (posedge <<clk>>)
+	begin
+        <<target1>> <= <<rom>>[<<read_address1>>];
+        <<target2>> <= <<rom>>[<<read_address2>>];
+	end

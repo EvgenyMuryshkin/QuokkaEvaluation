@@ -24,21 +24,9 @@ HEADER
 {
 	VERSION = 1;
 	TIME_UNIT = ns;
-	PRINT_OPTIONS = "Print_options_version 6\
-range_start 0ps\
-range_end 1.0s\
-width 1\
-names_percentage 25\
-comments 1\
-grid_lines 1\
-time_bars 1\
-name_every_page 0\
-expand_groups 0\
-print_all 1\
-print_row_height 100";
 	DATA_OFFSET = 0.0;
-	DATA_DURATION = 1000000000.0;
-	SIMULATION_TIME = 1000000000.0;
+	DATA_DURATION = 1000000.0;
+	SIMULATION_TIME = 0.0;
 	GRID_PHASE = 0.0;
 	GRID_PERIOD = 10.0;
 	GRID_DUTY_CYCLE = 50;
@@ -64,27 +52,7 @@ SIGNAL("Reset")
 	PARENT = "";
 }
 
-SIGNAL("CompositionModuleIsEnabled")
-{
-	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = SINGLE_BIT;
-	WIDTH = 1;
-	LSB_INDEX = -1;
-	DIRECTION = INPUT;
-	PARENT = "";
-}
-
-SIGNAL("CompositionModuleHasData")
-{
-	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = SINGLE_BIT;
-	WIDTH = 1;
-	LSB_INDEX = -1;
-	DIRECTION = OUTPUT;
-	PARENT = "";
-}
-
-SIGNAL("CompositionModuleData")
+SIGNAL("Data")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = BUS;
@@ -94,84 +62,114 @@ SIGNAL("CompositionModuleData")
 	PARENT = "";
 }
 
-SIGNAL("CompositionModuleData[7]")
+SIGNAL("Data[7]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
 	DIRECTION = OUTPUT;
-	PARENT = "CompositionModuleData";
+	PARENT = "Data";
 }
 
-SIGNAL("CompositionModuleData[6]")
+SIGNAL("Data[6]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
 	DIRECTION = OUTPUT;
-	PARENT = "CompositionModuleData";
+	PARENT = "Data";
 }
 
-SIGNAL("CompositionModuleData[5]")
+SIGNAL("Data[5]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
 	DIRECTION = OUTPUT;
-	PARENT = "CompositionModuleData";
+	PARENT = "Data";
 }
 
-SIGNAL("CompositionModuleData[4]")
+SIGNAL("Data[4]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
 	DIRECTION = OUTPUT;
-	PARENT = "CompositionModuleData";
+	PARENT = "Data";
 }
 
-SIGNAL("CompositionModuleData[3]")
+SIGNAL("Data[3]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
 	DIRECTION = OUTPUT;
-	PARENT = "CompositionModuleData";
+	PARENT = "Data";
 }
 
-SIGNAL("CompositionModuleData[2]")
+SIGNAL("Data[2]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
 	DIRECTION = OUTPUT;
-	PARENT = "CompositionModuleData";
+	PARENT = "Data";
 }
 
-SIGNAL("CompositionModuleData[1]")
+SIGNAL("Data[1]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
 	DIRECTION = OUTPUT;
-	PARENT = "CompositionModuleData";
+	PARENT = "Data";
 }
 
-SIGNAL("CompositionModuleData[0]")
+SIGNAL("Data[0]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
 	DIRECTION = OUTPUT;
-	PARENT = "CompositionModuleData";
+	PARENT = "Data";
+}
+
+SIGNAL("Ack")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = INPUT;
+	PARENT = "";
+}
+
+SIGNAL("HasData")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "";
+}
+
+SIGNAL("IsEnabled")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = INPUT;
+	PARENT = "";
 }
 
 TRANSITION_LIST("Clock")
@@ -181,9 +179,9 @@ TRANSITION_LIST("Clock")
 		REPEAT = 1;
 		NODE
 		{
-			REPEAT = 5000;
-			LEVEL 0 FOR 100000.0;
-			LEVEL 1 FOR 100000.0;
+			REPEAT = 500;
+			LEVEL 0 FOR 1000.0;
+			LEVEL 1 FOR 1000.0;
 		}
 	}
 }
@@ -193,111 +191,115 @@ TRANSITION_LIST("Reset")
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL 1 FOR 1000000000.0;
+		LEVEL 1 FOR 7680.0;
+		LEVEL 0 FOR 992320.0;
 	}
 }
 
-TRANSITION_LIST("CompositionModuleIsEnabled")
+TRANSITION_LIST("Data[7]")
 {
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL 1 FOR 1000000000.0;
+		LEVEL X FOR 1000000.0;
 	}
 }
 
-TRANSITION_LIST("CompositionModuleHasData")
+TRANSITION_LIST("Data[6]")
 {
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL 0 FOR 1900007.224;
-		NODE
-		{
-			REPEAT = 415;
-			LEVEL 1 FOR 199999.873;
-			LEVEL 0 FOR 2200000.127;
-		}
-		LEVEL 1 FOR 199999.873;
-		LEVEL 0 FOR 1899992.903;
+		LEVEL X FOR 1000000.0;
 	}
 }
 
-TRANSITION_LIST("CompositionModuleData[7]")
+TRANSITION_LIST("Data[5]")
 {
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL X FOR 1000000000.0;
+		LEVEL X FOR 1000000.0;
 	}
 }
 
-TRANSITION_LIST("CompositionModuleData[6]")
+TRANSITION_LIST("Data[4]")
 {
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL X FOR 1000000000.0;
+		LEVEL X FOR 1000000.0;
 	}
 }
 
-TRANSITION_LIST("CompositionModuleData[5]")
+TRANSITION_LIST("Data[3]")
 {
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL X FOR 1000000000.0;
+		LEVEL X FOR 1000000.0;
 	}
 }
 
-TRANSITION_LIST("CompositionModuleData[4]")
+TRANSITION_LIST("Data[2]")
 {
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL X FOR 1000000000.0;
+		LEVEL X FOR 1000000.0;
 	}
 }
 
-TRANSITION_LIST("CompositionModuleData[3]")
+TRANSITION_LIST("Data[1]")
 {
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL X FOR 1000000000.0;
+		LEVEL X FOR 1000000.0;
 	}
 }
 
-TRANSITION_LIST("CompositionModuleData[2]")
+TRANSITION_LIST("Data[0]")
 {
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL X FOR 1000000000.0;
+		LEVEL X FOR 1000000.0;
 	}
 }
 
-TRANSITION_LIST("CompositionModuleData[1]")
+TRANSITION_LIST("Ack")
 {
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL X FOR 1000000000.0;
+		LEVEL 0 FOR 17920.0;
+		LEVEL 1 FOR 15360.0;
+		LEVEL 0 FOR 966720.0;
 	}
 }
 
-TRANSITION_LIST("CompositionModuleData[0]")
+TRANSITION_LIST("HasData")
 {
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL X FOR 1000000000.0;
+		LEVEL X FOR 1000000.0;
+	}
+}
+
+TRANSITION_LIST("IsEnabled")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL 1 FOR 1000000.0;
 	}
 }
 
 DISPLAY_LINE
 {
-	CHANNEL = "CompositionModuleIsEnabled";
+	CHANNEL = "Clock";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 0;
@@ -315,7 +317,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "Clock";
+	CHANNEL = "IsEnabled";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 2;
@@ -324,7 +326,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "CompositionModuleHasData";
+	CHANNEL = "Ack";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 3;
@@ -333,97 +335,106 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "CompositionModuleData";
+	CHANNEL = "HasData";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 4;
 	TREE_LEVEL = 0;
-	CHILDREN = 5, 6, 7, 8, 9, 10, 11, 12;
 }
 
 DISPLAY_LINE
 {
-	CHANNEL = "CompositionModuleData[7]";
+	CHANNEL = "Data";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 5;
-	TREE_LEVEL = 1;
-	PARENT = 4;
+	TREE_LEVEL = 0;
+	CHILDREN = 6, 7, 8, 9, 10, 11, 12, 13;
 }
 
 DISPLAY_LINE
 {
-	CHANNEL = "CompositionModuleData[6]";
+	CHANNEL = "Data[7]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 6;
 	TREE_LEVEL = 1;
-	PARENT = 4;
+	PARENT = 5;
 }
 
 DISPLAY_LINE
 {
-	CHANNEL = "CompositionModuleData[5]";
+	CHANNEL = "Data[6]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 7;
 	TREE_LEVEL = 1;
-	PARENT = 4;
+	PARENT = 5;
 }
 
 DISPLAY_LINE
 {
-	CHANNEL = "CompositionModuleData[4]";
+	CHANNEL = "Data[5]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 8;
 	TREE_LEVEL = 1;
-	PARENT = 4;
+	PARENT = 5;
 }
 
 DISPLAY_LINE
 {
-	CHANNEL = "CompositionModuleData[3]";
+	CHANNEL = "Data[4]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 9;
 	TREE_LEVEL = 1;
-	PARENT = 4;
+	PARENT = 5;
 }
 
 DISPLAY_LINE
 {
-	CHANNEL = "CompositionModuleData[2]";
+	CHANNEL = "Data[3]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 10;
 	TREE_LEVEL = 1;
-	PARENT = 4;
+	PARENT = 5;
 }
 
 DISPLAY_LINE
 {
-	CHANNEL = "CompositionModuleData[1]";
+	CHANNEL = "Data[2]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 11;
 	TREE_LEVEL = 1;
-	PARENT = 4;
+	PARENT = 5;
 }
 
 DISPLAY_LINE
 {
-	CHANNEL = "CompositionModuleData[0]";
+	CHANNEL = "Data[1]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 12;
 	TREE_LEVEL = 1;
-	PARENT = 4;
+	PARENT = 5;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "Data[0]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Hexadecimal;
+	TREE_INDEX = 13;
+	TREE_LEVEL = 1;
+	PARENT = 5;
 }
 
 TIME_BAR
 {
-	TIME = 12675;
+	TIME = 17625;
 	MASTER = TRUE;
 }
 ;

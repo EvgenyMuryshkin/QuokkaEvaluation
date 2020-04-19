@@ -24,149 +24,99 @@ module EmitterModule_TopLevel (
 
 	input  Clock,
 	input  Reset,
-	input  EmitterModuleIsEnabled,
-	input  EmitterModuleAck,
-	output [7: 0] EmitterModuleData,
-	output EmitterModuleHasData
+	input  IsEnabled,
+	input  Ack,
+	output [7: 0] Data,
+	output HasData
     );
 
 // [BEGIN USER SIGNALS]
 // [END USER SIGNALS]
 localparam HiSignal = 1'b1;
 localparam LoSignal = 1'b0;
-wire  EmitterModule_TopLevel_Clock;
-wire  EmitterModule_TopLevel_Reset;
-wire  EmitterModule_TopLevel_EmitterModuleIsEnabled;
-wire  EmitterModule_TopLevel_EmitterModuleAck;
-wire  [8:1] EmitterModule_TopLevel_EmitterModuleData;
-wire  EmitterModule_TopLevel_EmitterModuleHasData;
-wire  EmitterModule_TopLevel_EmitterModule_Clock;
-wire  EmitterModule_TopLevel_EmitterModule_Reset;
-wire  EmitterModule_TopLevel_EmitterModule_IsEnabled;
-wire  EmitterModule_TopLevel_EmitterModule_Ack;
-wire  [8:1] EmitterModule_TopLevel_EmitterModule_Data;
-wire  EmitterModule_TopLevel_EmitterModule_HasData;
-wire  EmitterModule_TopLevel_EmitterModule_Zero = 1'b0;
-wire  EmitterModule_TopLevel_EmitterModule_One = 1'b1;
-wire  EmitterModule_TopLevel_EmitterModule_true = 1'b1;
-wire  EmitterModule_TopLevel_EmitterModule_false = 1'b0;
-wire  EmitterModule_TopLevel_EmitterModule_EmitterModule_L28F9L44T10_EmitterModule_L29F9L44T10_EmitterModule_L32F22T41_Expr = 1'b0;
-wire  EmitterModule_TopLevel_EmitterModule_EmitterModule_L28F9L44T10_EmitterModule_L29F9L44T10_EmitterModule_L34F41T65_Expr = 1'b1;
-wire  EmitterModule_TopLevel_EmitterModule_EmitterModule_L28F9L44T10_EmitterModule_L29F9L44T10_EmitterModule_L36F22T46_Expr = 1'b1;
-wire  EmitterModule_TopLevel_EmitterModule_EmitterModule_L28F9L44T10_EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L39F41T60_Expr = 1'b0;
-wire  EmitterModule_TopLevel_EmitterModule_EmitterModule_L28F9L44T10_EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L40F62T63_Expr = 1'b1;
-wire  EmitterModule_TopLevel_EmitterModule_EmitterModule_L26F45T64_Expr = 1'b0;
-wire  EmitterModule_TopLevel_EmitterModule_Inputs_IsEnabled;
-wire  EmitterModule_TopLevel_EmitterModule_Inputs_Ack;
-reg signed  [32:1] EmitterModule_TopLevel_EmitterModule_NextState_FSM = 32'b00000000000000000000000000000000;
-reg  [8:1] EmitterModule_TopLevel_EmitterModule_NextState_Data = 8'b00000000;
-wire  [8:1] EmitterModule_TopLevel_EmitterModule_EmitterModule_L28F9L44T10_EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L40F42T64_Expr;
-wire signed  [32:1] EmitterModule_TopLevel_EmitterModule_State_FSM;
-wire signed  [32:1] EmitterModule_TopLevel_EmitterModule_State_FSMDefault = 32'b00000000000000000000000000000000;
-wire  EmitterModule_TopLevel_EmitterModule_State_FSMWriteEnable;
-wire  [8:1] EmitterModule_TopLevel_EmitterModule_State_Data;
-wire  [8:1] EmitterModule_TopLevel_EmitterModule_State_DataDefault = 8'b00000000;
-wire  EmitterModule_TopLevel_EmitterModule_State_DataWriteEnable;
-wire  [10:1] EmitterModule_TopLevel_EmitterModule_EmitterModule_L28F9L44T10_EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L40F49T63_Expr;
-wire signed  [10:1] EmitterModule_TopLevel_EmitterModule_EmitterModule_L28F9L44T10_EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L40F49T63_Expr_1;
-wire signed  [10:1] EmitterModule_TopLevel_EmitterModule_EmitterModule_L28F9L44T10_EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L40F49T63_Expr_2;
-wire  EmitterModule_TopLevel_EmitterModule_EmitterModule_L28F9L44T10_EmitterModule_L29F9L44T10_EmitterModule_L32F17L35T27_Case;
-wire signed  [33:1] EmitterModule_TopLevel_EmitterModule_EmitterModule_L28F9L44T10_EmitterModule_L29F9L44T10_EmitterModule_L32F17L35T27_CaseLhs;
-wire signed  [33:1] EmitterModule_TopLevel_EmitterModule_EmitterModule_L28F9L44T10_EmitterModule_L29F9L44T10_EmitterModule_L32F17L35T27_CaseRhs;
-wire  EmitterModule_TopLevel_EmitterModule_EmitterModule_L28F9L44T10_EmitterModule_L29F9L44T10_EmitterModule_L36F17L42T27_Case;
-wire signed  [33:1] EmitterModule_TopLevel_EmitterModule_EmitterModule_L28F9L44T10_EmitterModule_L29F9L44T10_EmitterModule_L36F17L42T27_CaseLhs;
-wire signed  [33:1] EmitterModule_TopLevel_EmitterModule_EmitterModule_L28F9L44T10_EmitterModule_L29F9L44T10_EmitterModule_L36F17L42T27_CaseRhs;
-wire  EmitterModule_TopLevel_EmitterModule_EmitterModule_L26F32T64_Expr;
-wire signed  [33:1] EmitterModule_TopLevel_EmitterModule_EmitterModule_L26F32T64_ExprLhs;
-wire signed  [33:1] EmitterModule_TopLevel_EmitterModule_EmitterModule_L26F32T64_ExprRhs;
+wire  Zero = 1'b0;
+wire  One = 1'b1;
+wire  true = 1'b1;
+wire  false = 1'b0;
+wire  EmitterModule_L29F9L44T10_EmitterModule_L32F22T41_Expr = 1'b0;
+wire  EmitterModule_L29F9L44T10_EmitterModule_L34F41T65_Expr = 1'b1;
+wire  EmitterModule_L29F9L44T10_EmitterModule_L36F22T46_Expr = 1'b1;
+wire  EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L39F41T60_Expr = 1'b0;
+wire  EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L40F62T63_Expr = 1'b1;
+wire  EmitterModule_L26F45T64_Expr = 1'b0;
+wire  Inputs_IsEnabled;
+wire  Inputs_Ack;
+reg  NextState_FSM = 1'b0;
+reg  [8:1] NextState_Data = 8'b00000000;
+wire  [8:1] EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L40F42T64_Expr;
+reg  State_FSM = 1'b0;
+wire  State_FSMDefault = 1'b0;
+reg  [8:1] State_Data = 8'b00000000;
+wire  [8:1] State_DataDefault = 8'b00000000;
+wire  [10:1] EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L40F49T63_Expr;
+wire signed  [10:1] EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L40F49T63_Expr_1;
+wire signed  [10:1] EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L40F49T63_Expr_2;
+wire  EmitterModule_L29F9L44T10_EmitterModule_L32F17L35T27_Case;
+wire signed  [2:1] EmitterModule_L29F9L44T10_EmitterModule_L32F17L35T27_CaseLhs;
+wire signed  [2:1] EmitterModule_L29F9L44T10_EmitterModule_L32F17L35T27_CaseRhs;
+wire  EmitterModule_L29F9L44T10_EmitterModule_L36F17L42T27_Case;
+wire signed  [2:1] EmitterModule_L29F9L44T10_EmitterModule_L36F17L42T27_CaseLhs;
+wire signed  [2:1] EmitterModule_L29F9L44T10_EmitterModule_L36F17L42T27_CaseRhs;
+wire  EmitterModule_L26F32T64_Expr;
+wire signed  [2:1] EmitterModule_L26F32T64_ExprLhs;
+wire signed  [2:1] EmitterModule_L26F32T64_ExprRhs;
 wire  BoardSignals_Clock;
 wire  BoardSignals_Reset;
 wire  BoardSignals_Running;
 wire  BoardSignals_Starting;
 wire  BoardSignals_Started;
 reg  InternalReset = 1'b0;
-reg signed  [32:1] EmitterModule_TopLevel_EmitterModule_State_FSMQ = 32'b00000000000000000000000000000000;
-wire signed  [32:1] EmitterModule_TopLevel_EmitterModule_State_FSMD;
-reg  [8:1] EmitterModule_TopLevel_EmitterModule_State_DataQ = 8'b00000000;
-wire  [8:1] EmitterModule_TopLevel_EmitterModule_State_DataD;
-work_Quokka_BoardSignalsProc EmitterModule_TopLevel_EmitterModule_BoardSignalsConnection(BoardSignals_Clock,BoardSignals_Reset,BoardSignals_Running,BoardSignals_Starting,BoardSignals_Started,EmitterModule_TopLevel_EmitterModule_Clock,EmitterModule_TopLevel_EmitterModule_Reset,InternalReset);
+work_Quokka_BoardSignalsProc BoardSignalsConnection(BoardSignals_Clock,BoardSignals_Reset,BoardSignals_Running,BoardSignals_Starting,BoardSignals_Started,Clock,Reset,InternalReset);
 always @(posedge BoardSignals_Clock)
 begin
 if ( BoardSignals_Reset == 1 ) begin
-EmitterModule_TopLevel_EmitterModule_State_FSMQ <= EmitterModule_TopLevel_EmitterModule_State_FSMDefault;
-end
-else if ( EmitterModule_TopLevel_EmitterModule_State_FSMWriteEnable == 1 ) begin
-EmitterModule_TopLevel_EmitterModule_State_FSMQ <= EmitterModule_TopLevel_EmitterModule_State_FSMD;
+State_FSM <= State_FSMDefault;
+State_Data <= State_DataDefault;
 end
 else begin
-EmitterModule_TopLevel_EmitterModule_State_FSMQ <= EmitterModule_TopLevel_EmitterModule_State_FSMQ;
+State_FSM <= NextState_FSM;
+State_Data <= NextState_Data;
 end
 end
-always @(posedge BoardSignals_Clock)
-begin
-if ( BoardSignals_Reset == 1 ) begin
-EmitterModule_TopLevel_EmitterModule_State_DataQ <= EmitterModule_TopLevel_EmitterModule_State_DataDefault;
-end
-else if ( EmitterModule_TopLevel_EmitterModule_State_DataWriteEnable == 1 ) begin
-EmitterModule_TopLevel_EmitterModule_State_DataQ <= EmitterModule_TopLevel_EmitterModule_State_DataD;
-end
-else begin
-EmitterModule_TopLevel_EmitterModule_State_DataQ <= EmitterModule_TopLevel_EmitterModule_State_DataQ;
-end
-end
-assign EmitterModule_TopLevel_EmitterModule_EmitterModule_L28F9L44T10_EmitterModule_L29F9L44T10_EmitterModule_L32F17L35T27_Case = EmitterModule_TopLevel_EmitterModule_EmitterModule_L28F9L44T10_EmitterModule_L29F9L44T10_EmitterModule_L32F17L35T27_CaseLhs == EmitterModule_TopLevel_EmitterModule_EmitterModule_L28F9L44T10_EmitterModule_L29F9L44T10_EmitterModule_L32F17L35T27_CaseRhs ? 1'b1 : 1'b0;
-assign EmitterModule_TopLevel_EmitterModule_EmitterModule_L28F9L44T10_EmitterModule_L29F9L44T10_EmitterModule_L36F17L42T27_Case = EmitterModule_TopLevel_EmitterModule_EmitterModule_L28F9L44T10_EmitterModule_L29F9L44T10_EmitterModule_L36F17L42T27_CaseLhs == EmitterModule_TopLevel_EmitterModule_EmitterModule_L28F9L44T10_EmitterModule_L29F9L44T10_EmitterModule_L36F17L42T27_CaseRhs ? 1'b1 : 1'b0;
-assign EmitterModule_TopLevel_EmitterModule_EmitterModule_L26F32T64_Expr = EmitterModule_TopLevel_EmitterModule_EmitterModule_L26F32T64_ExprLhs == EmitterModule_TopLevel_EmitterModule_EmitterModule_L26F32T64_ExprRhs ? 1'b1 : 1'b0;
-assign EmitterModule_TopLevel_EmitterModule_EmitterModule_L28F9L44T10_EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L40F49T63_Expr = EmitterModule_TopLevel_EmitterModule_EmitterModule_L28F9L44T10_EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L40F49T63_Expr_1 + EmitterModule_TopLevel_EmitterModule_EmitterModule_L28F9L44T10_EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L40F49T63_Expr_2;
+assign EmitterModule_L29F9L44T10_EmitterModule_L32F17L35T27_Case = EmitterModule_L29F9L44T10_EmitterModule_L32F17L35T27_CaseLhs == EmitterModule_L29F9L44T10_EmitterModule_L32F17L35T27_CaseRhs ? 1'b1 : 1'b0;
+assign EmitterModule_L29F9L44T10_EmitterModule_L36F17L42T27_Case = EmitterModule_L29F9L44T10_EmitterModule_L36F17L42T27_CaseLhs == EmitterModule_L29F9L44T10_EmitterModule_L36F17L42T27_CaseRhs ? 1'b1 : 1'b0;
+assign EmitterModule_L26F32T64_Expr = EmitterModule_L26F32T64_ExprLhs == EmitterModule_L26F32T64_ExprRhs ? 1'b1 : 1'b0;
+assign EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L40F49T63_Expr = EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L40F49T63_Expr_1 + EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L40F49T63_Expr_2;
 always @*
 begin
-EmitterModule_TopLevel_EmitterModule_NextState_FSM = EmitterModule_TopLevel_EmitterModule_State_FSM/*cast*/;
-EmitterModule_TopLevel_EmitterModule_NextState_Data = EmitterModule_TopLevel_EmitterModule_State_Data/*cast*/;
-if ( EmitterModule_TopLevel_EmitterModule_EmitterModule_L28F9L44T10_EmitterModule_L29F9L44T10_EmitterModule_L32F17L35T27_Case == 1 ) begin
-if ( EmitterModule_TopLevel_EmitterModule_Inputs_IsEnabled == 1 ) begin
-EmitterModule_TopLevel_EmitterModule_NextState_FSM = { {31{1'b0}}, EmitterModule_TopLevel_EmitterModule_EmitterModule_L28F9L44T10_EmitterModule_L29F9L44T10_EmitterModule_L34F41T65_Expr }/*expand*/;
+NextState_FSM = State_FSM;
+NextState_Data = State_Data/*cast*/;
+if ( EmitterModule_L29F9L44T10_EmitterModule_L32F17L35T27_Case == 1 ) begin
+if ( Inputs_IsEnabled == 1 ) begin
+NextState_FSM = EmitterModule_L29F9L44T10_EmitterModule_L34F41T65_Expr;
 end
 end
-else begin
-if ( EmitterModule_TopLevel_EmitterModule_Inputs_Ack == 1 ) begin
-EmitterModule_TopLevel_EmitterModule_NextState_FSM = { {31{1'b0}}, EmitterModule_TopLevel_EmitterModule_EmitterModule_L28F9L44T10_EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L39F41T60_Expr }/*expand*/;
-EmitterModule_TopLevel_EmitterModule_NextState_Data = EmitterModule_TopLevel_EmitterModule_EmitterModule_L28F9L44T10_EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L40F42T64_Expr/*cast*/;
+else if ( EmitterModule_L29F9L44T10_EmitterModule_L36F17L42T27_Case == 1 ) begin
+if ( Inputs_Ack == 1 ) begin
+NextState_FSM = EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L39F41T60_Expr;
+NextState_Data = EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L40F42T64_Expr/*cast*/;
 end
 end
 
 end
-	assign EmitterModule_TopLevel_EmitterModuleIsEnabled = EmitterModuleIsEnabled;
-	assign EmitterModule_TopLevel_EmitterModuleAck = EmitterModuleAck;
-// Top-level entity connections
-assign EmitterModule_TopLevel_Clock = Clock;
-assign EmitterModule_TopLevel_Reset = !Reset;
-assign EmitterModuleData[7: 0] = EmitterModule_TopLevel_EmitterModuleData[8: 1];
-assign EmitterModuleHasData = EmitterModule_TopLevel_EmitterModuleHasData;
-assign EmitterModule_TopLevel_EmitterModule_State_FSM = EmitterModule_TopLevel_EmitterModule_State_FSMQ;
-assign EmitterModule_TopLevel_EmitterModule_State_FSMD = EmitterModule_TopLevel_EmitterModule_NextState_FSM;
-assign EmitterModule_TopLevel_EmitterModule_State_FSMWriteEnable = HiSignal;
-assign EmitterModule_TopLevel_EmitterModule_State_Data = EmitterModule_TopLevel_EmitterModule_State_DataQ;
-assign EmitterModule_TopLevel_EmitterModule_State_DataD = EmitterModule_TopLevel_EmitterModule_NextState_Data;
-assign EmitterModule_TopLevel_EmitterModule_State_DataWriteEnable = HiSignal;
-assign EmitterModule_TopLevel_EmitterModule_Clock = EmitterModule_TopLevel_Clock;
-assign EmitterModule_TopLevel_EmitterModule_Reset = EmitterModule_TopLevel_Reset;
-assign EmitterModule_TopLevel_EmitterModule_IsEnabled = EmitterModule_TopLevel_EmitterModuleIsEnabled;
-assign EmitterModule_TopLevel_EmitterModule_Ack = EmitterModule_TopLevel_EmitterModuleAck;
-assign EmitterModule_TopLevel_EmitterModuleData = EmitterModule_TopLevel_EmitterModule_Data;
-assign EmitterModule_TopLevel_EmitterModuleHasData = EmitterModule_TopLevel_EmitterModule_HasData;
-assign EmitterModule_TopLevel_EmitterModule_EmitterModule_L28F9L44T10_EmitterModule_L29F9L44T10_EmitterModule_L32F17L35T27_CaseLhs = { {1{EmitterModule_TopLevel_EmitterModule_State_FSM[32]}}, EmitterModule_TopLevel_EmitterModule_State_FSM }/*expand*/;
-assign EmitterModule_TopLevel_EmitterModule_EmitterModule_L28F9L44T10_EmitterModule_L29F9L44T10_EmitterModule_L32F17L35T27_CaseRhs = { {32{1'b0}}, EmitterModule_TopLevel_EmitterModule_EmitterModule_L28F9L44T10_EmitterModule_L29F9L44T10_EmitterModule_L32F22T41_Expr }/*expand*/;
-assign EmitterModule_TopLevel_EmitterModule_EmitterModule_L28F9L44T10_EmitterModule_L29F9L44T10_EmitterModule_L36F17L42T27_CaseLhs = { {1{EmitterModule_TopLevel_EmitterModule_State_FSM[32]}}, EmitterModule_TopLevel_EmitterModule_State_FSM }/*expand*/;
-assign EmitterModule_TopLevel_EmitterModule_EmitterModule_L28F9L44T10_EmitterModule_L29F9L44T10_EmitterModule_L36F17L42T27_CaseRhs = { {32{1'b0}}, EmitterModule_TopLevel_EmitterModule_EmitterModule_L28F9L44T10_EmitterModule_L29F9L44T10_EmitterModule_L36F22T46_Expr }/*expand*/;
-assign EmitterModule_TopLevel_EmitterModule_EmitterModule_L26F32T64_ExprLhs = { {1{EmitterModule_TopLevel_EmitterModule_State_FSM[32]}}, EmitterModule_TopLevel_EmitterModule_State_FSM }/*expand*/;
-assign EmitterModule_TopLevel_EmitterModule_EmitterModule_L26F32T64_ExprRhs = { {32{1'b0}}, EmitterModule_TopLevel_EmitterModule_EmitterModule_L26F45T64_Expr }/*expand*/;
-assign EmitterModule_TopLevel_EmitterModule_EmitterModule_L28F9L44T10_EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L40F49T63_Expr_1 = { {2{1'b0}}, EmitterModule_TopLevel_EmitterModule_State_Data }/*expand*/;
-assign EmitterModule_TopLevel_EmitterModule_EmitterModule_L28F9L44T10_EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L40F49T63_Expr_2 = { {9{1'b0}}, EmitterModule_TopLevel_EmitterModule_EmitterModule_L28F9L44T10_EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L40F62T63_Expr }/*expand*/;
-assign EmitterModule_TopLevel_EmitterModule_Inputs_IsEnabled = EmitterModule_TopLevel_EmitterModule_IsEnabled;
-assign EmitterModule_TopLevel_EmitterModule_Inputs_Ack = EmitterModule_TopLevel_EmitterModule_Ack;
-assign EmitterModule_TopLevel_EmitterModule_EmitterModule_L28F9L44T10_EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L40F42T64_Expr = EmitterModule_TopLevel_EmitterModule_EmitterModule_L28F9L44T10_EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L40F49T63_Expr[8:1]/*truncate*/;
-assign EmitterModule_TopLevel_EmitterModule_Data = EmitterModule_TopLevel_EmitterModule_State_Data/*cast*/;
-assign EmitterModule_TopLevel_EmitterModule_HasData = EmitterModule_TopLevel_EmitterModule_EmitterModule_L26F32T64_Expr;
+assign EmitterModule_L29F9L44T10_EmitterModule_L32F17L35T27_CaseLhs = { {1{1'b0}}, State_FSM }/*expand*/;
+assign EmitterModule_L29F9L44T10_EmitterModule_L32F17L35T27_CaseRhs = { {1{1'b0}}, EmitterModule_L29F9L44T10_EmitterModule_L32F22T41_Expr }/*expand*/;
+assign EmitterModule_L29F9L44T10_EmitterModule_L36F17L42T27_CaseLhs = { {1{1'b0}}, State_FSM }/*expand*/;
+assign EmitterModule_L29F9L44T10_EmitterModule_L36F17L42T27_CaseRhs = { {1{1'b0}}, EmitterModule_L29F9L44T10_EmitterModule_L36F22T46_Expr }/*expand*/;
+assign EmitterModule_L26F32T64_ExprLhs = { {1{1'b0}}, State_FSM }/*expand*/;
+assign EmitterModule_L26F32T64_ExprRhs = { {1{1'b0}}, EmitterModule_L26F45T64_Expr }/*expand*/;
+assign EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L40F49T63_Expr_1 = { {2{1'b0}}, State_Data }/*expand*/;
+assign EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L40F49T63_Expr_2 = { {9{1'b0}}, EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L40F62T63_Expr }/*expand*/;
+assign Inputs_IsEnabled = IsEnabled;
+assign Inputs_Ack = Ack;
+assign EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L40F42T64_Expr = EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L40F49T63_Expr[8:1]/*truncate*/;
+assign Data = State_Data/*cast*/;
+assign HasData = EmitterModule_L26F32T64_Expr;
 // [BEGIN USER ARCHITECTURE]
 // [END USER ARCHITECTURE]
 endmodule

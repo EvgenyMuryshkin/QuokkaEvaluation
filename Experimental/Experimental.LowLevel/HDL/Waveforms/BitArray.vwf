@@ -44,527 +44,851 @@ print_row_height 100";
 	GRID_DUTY_CYCLE = 50;
 }
 
-SIGNAL("BitArrayModuleDirect")
+SIGNAL("Direct")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = BUS;
 	WIDTH = 8;
-	LSB_INDEX = 1;
+	LSB_INDEX = 0;
 	DIRECTION = OUTPUT;
 	PARENT = "";
 }
 
-SIGNAL("BitArrayModuleDirect[8]")
+SIGNAL("Direct[7]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
 	DIRECTION = OUTPUT;
-	PARENT = "BitArrayModuleDirect";
+	PARENT = "Direct";
 }
 
-SIGNAL("BitArrayModuleDirect[7]")
+SIGNAL("Direct[6]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
 	DIRECTION = OUTPUT;
-	PARENT = "BitArrayModuleDirect";
+	PARENT = "Direct";
 }
 
-SIGNAL("BitArrayModuleDirect[6]")
+SIGNAL("Direct[5]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
 	DIRECTION = OUTPUT;
-	PARENT = "BitArrayModuleDirect";
+	PARENT = "Direct";
 }
 
-SIGNAL("BitArrayModuleDirect[5]")
+SIGNAL("Direct[4]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
 	DIRECTION = OUTPUT;
-	PARENT = "BitArrayModuleDirect";
+	PARENT = "Direct";
 }
 
-SIGNAL("BitArrayModuleDirect[4]")
+SIGNAL("Direct[3]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
 	DIRECTION = OUTPUT;
-	PARENT = "BitArrayModuleDirect";
+	PARENT = "Direct";
 }
 
-SIGNAL("BitArrayModuleDirect[3]")
+SIGNAL("Direct[2]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
 	DIRECTION = OUTPUT;
-	PARENT = "BitArrayModuleDirect";
+	PARENT = "Direct";
 }
 
-SIGNAL("BitArrayModuleDirect[2]")
+SIGNAL("Direct[1]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
 	DIRECTION = OUTPUT;
-	PARENT = "BitArrayModuleDirect";
+	PARENT = "Direct";
 }
 
-SIGNAL("BitArrayModuleDirect[1]")
+SIGNAL("Direct[0]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
 	DIRECTION = OUTPUT;
-	PARENT = "BitArrayModuleDirect";
+	PARENT = "Direct";
 }
 
-SIGNAL("BitArrayModuleHigh")
+SIGNAL("High")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = BUS;
 	WIDTH = 4;
-	LSB_INDEX = 1;
+	LSB_INDEX = 0;
 	DIRECTION = OUTPUT;
 	PARENT = "";
 }
 
-SIGNAL("BitArrayModuleHigh[4]")
+SIGNAL("High[3]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
 	DIRECTION = OUTPUT;
-	PARENT = "BitArrayModuleHigh";
+	PARENT = "High";
 }
 
-SIGNAL("BitArrayModuleHigh[3]")
+SIGNAL("High[2]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
 	DIRECTION = OUTPUT;
-	PARENT = "BitArrayModuleHigh";
+	PARENT = "High";
 }
 
-SIGNAL("BitArrayModuleHigh[2]")
+SIGNAL("High[1]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
 	DIRECTION = OUTPUT;
-	PARENT = "BitArrayModuleHigh";
+	PARENT = "High";
 }
 
-SIGNAL("BitArrayModuleHigh[1]")
+SIGNAL("High[0]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
 	DIRECTION = OUTPUT;
-	PARENT = "BitArrayModuleHigh";
+	PARENT = "High";
 }
 
-SIGNAL("BitArrayModuleLow")
+SIGNAL("Low")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = BUS;
 	WIDTH = 4;
-	LSB_INDEX = 1;
+	LSB_INDEX = 0;
 	DIRECTION = OUTPUT;
 	PARENT = "";
 }
 
-SIGNAL("BitArrayModuleLow[4]")
+SIGNAL("Low[3]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
 	DIRECTION = OUTPUT;
-	PARENT = "BitArrayModuleLow";
+	PARENT = "Low";
 }
 
-SIGNAL("BitArrayModuleLow[3]")
+SIGNAL("Low[2]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
 	DIRECTION = OUTPUT;
-	PARENT = "BitArrayModuleLow";
+	PARENT = "Low";
 }
 
-SIGNAL("BitArrayModuleLow[2]")
+SIGNAL("Low[1]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
 	DIRECTION = OUTPUT;
-	PARENT = "BitArrayModuleLow";
+	PARENT = "Low";
 }
 
-SIGNAL("BitArrayModuleLow[1]")
+SIGNAL("Low[0]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
 	DIRECTION = OUTPUT;
-	PARENT = "BitArrayModuleLow";
+	PARENT = "Low";
 }
 
-SIGNAL("BitArrayModuleValue")
+SIGNAL("Picks")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = BUS;
+	WIDTH = 4;
+	LSB_INDEX = 0;
+	DIRECTION = OUTPUT;
+	PARENT = "";
+}
+
+SIGNAL("Picks[3]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "Picks";
+}
+
+SIGNAL("Picks[2]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "Picks";
+}
+
+SIGNAL("Picks[1]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "Picks";
+}
+
+SIGNAL("Picks[0]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "Picks";
+}
+
+SIGNAL("Reversed")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = BUS;
 	WIDTH = 8;
-	LSB_INDEX = 1;
-	DIRECTION = INPUT;
+	LSB_INDEX = 0;
+	DIRECTION = OUTPUT;
 	PARENT = "";
 }
 
-SIGNAL("BitArrayModuleValue[8]")
+SIGNAL("Reversed[7]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
-	DIRECTION = INPUT;
-	PARENT = "BitArrayModuleValue";
+	DIRECTION = OUTPUT;
+	PARENT = "Reversed";
 }
 
-SIGNAL("BitArrayModuleValue[7]")
+SIGNAL("Reversed[6]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
-	DIRECTION = INPUT;
-	PARENT = "BitArrayModuleValue";
+	DIRECTION = OUTPUT;
+	PARENT = "Reversed";
 }
 
-SIGNAL("BitArrayModuleValue[6]")
+SIGNAL("Reversed[5]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
-	DIRECTION = INPUT;
-	PARENT = "BitArrayModuleValue";
+	DIRECTION = OUTPUT;
+	PARENT = "Reversed";
 }
 
-SIGNAL("BitArrayModuleValue[5]")
+SIGNAL("Reversed[4]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
-	DIRECTION = INPUT;
-	PARENT = "BitArrayModuleValue";
+	DIRECTION = OUTPUT;
+	PARENT = "Reversed";
 }
 
-SIGNAL("BitArrayModuleValue[4]")
+SIGNAL("Reversed[3]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
-	DIRECTION = INPUT;
-	PARENT = "BitArrayModuleValue";
+	DIRECTION = OUTPUT;
+	PARENT = "Reversed";
 }
 
-SIGNAL("BitArrayModuleValue[3]")
+SIGNAL("Reversed[2]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
-	DIRECTION = INPUT;
-	PARENT = "BitArrayModuleValue";
+	DIRECTION = OUTPUT;
+	PARENT = "Reversed";
 }
 
-SIGNAL("BitArrayModuleValue[2]")
+SIGNAL("Reversed[1]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
-	DIRECTION = INPUT;
-	PARENT = "BitArrayModuleValue";
+	DIRECTION = OUTPUT;
+	PARENT = "Reversed";
 }
 
-SIGNAL("BitArrayModuleValue[1]")
+SIGNAL("Reversed[0]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
-	DIRECTION = INPUT;
-	PARENT = "BitArrayModuleValue";
+	DIRECTION = OUTPUT;
+	PARENT = "Reversed";
 }
 
-SIGNAL("BitArrayModuleReversed")
+SIGNAL("ReversedHigh")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = BUS;
+	WIDTH = 4;
+	LSB_INDEX = 0;
+	DIRECTION = OUTPUT;
+	PARENT = "";
+}
+
+SIGNAL("ReversedHigh[3]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "ReversedHigh";
+}
+
+SIGNAL("ReversedHigh[2]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "ReversedHigh";
+}
+
+SIGNAL("ReversedHigh[1]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "ReversedHigh";
+}
+
+SIGNAL("ReversedHigh[0]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "ReversedHigh";
+}
+
+SIGNAL("ReversedLow")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = BUS;
+	WIDTH = 4;
+	LSB_INDEX = 0;
+	DIRECTION = OUTPUT;
+	PARENT = "";
+}
+
+SIGNAL("ReversedLow[3]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "ReversedLow";
+}
+
+SIGNAL("ReversedLow[2]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "ReversedLow";
+}
+
+SIGNAL("ReversedLow[1]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "ReversedLow";
+}
+
+SIGNAL("ReversedLow[0]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "ReversedLow";
+}
+
+SIGNAL("Value")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = BUS;
 	WIDTH = 8;
-	LSB_INDEX = 1;
-	DIRECTION = OUTPUT;
+	LSB_INDEX = 0;
+	DIRECTION = INPUT;
 	PARENT = "";
 }
 
-SIGNAL("BitArrayModuleReversed[8]")
+SIGNAL("Value[7]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
-	DIRECTION = OUTPUT;
-	PARENT = "BitArrayModuleReversed";
+	DIRECTION = INPUT;
+	PARENT = "Value";
 }
 
-SIGNAL("BitArrayModuleReversed[7]")
+SIGNAL("Value[6]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
-	DIRECTION = OUTPUT;
-	PARENT = "BitArrayModuleReversed";
+	DIRECTION = INPUT;
+	PARENT = "Value";
 }
 
-SIGNAL("BitArrayModuleReversed[6]")
+SIGNAL("Value[5]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
-	DIRECTION = OUTPUT;
-	PARENT = "BitArrayModuleReversed";
+	DIRECTION = INPUT;
+	PARENT = "Value";
 }
 
-SIGNAL("BitArrayModuleReversed[5]")
+SIGNAL("Value[4]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
-	DIRECTION = OUTPUT;
-	PARENT = "BitArrayModuleReversed";
+	DIRECTION = INPUT;
+	PARENT = "Value";
 }
 
-SIGNAL("BitArrayModuleReversed[4]")
+SIGNAL("Value[3]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
-	DIRECTION = OUTPUT;
-	PARENT = "BitArrayModuleReversed";
+	DIRECTION = INPUT;
+	PARENT = "Value";
 }
 
-SIGNAL("BitArrayModuleReversed[3]")
+SIGNAL("Value[2]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
-	DIRECTION = OUTPUT;
-	PARENT = "BitArrayModuleReversed";
+	DIRECTION = INPUT;
+	PARENT = "Value";
 }
 
-SIGNAL("BitArrayModuleReversed[2]")
+SIGNAL("Value[1]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
-	DIRECTION = OUTPUT;
-	PARENT = "BitArrayModuleReversed";
+	DIRECTION = INPUT;
+	PARENT = "Value";
 }
 
-SIGNAL("BitArrayModuleReversed[1]")
+SIGNAL("Value[0]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
-	DIRECTION = OUTPUT;
-	PARENT = "BitArrayModuleReversed";
+	DIRECTION = INPUT;
+	PARENT = "Value";
 }
 
-SIGNAL("BitArrayModuleReversedHigh")
+TRANSITION_LIST("Direct[7]")
 {
-	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = BUS;
-	WIDTH = 4;
-	LSB_INDEX = 1;
-	DIRECTION = OUTPUT;
-	PARENT = "";
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
 }
 
-SIGNAL("BitArrayModuleReversedHigh[4]")
+TRANSITION_LIST("Direct[6]")
 {
-	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = SINGLE_BIT;
-	WIDTH = 1;
-	LSB_INDEX = -1;
-	DIRECTION = OUTPUT;
-	PARENT = "BitArrayModuleReversedHigh";
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
 }
 
-SIGNAL("BitArrayModuleReversedHigh[3]")
+TRANSITION_LIST("Direct[5]")
 {
-	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = SINGLE_BIT;
-	WIDTH = 1;
-	LSB_INDEX = -1;
-	DIRECTION = OUTPUT;
-	PARENT = "BitArrayModuleReversedHigh";
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
 }
 
-SIGNAL("BitArrayModuleReversedHigh[2]")
+TRANSITION_LIST("Direct[4]")
 {
-	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = SINGLE_BIT;
-	WIDTH = 1;
-	LSB_INDEX = -1;
-	DIRECTION = OUTPUT;
-	PARENT = "BitArrayModuleReversedHigh";
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
 }
 
-SIGNAL("BitArrayModuleReversedHigh[1]")
+TRANSITION_LIST("Direct[3]")
 {
-	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = SINGLE_BIT;
-	WIDTH = 1;
-	LSB_INDEX = -1;
-	DIRECTION = OUTPUT;
-	PARENT = "BitArrayModuleReversedHigh";
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
 }
 
-SIGNAL("BitArrayModuleReversedLow")
+TRANSITION_LIST("Direct[2]")
 {
-	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = BUS;
-	WIDTH = 4;
-	LSB_INDEX = 1;
-	DIRECTION = OUTPUT;
-	PARENT = "";
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
 }
 
-SIGNAL("BitArrayModuleReversedLow[4]")
+TRANSITION_LIST("Direct[1]")
 {
-	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = SINGLE_BIT;
-	WIDTH = 1;
-	LSB_INDEX = -1;
-	DIRECTION = OUTPUT;
-	PARENT = "BitArrayModuleReversedLow";
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
 }
 
-SIGNAL("BitArrayModuleReversedLow[3]")
+TRANSITION_LIST("Direct[0]")
 {
-	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = SINGLE_BIT;
-	WIDTH = 1;
-	LSB_INDEX = -1;
-	DIRECTION = OUTPUT;
-	PARENT = "BitArrayModuleReversedLow";
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
 }
 
-SIGNAL("BitArrayModuleReversedLow[2]")
+TRANSITION_LIST("High[3]")
 {
-	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = SINGLE_BIT;
-	WIDTH = 1;
-	LSB_INDEX = -1;
-	DIRECTION = OUTPUT;
-	PARENT = "BitArrayModuleReversedLow";
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
 }
 
-SIGNAL("BitArrayModuleReversedLow[1]")
+TRANSITION_LIST("High[2]")
 {
-	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = SINGLE_BIT;
-	WIDTH = 1;
-	LSB_INDEX = -1;
-	DIRECTION = OUTPUT;
-	PARENT = "BitArrayModuleReversedLow";
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
 }
 
-SIGNAL("BitArrayModulePicks")
+TRANSITION_LIST("High[1]")
 {
-	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = BUS;
-	WIDTH = 4;
-	LSB_INDEX = 1;
-	DIRECTION = OUTPUT;
-	PARENT = "";
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
 }
 
-SIGNAL("BitArrayModulePicks[4]")
+TRANSITION_LIST("High[0]")
 {
-	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = SINGLE_BIT;
-	WIDTH = 1;
-	LSB_INDEX = -1;
-	DIRECTION = OUTPUT;
-	PARENT = "BitArrayModulePicks";
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
 }
 
-SIGNAL("BitArrayModulePicks[3]")
+TRANSITION_LIST("Low[3]")
 {
-	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = SINGLE_BIT;
-	WIDTH = 1;
-	LSB_INDEX = -1;
-	DIRECTION = OUTPUT;
-	PARENT = "BitArrayModulePicks";
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
 }
 
-SIGNAL("BitArrayModulePicks[2]")
+TRANSITION_LIST("Low[2]")
 {
-	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = SINGLE_BIT;
-	WIDTH = 1;
-	LSB_INDEX = -1;
-	DIRECTION = OUTPUT;
-	PARENT = "BitArrayModulePicks";
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
 }
 
-SIGNAL("BitArrayModulePicks[1]")
+TRANSITION_LIST("Low[1]")
 {
-	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = SINGLE_BIT;
-	WIDTH = 1;
-	LSB_INDEX = -1;
-	DIRECTION = OUTPUT;
-	PARENT = "BitArrayModulePicks";
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
 }
 
-TRANSITION_LIST("BitArrayModuleDirect[8]")
+TRANSITION_LIST("Low[0]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("Picks[3]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("Picks[2]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("Picks[1]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("Picks[0]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("Reversed[7]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("Reversed[6]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("Reversed[5]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("Reversed[4]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("Reversed[3]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("Reversed[2]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("Reversed[1]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("Reversed[0]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("ReversedHigh[3]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("ReversedHigh[2]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("ReversedHigh[1]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("ReversedHigh[0]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("ReversedLow[3]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("ReversedLow[2]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("ReversedLow[1]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("ReversedLow[0]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("Value[7]")
 {
 	NODE
 	{
@@ -573,7 +897,7 @@ TRANSITION_LIST("BitArrayModuleDirect[8]")
 	}
 }
 
-TRANSITION_LIST("BitArrayModuleDirect[7]")
+TRANSITION_LIST("Value[6]")
 {
 	NODE
 	{
@@ -582,7 +906,7 @@ TRANSITION_LIST("BitArrayModuleDirect[7]")
 	}
 }
 
-TRANSITION_LIST("BitArrayModuleDirect[6]")
+TRANSITION_LIST("Value[5]")
 {
 	NODE
 	{
@@ -591,7 +915,7 @@ TRANSITION_LIST("BitArrayModuleDirect[6]")
 	}
 }
 
-TRANSITION_LIST("BitArrayModuleDirect[5]")
+TRANSITION_LIST("Value[4]")
 {
 	NODE
 	{
@@ -600,7 +924,7 @@ TRANSITION_LIST("BitArrayModuleDirect[5]")
 	}
 }
 
-TRANSITION_LIST("BitArrayModuleDirect[4]")
+TRANSITION_LIST("Value[3]")
 {
 	NODE
 	{
@@ -609,7 +933,7 @@ TRANSITION_LIST("BitArrayModuleDirect[4]")
 	}
 }
 
-TRANSITION_LIST("BitArrayModuleDirect[3]")
+TRANSITION_LIST("Value[2]")
 {
 	NODE
 	{
@@ -618,7 +942,7 @@ TRANSITION_LIST("BitArrayModuleDirect[3]")
 	}
 }
 
-TRANSITION_LIST("BitArrayModuleDirect[2]")
+TRANSITION_LIST("Value[1]")
 {
 	NODE
 	{
@@ -627,331 +951,7 @@ TRANSITION_LIST("BitArrayModuleDirect[2]")
 	}
 }
 
-TRANSITION_LIST("BitArrayModuleDirect[1]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL 1 FOR 1000.0;
-	}
-}
-
-TRANSITION_LIST("BitArrayModuleHigh[4]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL 1 FOR 1000.0;
-	}
-}
-
-TRANSITION_LIST("BitArrayModuleHigh[3]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL 1 FOR 1000.0;
-	}
-}
-
-TRANSITION_LIST("BitArrayModuleHigh[2]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL 0 FOR 1000.0;
-	}
-}
-
-TRANSITION_LIST("BitArrayModuleHigh[1]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL 0 FOR 1000.0;
-	}
-}
-
-TRANSITION_LIST("BitArrayModuleLow[4]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL 0 FOR 1000.0;
-	}
-}
-
-TRANSITION_LIST("BitArrayModuleLow[3]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL 0 FOR 1000.0;
-	}
-}
-
-TRANSITION_LIST("BitArrayModuleLow[2]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL 1 FOR 1000.0;
-	}
-}
-
-TRANSITION_LIST("BitArrayModuleLow[1]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL 1 FOR 1000.0;
-	}
-}
-
-TRANSITION_LIST("BitArrayModuleValue[8]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL 1 FOR 1000.0;
-	}
-}
-
-TRANSITION_LIST("BitArrayModuleValue[7]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL 1 FOR 1000.0;
-	}
-}
-
-TRANSITION_LIST("BitArrayModuleValue[6]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL 0 FOR 1000.0;
-	}
-}
-
-TRANSITION_LIST("BitArrayModuleValue[5]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL 0 FOR 1000.0;
-	}
-}
-
-TRANSITION_LIST("BitArrayModuleValue[4]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL 0 FOR 1000.0;
-	}
-}
-
-TRANSITION_LIST("BitArrayModuleValue[3]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL 0 FOR 1000.0;
-	}
-}
-
-TRANSITION_LIST("BitArrayModuleValue[2]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL 1 FOR 1000.0;
-	}
-}
-
-TRANSITION_LIST("BitArrayModuleValue[1]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL 0 FOR 1000.0;
-	}
-}
-
-TRANSITION_LIST("BitArrayModuleReversed[8]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL 1 FOR 1000.0;
-	}
-}
-
-TRANSITION_LIST("BitArrayModuleReversed[7]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL 1 FOR 1000.0;
-	}
-}
-
-TRANSITION_LIST("BitArrayModuleReversed[6]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL 0 FOR 1000.0;
-	}
-}
-
-TRANSITION_LIST("BitArrayModuleReversed[5]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL 0 FOR 1000.0;
-	}
-}
-
-TRANSITION_LIST("BitArrayModuleReversed[4]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL 0 FOR 1000.0;
-	}
-}
-
-TRANSITION_LIST("BitArrayModuleReversed[3]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL 0 FOR 1000.0;
-	}
-}
-
-TRANSITION_LIST("BitArrayModuleReversed[2]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL 1 FOR 1000.0;
-	}
-}
-
-TRANSITION_LIST("BitArrayModuleReversed[1]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL 1 FOR 1000.0;
-	}
-}
-
-TRANSITION_LIST("BitArrayModuleReversedHigh[4]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL 0 FOR 1000.0;
-	}
-}
-
-TRANSITION_LIST("BitArrayModuleReversedHigh[3]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL 0 FOR 1000.0;
-	}
-}
-
-TRANSITION_LIST("BitArrayModuleReversedHigh[2]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL 1 FOR 1000.0;
-	}
-}
-
-TRANSITION_LIST("BitArrayModuleReversedHigh[1]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL 1 FOR 1000.0;
-	}
-}
-
-TRANSITION_LIST("BitArrayModuleReversedLow[4]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL 1 FOR 1000.0;
-	}
-}
-
-TRANSITION_LIST("BitArrayModuleReversedLow[3]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL 1 FOR 1000.0;
-	}
-}
-
-TRANSITION_LIST("BitArrayModuleReversedLow[2]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL 0 FOR 1000.0;
-	}
-}
-
-TRANSITION_LIST("BitArrayModuleReversedLow[1]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL 0 FOR 1000.0;
-	}
-}
-
-TRANSITION_LIST("BitArrayModulePicks[4]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL 1 FOR 1000.0;
-	}
-}
-
-TRANSITION_LIST("BitArrayModulePicks[3]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL 0 FOR 1000.0;
-	}
-}
-
-TRANSITION_LIST("BitArrayModulePicks[2]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL 1 FOR 1000.0;
-	}
-}
-
-TRANSITION_LIST("BitArrayModulePicks[1]")
+TRANSITION_LIST("Value[0]")
 {
 	NODE
 	{
@@ -962,7 +962,7 @@ TRANSITION_LIST("BitArrayModulePicks[1]")
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModuleValue";
+	CHANNEL = "Value";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 0;
@@ -972,7 +972,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModuleValue[8]";
+	CHANNEL = "Value[7]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 1;
@@ -982,7 +982,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModuleValue[7]";
+	CHANNEL = "Value[6]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 2;
@@ -992,7 +992,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModuleValue[6]";
+	CHANNEL = "Value[5]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 3;
@@ -1002,7 +1002,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModuleValue[5]";
+	CHANNEL = "Value[4]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 4;
@@ -1012,7 +1012,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModuleValue[4]";
+	CHANNEL = "Value[3]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 5;
@@ -1022,7 +1022,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModuleValue[3]";
+	CHANNEL = "Value[2]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 6;
@@ -1032,7 +1032,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModuleValue[2]";
+	CHANNEL = "Value[1]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 7;
@@ -1042,7 +1042,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModuleValue[1]";
+	CHANNEL = "Value[0]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 8;
@@ -1052,7 +1052,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModuleDirect";
+	CHANNEL = "Direct";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 9;
@@ -1062,7 +1062,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModuleDirect[8]";
+	CHANNEL = "Direct[7]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 10;
@@ -1072,7 +1072,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModuleDirect[7]";
+	CHANNEL = "Direct[6]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 11;
@@ -1082,7 +1082,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModuleDirect[6]";
+	CHANNEL = "Direct[5]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 12;
@@ -1092,7 +1092,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModuleDirect[5]";
+	CHANNEL = "Direct[4]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 13;
@@ -1102,7 +1102,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModuleDirect[4]";
+	CHANNEL = "Direct[3]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 14;
@@ -1112,7 +1112,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModuleDirect[3]";
+	CHANNEL = "Direct[2]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 15;
@@ -1122,7 +1122,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModuleDirect[2]";
+	CHANNEL = "Direct[1]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 16;
@@ -1132,7 +1132,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModuleDirect[1]";
+	CHANNEL = "Direct[0]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 17;
@@ -1142,7 +1142,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModuleHigh";
+	CHANNEL = "High";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 18;
@@ -1152,7 +1152,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModuleHigh[4]";
+	CHANNEL = "High[3]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 19;
@@ -1162,7 +1162,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModuleHigh[3]";
+	CHANNEL = "High[2]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 20;
@@ -1172,7 +1172,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModuleHigh[2]";
+	CHANNEL = "High[1]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 21;
@@ -1182,7 +1182,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModuleHigh[1]";
+	CHANNEL = "High[0]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 22;
@@ -1192,7 +1192,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModuleLow";
+	CHANNEL = "Low";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 23;
@@ -1202,7 +1202,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModuleLow[4]";
+	CHANNEL = "Low[3]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 24;
@@ -1212,7 +1212,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModuleLow[3]";
+	CHANNEL = "Low[2]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 25;
@@ -1222,7 +1222,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModuleLow[2]";
+	CHANNEL = "Low[1]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 26;
@@ -1232,7 +1232,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModuleLow[1]";
+	CHANNEL = "Low[0]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 27;
@@ -1242,7 +1242,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModuleReversed";
+	CHANNEL = "Reversed";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 28;
@@ -1252,7 +1252,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModuleReversed[8]";
+	CHANNEL = "Reversed[7]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 29;
@@ -1262,7 +1262,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModuleReversed[7]";
+	CHANNEL = "Reversed[6]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 30;
@@ -1272,7 +1272,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModuleReversed[6]";
+	CHANNEL = "Reversed[5]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 31;
@@ -1282,7 +1282,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModuleReversed[5]";
+	CHANNEL = "Reversed[4]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 32;
@@ -1292,7 +1292,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModuleReversed[4]";
+	CHANNEL = "Reversed[3]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 33;
@@ -1302,7 +1302,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModuleReversed[3]";
+	CHANNEL = "Reversed[2]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 34;
@@ -1312,7 +1312,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModuleReversed[2]";
+	CHANNEL = "Reversed[1]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 35;
@@ -1322,7 +1322,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModuleReversed[1]";
+	CHANNEL = "Reversed[0]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 36;
@@ -1332,7 +1332,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModuleReversedHigh";
+	CHANNEL = "ReversedHigh";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 37;
@@ -1342,7 +1342,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModuleReversedHigh[4]";
+	CHANNEL = "ReversedHigh[3]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 38;
@@ -1352,7 +1352,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModuleReversedHigh[3]";
+	CHANNEL = "ReversedHigh[2]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 39;
@@ -1362,7 +1362,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModuleReversedHigh[2]";
+	CHANNEL = "ReversedHigh[1]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 40;
@@ -1372,7 +1372,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModuleReversedHigh[1]";
+	CHANNEL = "ReversedHigh[0]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 41;
@@ -1382,7 +1382,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModuleReversedLow";
+	CHANNEL = "ReversedLow";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 42;
@@ -1392,7 +1392,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModuleReversedLow[4]";
+	CHANNEL = "ReversedLow[3]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 43;
@@ -1402,7 +1402,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModuleReversedLow[3]";
+	CHANNEL = "ReversedLow[2]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 44;
@@ -1412,7 +1412,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModuleReversedLow[2]";
+	CHANNEL = "ReversedLow[1]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 45;
@@ -1422,7 +1422,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModuleReversedLow[1]";
+	CHANNEL = "ReversedLow[0]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 46;
@@ -1432,7 +1432,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModulePicks";
+	CHANNEL = "Picks";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 47;
@@ -1442,7 +1442,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModulePicks[4]";
+	CHANNEL = "Picks[3]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 48;
@@ -1452,7 +1452,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModulePicks[3]";
+	CHANNEL = "Picks[2]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 49;
@@ -1462,7 +1462,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModulePicks[2]";
+	CHANNEL = "Picks[1]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 50;
@@ -1472,7 +1472,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "BitArrayModulePicks[1]";
+	CHANNEL = "Picks[0]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 51;

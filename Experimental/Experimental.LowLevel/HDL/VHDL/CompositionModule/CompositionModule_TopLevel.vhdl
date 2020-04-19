@@ -29,9 +29,9 @@ entity CompositionModule_TopLevel is
 
 Clock : in  std_logic;
 Reset : in  std_logic;
-CompositionModuleIsEnabled : in  std_logic;
-CompositionModuleHasData : out  std_logic;
-CompositionModuleData : out  unsigned(7 downto 0)
+IsEnabled : in  std_logic;
+HasData : out  std_logic;
+Data : out  unsigned(7 downto 0)
     );
 end entity;
 
@@ -42,142 +42,127 @@ architecture rtl of CompositionModule_TopLevel is
 -- [END USER SIGNALS]
 constant HiSignal : std_logic := '1';
 constant LoSignal : std_logic := '0';
-signal CompositionModule_TopLevel_Clock : std_logic := '0';
-signal CompositionModule_TopLevel_Reset : std_logic := '0';
-signal CompositionModule_TopLevel_CompositionModuleIsEnabled : std_logic := '0';
-signal CompositionModule_TopLevel_CompositionModuleHasData : std_logic := '0';
-signal CompositionModule_TopLevel_CompositionModuleData : unsigned(8 downto 1) := (others => '0');
-signal CompositionModule_TopLevel_CompositionModule_Clock : std_logic := '0';
-signal CompositionModule_TopLevel_CompositionModule_Reset : std_logic := '0';
-signal CompositionModule_TopLevel_CompositionModule_IsEnabled : std_logic := '0';
-signal CompositionModule_TopLevel_CompositionModule_HasData : std_logic := '0';
-signal CompositionModule_TopLevel_CompositionModule_Data : unsigned(8 downto 1) := (others => '0');
-constant CompositionModule_TopLevel_CompositionModule_Zero : std_logic := '0';
-constant CompositionModule_TopLevel_CompositionModule_One : std_logic := '1';
-constant CompositionModule_TopLevel_CompositionModule_true : std_logic := '1';
-constant CompositionModule_TopLevel_CompositionModule_false : std_logic := '0';
-constant CompositionModule_TopLevel_CompositionModule_CompositionModule_L41F27T31_Expr : std_logic := '1';
-signal CompositionModule_TopLevel_CompositionModule_Inputs_IsEnabled : std_logic := '0';
-signal CompositionModule_TopLevel_CompositionModule_Emitter_IsEnabled : std_logic := '0';
-signal CompositionModule_TopLevel_CompositionModule_Emitter_Ack : std_logic := '0';
-signal CompositionModule_TopLevel_CompositionModule_Emitter_Data : unsigned(8 downto 1)  := "00000000";
-signal CompositionModule_TopLevel_CompositionModule_Emitter_HasData : std_logic := '0';
-signal CompositionModule_TopLevel_CompositionModule_Transmitter_Trigger : std_logic := '0';
-signal CompositionModule_TopLevel_CompositionModule_Transmitter_Ack : std_logic := '0';
-signal CompositionModule_TopLevel_CompositionModule_Transmitter_Data : unsigned(8 downto 1)  := "00000000";
-signal CompositionModule_TopLevel_CompositionModule_Transmitter_Bit : std_logic := '0';
-signal CompositionModule_TopLevel_CompositionModule_Transmitter_IsReady : std_logic := '0';
-signal CompositionModule_TopLevel_CompositionModule_Transmitter_IsTransmitting : std_logic := '0';
-signal CompositionModule_TopLevel_CompositionModule_Transmitter_IsTransmissionStarted : std_logic := '0';
-signal CompositionModule_TopLevel_CompositionModule_Receiver_IsValid : std_logic := '0';
-signal CompositionModule_TopLevel_CompositionModule_Receiver_Ack : std_logic := '0';
-signal CompositionModule_TopLevel_CompositionModule_Receiver_Bit : std_logic := '0';
-signal CompositionModule_TopLevel_CompositionModule_Receiver_HasData : std_logic := '0';
-signal CompositionModule_TopLevel_CompositionModule_Receiver_Data : unsigned(8 downto 1)  := "00000000";
-signal CompositionModule_TopLevel_CompositionModule_Receiver_PartialData : unsigned(8 downto 1)  := "00000000";
-signal CompositionModule_TopLevel_CompositionModule_EmitterIsEnabledEmitter_IsEnabledHardLink : std_logic := '0';
-signal CompositionModule_TopLevel_CompositionModule_EmitterAckEmitter_AckHardLink : std_logic := '0';
-signal CompositionModule_TopLevel_CompositionModule_EmitterDataEmitter_DataHardLink : unsigned(8 downto 1)  := "00000000";
-signal CompositionModule_TopLevel_CompositionModule_EmitterHasDataEmitter_HasDataHardLink : std_logic := '0';
-signal CompositionModule_TopLevel_CompositionModule_TransmitterTriggerTransmitter_TriggerHardLink : std_logic := '0';
-signal CompositionModule_TopLevel_CompositionModule_TransmitterAckTransmitter_AckHardLink : std_logic := '0';
-signal CompositionModule_TopLevel_CompositionModule_TransmitterDataTransmitter_DataHardLink : unsigned(8 downto 1)  := "00000000";
-signal CompositionModule_TopLevel_CompositionModule_TransmitterBitTransmitter_BitHardLink : std_logic := '0';
-signal CompositionModule_TopLevel_CompositionModule_TransmitterIsReadyTransmitter_IsReadyHardLink : std_logic := '0';
-signal CompositionModule_TopLevel_CompositionModule_TransmitterIsTransmittingTransmitter_IsTransmittingHardLink : std_logic := '0';
-signal CompositionModule_TopLevel_CompositionModule_TransmitterIsTransmissionStartedTransmitter_IsTransmissionStartedHardLink : std_logic := '0';
-signal CompositionModule_TopLevel_CompositionModule_ReceiverIsValidReceiver_IsValidHardLink : std_logic := '0';
-signal CompositionModule_TopLevel_CompositionModule_ReceiverAckReceiver_AckHardLink : std_logic := '0';
-signal CompositionModule_TopLevel_CompositionModule_ReceiverBitReceiver_BitHardLink : std_logic := '0';
-signal CompositionModule_TopLevel_CompositionModule_ReceiverHasDataReceiver_HasDataHardLink : std_logic := '0';
-signal CompositionModule_TopLevel_CompositionModule_ReceiverDataReceiver_DataHardLink : unsigned(8 downto 1)  := "00000000";
-signal CompositionModule_TopLevel_CompositionModule_ReceiverPartialDataReceiver_PartialDataHardLink : unsigned(8 downto 1)  := "00000000";
+constant Zero : std_logic := '0';
+constant One : std_logic := '1';
+constant true : std_logic := '1';
+constant false : std_logic := '0';
+constant CompositionModule_L41F27T31_Expr : std_logic := '1';
+signal Inputs_IsEnabled : std_logic := '0';
+signal Emitter_IsEnabled : std_logic := '0';
+signal Emitter_Ack : std_logic := '0';
+signal Emitter_Data : unsigned(8 downto 1)  := "00000000";
+signal Emitter_HasData : std_logic := '0';
+signal Transmitter_Trigger : std_logic := '0';
+signal Transmitter_Ack : std_logic := '0';
+signal Transmitter_Data : unsigned(8 downto 1)  := "00000000";
+signal Transmitter_Bit : std_logic := '0';
+signal Transmitter_IsReady : std_logic := '0';
+signal Transmitter_IsTransmitting : std_logic := '0';
+signal Transmitter_IsTransmissionStarted : std_logic := '0';
+signal Receiver_IsValid : std_logic := '0';
+signal Receiver_Ack : std_logic := '0';
+signal Receiver_Bit : std_logic := '0';
+signal Receiver_HasData : std_logic := '0';
+signal Receiver_Data : unsigned(8 downto 1)  := "00000000";
+signal Receiver_PartialData : unsigned(8 downto 1)  := "00000000";
+signal EmitterIsEnabledEmitter_IsEnabledHardLink : std_logic := '0';
+signal EmitterAckEmitter_AckHardLink : std_logic := '0';
+signal EmitterDataEmitter_DataHardLink : unsigned(8 downto 1)  := "00000000";
+signal EmitterHasDataEmitter_HasDataHardLink : std_logic := '0';
+signal TransmitterTriggerTransmitter_TriggerHardLink : std_logic := '0';
+signal TransmitterAckTransmitter_AckHardLink : std_logic := '0';
+signal TransmitterDataTransmitter_DataHardLink : unsigned(8 downto 1)  := "00000000";
+signal TransmitterBitTransmitter_BitHardLink : std_logic := '0';
+signal TransmitterIsReadyTransmitter_IsReadyHardLink : std_logic := '0';
+signal TransmitterIsTransmittingTransmitter_IsTransmittingHardLink : std_logic := '0';
+signal TransmitterIsTransmissionStartedTransmitter_IsTransmissionStartedHardLink : std_logic := '0';
+signal ReceiverIsValidReceiver_IsValidHardLink : std_logic := '0';
+signal ReceiverAckReceiver_AckHardLink : std_logic := '0';
+signal ReceiverBitReceiver_BitHardLink : std_logic := '0';
+signal ReceiverHasDataReceiver_HasDataHardLink : std_logic := '0';
+signal ReceiverDataReceiver_DataHardLink : unsigned(8 downto 1)  := "00000000";
+signal ReceiverPartialDataReceiver_PartialDataHardLink : unsigned(8 downto 1)  := "00000000";
 signal BoardSignals : BoardSignalsType;
 signal InternalReset : std_logic := '0';
 begin
-work.Quokka.BoardSignalsProc(BoardSignals,CompositionModule_TopLevel_CompositionModule_Clock,CompositionModule_TopLevel_CompositionModule_Reset,InternalReset);
+work.Quokka.BoardSignalsProc(BoardSignals,Clock,Reset,InternalReset);
 CompositionModule_TopLevel_CompositionModule_Emitter : entity work.CompositionModule_TopLevel_CompositionModule_Emitter port map
 (
---[BEGIN USER MAP FOR CompositionModule_TopLevel_CompositionModule_Emitter]
---[END USER MAP FOR CompositionModule_TopLevel_CompositionModule_Emitter]
+--[BEGIN USER MAP FOR Emitter]
+--[END USER MAP FOR Emitter]
 BoardSignals => BoardSignals,
-EmitterModuleIsEnabled => CompositionModule_TopLevel_CompositionModule_EmitterIsEnabledEmitter_IsEnabledHardLink,
-EmitterModuleAck => CompositionModule_TopLevel_CompositionModule_EmitterAckEmitter_AckHardLink,
-EmitterModuleData => CompositionModule_TopLevel_CompositionModule_EmitterDataEmitter_DataHardLink,
-EmitterModuleHasData => CompositionModule_TopLevel_CompositionModule_EmitterHasDataEmitter_HasDataHardLink
+IsEnabled => EmitterIsEnabledEmitter_IsEnabledHardLink,
+Ack => EmitterAckEmitter_AckHardLink,
+Data => EmitterDataEmitter_DataHardLink,
+HasData => EmitterHasDataEmitter_HasDataHardLink
 
 );
 CompositionModule_TopLevel_CompositionModule_Transmitter : entity work.CompositionModule_TopLevel_CompositionModule_Transmitter port map
 (
---[BEGIN USER MAP FOR CompositionModule_TopLevel_CompositionModule_Transmitter]
---[END USER MAP FOR CompositionModule_TopLevel_CompositionModule_Transmitter]
+--[BEGIN USER MAP FOR Transmitter]
+--[END USER MAP FOR Transmitter]
 BoardSignals => BoardSignals,
-TransmitterModuleTrigger => CompositionModule_TopLevel_CompositionModule_TransmitterTriggerTransmitter_TriggerHardLink,
-TransmitterModuleAck => CompositionModule_TopLevel_CompositionModule_TransmitterAckTransmitter_AckHardLink,
-TransmitterModuleData => CompositionModule_TopLevel_CompositionModule_TransmitterDataTransmitter_DataHardLink,
-TransmitterModuleBit => CompositionModule_TopLevel_CompositionModule_TransmitterBitTransmitter_BitHardLink,
-TransmitterModuleIsReady => CompositionModule_TopLevel_CompositionModule_TransmitterIsReadyTransmitter_IsReadyHardLink,
-TransmitterModuleIsTransmitting => CompositionModule_TopLevel_CompositionModule_TransmitterIsTransmittingTransmitter_IsTransmittingHardLink,
-TransmitterModuleIsTransmissionStarted => CompositionModule_TopLevel_CompositionModule_TransmitterIsTransmissionStartedTransmitter_IsTransmissionStartedHardLink
+Trigger => TransmitterTriggerTransmitter_TriggerHardLink,
+Ack => TransmitterAckTransmitter_AckHardLink,
+Data => TransmitterDataTransmitter_DataHardLink,
+Bit => TransmitterBitTransmitter_BitHardLink,
+IsReady => TransmitterIsReadyTransmitter_IsReadyHardLink,
+IsTransmitting => TransmitterIsTransmittingTransmitter_IsTransmittingHardLink,
+IsTransmissionStarted => TransmitterIsTransmissionStartedTransmitter_IsTransmissionStartedHardLink
 
 );
 CompositionModule_TopLevel_CompositionModule_Receiver : entity work.CompositionModule_TopLevel_CompositionModule_Receiver port map
 (
---[BEGIN USER MAP FOR CompositionModule_TopLevel_CompositionModule_Receiver]
---[END USER MAP FOR CompositionModule_TopLevel_CompositionModule_Receiver]
+--[BEGIN USER MAP FOR Receiver]
+--[END USER MAP FOR Receiver]
 BoardSignals => BoardSignals,
-ReceiverModuleIsValid => CompositionModule_TopLevel_CompositionModule_ReceiverIsValidReceiver_IsValidHardLink,
-ReceiverModuleAck => CompositionModule_TopLevel_CompositionModule_ReceiverAckReceiver_AckHardLink,
-ReceiverModuleBit => CompositionModule_TopLevel_CompositionModule_ReceiverBitReceiver_BitHardLink,
-ReceiverModuleHasData => CompositionModule_TopLevel_CompositionModule_ReceiverHasDataReceiver_HasDataHardLink,
-ReceiverModuleData => CompositionModule_TopLevel_CompositionModule_ReceiverDataReceiver_DataHardLink,
-ReceiverModulePartialData => CompositionModule_TopLevel_CompositionModule_ReceiverPartialDataReceiver_PartialDataHardLink
+IsValid => ReceiverIsValidReceiver_IsValidHardLink,
+Ack => ReceiverAckReceiver_AckHardLink,
+Bit => ReceiverBitReceiver_BitHardLink,
+HasData => ReceiverHasDataReceiver_HasDataHardLink,
+Data => ReceiverDataReceiver_DataHardLink,
+PartialData => ReceiverPartialDataReceiver_PartialDataHardLink
 
 );
 -- Top-level entity connections
-process(Clock, CompositionModule_TopLevel_CompositionModuleData, CompositionModule_TopLevel_CompositionModuleHasData, CompositionModuleIsEnabled, Reset)
+process(Clock, CompositionModule_TopLevel_Data, CompositionModule_TopLevel_HasData, IsEnabled, Reset)
 begin
-	CompositionModule_TopLevel_CompositionModuleIsEnabled <= CompositionModuleIsEnabled;
+	CompositionModule_TopLevel_IsEnabled <= IsEnabled;
 CompositionModule_TopLevel_Clock <= Clock;
 CompositionModule_TopLevel_Reset <= NOT Reset;
-CompositionModuleHasData <= CompositionModule_TopLevel_CompositionModuleHasData;
-CompositionModuleData <= CompositionModule_TopLevel_CompositionModuleData;
+HasData <= CompositionModule_TopLevel_HasData;
+Data <= CompositionModule_TopLevel_Data;
 end process;
-process(CompositionModule_TopLevel_Clock, CompositionModule_TopLevel_CompositionModule_Data, CompositionModule_TopLevel_CompositionModule_Emitter_Ack, CompositionModule_TopLevel_CompositionModule_Emitter_Data, CompositionModule_TopLevel_CompositionModule_Emitter_HasData, CompositionModule_TopLevel_CompositionModule_Emitter_IsEnabled, CompositionModule_TopLevel_CompositionModule_EmitterDataEmitter_DataHardLink, CompositionModule_TopLevel_CompositionModule_EmitterHasDataEmitter_HasDataHardLink, CompositionModule_TopLevel_CompositionModule_HasData, CompositionModule_TopLevel_CompositionModule_Inputs_IsEnabled, CompositionModule_TopLevel_CompositionModule_IsEnabled, CompositionModule_TopLevel_CompositionModule_Receiver_Ack, CompositionModule_TopLevel_CompositionModule_Receiver_Bit, CompositionModule_TopLevel_CompositionModule_Receiver_Data, CompositionModule_TopLevel_CompositionModule_Receiver_HasData, CompositionModule_TopLevel_CompositionModule_Receiver_IsValid, CompositionModule_TopLevel_CompositionModule_ReceiverDataReceiver_DataHardLink, CompositionModule_TopLevel_CompositionModule_ReceiverHasDataReceiver_HasDataHardLink, CompositionModule_TopLevel_CompositionModule_ReceiverPartialDataReceiver_PartialDataHardLink, CompositionModule_TopLevel_CompositionModule_Transmitter_Ack, CompositionModule_TopLevel_CompositionModule_Transmitter_Bit, CompositionModule_TopLevel_CompositionModule_Transmitter_Data, CompositionModule_TopLevel_CompositionModule_Transmitter_IsReady, CompositionModule_TopLevel_CompositionModule_Transmitter_IsTransmitting, CompositionModule_TopLevel_CompositionModule_Transmitter_Trigger, CompositionModule_TopLevel_CompositionModule_TransmitterBitTransmitter_BitHardLink, CompositionModule_TopLevel_CompositionModule_TransmitterIsReadyTransmitter_IsReadyHardLink, CompositionModule_TopLevel_CompositionModule_TransmitterIsTransmissionStartedTransmitter_IsTransmissionStartedHardLink, CompositionModule_TopLevel_CompositionModule_TransmitterIsTransmittingTransmitter_IsTransmittingHardLink, CompositionModule_TopLevel_CompositionModuleIsEnabled, CompositionModule_TopLevel_Reset)
+process(Emitter_Ack, Emitter_Data, Emitter_HasData, Emitter_IsEnabled, EmitterDataEmitter_DataHardLink, EmitterHasDataEmitter_HasDataHardLink, Inputs_IsEnabled, IsEnabled, Receiver_Ack, Receiver_Bit, Receiver_Data, Receiver_HasData, Receiver_IsValid, ReceiverDataReceiver_DataHardLink, ReceiverHasDataReceiver_HasDataHardLink, ReceiverPartialDataReceiver_PartialDataHardLink, Transmitter_Ack, Transmitter_Bit, Transmitter_Data, Transmitter_IsReady, Transmitter_IsTransmitting, Transmitter_Trigger, TransmitterBitTransmitter_BitHardLink, TransmitterIsReadyTransmitter_IsReadyHardLink, TransmitterIsTransmissionStartedTransmitter_IsTransmissionStartedHardLink, TransmitterIsTransmittingTransmitter_IsTransmittingHardLink)
 begin
-CompositionModule_TopLevel_CompositionModule_Clock <= CompositionModule_TopLevel_Clock;
-CompositionModule_TopLevel_CompositionModule_Reset <= CompositionModule_TopLevel_Reset;
-CompositionModule_TopLevel_CompositionModule_IsEnabled <= CompositionModule_TopLevel_CompositionModuleIsEnabled;
-CompositionModule_TopLevel_CompositionModuleHasData <= CompositionModule_TopLevel_CompositionModule_HasData;
-CompositionModule_TopLevel_CompositionModuleData <= CompositionModule_TopLevel_CompositionModule_Data;
-CompositionModule_TopLevel_CompositionModule_Inputs_IsEnabled <= CompositionModule_TopLevel_CompositionModule_IsEnabled;
-CompositionModule_TopLevel_CompositionModule_Emitter_IsEnabled <= CompositionModule_TopLevel_CompositionModule_Inputs_IsEnabled;
-CompositionModule_TopLevel_CompositionModule_Emitter_Ack <= CompositionModule_TopLevel_CompositionModule_Transmitter_IsReady;
-CompositionModule_TopLevel_CompositionModule_Transmitter_Trigger <= CompositionModule_TopLevel_CompositionModule_Emitter_HasData;
-CompositionModule_TopLevel_CompositionModule_Transmitter_Data <= unsigned(CompositionModule_TopLevel_CompositionModule_Emitter_Data);
-CompositionModule_TopLevel_CompositionModule_Transmitter_Ack <= CompositionModule_TopLevel_CompositionModule_Receiver_HasData;
-CompositionModule_TopLevel_CompositionModule_Receiver_IsValid <= CompositionModule_TopLevel_CompositionModule_Transmitter_IsTransmitting;
-CompositionModule_TopLevel_CompositionModule_Receiver_Bit <= CompositionModule_TopLevel_CompositionModule_Transmitter_Bit;
-CompositionModule_TopLevel_CompositionModule_Receiver_Ack <= CompositionModule_TopLevel_CompositionModule_CompositionModule_L41F27T31_Expr;
-CompositionModule_TopLevel_CompositionModule_HasData <= CompositionModule_TopLevel_CompositionModule_Receiver_HasData;
-CompositionModule_TopLevel_CompositionModule_Data <= unsigned(CompositionModule_TopLevel_CompositionModule_Receiver_Data);
-CompositionModule_TopLevel_CompositionModule_EmitterIsEnabledEmitter_IsEnabledHardLink <= CompositionModule_TopLevel_CompositionModule_Emitter_IsEnabled;
-CompositionModule_TopLevel_CompositionModule_EmitterAckEmitter_AckHardLink <= CompositionModule_TopLevel_CompositionModule_Emitter_Ack;
-CompositionModule_TopLevel_CompositionModule_Emitter_Data <= unsigned(CompositionModule_TopLevel_CompositionModule_EmitterDataEmitter_DataHardLink);
-CompositionModule_TopLevel_CompositionModule_Emitter_HasData <= CompositionModule_TopLevel_CompositionModule_EmitterHasDataEmitter_HasDataHardLink;
-CompositionModule_TopLevel_CompositionModule_TransmitterTriggerTransmitter_TriggerHardLink <= CompositionModule_TopLevel_CompositionModule_Transmitter_Trigger;
-CompositionModule_TopLevel_CompositionModule_TransmitterAckTransmitter_AckHardLink <= CompositionModule_TopLevel_CompositionModule_Transmitter_Ack;
-CompositionModule_TopLevel_CompositionModule_TransmitterDataTransmitter_DataHardLink <= unsigned(CompositionModule_TopLevel_CompositionModule_Transmitter_Data);
-CompositionModule_TopLevel_CompositionModule_Transmitter_Bit <= CompositionModule_TopLevel_CompositionModule_TransmitterBitTransmitter_BitHardLink;
-CompositionModule_TopLevel_CompositionModule_Transmitter_IsReady <= CompositionModule_TopLevel_CompositionModule_TransmitterIsReadyTransmitter_IsReadyHardLink;
-CompositionModule_TopLevel_CompositionModule_Transmitter_IsTransmitting <= CompositionModule_TopLevel_CompositionModule_TransmitterIsTransmittingTransmitter_IsTransmittingHardLink;
-CompositionModule_TopLevel_CompositionModule_Transmitter_IsTransmissionStarted <= CompositionModule_TopLevel_CompositionModule_TransmitterIsTransmissionStartedTransmitter_IsTransmissionStartedHardLink;
-CompositionModule_TopLevel_CompositionModule_ReceiverIsValidReceiver_IsValidHardLink <= CompositionModule_TopLevel_CompositionModule_Receiver_IsValid;
-CompositionModule_TopLevel_CompositionModule_ReceiverAckReceiver_AckHardLink <= CompositionModule_TopLevel_CompositionModule_Receiver_Ack;
-CompositionModule_TopLevel_CompositionModule_ReceiverBitReceiver_BitHardLink <= CompositionModule_TopLevel_CompositionModule_Receiver_Bit;
-CompositionModule_TopLevel_CompositionModule_Receiver_HasData <= CompositionModule_TopLevel_CompositionModule_ReceiverHasDataReceiver_HasDataHardLink;
-CompositionModule_TopLevel_CompositionModule_Receiver_Data <= unsigned(CompositionModule_TopLevel_CompositionModule_ReceiverDataReceiver_DataHardLink);
-CompositionModule_TopLevel_CompositionModule_Receiver_PartialData <= unsigned(CompositionModule_TopLevel_CompositionModule_ReceiverPartialDataReceiver_PartialDataHardLink);
+Inputs_IsEnabled <= IsEnabled;
+Emitter_IsEnabled <= Inputs_IsEnabled;
+Emitter_Ack <= Transmitter_IsReady;
+Transmitter_Trigger <= Emitter_HasData;
+Transmitter_Data <= unsigned(Emitter_Data);
+Transmitter_Ack <= Receiver_HasData;
+Receiver_IsValid <= Transmitter_IsTransmitting;
+Receiver_Bit <= Transmitter_Bit;
+Receiver_Ack <= CompositionModule_L41F27T31_Expr;
+HasData <= Receiver_HasData;
+Data <= unsigned(Receiver_Data);
+EmitterIsEnabledEmitter_IsEnabledHardLink <= Emitter_IsEnabled;
+EmitterAckEmitter_AckHardLink <= Emitter_Ack;
+Emitter_Data <= unsigned(EmitterDataEmitter_DataHardLink);
+Emitter_HasData <= EmitterHasDataEmitter_HasDataHardLink;
+TransmitterTriggerTransmitter_TriggerHardLink <= Transmitter_Trigger;
+TransmitterAckTransmitter_AckHardLink <= Transmitter_Ack;
+TransmitterDataTransmitter_DataHardLink <= unsigned(Transmitter_Data);
+Transmitter_Bit <= TransmitterBitTransmitter_BitHardLink;
+Transmitter_IsReady <= TransmitterIsReadyTransmitter_IsReadyHardLink;
+Transmitter_IsTransmitting <= TransmitterIsTransmittingTransmitter_IsTransmittingHardLink;
+Transmitter_IsTransmissionStarted <= TransmitterIsTransmissionStartedTransmitter_IsTransmissionStartedHardLink;
+ReceiverIsValidReceiver_IsValidHardLink <= Receiver_IsValid;
+ReceiverAckReceiver_AckHardLink <= Receiver_Ack;
+ReceiverBitReceiver_BitHardLink <= Receiver_Bit;
+Receiver_HasData <= ReceiverHasDataReceiver_HasDataHardLink;
+Receiver_Data <= unsigned(ReceiverDataReceiver_DataHardLink);
+Receiver_PartialData <= unsigned(ReceiverPartialDataReceiver_PartialDataHardLink);
 end process;
 -- [BEGIN USER ARCHITECTURE]
 -- [END USER ARCHITECTURE]

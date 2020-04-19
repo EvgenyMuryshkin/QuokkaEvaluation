@@ -27,14 +27,14 @@ entity BitArrayModule_TopLevel is
 -- [BEGIN USER PORTS]
 -- [END USER PORTS]
 
-BitArrayModuleValue : in  unsigned(7 downto 0);
-BitArrayModuleDirect : out  unsigned(7 downto 0);
-BitArrayModuleHigh : out  unsigned(3 downto 0);
-BitArrayModuleLow : out  unsigned(3 downto 0);
-BitArrayModuleReversed : out  unsigned(7 downto 0);
-BitArrayModuleReversedHigh : out  unsigned(3 downto 0);
-BitArrayModuleReversedLow : out  unsigned(3 downto 0);
-BitArrayModulePicks : out  unsigned(3 downto 0)
+Value : in  unsigned(7 downto 0);
+Direct : out  unsigned(7 downto 0);
+High : out  unsigned(3 downto 0);
+Low : out  unsigned(3 downto 0);
+Reversed : out  unsigned(7 downto 0);
+ReversedHigh : out  unsigned(3 downto 0);
+ReversedLow : out  unsigned(3 downto 0);
+Picks : out  unsigned(3 downto 0)
     );
 end entity;
 
@@ -45,76 +45,52 @@ architecture rtl of BitArrayModule_TopLevel is
 -- [END USER SIGNALS]
 constant HiSignal : std_logic := '1';
 constant LoSignal : std_logic := '0';
-signal BitArrayModule_TopLevel_BitArrayModuleValue : unsigned(8 downto 1) := (others => '0');
-signal BitArrayModule_TopLevel_BitArrayModuleDirect : unsigned(8 downto 1) := (others => '0');
-signal BitArrayModule_TopLevel_BitArrayModuleHigh : unsigned(4 downto 1) := (others => '0');
-signal BitArrayModule_TopLevel_BitArrayModuleLow : unsigned(4 downto 1) := (others => '0');
-signal BitArrayModule_TopLevel_BitArrayModuleReversed : unsigned(8 downto 1) := (others => '0');
-signal BitArrayModule_TopLevel_BitArrayModuleReversedHigh : unsigned(4 downto 1) := (others => '0');
-signal BitArrayModule_TopLevel_BitArrayModuleReversedLow : unsigned(4 downto 1) := (others => '0');
-signal BitArrayModule_TopLevel_BitArrayModulePicks : unsigned(4 downto 1) := (others => '0');
-signal BitArrayModule_TopLevel_BitArrayModule_Value : unsigned(8 downto 1) := (others => '0');
-signal BitArrayModule_TopLevel_BitArrayModule_Direct : unsigned(8 downto 1) := (others => '0');
-signal BitArrayModule_TopLevel_BitArrayModule_High : unsigned(4 downto 1) := (others => '0');
-signal BitArrayModule_TopLevel_BitArrayModule_Low : unsigned(4 downto 1) := (others => '0');
-signal BitArrayModule_TopLevel_BitArrayModule_Reversed : unsigned(8 downto 1) := (others => '0');
-signal BitArrayModule_TopLevel_BitArrayModule_ReversedHigh : unsigned(4 downto 1) := (others => '0');
-signal BitArrayModule_TopLevel_BitArrayModule_ReversedLow : unsigned(4 downto 1) := (others => '0');
-signal BitArrayModule_TopLevel_BitArrayModule_Picks : unsigned(4 downto 1) := (others => '0');
-constant BitArrayModule_TopLevel_BitArrayModule_Zero : std_logic := '0';
-constant BitArrayModule_TopLevel_BitArrayModule_One : std_logic := '1';
-constant BitArrayModule_TopLevel_BitArrayModule_true : std_logic := '1';
-constant BitArrayModule_TopLevel_BitArrayModule_false : std_logic := '0';
-signal BitArrayModule_TopLevel_BitArrayModule_Inputs_Value : unsigned(8 downto 1)  := "00000000";
-signal BitArrayModule_TopLevel_BitArrayModule_Bits : unsigned(8 downto 1)  := "00000000";
-signal BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L15F36T46_Index : unsigned(4 downto 1)  := "0000";
-signal BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L16F35T45_Index : unsigned(4 downto 1)  := "0000";
-signal BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L17F40T50_Index : unsigned(8 downto 1)  := "00000000";
-signal BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L18F44T54_Index : unsigned(4 downto 1)  := "0000";
-signal BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L19F43T53_Index : unsigned(4 downto 1)  := "0000";
-signal BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L20F37T74_Source : unsigned(4 downto 1)  := "0000";
-signal BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L20F53T62_Index : unsigned(2 downto 1)  := "00";
-signal BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L20F64T73_Index : unsigned(2 downto 1)  := "00";
+constant Zero : std_logic := '0';
+constant One : std_logic := '1';
+constant true : std_logic := '1';
+constant false : std_logic := '0';
+signal Inputs_Value : unsigned(8 downto 1)  := "00000000";
+signal Bits : unsigned(8 downto 1)  := "00000000";
+signal BitArrayModule_L15F36T46_Index : unsigned(4 downto 1)  := "0000";
+signal BitArrayModule_L16F35T45_Index : unsigned(4 downto 1)  := "0000";
+signal BitArrayModule_L17F40T50_Index : unsigned(8 downto 1)  := "00000000";
+signal BitArrayModule_L18F44T54_Index : unsigned(4 downto 1)  := "0000";
+signal BitArrayModule_L19F43T53_Index : unsigned(4 downto 1)  := "0000";
+signal BitArrayModule_L20F37T74_Source : unsigned(4 downto 1)  := "0000";
+signal BitArrayModule_L20F53T62_Index : unsigned(2 downto 1)  := "00";
+signal BitArrayModule_L20F64T73_Index : unsigned(2 downto 1)  := "00";
 begin
 -- Top-level entity connections
-process(BitArrayModule_TopLevel_BitArrayModuleDirect, BitArrayModule_TopLevel_BitArrayModuleHigh, BitArrayModule_TopLevel_BitArrayModuleLow, BitArrayModule_TopLevel_BitArrayModulePicks, BitArrayModule_TopLevel_BitArrayModuleReversed, BitArrayModule_TopLevel_BitArrayModuleReversedHigh, BitArrayModule_TopLevel_BitArrayModuleReversedLow, BitArrayModuleValue)
+process(BitArrayModule_TopLevel_Direct, BitArrayModule_TopLevel_High, BitArrayModule_TopLevel_Low, BitArrayModule_TopLevel_Picks, BitArrayModule_TopLevel_Reversed, BitArrayModule_TopLevel_ReversedHigh, BitArrayModule_TopLevel_ReversedLow, Value)
 begin
-	BitArrayModule_TopLevel_BitArrayModuleValue <= BitArrayModuleValue;
-BitArrayModuleDirect <= BitArrayModule_TopLevel_BitArrayModuleDirect;
-BitArrayModuleHigh <= BitArrayModule_TopLevel_BitArrayModuleHigh;
-BitArrayModuleLow <= BitArrayModule_TopLevel_BitArrayModuleLow;
-BitArrayModuleReversed <= BitArrayModule_TopLevel_BitArrayModuleReversed;
-BitArrayModuleReversedHigh <= BitArrayModule_TopLevel_BitArrayModuleReversedHigh;
-BitArrayModuleReversedLow <= BitArrayModule_TopLevel_BitArrayModuleReversedLow;
-BitArrayModulePicks <= BitArrayModule_TopLevel_BitArrayModulePicks;
+	BitArrayModule_TopLevel_Value <= Value;
+Direct <= BitArrayModule_TopLevel_Direct;
+High <= BitArrayModule_TopLevel_High;
+Low <= BitArrayModule_TopLevel_Low;
+Reversed <= BitArrayModule_TopLevel_Reversed;
+ReversedHigh <= BitArrayModule_TopLevel_ReversedHigh;
+ReversedLow <= BitArrayModule_TopLevel_ReversedLow;
+Picks <= BitArrayModule_TopLevel_Picks;
 end process;
-process(BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L15F36T46_Index, BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L16F35T45_Index, BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L17F40T50_Index, BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L18F44T54_Index, BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L19F43T53_Index, BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L20F37T74_Source, BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L20F53T62_Index, BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L20F64T73_Index, BitArrayModule_TopLevel_BitArrayModule_Bits, BitArrayModule_TopLevel_BitArrayModule_Direct, BitArrayModule_TopLevel_BitArrayModule_High, BitArrayModule_TopLevel_BitArrayModule_Inputs_Value, BitArrayModule_TopLevel_BitArrayModule_Low, BitArrayModule_TopLevel_BitArrayModule_Picks, BitArrayModule_TopLevel_BitArrayModule_Reversed, BitArrayModule_TopLevel_BitArrayModule_ReversedHigh, BitArrayModule_TopLevel_BitArrayModule_ReversedLow, BitArrayModule_TopLevel_BitArrayModule_Value, BitArrayModule_TopLevel_BitArrayModuleValue)
+process(BitArrayModule_L15F36T46_Index, BitArrayModule_L16F35T45_Index, BitArrayModule_L17F40T50_Index, BitArrayModule_L18F44T54_Index, BitArrayModule_L19F43T53_Index, BitArrayModule_L20F37T74_Source, BitArrayModule_L20F53T62_Index, BitArrayModule_L20F64T73_Index, Bits, Inputs_Value, Value)
 begin
-BitArrayModule_TopLevel_BitArrayModule_Value <= BitArrayModule_TopLevel_BitArrayModuleValue;
-BitArrayModule_TopLevel_BitArrayModuleDirect <= BitArrayModule_TopLevel_BitArrayModule_Direct;
-BitArrayModule_TopLevel_BitArrayModuleHigh <= BitArrayModule_TopLevel_BitArrayModule_High;
-BitArrayModule_TopLevel_BitArrayModuleLow <= BitArrayModule_TopLevel_BitArrayModule_Low;
-BitArrayModule_TopLevel_BitArrayModuleReversed <= BitArrayModule_TopLevel_BitArrayModule_Reversed;
-BitArrayModule_TopLevel_BitArrayModuleReversedHigh <= BitArrayModule_TopLevel_BitArrayModule_ReversedHigh;
-BitArrayModule_TopLevel_BitArrayModuleReversedLow <= BitArrayModule_TopLevel_BitArrayModule_ReversedLow;
-BitArrayModule_TopLevel_BitArrayModulePicks <= BitArrayModule_TopLevel_BitArrayModule_Picks;
-BitArrayModule_TopLevel_BitArrayModule_Inputs_Value <= unsigned(BitArrayModule_TopLevel_BitArrayModule_Value);
-BitArrayModule_TopLevel_BitArrayModule_Bits <= unsigned(BitArrayModule_TopLevel_BitArrayModule_Inputs_Value);
-BitArrayModule_TopLevel_BitArrayModule_Direct <= unsigned(BitArrayModule_TopLevel_BitArrayModule_Bits);
-BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L15F36T46_Index <= unsigned(BitArrayModule_TopLevel_BitArrayModule_Bits(8 downto 5));
-BitArrayModule_TopLevel_BitArrayModule_High <= unsigned(BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L15F36T46_Index);
-BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L16F35T45_Index <= unsigned(BitArrayModule_TopLevel_BitArrayModule_Bits(4 downto 1));
-BitArrayModule_TopLevel_BitArrayModule_Low <= unsigned(BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L16F35T45_Index);
-BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L17F40T50_Index <= (1 => BitArrayModule_TopLevel_BitArrayModule_Bits(8), 2 => BitArrayModule_TopLevel_BitArrayModule_Bits(7), 3 => BitArrayModule_TopLevel_BitArrayModule_Bits(6), 4 => BitArrayModule_TopLevel_BitArrayModule_Bits(5), 5 => BitArrayModule_TopLevel_BitArrayModule_Bits(4), 6 => BitArrayModule_TopLevel_BitArrayModule_Bits(3), 7 => BitArrayModule_TopLevel_BitArrayModule_Bits(2), 8 => BitArrayModule_TopLevel_BitArrayModule_Bits(1), others => '0');
-BitArrayModule_TopLevel_BitArrayModule_Reversed <= unsigned(BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L17F40T50_Index);
-BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L18F44T54_Index <= (1 => BitArrayModule_TopLevel_BitArrayModule_Bits(8), 2 => BitArrayModule_TopLevel_BitArrayModule_Bits(7), 3 => BitArrayModule_TopLevel_BitArrayModule_Bits(6), 4 => BitArrayModule_TopLevel_BitArrayModule_Bits(5), others => '0');
-BitArrayModule_TopLevel_BitArrayModule_ReversedHigh <= unsigned(BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L18F44T54_Index);
-BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L19F43T53_Index <= (1 => BitArrayModule_TopLevel_BitArrayModule_Bits(4), 2 => BitArrayModule_TopLevel_BitArrayModule_Bits(3), 3 => BitArrayModule_TopLevel_BitArrayModule_Bits(2), 4 => BitArrayModule_TopLevel_BitArrayModule_Bits(1), others => '0');
-BitArrayModule_TopLevel_BitArrayModule_ReversedLow <= unsigned(BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L19F43T53_Index);
-BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L20F53T62_Index <= unsigned(BitArrayModule_TopLevel_BitArrayModule_Bits(7 downto 6));
-BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L20F64T73_Index <= (1 => BitArrayModule_TopLevel_BitArrayModule_Bits(3), 2 => BitArrayModule_TopLevel_BitArrayModule_Bits(2), others => '0');
-BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L20F37T74_Source <= (1 => BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L20F53T62_Index(1), 2 => BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L20F53T62_Index(2), 3 => BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L20F64T73_Index(1), 4 => BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L20F64T73_Index(2), others => '0');
-BitArrayModule_TopLevel_BitArrayModule_Picks <= unsigned(BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L20F37T74_Source);
+Inputs_Value <= unsigned(Value);
+Bits <= unsigned(Inputs_Value);
+Direct <= unsigned(Bits);
+BitArrayModule_L15F36T46_Index <= unsigned(Bits(8 downto 5));
+High <= unsigned(BitArrayModule_L15F36T46_Index);
+BitArrayModule_L16F35T45_Index <= unsigned(Bits(4 downto 1));
+Low <= unsigned(BitArrayModule_L16F35T45_Index);
+BitArrayModule_L17F40T50_Index <= (1 => Bits(8), 2 => Bits(7), 3 => Bits(6), 4 => Bits(5), 5 => Bits(4), 6 => Bits(3), 7 => Bits(2), 8 => Bits(1), others => '0');
+Reversed <= unsigned(BitArrayModule_L17F40T50_Index);
+BitArrayModule_L18F44T54_Index <= (1 => Bits(8), 2 => Bits(7), 3 => Bits(6), 4 => Bits(5), others => '0');
+ReversedHigh <= unsigned(BitArrayModule_L18F44T54_Index);
+BitArrayModule_L19F43T53_Index <= (1 => Bits(4), 2 => Bits(3), 3 => Bits(2), 4 => Bits(1), others => '0');
+ReversedLow <= unsigned(BitArrayModule_L19F43T53_Index);
+BitArrayModule_L20F53T62_Index <= unsigned(Bits(7 downto 6));
+BitArrayModule_L20F64T73_Index <= (1 => Bits(3), 2 => Bits(2), others => '0');
+BitArrayModule_L20F37T74_Source <= (1 => BitArrayModule_L20F53T62_Index(1), 2 => BitArrayModule_L20F53T62_Index(2), 3 => BitArrayModule_L20F64T73_Index(1), 4 => BitArrayModule_L20F64T73_Index(2), others => '0');
+Picks <= unsigned(BitArrayModule_L20F37T74_Source);
 end process;
 -- [BEGIN USER ARCHITECTURE]
 -- [END USER ARCHITECTURE]

@@ -29,8 +29,8 @@ entity CounterModule_TopLevel is
 
 Clock : in  std_logic;
 Reset : in  std_logic;
-CounterModuleInReset : in  std_logic;
-CounterModuleValue : out  unsigned(7 downto 0)
+Enabled : in  std_logic;
+Value : out  unsigned(7 downto 0)
     );
 end entity;
 
@@ -41,99 +41,75 @@ architecture rtl of CounterModule_TopLevel is
 -- [END USER SIGNALS]
 constant HiSignal : std_logic := '1';
 constant LoSignal : std_logic := '0';
-signal CounterModule_TopLevel_Clock : std_logic := '0';
-signal CounterModule_TopLevel_Reset : std_logic := '0';
-signal CounterModule_TopLevel_CounterModuleInReset : std_logic := '0';
-signal CounterModule_TopLevel_CounterModuleValue : unsigned(8 downto 1) := (others => '0');
-signal CounterModule_TopLevel_CounterModule_Clock : std_logic := '0';
-signal CounterModule_TopLevel_CounterModule_Reset : std_logic := '0';
-signal CounterModule_TopLevel_CounterModule_InReset : std_logic := '0';
-signal CounterModule_TopLevel_CounterModule_Value : unsigned(8 downto 1) := (others => '0');
-constant CounterModule_TopLevel_CounterModule_Zero : std_logic := '0';
-constant CounterModule_TopLevel_CounterModule_One : std_logic := '1';
-constant CounterModule_TopLevel_CounterModule_true : std_logic := '1';
-constant CounterModule_TopLevel_CounterModule_false : std_logic := '0';
-constant CounterModule_TopLevel_CounterModule_CounterModule_L19F9L22T10_CounterModule_L20F9L22T10_CounterModule_L21F48T61_Expr : std_logic := '0';
-constant CounterModule_TopLevel_CounterModule_CounterModule_L19F9L22T10_CounterModule_L20F9L22T10_CounterModule_L21F85T86_Expr : std_logic := '1';
-signal CounterModule_TopLevel_CounterModule_Inputs_InReset : std_logic := '0';
-signal CounterModule_TopLevel_CounterModule_NextState_Value : unsigned(8 downto 1)  := "00000000";
-signal CounterModule_TopLevel_CounterModule_CounterModule_L19F9L22T10_CounterModule_L20F9L22T10_CounterModule_L21F64T87_Expr : unsigned(8 downto 1)  := "00000000";
-signal CounterModule_TopLevel_CounterModule_State_Value : unsigned(8 downto 1)  := "00000000";
-constant CounterModule_TopLevel_CounterModule_State_ValueDefault : unsigned(8 downto 1)  := "00000000";
-signal CounterModule_TopLevel_CounterModule_State_ValueWriteEnable : std_logic := '0';
-signal CounterModule_TopLevel_CounterModule_CounterModule_L19F9L22T10_CounterModule_L20F9L22T10_CounterModule_L21F71T86_Expr : unsigned(10 downto 1)  := "0000000000";
-signal CounterModule_TopLevel_CounterModule_CounterModule_L19F9L22T10_CounterModule_L20F9L22T10_CounterModule_L21F71T86_Expr_1 : signed(10 downto 1)  := "0000000000";
-signal CounterModule_TopLevel_CounterModule_CounterModule_L19F9L22T10_CounterModule_L20F9L22T10_CounterModule_L21F71T86_Expr_2 : signed(10 downto 1)  := "0000000000";
-signal CounterModule_TopLevel_CounterModule_CounterModule_L19F9L22T10_CounterModule_L20F9L22T10_CounterModule_L21F31T87_Lookup : unsigned(8 downto 1)  := "00000000";
-signal CounterModule_TopLevel_CounterModule_CounterModule_L19F9L22T10_CounterModule_L20F9L22T10_CounterModule_L21F31T87_LookupMultiplexerAddress : std_logic := '0';
-signal CounterModule_TopLevel_CounterModule_CounterModule_L19F9L22T10_CounterModule_L20F9L22T10_CounterModule_L21F31T87_Lookup1 : unsigned(8 downto 1)  := "00000000";
-signal CounterModule_TopLevel_CounterModule_CounterModule_L19F9L22T10_CounterModule_L20F9L22T10_CounterModule_L21F31T87_Lookup2 : unsigned(8 downto 1)  := "00000000";
-signal BoardSignals : BoardSignalsType;
-signal InternalReset : std_logic := '0';
-signal CounterModule_TopLevel_CounterModule_State_ValueQ : unsigned(8 downto 1)  := "00000000";
-signal CounterModule_TopLevel_CounterModule_State_ValueD : unsigned(8 downto 1)  := "00000000";
+constant Zero : std_logic := '0';
+constant One : std_logic := '1';
+constant true : std_logic := '1';
+constant false : std_logic := '0';
+constant CounterModule_L20F9L22T10_CounterModule_L21F69T70_Expr : std_logic := '1';
+signal Inputs_Enabled : std_logic := '0';
+signal NextState_Value : unsigned(8 downto 1)  := "00000000";
+signal CounterModule_L20F9L22T10_CounterModule_L21F31T85_Expr : unsigned(8 downto 1)  := "00000000";
+signal State_Value : unsigned(8 downto 1)  := "00000000";
+constant State_ValueDefault : unsigned(8 downto 1)  := "00000000";
+signal CounterModule_L20F9L22T10_CounterModule_L21F55T70_Expr : unsigned(10 downto 1)  := "0000000000";
+signal CounterModule_L20F9L22T10_CounterModule_L21F55T70_Expr_1 : signed(10 downto 1)  := "0000000000";
+signal CounterModule_L20F9L22T10_CounterModule_L21F55T70_Expr_2 : signed(10 downto 1)  := "0000000000";
+signal CounterModule_L20F9L22T10_CounterModule_L21F38T84_Lookup : unsigned(8 downto 1)  := "00000000";
+signal CounterModule_L20F9L22T10_CounterModule_L21F38T84_LookupMultiplexerAddress : std_logic := '0';
+signal CounterModule_L20F9L22T10_CounterModule_L21F38T84_Lookup1 : unsigned(8 downto 1)  := "00000000";
+signal CounterModule_L20F9L22T10_CounterModule_L21F38T84_Lookup2 : unsigned(8 downto 1)  := "00000000";
 begin
-work.Quokka.BoardSignalsProc(BoardSignals,CounterModule_TopLevel_CounterModule_Clock,CounterModule_TopLevel_CounterModule_Reset,InternalReset);
-process (BoardSignals, CounterModule_TopLevel_CounterModule_State_ValueD, CounterModule_TopLevel_CounterModule_State_ValueQ, CounterModule_TopLevel_CounterModule_State_ValueWriteEnable)
+process (Clock, NextState_Value, Reset)
 begin
-if rising_edge(BoardSignals.Clock) then
-if ( BoardSignals.Reset = '1' ) then
-CounterModule_TopLevel_CounterModule_State_ValueQ <= CounterModule_TopLevel_CounterModule_State_ValueDefault;
-elsif ( CounterModule_TopLevel_CounterModule_State_ValueWriteEnable = '1' ) then
-CounterModule_TopLevel_CounterModule_State_ValueQ <= CounterModule_TopLevel_CounterModule_State_ValueD;
+if rising_edge(Clock) then
+if ( Reset = '1' ) then
+State_Value <= State_ValueDefault;
 else
-CounterModule_TopLevel_CounterModule_State_ValueQ <= CounterModule_TopLevel_CounterModule_State_ValueQ;
+State_Value <= NextState_Value;
 end if;
 end if;
 end process;
 
-process(CounterModule_TopLevel_CounterModule_CounterModule_L19F9L22T10_CounterModule_L20F9L22T10_CounterModule_L21F71T86_Expr_1, CounterModule_TopLevel_CounterModule_CounterModule_L19F9L22T10_CounterModule_L20F9L22T10_CounterModule_L21F71T86_Expr_2)
+process(CounterModule_L20F9L22T10_CounterModule_L21F55T70_Expr_1, CounterModule_L20F9L22T10_CounterModule_L21F55T70_Expr_2)
 begin
-    CounterModule_TopLevel_CounterModule_CounterModule_L19F9L22T10_CounterModule_L20F9L22T10_CounterModule_L21F71T86_Expr <= resize(unsigned(signed(resize(CounterModule_TopLevel_CounterModule_CounterModule_L19F9L22T10_CounterModule_L20F9L22T10_CounterModule_L21F71T86_Expr_1, CounterModule_TopLevel_CounterModule_CounterModule_L19F9L22T10_CounterModule_L20F9L22T10_CounterModule_L21F71T86_Expr_1'length + 1)) + signed(resize(CounterModule_TopLevel_CounterModule_CounterModule_L19F9L22T10_CounterModule_L20F9L22T10_CounterModule_L21F71T86_Expr_2, CounterModule_TopLevel_CounterModule_CounterModule_L19F9L22T10_CounterModule_L20F9L22T10_CounterModule_L21F71T86_Expr_2'length + 1))), CounterModule_TopLevel_CounterModule_CounterModule_L19F9L22T10_CounterModule_L20F9L22T10_CounterModule_L21F71T86_Expr'length);
+    CounterModule_L20F9L22T10_CounterModule_L21F55T70_Expr <= resize(unsigned(signed(resize(CounterModule_L20F9L22T10_CounterModule_L21F55T70_Expr_1, CounterModule_L20F9L22T10_CounterModule_L21F55T70_Expr_1'length + 1)) + signed(resize(CounterModule_L20F9L22T10_CounterModule_L21F55T70_Expr_2, CounterModule_L20F9L22T10_CounterModule_L21F55T70_Expr_2'length + 1))), CounterModule_L20F9L22T10_CounterModule_L21F55T70_Expr'length);
 
 end process;
-process(CounterModule_TopLevel_CounterModule_CounterModule_L19F9L22T10_CounterModule_L20F9L22T10_CounterModule_L21F31T87_Lookup1, CounterModule_TopLevel_CounterModule_CounterModule_L19F9L22T10_CounterModule_L20F9L22T10_CounterModule_L21F31T87_Lookup2, CounterModule_TopLevel_CounterModule_CounterModule_L19F9L22T10_CounterModule_L20F9L22T10_CounterModule_L21F31T87_LookupMultiplexerAddress)
+process(CounterModule_L20F9L22T10_CounterModule_L21F38T84_Lookup1, CounterModule_L20F9L22T10_CounterModule_L21F38T84_Lookup2, CounterModule_L20F9L22T10_CounterModule_L21F38T84_LookupMultiplexerAddress)
 begin
-case CounterModule_TopLevel_CounterModule_CounterModule_L19F9L22T10_CounterModule_L20F9L22T10_CounterModule_L21F31T87_LookupMultiplexerAddress is
+case CounterModule_L20F9L22T10_CounterModule_L21F38T84_LookupMultiplexerAddress is
   when '0' => 
-CounterModule_TopLevel_CounterModule_CounterModule_L19F9L22T10_CounterModule_L20F9L22T10_CounterModule_L21F31T87_Lookup <= CounterModule_TopLevel_CounterModule_CounterModule_L19F9L22T10_CounterModule_L20F9L22T10_CounterModule_L21F31T87_Lookup1;
+CounterModule_L20F9L22T10_CounterModule_L21F38T84_Lookup <= CounterModule_L20F9L22T10_CounterModule_L21F38T84_Lookup1;
   when '1' => 
-CounterModule_TopLevel_CounterModule_CounterModule_L19F9L22T10_CounterModule_L20F9L22T10_CounterModule_L21F31T87_Lookup <= CounterModule_TopLevel_CounterModule_CounterModule_L19F9L22T10_CounterModule_L20F9L22T10_CounterModule_L21F31T87_Lookup2;
+CounterModule_L20F9L22T10_CounterModule_L21F38T84_Lookup <= CounterModule_L20F9L22T10_CounterModule_L21F38T84_Lookup2;
   when others => 
-CounterModule_TopLevel_CounterModule_CounterModule_L19F9L22T10_CounterModule_L20F9L22T10_CounterModule_L21F31T87_Lookup <= "00000000";
+CounterModule_L20F9L22T10_CounterModule_L21F38T84_Lookup <= "00000000";
 end case;
 
 end process;
-process(CounterModule_TopLevel_CounterModule_CounterModule_L19F9L22T10_CounterModule_L20F9L22T10_CounterModule_L21F31T87_Lookup, CounterModule_TopLevel_CounterModule_State_Value)
+process(CounterModule_L20F9L22T10_CounterModule_L21F31T85_Expr, State_Value)
 begin
-CounterModule_TopLevel_CounterModule_NextState_Value <= unsigned(CounterModule_TopLevel_CounterModule_State_Value);
-CounterModule_TopLevel_CounterModule_NextState_Value <= unsigned(CounterModule_TopLevel_CounterModule_CounterModule_L19F9L22T10_CounterModule_L20F9L22T10_CounterModule_L21F31T87_Lookup);
+NextState_Value <= unsigned(State_Value);
+NextState_Value <= unsigned(CounterModule_L20F9L22T10_CounterModule_L21F31T85_Expr);
 end process;
 -- Top-level entity connections
-process(Clock, CounterModule_TopLevel_CounterModuleValue, CounterModuleInReset, Reset)
+process(Clock, CounterModule_TopLevel_Value, Enabled, Reset)
 begin
-	CounterModule_TopLevel_CounterModuleInReset <= CounterModuleInReset;
+	CounterModule_TopLevel_Enabled <= Enabled;
 CounterModule_TopLevel_Clock <= Clock;
 CounterModule_TopLevel_Reset <= NOT Reset;
-CounterModuleValue <= CounterModule_TopLevel_CounterModuleValue;
+Value <= CounterModule_TopLevel_Value;
 end process;
-process(CounterModule_TopLevel_Clock, CounterModule_TopLevel_CounterModule_CounterModule_L19F9L22T10_CounterModule_L20F9L22T10_CounterModule_L21F64T87_Expr, CounterModule_TopLevel_CounterModule_CounterModule_L19F9L22T10_CounterModule_L20F9L22T10_CounterModule_L21F71T86_Expr, CounterModule_TopLevel_CounterModule_Inputs_InReset, CounterModule_TopLevel_CounterModule_InReset, CounterModule_TopLevel_CounterModule_NextState_Value, CounterModule_TopLevel_CounterModule_State_Value, CounterModule_TopLevel_CounterModule_State_ValueQ, CounterModule_TopLevel_CounterModule_Value, CounterModule_TopLevel_CounterModuleInReset, CounterModule_TopLevel_Reset)
+process(CounterModule_L20F9L22T10_CounterModule_L21F38T84_Lookup, CounterModule_L20F9L22T10_CounterModule_L21F55T70_Expr, Enabled, Inputs_Enabled, State_Value)
 begin
-CounterModule_TopLevel_CounterModule_CounterModule_L19F9L22T10_CounterModule_L20F9L22T10_CounterModule_L21F31T87_LookupMultiplexerAddress <= CounterModule_TopLevel_CounterModule_Inputs_InReset;
-CounterModule_TopLevel_CounterModule_State_Value <= CounterModule_TopLevel_CounterModule_State_ValueQ;
-CounterModule_TopLevel_CounterModule_State_ValueD <= CounterModule_TopLevel_CounterModule_NextState_Value;
-CounterModule_TopLevel_CounterModule_State_ValueWriteEnable <= HiSignal;
-CounterModule_TopLevel_CounterModule_Clock <= CounterModule_TopLevel_Clock;
-CounterModule_TopLevel_CounterModule_Reset <= CounterModule_TopLevel_Reset;
-CounterModule_TopLevel_CounterModule_InReset <= CounterModule_TopLevel_CounterModuleInReset;
-CounterModule_TopLevel_CounterModuleValue <= CounterModule_TopLevel_CounterModule_Value;
-CounterModule_TopLevel_CounterModule_CounterModule_L19F9L22T10_CounterModule_L20F9L22T10_CounterModule_L21F71T86_Expr_1 <= signed(resize(CounterModule_TopLevel_CounterModule_State_Value, CounterModule_TopLevel_CounterModule_CounterModule_L19F9L22T10_CounterModule_L20F9L22T10_CounterModule_L21F71T86_Expr_1'length));
-CounterModule_TopLevel_CounterModule_CounterModule_L19F9L22T10_CounterModule_L20F9L22T10_CounterModule_L21F71T86_Expr_2 <= (1 => CounterModule_TopLevel_CounterModule_CounterModule_L19F9L22T10_CounterModule_L20F9L22T10_CounterModule_L21F85T86_Expr, others => '0');
-CounterModule_TopLevel_CounterModule_Inputs_InReset <= CounterModule_TopLevel_CounterModule_InReset;
-CounterModule_TopLevel_CounterModule_CounterModule_L19F9L22T10_CounterModule_L20F9L22T10_CounterModule_L21F64T87_Expr <= unsigned(CounterModule_TopLevel_CounterModule_CounterModule_L19F9L22T10_CounterModule_L20F9L22T10_CounterModule_L21F71T86_Expr(8 downto 1));
-CounterModule_TopLevel_CounterModule_Value <= unsigned(CounterModule_TopLevel_CounterModule_State_Value);
-CounterModule_TopLevel_CounterModule_CounterModule_L19F9L22T10_CounterModule_L20F9L22T10_CounterModule_L21F31T87_Lookup1 <= unsigned(CounterModule_TopLevel_CounterModule_CounterModule_L19F9L22T10_CounterModule_L20F9L22T10_CounterModule_L21F64T87_Expr);
-CounterModule_TopLevel_CounterModule_CounterModule_L19F9L22T10_CounterModule_L20F9L22T10_CounterModule_L21F31T87_Lookup2 <= (1 => CounterModule_TopLevel_CounterModule_CounterModule_L19F9L22T10_CounterModule_L20F9L22T10_CounterModule_L21F48T61_Expr, others => '0');
+CounterModule_L20F9L22T10_CounterModule_L21F38T84_LookupMultiplexerAddress <= Inputs_Enabled;
+CounterModule_L20F9L22T10_CounterModule_L21F55T70_Expr_1 <= signed(resize(State_Value, CounterModule_L20F9L22T10_CounterModule_L21F55T70_Expr_1'length));
+CounterModule_L20F9L22T10_CounterModule_L21F55T70_Expr_2 <= (1 => CounterModule_L20F9L22T10_CounterModule_L21F69T70_Expr, others => '0');
+Inputs_Enabled <= Enabled;
+CounterModule_L20F9L22T10_CounterModule_L21F31T85_Expr <= unsigned(CounterModule_L20F9L22T10_CounterModule_L21F38T84_Lookup);
+Value <= unsigned(State_Value);
+CounterModule_L20F9L22T10_CounterModule_L21F38T84_Lookup1 <= unsigned(State_Value);
+CounterModule_L20F9L22T10_CounterModule_L21F38T84_Lookup2 <= unsigned(CounterModule_L20F9L22T10_CounterModule_L21F55T70_Expr(8 downto 1));
 end process;
 -- [BEGIN USER ARCHITECTURE]
 -- [END USER ARCHITECTURE]

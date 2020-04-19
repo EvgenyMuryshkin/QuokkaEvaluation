@@ -27,10 +27,10 @@ entity CombinationalROMModule_TopLevel is
 -- [BEGIN USER PORTS]
 -- [END USER PORTS]
 
-CombinationalROMModuleReadAddress1 : in  unsigned(7 downto 0);
-CombinationalROMModuleReadAddress2 : in  unsigned(7 downto 0);
-CombinationalROMModuleValue1 : out  unsigned(7 downto 0);
-CombinationalROMModuleValue2 : out  unsigned(7 downto 0)
+ReadAddress1 : in  unsigned(7 downto 0);
+ReadAddress2 : in  unsigned(7 downto 0);
+Value1 : out  unsigned(7 downto 0);
+Value2 : out  unsigned(7 downto 0)
     );
 end entity;
 
@@ -41,28 +41,16 @@ architecture rtl of CombinationalROMModule_TopLevel is
 -- [END USER SIGNALS]
 constant HiSignal : std_logic := '1';
 constant LoSignal : std_logic := '0';
-signal CombinationalROMModule_TopLevel_CombinationalROMModuleReadAddress1 : unsigned(8 downto 1) := (others => '0');
-signal CombinationalROMModule_TopLevel_CombinationalROMModuleReadAddress2 : unsigned(8 downto 1) := (others => '0');
-signal CombinationalROMModule_TopLevel_CombinationalROMModuleValue1 : unsigned(8 downto 1) := (others => '0');
-signal CombinationalROMModule_TopLevel_CombinationalROMModuleValue2 : unsigned(8 downto 1) := (others => '0');
-signal CombinationalROMModule_TopLevel_CombinationalROMModule_ReadAddress1 : unsigned(8 downto 1) := (others => '0');
-signal CombinationalROMModule_TopLevel_CombinationalROMModule_ReadAddress2 : unsigned(8 downto 1) := (others => '0');
-signal CombinationalROMModule_TopLevel_CombinationalROMModule_Value1 : unsigned(8 downto 1) := (others => '0');
-signal CombinationalROMModule_TopLevel_CombinationalROMModule_Value2 : unsigned(8 downto 1) := (others => '0');
-constant CombinationalROMModule_TopLevel_CombinationalROMModule_Zero : std_logic := '0';
-constant CombinationalROMModule_TopLevel_CombinationalROMModule_One : std_logic := '1';
-constant CombinationalROMModule_TopLevel_CombinationalROMModule_true : std_logic := '1';
-constant CombinationalROMModule_TopLevel_CombinationalROMModule_false : std_logic := '0';
-signal CombinationalROMModule_TopLevel_CombinationalROMModule_Inputs_ReadAddress1 : unsigned(8 downto 1)  := "00000000";
-signal CombinationalROMModule_TopLevel_CombinationalROMModule_Inputs_ReadAddress2 : unsigned(8 downto 1)  := "00000000";
-signal CombinationalROMModule_TopLevel_CombinationalROMModule_CombinationalROMModule_L22F31T56_Index : unsigned(8 downto 1)  := "00000000";
-signal CombinationalROMModule_TopLevel_CombinationalROMModule_CombinationalROMModule_L23F31T56_Index : unsigned(8 downto 1)  := "00000000";
-signal CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_InReadAddress0 : unsigned(8 downto 1) := (others => '0');
-signal CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_OutData0 : unsigned(8 downto 1)  := "00000000";
-signal CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_InReadAddress1 : unsigned(8 downto 1) := (others => '0');
-signal CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_OutData1 : unsigned(8 downto 1)  := "00000000";
-type CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlockArray is array(0 to 255) of unsigned(8 downto 1);
-constant CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlockArrayInit: CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlockArray:= (
+constant Zero : std_logic := '0';
+constant One : std_logic := '1';
+constant true : std_logic := '1';
+constant false : std_logic := '0';
+signal Inputs_ReadAddress1 : unsigned(8 downto 1)  := "00000000";
+signal Inputs_ReadAddress2 : unsigned(8 downto 1)  := "00000000";
+signal CombinationalROMModule_L22F31T56_Index : unsigned(8 downto 1)  := "00000000";
+signal CombinationalROMModule_L23F31T56_Index : unsigned(8 downto 1)  := "00000000";
+type buffArray is array(0 to 255) of unsigned(8 downto 1);
+constant buffArrayInit: buffArray:= (
 "00100000",
 "00100000",
 "00100001",
@@ -320,32 +308,24 @@ constant CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent
 "11011110",
 "11011111"
 );
-signal CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock : CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlockArray := CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlockArrayInit;
+signal buff : buffArray := buffArrayInit;
 begin
 -- Top-level entity connections
-process(CombinationalROMModule_TopLevel_CombinationalROMModuleValue1, CombinationalROMModule_TopLevel_CombinationalROMModuleValue2, CombinationalROMModuleReadAddress1, CombinationalROMModuleReadAddress2)
+process(CombinationalROMModule_TopLevel_Value1, CombinationalROMModule_TopLevel_Value2, ReadAddress1, ReadAddress2)
 begin
-	CombinationalROMModule_TopLevel_CombinationalROMModuleReadAddress1 <= CombinationalROMModuleReadAddress1;
-	CombinationalROMModule_TopLevel_CombinationalROMModuleReadAddress2 <= CombinationalROMModuleReadAddress2;
-CombinationalROMModuleValue1 <= CombinationalROMModule_TopLevel_CombinationalROMModuleValue1;
-CombinationalROMModuleValue2 <= CombinationalROMModule_TopLevel_CombinationalROMModuleValue2;
+	CombinationalROMModule_TopLevel_ReadAddress1 <= ReadAddress1;
+	CombinationalROMModule_TopLevel_ReadAddress2 <= ReadAddress2;
+Value1 <= CombinationalROMModule_TopLevel_Value1;
+Value2 <= CombinationalROMModule_TopLevel_Value2;
 end process;
-process(CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_InReadAddress0, CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_InReadAddress1, CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock, CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_OutData0, CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_OutData1, CombinationalROMModule_TopLevel_CombinationalROMModule_CombinationalROMModule_L22F31T56_Index, CombinationalROMModule_TopLevel_CombinationalROMModule_CombinationalROMModule_L23F31T56_Index, CombinationalROMModule_TopLevel_CombinationalROMModule_Inputs_ReadAddress1, CombinationalROMModule_TopLevel_CombinationalROMModule_Inputs_ReadAddress2, CombinationalROMModule_TopLevel_CombinationalROMModule_ReadAddress1, CombinationalROMModule_TopLevel_CombinationalROMModule_ReadAddress2, CombinationalROMModule_TopLevel_CombinationalROMModule_Value1, CombinationalROMModule_TopLevel_CombinationalROMModule_Value2, CombinationalROMModule_TopLevel_CombinationalROMModuleReadAddress1, CombinationalROMModule_TopLevel_CombinationalROMModuleReadAddress2)
+process(buff, CombinationalROMModule_L22F31T56_Index, CombinationalROMModule_L23F31T56_Index, Inputs_ReadAddress1, Inputs_ReadAddress2, ReadAddress1, ReadAddress2)
 begin
-CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_OutData0 <= CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock(TO_INTEGER(UNSIGNED(CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_InReadAddress0)));
-CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_OutData1 <= CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_MemoryBlock(TO_INTEGER(UNSIGNED(CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_InReadAddress1)));
-CombinationalROMModule_TopLevel_CombinationalROMModule_CombinationalROMModule_L22F31T56_Index <= CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_OutData0;
-CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_InReadAddress0 <= CombinationalROMModule_TopLevel_CombinationalROMModule_Inputs_ReadAddress1;
-CombinationalROMModule_TopLevel_CombinationalROMModule_CombinationalROMModule_L23F31T56_Index <= CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_OutData1;
-CombinationalROMModule_TopLevel_CombinationalROMModule_buffRAMComponent_InReadAddress1 <= CombinationalROMModule_TopLevel_CombinationalROMModule_Inputs_ReadAddress2;
-CombinationalROMModule_TopLevel_CombinationalROMModule_ReadAddress1 <= CombinationalROMModule_TopLevel_CombinationalROMModuleReadAddress1;
-CombinationalROMModule_TopLevel_CombinationalROMModule_ReadAddress2 <= CombinationalROMModule_TopLevel_CombinationalROMModuleReadAddress2;
-CombinationalROMModule_TopLevel_CombinationalROMModuleValue1 <= CombinationalROMModule_TopLevel_CombinationalROMModule_Value1;
-CombinationalROMModule_TopLevel_CombinationalROMModuleValue2 <= CombinationalROMModule_TopLevel_CombinationalROMModule_Value2;
-CombinationalROMModule_TopLevel_CombinationalROMModule_Inputs_ReadAddress1 <= unsigned(CombinationalROMModule_TopLevel_CombinationalROMModule_ReadAddress1);
-CombinationalROMModule_TopLevel_CombinationalROMModule_Inputs_ReadAddress2 <= unsigned(CombinationalROMModule_TopLevel_CombinationalROMModule_ReadAddress2);
-CombinationalROMModule_TopLevel_CombinationalROMModule_Value1 <= unsigned(CombinationalROMModule_TopLevel_CombinationalROMModule_CombinationalROMModule_L22F31T56_Index);
-CombinationalROMModule_TopLevel_CombinationalROMModule_Value2 <= unsigned(CombinationalROMModule_TopLevel_CombinationalROMModule_CombinationalROMModule_L23F31T56_Index);
+CombinationalROMModule_L22F31T56_Index <= buff(TO_INTEGER(UNSIGNED(Inputs_ReadAddress1)));
+CombinationalROMModule_L23F31T56_Index <= buff(TO_INTEGER(UNSIGNED(Inputs_ReadAddress2)));
+Inputs_ReadAddress1 <= unsigned(ReadAddress1);
+Inputs_ReadAddress2 <= unsigned(ReadAddress2);
+Value1 <= unsigned(CombinationalROMModule_L22F31T56_Index);
+Value2 <= unsigned(CombinationalROMModule_L23F31T56_Index);
 end process;
 -- [BEGIN USER ARCHITECTURE]
 -- [END USER ARCHITECTURE]

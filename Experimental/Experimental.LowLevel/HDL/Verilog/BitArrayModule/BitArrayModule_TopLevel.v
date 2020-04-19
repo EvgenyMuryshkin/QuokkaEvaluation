@@ -22,101 +22,68 @@ module BitArrayModule_TopLevel (
 // [BEGIN USER PORTS]
 // [END USER PORTS]
 
-	input  [7: 0] BitArrayModuleValue,
-	output [7: 0] BitArrayModuleDirect,
-	output [3: 0] BitArrayModuleHigh,
-	output [3: 0] BitArrayModuleLow,
-	output [7: 0] BitArrayModuleReversed,
-	output [3: 0] BitArrayModuleReversedHigh,
-	output [3: 0] BitArrayModuleReversedLow,
-	output [3: 0] BitArrayModulePicks
+	input  [7: 0] Value,
+	output [7: 0] Direct,
+	output [3: 0] High,
+	output [3: 0] Low,
+	output [7: 0] Reversed,
+	output [3: 0] ReversedHigh,
+	output [3: 0] ReversedLow,
+	output [3: 0] Picks
     );
 
 // [BEGIN USER SIGNALS]
 // [END USER SIGNALS]
 localparam HiSignal = 1'b1;
 localparam LoSignal = 1'b0;
-wire  [8:1] BitArrayModule_TopLevel_BitArrayModuleValue;
-wire  [8:1] BitArrayModule_TopLevel_BitArrayModuleDirect;
-wire  [4:1] BitArrayModule_TopLevel_BitArrayModuleHigh;
-wire  [4:1] BitArrayModule_TopLevel_BitArrayModuleLow;
-wire  [8:1] BitArrayModule_TopLevel_BitArrayModuleReversed;
-wire  [4:1] BitArrayModule_TopLevel_BitArrayModuleReversedHigh;
-wire  [4:1] BitArrayModule_TopLevel_BitArrayModuleReversedLow;
-wire  [4:1] BitArrayModule_TopLevel_BitArrayModulePicks;
-wire  [8:1] BitArrayModule_TopLevel_BitArrayModule_Value;
-wire  [8:1] BitArrayModule_TopLevel_BitArrayModule_Direct;
-wire  [4:1] BitArrayModule_TopLevel_BitArrayModule_High;
-wire  [4:1] BitArrayModule_TopLevel_BitArrayModule_Low;
-wire  [8:1] BitArrayModule_TopLevel_BitArrayModule_Reversed;
-wire  [4:1] BitArrayModule_TopLevel_BitArrayModule_ReversedHigh;
-wire  [4:1] BitArrayModule_TopLevel_BitArrayModule_ReversedLow;
-wire  [4:1] BitArrayModule_TopLevel_BitArrayModule_Picks;
-wire  BitArrayModule_TopLevel_BitArrayModule_Zero = 1'b0;
-wire  BitArrayModule_TopLevel_BitArrayModule_One = 1'b1;
-wire  BitArrayModule_TopLevel_BitArrayModule_true = 1'b1;
-wire  BitArrayModule_TopLevel_BitArrayModule_false = 1'b0;
-wire  [8:1] BitArrayModule_TopLevel_BitArrayModule_Inputs_Value;
-wire  [8:1] BitArrayModule_TopLevel_BitArrayModule_Bits;
-wire  [4:1] BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L15F36T46_Index;
-wire  [4:1] BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L16F35T45_Index;
-wire  [8:1] BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L17F40T50_Index;
-wire  [4:1] BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L18F44T54_Index;
-wire  [4:1] BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L19F43T53_Index;
-wire  [4:1] BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L20F37T74_Source;
-wire  [2:1] BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L20F53T62_Index;
-wire  [2:1] BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L20F64T73_Index;
-	assign BitArrayModule_TopLevel_BitArrayModuleValue[8: 1] = BitArrayModuleValue[7: 0];
-// Top-level entity connections
-assign BitArrayModuleDirect[7: 0] = BitArrayModule_TopLevel_BitArrayModuleDirect[8: 1];
-assign BitArrayModuleHigh[3: 0] = BitArrayModule_TopLevel_BitArrayModuleHigh[4: 1];
-assign BitArrayModuleLow[3: 0] = BitArrayModule_TopLevel_BitArrayModuleLow[4: 1];
-assign BitArrayModuleReversed[7: 0] = BitArrayModule_TopLevel_BitArrayModuleReversed[8: 1];
-assign BitArrayModuleReversedHigh[3: 0] = BitArrayModule_TopLevel_BitArrayModuleReversedHigh[4: 1];
-assign BitArrayModuleReversedLow[3: 0] = BitArrayModule_TopLevel_BitArrayModuleReversedLow[4: 1];
-assign BitArrayModulePicks[3: 0] = BitArrayModule_TopLevel_BitArrayModulePicks[4: 1];
-assign BitArrayModule_TopLevel_BitArrayModule_Value = BitArrayModule_TopLevel_BitArrayModuleValue;
-assign BitArrayModule_TopLevel_BitArrayModuleDirect = BitArrayModule_TopLevel_BitArrayModule_Direct;
-assign BitArrayModule_TopLevel_BitArrayModuleHigh = BitArrayModule_TopLevel_BitArrayModule_High;
-assign BitArrayModule_TopLevel_BitArrayModuleLow = BitArrayModule_TopLevel_BitArrayModule_Low;
-assign BitArrayModule_TopLevel_BitArrayModuleReversed = BitArrayModule_TopLevel_BitArrayModule_Reversed;
-assign BitArrayModule_TopLevel_BitArrayModuleReversedHigh = BitArrayModule_TopLevel_BitArrayModule_ReversedHigh;
-assign BitArrayModule_TopLevel_BitArrayModuleReversedLow = BitArrayModule_TopLevel_BitArrayModule_ReversedLow;
-assign BitArrayModule_TopLevel_BitArrayModulePicks = BitArrayModule_TopLevel_BitArrayModule_Picks;
-assign BitArrayModule_TopLevel_BitArrayModule_Inputs_Value = BitArrayModule_TopLevel_BitArrayModule_Value/*cast*/;
-assign BitArrayModule_TopLevel_BitArrayModule_Bits = BitArrayModule_TopLevel_BitArrayModule_Inputs_Value/*cast*/;
-assign BitArrayModule_TopLevel_BitArrayModule_Direct = BitArrayModule_TopLevel_BitArrayModule_Bits/*cast*/;
-assign BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L15F36T46_Index = BitArrayModule_TopLevel_BitArrayModule_Bits[8:5]/*cast*/;
-assign BitArrayModule_TopLevel_BitArrayModule_High = BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L15F36T46_Index/*cast*/;
-assign BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L16F35T45_Index = BitArrayModule_TopLevel_BitArrayModule_Bits[4:1]/*cast*/;
-assign BitArrayModule_TopLevel_BitArrayModule_Low = BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L16F35T45_Index/*cast*/;
-assign BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L17F40T50_Index[1] = BitArrayModule_TopLevel_BitArrayModule_Bits[8];
-assign BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L17F40T50_Index[2] = BitArrayModule_TopLevel_BitArrayModule_Bits[7];
-assign BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L17F40T50_Index[3] = BitArrayModule_TopLevel_BitArrayModule_Bits[6];
-assign BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L17F40T50_Index[4] = BitArrayModule_TopLevel_BitArrayModule_Bits[5];
-assign BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L17F40T50_Index[5] = BitArrayModule_TopLevel_BitArrayModule_Bits[4];
-assign BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L17F40T50_Index[6] = BitArrayModule_TopLevel_BitArrayModule_Bits[3];
-assign BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L17F40T50_Index[7] = BitArrayModule_TopLevel_BitArrayModule_Bits[2];
-assign BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L17F40T50_Index[8] = BitArrayModule_TopLevel_BitArrayModule_Bits[1];
-assign BitArrayModule_TopLevel_BitArrayModule_Reversed = BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L17F40T50_Index/*cast*/;
-assign BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L18F44T54_Index[1] = BitArrayModule_TopLevel_BitArrayModule_Bits[8];
-assign BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L18F44T54_Index[2] = BitArrayModule_TopLevel_BitArrayModule_Bits[7];
-assign BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L18F44T54_Index[3] = BitArrayModule_TopLevel_BitArrayModule_Bits[6];
-assign BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L18F44T54_Index[4] = BitArrayModule_TopLevel_BitArrayModule_Bits[5];
-assign BitArrayModule_TopLevel_BitArrayModule_ReversedHigh = BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L18F44T54_Index/*cast*/;
-assign BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L19F43T53_Index[1] = BitArrayModule_TopLevel_BitArrayModule_Bits[4];
-assign BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L19F43T53_Index[2] = BitArrayModule_TopLevel_BitArrayModule_Bits[3];
-assign BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L19F43T53_Index[3] = BitArrayModule_TopLevel_BitArrayModule_Bits[2];
-assign BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L19F43T53_Index[4] = BitArrayModule_TopLevel_BitArrayModule_Bits[1];
-assign BitArrayModule_TopLevel_BitArrayModule_ReversedLow = BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L19F43T53_Index/*cast*/;
-assign BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L20F53T62_Index = BitArrayModule_TopLevel_BitArrayModule_Bits[7:6]/*cast*/;
-assign BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L20F64T73_Index[1] = BitArrayModule_TopLevel_BitArrayModule_Bits[3];
-assign BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L20F64T73_Index[2] = BitArrayModule_TopLevel_BitArrayModule_Bits[2];
-assign BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L20F37T74_Source[1] = BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L20F53T62_Index[1];
-assign BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L20F37T74_Source[2] = BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L20F53T62_Index[2];
-assign BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L20F37T74_Source[3] = BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L20F64T73_Index[1];
-assign BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L20F37T74_Source[4] = BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L20F64T73_Index[2];
-assign BitArrayModule_TopLevel_BitArrayModule_Picks = BitArrayModule_TopLevel_BitArrayModule_BitArrayModule_L20F37T74_Source/*cast*/;
+wire  Zero = 1'b0;
+wire  One = 1'b1;
+wire  true = 1'b1;
+wire  false = 1'b0;
+wire  [8:1] Inputs_Value;
+wire  [8:1] Bits;
+wire  [4:1] BitArrayModule_L15F36T46_Index;
+wire  [4:1] BitArrayModule_L16F35T45_Index;
+wire  [8:1] BitArrayModule_L17F40T50_Index;
+wire  [4:1] BitArrayModule_L18F44T54_Index;
+wire  [4:1] BitArrayModule_L19F43T53_Index;
+wire  [4:1] BitArrayModule_L20F37T74_Source;
+wire  [2:1] BitArrayModule_L20F53T62_Index;
+wire  [2:1] BitArrayModule_L20F64T73_Index;
+assign Inputs_Value = Value/*cast*/;
+assign Bits = Inputs_Value/*cast*/;
+assign Direct = Bits/*cast*/;
+assign BitArrayModule_L15F36T46_Index = Bits[8:5]/*cast*/;
+assign High = BitArrayModule_L15F36T46_Index/*cast*/;
+assign BitArrayModule_L16F35T45_Index = Bits[4:1]/*cast*/;
+assign Low = BitArrayModule_L16F35T45_Index/*cast*/;
+assign BitArrayModule_L17F40T50_Index[1] = Bits[8];
+assign BitArrayModule_L17F40T50_Index[2] = Bits[7];
+assign BitArrayModule_L17F40T50_Index[3] = Bits[6];
+assign BitArrayModule_L17F40T50_Index[4] = Bits[5];
+assign BitArrayModule_L17F40T50_Index[5] = Bits[4];
+assign BitArrayModule_L17F40T50_Index[6] = Bits[3];
+assign BitArrayModule_L17F40T50_Index[7] = Bits[2];
+assign BitArrayModule_L17F40T50_Index[8] = Bits[1];
+assign Reversed = BitArrayModule_L17F40T50_Index/*cast*/;
+assign BitArrayModule_L18F44T54_Index[1] = Bits[8];
+assign BitArrayModule_L18F44T54_Index[2] = Bits[7];
+assign BitArrayModule_L18F44T54_Index[3] = Bits[6];
+assign BitArrayModule_L18F44T54_Index[4] = Bits[5];
+assign ReversedHigh = BitArrayModule_L18F44T54_Index/*cast*/;
+assign BitArrayModule_L19F43T53_Index[1] = Bits[4];
+assign BitArrayModule_L19F43T53_Index[2] = Bits[3];
+assign BitArrayModule_L19F43T53_Index[3] = Bits[2];
+assign BitArrayModule_L19F43T53_Index[4] = Bits[1];
+assign ReversedLow = BitArrayModule_L19F43T53_Index/*cast*/;
+assign BitArrayModule_L20F53T62_Index = Bits[7:6]/*cast*/;
+assign BitArrayModule_L20F64T73_Index[1] = Bits[3];
+assign BitArrayModule_L20F64T73_Index[2] = Bits[2];
+assign BitArrayModule_L20F37T74_Source[1] = BitArrayModule_L20F53T62_Index[1];
+assign BitArrayModule_L20F37T74_Source[2] = BitArrayModule_L20F53T62_Index[2];
+assign BitArrayModule_L20F37T74_Source[3] = BitArrayModule_L20F64T73_Index[1];
+assign BitArrayModule_L20F37T74_Source[4] = BitArrayModule_L20F64T73_Index[2];
+assign Picks = BitArrayModule_L20F37T74_Source/*cast*/;
 // [BEGIN USER ARCHITECTURE]
 // [END USER ARCHITECTURE]
 endmodule

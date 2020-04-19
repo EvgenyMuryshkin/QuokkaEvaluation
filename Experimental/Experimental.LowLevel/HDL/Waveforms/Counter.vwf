@@ -42,106 +42,6 @@ SIGNAL("Clock")
 	PARENT = "";
 }
 
-SIGNAL("CounterModuleInReset")
-{
-	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = SINGLE_BIT;
-	WIDTH = 1;
-	LSB_INDEX = -1;
-	DIRECTION = INPUT;
-	PARENT = "";
-}
-
-SIGNAL("CounterModuleValue")
-{
-	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = BUS;
-	WIDTH = 8;
-	LSB_INDEX = 1;
-	DIRECTION = OUTPUT;
-	PARENT = "";
-}
-
-SIGNAL("CounterModuleValue[8]")
-{
-	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = SINGLE_BIT;
-	WIDTH = 1;
-	LSB_INDEX = -1;
-	DIRECTION = OUTPUT;
-	PARENT = "CounterModuleValue";
-}
-
-SIGNAL("CounterModuleValue[7]")
-{
-	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = SINGLE_BIT;
-	WIDTH = 1;
-	LSB_INDEX = -1;
-	DIRECTION = OUTPUT;
-	PARENT = "CounterModuleValue";
-}
-
-SIGNAL("CounterModuleValue[6]")
-{
-	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = SINGLE_BIT;
-	WIDTH = 1;
-	LSB_INDEX = -1;
-	DIRECTION = OUTPUT;
-	PARENT = "CounterModuleValue";
-}
-
-SIGNAL("CounterModuleValue[5]")
-{
-	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = SINGLE_BIT;
-	WIDTH = 1;
-	LSB_INDEX = -1;
-	DIRECTION = OUTPUT;
-	PARENT = "CounterModuleValue";
-}
-
-SIGNAL("CounterModuleValue[4]")
-{
-	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = SINGLE_BIT;
-	WIDTH = 1;
-	LSB_INDEX = -1;
-	DIRECTION = OUTPUT;
-	PARENT = "CounterModuleValue";
-}
-
-SIGNAL("CounterModuleValue[3]")
-{
-	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = SINGLE_BIT;
-	WIDTH = 1;
-	LSB_INDEX = -1;
-	DIRECTION = OUTPUT;
-	PARENT = "CounterModuleValue";
-}
-
-SIGNAL("CounterModuleValue[2]")
-{
-	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = SINGLE_BIT;
-	WIDTH = 1;
-	LSB_INDEX = -1;
-	DIRECTION = OUTPUT;
-	PARENT = "CounterModuleValue";
-}
-
-SIGNAL("CounterModuleValue[1]")
-{
-	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = SINGLE_BIT;
-	WIDTH = 1;
-	LSB_INDEX = -1;
-	DIRECTION = OUTPUT;
-	PARENT = "CounterModuleValue";
-}
-
 SIGNAL("Reset")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
@@ -150,6 +50,106 @@ SIGNAL("Reset")
 	LSB_INDEX = -1;
 	DIRECTION = INPUT;
 	PARENT = "";
+}
+
+SIGNAL("Enabled")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = INPUT;
+	PARENT = "";
+}
+
+SIGNAL("Value")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = BUS;
+	WIDTH = 8;
+	LSB_INDEX = 0;
+	DIRECTION = OUTPUT;
+	PARENT = "";
+}
+
+SIGNAL("Value[7]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "Value";
+}
+
+SIGNAL("Value[6]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "Value";
+}
+
+SIGNAL("Value[5]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "Value";
+}
+
+SIGNAL("Value[4]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "Value";
+}
+
+SIGNAL("Value[3]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "Value";
+}
+
+SIGNAL("Value[2]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "Value";
+}
+
+SIGNAL("Value[1]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "Value";
+}
+
+SIGNAL("Value[0]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "Value";
 }
 
 TRANSITION_LIST("Clock")
@@ -166,98 +166,98 @@ TRANSITION_LIST("Clock")
 	}
 }
 
-TRANSITION_LIST("CounterModuleInReset")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL 0 FOR 481280.0;
-		LEVEL 1 FOR 20480.0;
-		LEVEL 0 FOR 2979520.0;
-		LEVEL 1 FOR 20480.0;
-		LEVEL 0 FOR 1498240.0;
-	}
-}
-
-TRANSITION_LIST("CounterModuleValue[8]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL X FOR 5000000.0;
-	}
-}
-
-TRANSITION_LIST("CounterModuleValue[7]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL X FOR 5000000.0;
-	}
-}
-
-TRANSITION_LIST("CounterModuleValue[6]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL X FOR 5000000.0;
-	}
-}
-
-TRANSITION_LIST("CounterModuleValue[5]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL X FOR 5000000.0;
-	}
-}
-
-TRANSITION_LIST("CounterModuleValue[4]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL X FOR 5000000.0;
-	}
-}
-
-TRANSITION_LIST("CounterModuleValue[3]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL X FOR 5000000.0;
-	}
-}
-
-TRANSITION_LIST("CounterModuleValue[2]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL X FOR 5000000.0;
-	}
-}
-
-TRANSITION_LIST("CounterModuleValue[1]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL X FOR 5000000.0;
-	}
-}
-
 TRANSITION_LIST("Reset")
 {
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL 0 FOR 279040.0;
-		LEVEL 1 FOR 4720960.0;
+		LEVEL 1 FOR 279040.0;
+		LEVEL 0 FOR 4720960.0;
+	}
+}
+
+TRANSITION_LIST("Enabled")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL 0 FOR 440320.0;
+		LEVEL 1 FOR 163840.0;
+		LEVEL 0 FOR 2877120.0;
+		LEVEL 1 FOR 20480.0;
+		LEVEL 0 FOR 1498240.0;
+	}
+}
+
+TRANSITION_LIST("Value[7]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 5000000.0;
+	}
+}
+
+TRANSITION_LIST("Value[6]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 5000000.0;
+	}
+}
+
+TRANSITION_LIST("Value[5]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 5000000.0;
+	}
+}
+
+TRANSITION_LIST("Value[4]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 5000000.0;
+	}
+}
+
+TRANSITION_LIST("Value[3]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 5000000.0;
+	}
+}
+
+TRANSITION_LIST("Value[2]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 5000000.0;
+	}
+}
+
+TRANSITION_LIST("Value[1]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 5000000.0;
+	}
+}
+
+TRANSITION_LIST("Value[0]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 5000000.0;
 	}
 }
 
@@ -281,7 +281,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "CounterModuleInReset";
+	CHANNEL = "Enabled";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 2;
@@ -290,7 +290,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "CounterModuleValue";
+	CHANNEL = "Value";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 3;
@@ -300,7 +300,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "CounterModuleValue[8]";
+	CHANNEL = "Value[7]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 4;
@@ -310,7 +310,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "CounterModuleValue[7]";
+	CHANNEL = "Value[6]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 5;
@@ -320,7 +320,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "CounterModuleValue[6]";
+	CHANNEL = "Value[5]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 6;
@@ -330,7 +330,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "CounterModuleValue[5]";
+	CHANNEL = "Value[4]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 7;
@@ -340,7 +340,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "CounterModuleValue[4]";
+	CHANNEL = "Value[3]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 8;
@@ -350,7 +350,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "CounterModuleValue[3]";
+	CHANNEL = "Value[2]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 9;
@@ -360,7 +360,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "CounterModuleValue[2]";
+	CHANNEL = "Value[1]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 10;
@@ -370,7 +370,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "CounterModuleValue[1]";
+	CHANNEL = "Value[0]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 11;
