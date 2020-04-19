@@ -284,4 +284,4 @@ __pycache__/
 *.tan.summary
 /VHDL/db/*
 /Experimental/Experimental.Tests/SimResults/*
-/Experimental/Experimental.LowLevel/HDL/db
+/Experimental/Experimental.HDL/db
