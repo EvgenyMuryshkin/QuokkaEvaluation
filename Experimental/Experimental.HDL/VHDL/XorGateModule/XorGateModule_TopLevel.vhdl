@@ -27,9 +27,9 @@ entity XorGateModule_TopLevel is
 -- [BEGIN USER PORTS]
 -- [END USER PORTS]
 
-XorGateModuleI1 : in  std_logic;
-XorGateModuleI2 : in  std_logic;
-XorGateModuleO : out  std_logic
+I1 : in  std_logic;
+I2 : in  std_logic;
+O : out  std_logic
     );
 end entity;
 
@@ -40,45 +40,36 @@ architecture rtl of XorGateModule_TopLevel is
 -- [END USER SIGNALS]
 constant HiSignal : std_logic := '1';
 constant LoSignal : std_logic := '0';
-signal XorGateModule_TopLevel_XorGateModuleI1 : std_logic := '0';
-signal XorGateModule_TopLevel_XorGateModuleI2 : std_logic := '0';
-signal XorGateModule_TopLevel_XorGateModuleO : std_logic := '0';
-signal XorGateModule_TopLevel_XorGateModule_I1 : std_logic := '0';
-signal XorGateModule_TopLevel_XorGateModule_I2 : std_logic := '0';
-signal XorGateModule_TopLevel_XorGateModule_O : std_logic := '0';
-constant XorGateModule_TopLevel_XorGateModule_Zero : std_logic := '0';
-constant XorGateModule_TopLevel_XorGateModule_One : std_logic := '1';
-constant XorGateModule_TopLevel_XorGateModule_true : std_logic := '1';
-constant XorGateModule_TopLevel_XorGateModule_false : std_logic := '0';
-signal XorGateModule_TopLevel_XorGateModule_Inputs_I1 : std_logic := '0';
-signal XorGateModule_TopLevel_XorGateModule_Inputs_I2 : std_logic := '0';
-signal XorGateModule_TopLevel_XorGateModule_SimpleGates_L22F26T47_Expr : std_logic := '0';
-signal XorGateModule_TopLevel_XorGateModule_SimpleGates_L22F26T47_Expr_1 : std_logic := '0';
-signal XorGateModule_TopLevel_XorGateModule_SimpleGates_L22F26T47_Expr_2 : std_logic := '0';
+constant Zero : std_logic := '0';
+constant One : std_logic := '1';
+constant true : std_logic := '1';
+constant false : std_logic := '0';
+signal Inputs_I1 : std_logic := '0';
+signal Inputs_I2 : std_logic := '0';
+signal SimpleGates_L22F26T47_Expr : std_logic := '0';
+signal SimpleGates_L22F26T47_Expr_1 : std_logic := '0';
+signal SimpleGates_L22F26T47_Expr_2 : std_logic := '0';
 begin
 
-process(XorGateModule_TopLevel_XorGateModule_SimpleGates_L22F26T47_Expr_1, XorGateModule_TopLevel_XorGateModule_SimpleGates_L22F26T47_Expr_2)
+process(SimpleGates_L22F26T47_Expr_1, SimpleGates_L22F26T47_Expr_2)
 begin
-XorGateModule_TopLevel_XorGateModule_SimpleGates_L22F26T47_Expr <= XorGateModule_TopLevel_XorGateModule_SimpleGates_L22F26T47_Expr_1 XOR XorGateModule_TopLevel_XorGateModule_SimpleGates_L22F26T47_Expr_2;
+SimpleGates_L22F26T47_Expr <= SimpleGates_L22F26T47_Expr_1 XOR SimpleGates_L22F26T47_Expr_2;
 
     end process;
 -- Top-level entity connections
-process(XorGateModule_TopLevel_XorGateModuleO, XorGateModuleI1, XorGateModuleI2)
+process(I1, I2, XorGateModule_TopLevel_O)
 begin
-	XorGateModule_TopLevel_XorGateModuleI1 <= XorGateModuleI1;
-	XorGateModule_TopLevel_XorGateModuleI2 <= XorGateModuleI2;
-XorGateModuleO <= XorGateModule_TopLevel_XorGateModuleO;
+	XorGateModule_TopLevel_I1 <= I1;
+	XorGateModule_TopLevel_I2 <= I2;
+O <= XorGateModule_TopLevel_O;
 end process;
-process(XorGateModule_TopLevel_XorGateModule_I1, XorGateModule_TopLevel_XorGateModule_I2, XorGateModule_TopLevel_XorGateModule_Inputs_I1, XorGateModule_TopLevel_XorGateModule_Inputs_I2, XorGateModule_TopLevel_XorGateModule_O, XorGateModule_TopLevel_XorGateModule_SimpleGates_L22F26T47_Expr, XorGateModule_TopLevel_XorGateModuleI1, XorGateModule_TopLevel_XorGateModuleI2)
+process(I1, I2, Inputs_I1, Inputs_I2, SimpleGates_L22F26T47_Expr)
 begin
-XorGateModule_TopLevel_XorGateModule_I1 <= XorGateModule_TopLevel_XorGateModuleI1;
-XorGateModule_TopLevel_XorGateModule_I2 <= XorGateModule_TopLevel_XorGateModuleI2;
-XorGateModule_TopLevel_XorGateModuleO <= XorGateModule_TopLevel_XorGateModule_O;
-XorGateModule_TopLevel_XorGateModule_SimpleGates_L22F26T47_Expr_1 <= XorGateModule_TopLevel_XorGateModule_Inputs_I1;
-XorGateModule_TopLevel_XorGateModule_SimpleGates_L22F26T47_Expr_2 <= XorGateModule_TopLevel_XorGateModule_Inputs_I2;
-XorGateModule_TopLevel_XorGateModule_Inputs_I1 <= XorGateModule_TopLevel_XorGateModule_I1;
-XorGateModule_TopLevel_XorGateModule_Inputs_I2 <= XorGateModule_TopLevel_XorGateModule_I2;
-XorGateModule_TopLevel_XorGateModule_O <= XorGateModule_TopLevel_XorGateModule_SimpleGates_L22F26T47_Expr;
+SimpleGates_L22F26T47_Expr_1 <= Inputs_I1;
+SimpleGates_L22F26T47_Expr_2 <= Inputs_I2;
+Inputs_I1 <= I1;
+Inputs_I2 <= I2;
+O <= SimpleGates_L22F26T47_Expr;
 end process;
 -- [BEGIN USER ARCHITECTURE]
 -- [END USER ARCHITECTURE]

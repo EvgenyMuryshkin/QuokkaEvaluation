@@ -22,43 +22,30 @@ module XorGateModule_TopLevel (
 // [BEGIN USER PORTS]
 // [END USER PORTS]
 
-	input  XorGateModuleI1,
-	input  XorGateModuleI2,
-	output XorGateModuleO
+	input  I1,
+	input  I2,
+	output O
     );
 
 // [BEGIN USER SIGNALS]
 // [END USER SIGNALS]
 localparam HiSignal = 1'b1;
 localparam LoSignal = 1'b0;
-wire  XorGateModule_TopLevel_XorGateModuleI1;
-wire  XorGateModule_TopLevel_XorGateModuleI2;
-wire  XorGateModule_TopLevel_XorGateModuleO;
-wire  XorGateModule_TopLevel_XorGateModule_I1;
-wire  XorGateModule_TopLevel_XorGateModule_I2;
-wire  XorGateModule_TopLevel_XorGateModule_O;
-wire  XorGateModule_TopLevel_XorGateModule_Zero = 1'b0;
-wire  XorGateModule_TopLevel_XorGateModule_One = 1'b1;
-wire  XorGateModule_TopLevel_XorGateModule_true = 1'b1;
-wire  XorGateModule_TopLevel_XorGateModule_false = 1'b0;
-wire  XorGateModule_TopLevel_XorGateModule_Inputs_I1;
-wire  XorGateModule_TopLevel_XorGateModule_Inputs_I2;
-wire  XorGateModule_TopLevel_XorGateModule_SimpleGates_L22F26T47_Expr;
-wire  XorGateModule_TopLevel_XorGateModule_SimpleGates_L22F26T47_Expr_1;
-wire  XorGateModule_TopLevel_XorGateModule_SimpleGates_L22F26T47_Expr_2;
-assign XorGateModule_TopLevel_XorGateModule_SimpleGates_L22F26T47_Expr = XorGateModule_TopLevel_XorGateModule_SimpleGates_L22F26T47_Expr_1 ^ XorGateModule_TopLevel_XorGateModule_SimpleGates_L22F26T47_Expr_2;
-	assign XorGateModule_TopLevel_XorGateModuleI1 = XorGateModuleI1;
-	assign XorGateModule_TopLevel_XorGateModuleI2 = XorGateModuleI2;
-// Top-level entity connections
-assign XorGateModuleO = XorGateModule_TopLevel_XorGateModuleO;
-assign XorGateModule_TopLevel_XorGateModule_I1 = XorGateModule_TopLevel_XorGateModuleI1;
-assign XorGateModule_TopLevel_XorGateModule_I2 = XorGateModule_TopLevel_XorGateModuleI2;
-assign XorGateModule_TopLevel_XorGateModuleO = XorGateModule_TopLevel_XorGateModule_O;
-assign XorGateModule_TopLevel_XorGateModule_SimpleGates_L22F26T47_Expr_1 = XorGateModule_TopLevel_XorGateModule_Inputs_I1;
-assign XorGateModule_TopLevel_XorGateModule_SimpleGates_L22F26T47_Expr_2 = XorGateModule_TopLevel_XorGateModule_Inputs_I2;
-assign XorGateModule_TopLevel_XorGateModule_Inputs_I1 = XorGateModule_TopLevel_XorGateModule_I1;
-assign XorGateModule_TopLevel_XorGateModule_Inputs_I2 = XorGateModule_TopLevel_XorGateModule_I2;
-assign XorGateModule_TopLevel_XorGateModule_O = XorGateModule_TopLevel_XorGateModule_SimpleGates_L22F26T47_Expr;
+wire  Zero = 1'b0;
+wire  One = 1'b1;
+wire  true = 1'b1;
+wire  false = 1'b0;
+wire  Inputs_I1;
+wire  Inputs_I2;
+wire  SimpleGates_L22F26T47_Expr;
+wire  SimpleGates_L22F26T47_Expr_1;
+wire  SimpleGates_L22F26T47_Expr_2;
+assign SimpleGates_L22F26T47_Expr = SimpleGates_L22F26T47_Expr_1 ^ SimpleGates_L22F26T47_Expr_2;
+assign SimpleGates_L22F26T47_Expr_1 = Inputs_I1;
+assign SimpleGates_L22F26T47_Expr_2 = Inputs_I2;
+assign Inputs_I1 = I1;
+assign Inputs_I2 = I2;
+assign O = SimpleGates_L22F26T47_Expr;
 // [BEGIN USER ARCHITECTURE]
 // [END USER ARCHITECTURE]
 endmodule

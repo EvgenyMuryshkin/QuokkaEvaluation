@@ -65,16 +65,9 @@ wire signed  [2:1] EmitterModule_L29F9L44T10_EmitterModule_L36F17L42T27_CaseRhs;
 wire  EmitterModule_L26F32T64_Expr;
 wire signed  [2:1] EmitterModule_L26F32T64_ExprLhs;
 wire signed  [2:1] EmitterModule_L26F32T64_ExprRhs;
-wire  BoardSignals_Clock;
-wire  BoardSignals_Reset;
-wire  BoardSignals_Running;
-wire  BoardSignals_Starting;
-wire  BoardSignals_Started;
-reg  InternalReset = 1'b0;
-work_Quokka_BoardSignalsProc BoardSignalsConnection(BoardSignals_Clock,BoardSignals_Reset,BoardSignals_Running,BoardSignals_Starting,BoardSignals_Started,Clock,Reset,InternalReset);
-always @(posedge BoardSignals_Clock)
+always @(posedge Clock)
 begin
-if ( BoardSignals_Reset == 1 ) begin
+if ( Reset == 1 ) begin
 State_FSM <= State_FSMDefault;
 State_Data <= State_DataDefault;
 end

@@ -22,43 +22,30 @@ module OrGateModule_TopLevel (
 // [BEGIN USER PORTS]
 // [END USER PORTS]
 
-	input  OrGateModuleI1,
-	input  OrGateModuleI2,
-	output OrGateModuleO
+	input  I1,
+	input  I2,
+	output O
     );
 
 // [BEGIN USER SIGNALS]
 // [END USER SIGNALS]
 localparam HiSignal = 1'b1;
 localparam LoSignal = 1'b0;
-wire  OrGateModule_TopLevel_OrGateModuleI1;
-wire  OrGateModule_TopLevel_OrGateModuleI2;
-wire  OrGateModule_TopLevel_OrGateModuleO;
-wire  OrGateModule_TopLevel_OrGateModule_I1;
-wire  OrGateModule_TopLevel_OrGateModule_I2;
-wire  OrGateModule_TopLevel_OrGateModule_O;
-wire  OrGateModule_TopLevel_OrGateModule_Zero = 1'b0;
-wire  OrGateModule_TopLevel_OrGateModule_One = 1'b1;
-wire  OrGateModule_TopLevel_OrGateModule_true = 1'b1;
-wire  OrGateModule_TopLevel_OrGateModule_false = 1'b0;
-wire  OrGateModule_TopLevel_OrGateModule_Inputs_I1;
-wire  OrGateModule_TopLevel_OrGateModule_Inputs_I2;
-wire  OrGateModule_TopLevel_OrGateModule_SimpleGates_L17F26T48_Expr;
-wire  OrGateModule_TopLevel_OrGateModule_SimpleGates_L17F26T48_Expr_1;
-wire  OrGateModule_TopLevel_OrGateModule_SimpleGates_L17F26T48_Expr_2;
-assign OrGateModule_TopLevel_OrGateModule_SimpleGates_L17F26T48_Expr = OrGateModule_TopLevel_OrGateModule_SimpleGates_L17F26T48_Expr_1 | OrGateModule_TopLevel_OrGateModule_SimpleGates_L17F26T48_Expr_2;
-	assign OrGateModule_TopLevel_OrGateModuleI1 = OrGateModuleI1;
-	assign OrGateModule_TopLevel_OrGateModuleI2 = OrGateModuleI2;
-// Top-level entity connections
-assign OrGateModuleO = OrGateModule_TopLevel_OrGateModuleO;
-assign OrGateModule_TopLevel_OrGateModule_I1 = OrGateModule_TopLevel_OrGateModuleI1;
-assign OrGateModule_TopLevel_OrGateModule_I2 = OrGateModule_TopLevel_OrGateModuleI2;
-assign OrGateModule_TopLevel_OrGateModuleO = OrGateModule_TopLevel_OrGateModule_O;
-assign OrGateModule_TopLevel_OrGateModule_SimpleGates_L17F26T48_Expr_1 = OrGateModule_TopLevel_OrGateModule_Inputs_I1;
-assign OrGateModule_TopLevel_OrGateModule_SimpleGates_L17F26T48_Expr_2 = OrGateModule_TopLevel_OrGateModule_Inputs_I2;
-assign OrGateModule_TopLevel_OrGateModule_Inputs_I1 = OrGateModule_TopLevel_OrGateModule_I1;
-assign OrGateModule_TopLevel_OrGateModule_Inputs_I2 = OrGateModule_TopLevel_OrGateModule_I2;
-assign OrGateModule_TopLevel_OrGateModule_O = OrGateModule_TopLevel_OrGateModule_SimpleGates_L17F26T48_Expr;
+wire  Zero = 1'b0;
+wire  One = 1'b1;
+wire  true = 1'b1;
+wire  false = 1'b0;
+wire  Inputs_I1;
+wire  Inputs_I2;
+wire  SimpleGates_L17F26T48_Expr;
+wire  SimpleGates_L17F26T48_Expr_1;
+wire  SimpleGates_L17F26T48_Expr_2;
+assign SimpleGates_L17F26T48_Expr = SimpleGates_L17F26T48_Expr_1 | SimpleGates_L17F26T48_Expr_2;
+assign SimpleGates_L17F26T48_Expr_1 = Inputs_I1;
+assign SimpleGates_L17F26T48_Expr_2 = Inputs_I2;
+assign Inputs_I1 = I1;
+assign Inputs_I2 = I2;
+assign O = SimpleGates_L17F26T48_Expr;
 // [BEGIN USER ARCHITECTURE]
 // [END USER ARCHITECTURE]
 endmodule

@@ -27,11 +27,11 @@ entity FullAdderModule_TopLevel is
 -- [BEGIN USER PORTS]
 -- [END USER PORTS]
 
-FullAdderModuleA : in  std_logic;
-FullAdderModuleB : in  std_logic;
-FullAdderModuleCIn : in  std_logic;
-FullAdderModuleO : out  std_logic;
-FullAdderModuleCOut : out  std_logic
+A : in  std_logic;
+B : in  std_logic;
+CIn : in  std_logic;
+O : out  std_logic;
+COut : out  std_logic
     );
 end entity;
 
@@ -42,102 +42,87 @@ architecture rtl of FullAdderModule_TopLevel is
 -- [END USER SIGNALS]
 constant HiSignal : std_logic := '1';
 constant LoSignal : std_logic := '0';
-signal FullAdderModule_TopLevel_FullAdderModuleA : std_logic := '0';
-signal FullAdderModule_TopLevel_FullAdderModuleB : std_logic := '0';
-signal FullAdderModule_TopLevel_FullAdderModuleCIn : std_logic := '0';
-signal FullAdderModule_TopLevel_FullAdderModuleO : std_logic := '0';
-signal FullAdderModule_TopLevel_FullAdderModuleCOut : std_logic := '0';
-signal FullAdderModule_TopLevel_FullAdderModule_A : std_logic := '0';
-signal FullAdderModule_TopLevel_FullAdderModule_B : std_logic := '0';
-signal FullAdderModule_TopLevel_FullAdderModule_CIn : std_logic := '0';
-signal FullAdderModule_TopLevel_FullAdderModule_O : std_logic := '0';
-signal FullAdderModule_TopLevel_FullAdderModule_COut : std_logic := '0';
-constant FullAdderModule_TopLevel_FullAdderModule_Zero : std_logic := '0';
-constant FullAdderModule_TopLevel_FullAdderModule_One : std_logic := '1';
-constant FullAdderModule_TopLevel_FullAdderModule_true : std_logic := '1';
-constant FullAdderModule_TopLevel_FullAdderModule_false : std_logic := '0';
-signal FullAdderModule_TopLevel_FullAdderModule_Inputs_A : std_logic := '0';
-signal FullAdderModule_TopLevel_FullAdderModule_Inputs_B : std_logic := '0';
-signal FullAdderModule_TopLevel_FullAdderModule_Inputs_CIn : std_logic := '0';
-signal FullAdderModule_TopLevel_FullAdderModule_P : std_logic := '0';
-signal FullAdderModule_TopLevel_FullAdderModule_FullAdder_L14F27T46_Expr : std_logic := '0';
-signal FullAdderModule_TopLevel_FullAdderModule_FullAdder_L14F27T46_Expr_1 : std_logic := '0';
-signal FullAdderModule_TopLevel_FullAdderModule_FullAdder_L14F27T46_Expr_2 : std_logic := '0';
-signal FullAdderModule_TopLevel_FullAdderModule_FullAdder_L16F26T40_Expr : std_logic := '0';
-signal FullAdderModule_TopLevel_FullAdderModule_FullAdder_L16F26T40_Expr_1 : std_logic := '0';
-signal FullAdderModule_TopLevel_FullAdderModule_FullAdder_L16F26T40_Expr_2 : std_logic := '0';
-signal FullAdderModule_TopLevel_FullAdderModule_FullAdder_L17F29T70_Expr : std_logic := '0';
-signal FullAdderModule_TopLevel_FullAdderModule_FullAdder_L17F29T70_Expr_1 : std_logic := '0';
-signal FullAdderModule_TopLevel_FullAdderModule_FullAdder_L17F29T70_Expr_2 : std_logic := '0';
-signal FullAdderModule_TopLevel_FullAdderModule_FullAdder_L17F30T49_Expr : std_logic := '0';
-signal FullAdderModule_TopLevel_FullAdderModule_FullAdder_L17F30T49_Expr_1 : std_logic := '0';
-signal FullAdderModule_TopLevel_FullAdderModule_FullAdder_L17F30T49_Expr_2 : std_logic := '0';
-signal FullAdderModule_TopLevel_FullAdderModule_FullAdder_L17F55T69_Expr : std_logic := '0';
-signal FullAdderModule_TopLevel_FullAdderModule_FullAdder_L17F55T69_Expr_1 : std_logic := '0';
-signal FullAdderModule_TopLevel_FullAdderModule_FullAdder_L17F55T69_Expr_2 : std_logic := '0';
+constant Zero : std_logic := '0';
+constant One : std_logic := '1';
+constant true : std_logic := '1';
+constant false : std_logic := '0';
+signal Inputs_A : std_logic := '0';
+signal Inputs_B : std_logic := '0';
+signal Inputs_CIn : std_logic := '0';
+signal P : std_logic := '0';
+signal FullAdder_L14F27T46_Expr : std_logic := '0';
+signal FullAdder_L14F27T46_Expr_1 : std_logic := '0';
+signal FullAdder_L14F27T46_Expr_2 : std_logic := '0';
+signal FullAdder_L16F26T40_Expr : std_logic := '0';
+signal FullAdder_L16F26T40_Expr_1 : std_logic := '0';
+signal FullAdder_L16F26T40_Expr_2 : std_logic := '0';
+signal FullAdder_L17F29T70_Expr : std_logic := '0';
+signal FullAdder_L17F29T70_Expr_1 : std_logic := '0';
+signal FullAdder_L17F29T70_Expr_2 : std_logic := '0';
+signal FullAdder_L17F30T49_Expr : std_logic := '0';
+signal FullAdder_L17F30T49_Expr_1 : std_logic := '0';
+signal FullAdder_L17F30T49_Expr_2 : std_logic := '0';
+signal FullAdder_L17F55T69_Expr : std_logic := '0';
+signal FullAdder_L17F55T69_Expr_1 : std_logic := '0';
+signal FullAdder_L17F55T69_Expr_2 : std_logic := '0';
 begin
 
-process(FullAdderModule_TopLevel_FullAdderModule_FullAdder_L14F27T46_Expr_1, FullAdderModule_TopLevel_FullAdderModule_FullAdder_L14F27T46_Expr_2)
+process(FullAdder_L14F27T46_Expr_1, FullAdder_L14F27T46_Expr_2)
 begin
-FullAdderModule_TopLevel_FullAdderModule_FullAdder_L14F27T46_Expr <= FullAdderModule_TopLevel_FullAdderModule_FullAdder_L14F27T46_Expr_1 XOR FullAdderModule_TopLevel_FullAdderModule_FullAdder_L14F27T46_Expr_2;
+FullAdder_L14F27T46_Expr <= FullAdder_L14F27T46_Expr_1 XOR FullAdder_L14F27T46_Expr_2;
 
     end process;
 
-process(FullAdderModule_TopLevel_FullAdderModule_FullAdder_L16F26T40_Expr_1, FullAdderModule_TopLevel_FullAdderModule_FullAdder_L16F26T40_Expr_2)
+process(FullAdder_L16F26T40_Expr_1, FullAdder_L16F26T40_Expr_2)
 begin
-FullAdderModule_TopLevel_FullAdderModule_FullAdder_L16F26T40_Expr <= FullAdderModule_TopLevel_FullAdderModule_FullAdder_L16F26T40_Expr_1 XOR FullAdderModule_TopLevel_FullAdderModule_FullAdder_L16F26T40_Expr_2;
+FullAdder_L16F26T40_Expr <= FullAdder_L16F26T40_Expr_1 XOR FullAdder_L16F26T40_Expr_2;
 
     end process;
 
-process(FullAdderModule_TopLevel_FullAdderModule_FullAdder_L17F29T70_Expr_1, FullAdderModule_TopLevel_FullAdderModule_FullAdder_L17F29T70_Expr_2)
+process(FullAdder_L17F29T70_Expr_1, FullAdder_L17F29T70_Expr_2)
 begin
-FullAdderModule_TopLevel_FullAdderModule_FullAdder_L17F29T70_Expr <= FullAdderModule_TopLevel_FullAdderModule_FullAdder_L17F29T70_Expr_1 OR FullAdderModule_TopLevel_FullAdderModule_FullAdder_L17F29T70_Expr_2;
+FullAdder_L17F29T70_Expr <= FullAdder_L17F29T70_Expr_1 OR FullAdder_L17F29T70_Expr_2;
 
     end process;
 
-process(FullAdderModule_TopLevel_FullAdderModule_FullAdder_L17F30T49_Expr_1, FullAdderModule_TopLevel_FullAdderModule_FullAdder_L17F30T49_Expr_2)
+process(FullAdder_L17F30T49_Expr_1, FullAdder_L17F30T49_Expr_2)
 begin
-FullAdderModule_TopLevel_FullAdderModule_FullAdder_L17F30T49_Expr <= FullAdderModule_TopLevel_FullAdderModule_FullAdder_L17F30T49_Expr_1 AND FullAdderModule_TopLevel_FullAdderModule_FullAdder_L17F30T49_Expr_2;
+FullAdder_L17F30T49_Expr <= FullAdder_L17F30T49_Expr_1 AND FullAdder_L17F30T49_Expr_2;
 
     end process;
 
-process(FullAdderModule_TopLevel_FullAdderModule_FullAdder_L17F55T69_Expr_1, FullAdderModule_TopLevel_FullAdderModule_FullAdder_L17F55T69_Expr_2)
+process(FullAdder_L17F55T69_Expr_1, FullAdder_L17F55T69_Expr_2)
 begin
-FullAdderModule_TopLevel_FullAdderModule_FullAdder_L17F55T69_Expr <= FullAdderModule_TopLevel_FullAdderModule_FullAdder_L17F55T69_Expr_1 AND FullAdderModule_TopLevel_FullAdderModule_FullAdder_L17F55T69_Expr_2;
+FullAdder_L17F55T69_Expr <= FullAdder_L17F55T69_Expr_1 AND FullAdder_L17F55T69_Expr_2;
 
     end process;
 -- Top-level entity connections
-process(FullAdderModule_TopLevel_FullAdderModuleCOut, FullAdderModule_TopLevel_FullAdderModuleO, FullAdderModuleA, FullAdderModuleB, FullAdderModuleCIn)
+process(A, B, CIn, FullAdderModule_TopLevel_COut, FullAdderModule_TopLevel_O)
 begin
-	FullAdderModule_TopLevel_FullAdderModuleA <= FullAdderModuleA;
-	FullAdderModule_TopLevel_FullAdderModuleB <= FullAdderModuleB;
-	FullAdderModule_TopLevel_FullAdderModuleCIn <= FullAdderModuleCIn;
-FullAdderModuleO <= FullAdderModule_TopLevel_FullAdderModuleO;
-FullAdderModuleCOut <= FullAdderModule_TopLevel_FullAdderModuleCOut;
+	FullAdderModule_TopLevel_A <= A;
+	FullAdderModule_TopLevel_B <= B;
+	FullAdderModule_TopLevel_CIn <= CIn;
+O <= FullAdderModule_TopLevel_O;
+COut <= FullAdderModule_TopLevel_COut;
 end process;
-process(FullAdderModule_TopLevel_FullAdderModule_A, FullAdderModule_TopLevel_FullAdderModule_B, FullAdderModule_TopLevel_FullAdderModule_CIn, FullAdderModule_TopLevel_FullAdderModule_COut, FullAdderModule_TopLevel_FullAdderModule_FullAdder_L14F27T46_Expr, FullAdderModule_TopLevel_FullAdderModule_FullAdder_L16F26T40_Expr, FullAdderModule_TopLevel_FullAdderModule_FullAdder_L17F29T70_Expr, FullAdderModule_TopLevel_FullAdderModule_FullAdder_L17F30T49_Expr, FullAdderModule_TopLevel_FullAdderModule_FullAdder_L17F55T69_Expr, FullAdderModule_TopLevel_FullAdderModule_Inputs_A, FullAdderModule_TopLevel_FullAdderModule_Inputs_B, FullAdderModule_TopLevel_FullAdderModule_Inputs_CIn, FullAdderModule_TopLevel_FullAdderModule_O, FullAdderModule_TopLevel_FullAdderModule_P, FullAdderModule_TopLevel_FullAdderModuleA, FullAdderModule_TopLevel_FullAdderModuleB, FullAdderModule_TopLevel_FullAdderModuleCIn)
+process(A, B, CIn, FullAdder_L14F27T46_Expr, FullAdder_L16F26T40_Expr, FullAdder_L17F29T70_Expr, FullAdder_L17F30T49_Expr, FullAdder_L17F55T69_Expr, Inputs_A, Inputs_B, Inputs_CIn, P)
 begin
-FullAdderModule_TopLevel_FullAdderModule_A <= FullAdderModule_TopLevel_FullAdderModuleA;
-FullAdderModule_TopLevel_FullAdderModule_B <= FullAdderModule_TopLevel_FullAdderModuleB;
-FullAdderModule_TopLevel_FullAdderModule_CIn <= FullAdderModule_TopLevel_FullAdderModuleCIn;
-FullAdderModule_TopLevel_FullAdderModuleO <= FullAdderModule_TopLevel_FullAdderModule_O;
-FullAdderModule_TopLevel_FullAdderModuleCOut <= FullAdderModule_TopLevel_FullAdderModule_COut;
-FullAdderModule_TopLevel_FullAdderModule_FullAdder_L14F27T46_Expr_1 <= FullAdderModule_TopLevel_FullAdderModule_Inputs_A;
-FullAdderModule_TopLevel_FullAdderModule_FullAdder_L14F27T46_Expr_2 <= FullAdderModule_TopLevel_FullAdderModule_Inputs_B;
-FullAdderModule_TopLevel_FullAdderModule_FullAdder_L16F26T40_Expr_1 <= FullAdderModule_TopLevel_FullAdderModule_P;
-FullAdderModule_TopLevel_FullAdderModule_FullAdder_L16F26T40_Expr_2 <= FullAdderModule_TopLevel_FullAdderModule_Inputs_CIn;
-FullAdderModule_TopLevel_FullAdderModule_FullAdder_L17F29T70_Expr_1 <= FullAdderModule_TopLevel_FullAdderModule_FullAdder_L17F30T49_Expr;
-FullAdderModule_TopLevel_FullAdderModule_FullAdder_L17F29T70_Expr_2 <= FullAdderModule_TopLevel_FullAdderModule_FullAdder_L17F55T69_Expr;
-FullAdderModule_TopLevel_FullAdderModule_FullAdder_L17F30T49_Expr_1 <= FullAdderModule_TopLevel_FullAdderModule_Inputs_A;
-FullAdderModule_TopLevel_FullAdderModule_FullAdder_L17F30T49_Expr_2 <= FullAdderModule_TopLevel_FullAdderModule_Inputs_B;
-FullAdderModule_TopLevel_FullAdderModule_FullAdder_L17F55T69_Expr_1 <= FullAdderModule_TopLevel_FullAdderModule_P;
-FullAdderModule_TopLevel_FullAdderModule_FullAdder_L17F55T69_Expr_2 <= FullAdderModule_TopLevel_FullAdderModule_Inputs_CIn;
-FullAdderModule_TopLevel_FullAdderModule_Inputs_A <= FullAdderModule_TopLevel_FullAdderModule_A;
-FullAdderModule_TopLevel_FullAdderModule_Inputs_B <= FullAdderModule_TopLevel_FullAdderModule_B;
-FullAdderModule_TopLevel_FullAdderModule_Inputs_CIn <= FullAdderModule_TopLevel_FullAdderModule_CIn;
-FullAdderModule_TopLevel_FullAdderModule_P <= FullAdderModule_TopLevel_FullAdderModule_FullAdder_L14F27T46_Expr;
-FullAdderModule_TopLevel_FullAdderModule_O <= FullAdderModule_TopLevel_FullAdderModule_FullAdder_L16F26T40_Expr;
-FullAdderModule_TopLevel_FullAdderModule_COut <= FullAdderModule_TopLevel_FullAdderModule_FullAdder_L17F29T70_Expr;
+FullAdder_L14F27T46_Expr_1 <= Inputs_A;
+FullAdder_L14F27T46_Expr_2 <= Inputs_B;
+FullAdder_L16F26T40_Expr_1 <= P;
+FullAdder_L16F26T40_Expr_2 <= Inputs_CIn;
+FullAdder_L17F29T70_Expr_1 <= FullAdder_L17F30T49_Expr;
+FullAdder_L17F29T70_Expr_2 <= FullAdder_L17F55T69_Expr;
+FullAdder_L17F30T49_Expr_1 <= Inputs_A;
+FullAdder_L17F30T49_Expr_2 <= Inputs_B;
+FullAdder_L17F55T69_Expr_1 <= P;
+FullAdder_L17F55T69_Expr_2 <= Inputs_CIn;
+Inputs_A <= A;
+Inputs_B <= B;
+Inputs_CIn <= CIn;
+P <= FullAdder_L14F27T46_Expr;
+O <= FullAdder_L16F26T40_Expr;
+COut <= FullAdder_L17F29T70_Expr;
 end process;
 -- [BEGIN USER ARCHITECTURE]
 -- [END USER ARCHITECTURE]

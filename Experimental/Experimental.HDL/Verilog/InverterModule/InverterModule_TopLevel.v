@@ -22,34 +22,25 @@ module InverterModule_TopLevel (
 // [BEGIN USER PORTS]
 // [END USER PORTS]
 
-	input  InverterModuleInput,
-	output InverterModuleOutput
+	input  Input,
+	output Output
     );
 
 // [BEGIN USER SIGNALS]
 // [END USER SIGNALS]
 localparam HiSignal = 1'b1;
 localparam LoSignal = 1'b0;
-wire  InverterModule_TopLevel_InverterModuleInput;
-wire  InverterModule_TopLevel_InverterModuleOutput;
-wire  InverterModule_TopLevel_InverterModule_Input;
-wire  InverterModule_TopLevel_InverterModule_Output;
-wire  InverterModule_TopLevel_InverterModule_Zero = 1'b0;
-wire  InverterModule_TopLevel_InverterModule_One = 1'b1;
-wire  InverterModule_TopLevel_InverterModule_true = 1'b1;
-wire  InverterModule_TopLevel_InverterModule_false = 1'b0;
-wire  InverterModule_TopLevel_InverterModule_Inputs_Input;
-wire  InverterModule_TopLevel_InverterModule_InverterModule_L7F31T44_Expr;
-wire  InverterModule_TopLevel_InverterModule_InverterModule_L7F31T44_Expr_1;
-assign InverterModule_TopLevel_InverterModule_InverterModule_L7F31T44_Expr = ~InverterModule_TopLevel_InverterModule_InverterModule_L7F31T44_Expr_1;
-	assign InverterModule_TopLevel_InverterModuleInput = InverterModuleInput;
-// Top-level entity connections
-assign InverterModuleOutput = InverterModule_TopLevel_InverterModuleOutput;
-assign InverterModule_TopLevel_InverterModule_Input = InverterModule_TopLevel_InverterModuleInput;
-assign InverterModule_TopLevel_InverterModuleOutput = InverterModule_TopLevel_InverterModule_Output;
-assign InverterModule_TopLevel_InverterModule_InverterModule_L7F31T44_Expr_1 = InverterModule_TopLevel_InverterModule_Inputs_Input;
-assign InverterModule_TopLevel_InverterModule_Inputs_Input = InverterModule_TopLevel_InverterModule_Input;
-assign InverterModule_TopLevel_InverterModule_Output = InverterModule_TopLevel_InverterModule_InverterModule_L7F31T44_Expr;
+wire  Zero = 1'b0;
+wire  One = 1'b1;
+wire  true = 1'b1;
+wire  false = 1'b0;
+wire  Inputs_Input;
+wire  InverterModule_L7F31T44_Expr;
+wire  InverterModule_L7F31T44_Expr_1;
+assign InverterModule_L7F31T44_Expr = ~InverterModule_L7F31T44_Expr_1;
+assign InverterModule_L7F31T44_Expr_1 = Inputs_Input;
+assign Inputs_Input = Input;
+assign Output = InverterModule_L7F31T44_Expr;
 // [BEGIN USER ARCHITECTURE]
 // [END USER ARCHITECTURE]
 endmodule

@@ -27,8 +27,8 @@ entity InverterModule_TopLevel is
 -- [BEGIN USER PORTS]
 -- [END USER PORTS]
 
-InverterModuleInput : in  std_logic;
-InverterModuleOutput : out  std_logic
+Input : in  std_logic;
+Output : out  std_logic
     );
 end entity;
 
@@ -39,37 +39,31 @@ architecture rtl of InverterModule_TopLevel is
 -- [END USER SIGNALS]
 constant HiSignal : std_logic := '1';
 constant LoSignal : std_logic := '0';
-signal InverterModule_TopLevel_InverterModuleInput : std_logic := '0';
-signal InverterModule_TopLevel_InverterModuleOutput : std_logic := '0';
-signal InverterModule_TopLevel_InverterModule_Input : std_logic := '0';
-signal InverterModule_TopLevel_InverterModule_Output : std_logic := '0';
-constant InverterModule_TopLevel_InverterModule_Zero : std_logic := '0';
-constant InverterModule_TopLevel_InverterModule_One : std_logic := '1';
-constant InverterModule_TopLevel_InverterModule_true : std_logic := '1';
-constant InverterModule_TopLevel_InverterModule_false : std_logic := '0';
-signal InverterModule_TopLevel_InverterModule_Inputs_Input : std_logic := '0';
-signal InverterModule_TopLevel_InverterModule_InverterModule_L7F31T44_Expr : std_logic := '0';
-signal InverterModule_TopLevel_InverterModule_InverterModule_L7F31T44_Expr_1 : std_logic := '0';
+constant Zero : std_logic := '0';
+constant One : std_logic := '1';
+constant true : std_logic := '1';
+constant false : std_logic := '0';
+signal Inputs_Input : std_logic := '0';
+signal InverterModule_L7F31T44_Expr : std_logic := '0';
+signal InverterModule_L7F31T44_Expr_1 : std_logic := '0';
 begin
 
-process(InverterModule_TopLevel_InverterModule_InverterModule_L7F31T44_Expr_1)
+process(InverterModule_L7F31T44_Expr_1)
 begin
-InverterModule_TopLevel_InverterModule_InverterModule_L7F31T44_Expr <= NOT InverterModule_TopLevel_InverterModule_InverterModule_L7F31T44_Expr_1;
+InverterModule_L7F31T44_Expr <= NOT InverterModule_L7F31T44_Expr_1;
 
     end process;
 -- Top-level entity connections
-process(InverterModule_TopLevel_InverterModuleOutput, InverterModuleInput)
+process(Input, InverterModule_TopLevel_Output)
 begin
-	InverterModule_TopLevel_InverterModuleInput <= InverterModuleInput;
-InverterModuleOutput <= InverterModule_TopLevel_InverterModuleOutput;
+	InverterModule_TopLevel_Input <= Input;
+Output <= InverterModule_TopLevel_Output;
 end process;
-process(InverterModule_TopLevel_InverterModule_Input, InverterModule_TopLevel_InverterModule_Inputs_Input, InverterModule_TopLevel_InverterModule_InverterModule_L7F31T44_Expr, InverterModule_TopLevel_InverterModule_Output, InverterModule_TopLevel_InverterModuleInput)
+process(Input, Inputs_Input, InverterModule_L7F31T44_Expr)
 begin
-InverterModule_TopLevel_InverterModule_Input <= InverterModule_TopLevel_InverterModuleInput;
-InverterModule_TopLevel_InverterModuleOutput <= InverterModule_TopLevel_InverterModule_Output;
-InverterModule_TopLevel_InverterModule_InverterModule_L7F31T44_Expr_1 <= InverterModule_TopLevel_InverterModule_Inputs_Input;
-InverterModule_TopLevel_InverterModule_Inputs_Input <= InverterModule_TopLevel_InverterModule_Input;
-InverterModule_TopLevel_InverterModule_Output <= InverterModule_TopLevel_InverterModule_InverterModule_L7F31T44_Expr;
+InverterModule_L7F31T44_Expr_1 <= Inputs_Input;
+Inputs_Input <= Input;
+Output <= InverterModule_L7F31T44_Expr;
 end process;
 -- [BEGIN USER ARCHITECTURE]
 -- [END USER ARCHITECTURE]

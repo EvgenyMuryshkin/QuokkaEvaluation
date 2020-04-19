@@ -27,9 +27,9 @@ entity AndGateModule_TopLevel is
 -- [BEGIN USER PORTS]
 -- [END USER PORTS]
 
-AndGateModuleI1 : in  std_logic;
-AndGateModuleI2 : in  std_logic;
-AndGateModuleO : out  std_logic
+I1 : in  std_logic;
+I2 : in  std_logic;
+O : out  std_logic
     );
 end entity;
 
@@ -40,45 +40,36 @@ architecture rtl of AndGateModule_TopLevel is
 -- [END USER SIGNALS]
 constant HiSignal : std_logic := '1';
 constant LoSignal : std_logic := '0';
-signal AndGateModule_TopLevel_AndGateModuleI1 : std_logic := '0';
-signal AndGateModule_TopLevel_AndGateModuleI2 : std_logic := '0';
-signal AndGateModule_TopLevel_AndGateModuleO : std_logic := '0';
-signal AndGateModule_TopLevel_AndGateModule_I1 : std_logic := '0';
-signal AndGateModule_TopLevel_AndGateModule_I2 : std_logic := '0';
-signal AndGateModule_TopLevel_AndGateModule_O : std_logic := '0';
-constant AndGateModule_TopLevel_AndGateModule_Zero : std_logic := '0';
-constant AndGateModule_TopLevel_AndGateModule_One : std_logic := '1';
-constant AndGateModule_TopLevel_AndGateModule_true : std_logic := '1';
-constant AndGateModule_TopLevel_AndGateModule_false : std_logic := '0';
-signal AndGateModule_TopLevel_AndGateModule_Inputs_I1 : std_logic := '0';
-signal AndGateModule_TopLevel_AndGateModule_Inputs_I2 : std_logic := '0';
-signal AndGateModule_TopLevel_AndGateModule_SimpleGates_L12F26T48_Expr : std_logic := '0';
-signal AndGateModule_TopLevel_AndGateModule_SimpleGates_L12F26T48_Expr_1 : std_logic := '0';
-signal AndGateModule_TopLevel_AndGateModule_SimpleGates_L12F26T48_Expr_2 : std_logic := '0';
+constant Zero : std_logic := '0';
+constant One : std_logic := '1';
+constant true : std_logic := '1';
+constant false : std_logic := '0';
+signal Inputs_I1 : std_logic := '0';
+signal Inputs_I2 : std_logic := '0';
+signal SimpleGates_L12F26T48_Expr : std_logic := '0';
+signal SimpleGates_L12F26T48_Expr_1 : std_logic := '0';
+signal SimpleGates_L12F26T48_Expr_2 : std_logic := '0';
 begin
 
-process(AndGateModule_TopLevel_AndGateModule_SimpleGates_L12F26T48_Expr_1, AndGateModule_TopLevel_AndGateModule_SimpleGates_L12F26T48_Expr_2)
+process(SimpleGates_L12F26T48_Expr_1, SimpleGates_L12F26T48_Expr_2)
 begin
-AndGateModule_TopLevel_AndGateModule_SimpleGates_L12F26T48_Expr <= AndGateModule_TopLevel_AndGateModule_SimpleGates_L12F26T48_Expr_1 AND AndGateModule_TopLevel_AndGateModule_SimpleGates_L12F26T48_Expr_2;
+SimpleGates_L12F26T48_Expr <= SimpleGates_L12F26T48_Expr_1 AND SimpleGates_L12F26T48_Expr_2;
 
     end process;
 -- Top-level entity connections
-process(AndGateModule_TopLevel_AndGateModuleO, AndGateModuleI1, AndGateModuleI2)
+process(AndGateModule_TopLevel_O, I1, I2)
 begin
-	AndGateModule_TopLevel_AndGateModuleI1 <= AndGateModuleI1;
-	AndGateModule_TopLevel_AndGateModuleI2 <= AndGateModuleI2;
-AndGateModuleO <= AndGateModule_TopLevel_AndGateModuleO;
+	AndGateModule_TopLevel_I1 <= I1;
+	AndGateModule_TopLevel_I2 <= I2;
+O <= AndGateModule_TopLevel_O;
 end process;
-process(AndGateModule_TopLevel_AndGateModule_I1, AndGateModule_TopLevel_AndGateModule_I2, AndGateModule_TopLevel_AndGateModule_Inputs_I1, AndGateModule_TopLevel_AndGateModule_Inputs_I2, AndGateModule_TopLevel_AndGateModule_O, AndGateModule_TopLevel_AndGateModule_SimpleGates_L12F26T48_Expr, AndGateModule_TopLevel_AndGateModuleI1, AndGateModule_TopLevel_AndGateModuleI2)
+process(I1, I2, Inputs_I1, Inputs_I2, SimpleGates_L12F26T48_Expr)
 begin
-AndGateModule_TopLevel_AndGateModule_I1 <= AndGateModule_TopLevel_AndGateModuleI1;
-AndGateModule_TopLevel_AndGateModule_I2 <= AndGateModule_TopLevel_AndGateModuleI2;
-AndGateModule_TopLevel_AndGateModuleO <= AndGateModule_TopLevel_AndGateModule_O;
-AndGateModule_TopLevel_AndGateModule_SimpleGates_L12F26T48_Expr_1 <= AndGateModule_TopLevel_AndGateModule_Inputs_I1;
-AndGateModule_TopLevel_AndGateModule_SimpleGates_L12F26T48_Expr_2 <= AndGateModule_TopLevel_AndGateModule_Inputs_I2;
-AndGateModule_TopLevel_AndGateModule_Inputs_I1 <= AndGateModule_TopLevel_AndGateModule_I1;
-AndGateModule_TopLevel_AndGateModule_Inputs_I2 <= AndGateModule_TopLevel_AndGateModule_I2;
-AndGateModule_TopLevel_AndGateModule_O <= AndGateModule_TopLevel_AndGateModule_SimpleGates_L12F26T48_Expr;
+SimpleGates_L12F26T48_Expr_1 <= Inputs_I1;
+SimpleGates_L12F26T48_Expr_2 <= Inputs_I2;
+Inputs_I1 <= I1;
+Inputs_I2 <= I2;
+O <= SimpleGates_L12F26T48_Expr;
 end process;
 -- [BEGIN USER ARCHITECTURE]
 -- [END USER ARCHITECTURE]

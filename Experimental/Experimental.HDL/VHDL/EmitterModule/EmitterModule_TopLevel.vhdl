@@ -74,14 +74,11 @@ signal EmitterModule_L29F9L44T10_EmitterModule_L36F17L42T27_CaseRhs : signed(2 d
 signal EmitterModule_L26F32T64_Expr : std_logic := '0';
 signal EmitterModule_L26F32T64_ExprLhs : signed(2 downto 1)  := "00";
 signal EmitterModule_L26F32T64_ExprRhs : signed(2 downto 1)  := "00";
-signal BoardSignals : BoardSignalsType;
-signal InternalReset : std_logic := '0';
 begin
-work.Quokka.BoardSignalsProc(BoardSignals,Clock,Reset,InternalReset);
-process (BoardSignals, NextState_Data, NextState_FSM)
+process (Clock, NextState_Data, NextState_FSM, Reset)
 begin
-if rising_edge(BoardSignals.Clock) then
-if ( BoardSignals.Reset = '1' ) then
+if rising_edge(Clock) then
+if ( Reset = '1' ) then
 State_FSM <= State_FSMDefault;
 State_Data <= State_DataDefault;
 else

@@ -27,9 +27,9 @@ entity OrGateModule_TopLevel is
 -- [BEGIN USER PORTS]
 -- [END USER PORTS]
 
-OrGateModuleI1 : in  std_logic;
-OrGateModuleI2 : in  std_logic;
-OrGateModuleO : out  std_logic
+I1 : in  std_logic;
+I2 : in  std_logic;
+O : out  std_logic
     );
 end entity;
 
@@ -40,45 +40,36 @@ architecture rtl of OrGateModule_TopLevel is
 -- [END USER SIGNALS]
 constant HiSignal : std_logic := '1';
 constant LoSignal : std_logic := '0';
-signal OrGateModule_TopLevel_OrGateModuleI1 : std_logic := '0';
-signal OrGateModule_TopLevel_OrGateModuleI2 : std_logic := '0';
-signal OrGateModule_TopLevel_OrGateModuleO : std_logic := '0';
-signal OrGateModule_TopLevel_OrGateModule_I1 : std_logic := '0';
-signal OrGateModule_TopLevel_OrGateModule_I2 : std_logic := '0';
-signal OrGateModule_TopLevel_OrGateModule_O : std_logic := '0';
-constant OrGateModule_TopLevel_OrGateModule_Zero : std_logic := '0';
-constant OrGateModule_TopLevel_OrGateModule_One : std_logic := '1';
-constant OrGateModule_TopLevel_OrGateModule_true : std_logic := '1';
-constant OrGateModule_TopLevel_OrGateModule_false : std_logic := '0';
-signal OrGateModule_TopLevel_OrGateModule_Inputs_I1 : std_logic := '0';
-signal OrGateModule_TopLevel_OrGateModule_Inputs_I2 : std_logic := '0';
-signal OrGateModule_TopLevel_OrGateModule_SimpleGates_L17F26T48_Expr : std_logic := '0';
-signal OrGateModule_TopLevel_OrGateModule_SimpleGates_L17F26T48_Expr_1 : std_logic := '0';
-signal OrGateModule_TopLevel_OrGateModule_SimpleGates_L17F26T48_Expr_2 : std_logic := '0';
+constant Zero : std_logic := '0';
+constant One : std_logic := '1';
+constant true : std_logic := '1';
+constant false : std_logic := '0';
+signal Inputs_I1 : std_logic := '0';
+signal Inputs_I2 : std_logic := '0';
+signal SimpleGates_L17F26T48_Expr : std_logic := '0';
+signal SimpleGates_L17F26T48_Expr_1 : std_logic := '0';
+signal SimpleGates_L17F26T48_Expr_2 : std_logic := '0';
 begin
 
-process(OrGateModule_TopLevel_OrGateModule_SimpleGates_L17F26T48_Expr_1, OrGateModule_TopLevel_OrGateModule_SimpleGates_L17F26T48_Expr_2)
+process(SimpleGates_L17F26T48_Expr_1, SimpleGates_L17F26T48_Expr_2)
 begin
-OrGateModule_TopLevel_OrGateModule_SimpleGates_L17F26T48_Expr <= OrGateModule_TopLevel_OrGateModule_SimpleGates_L17F26T48_Expr_1 OR OrGateModule_TopLevel_OrGateModule_SimpleGates_L17F26T48_Expr_2;
+SimpleGates_L17F26T48_Expr <= SimpleGates_L17F26T48_Expr_1 OR SimpleGates_L17F26T48_Expr_2;
 
     end process;
 -- Top-level entity connections
-process(OrGateModule_TopLevel_OrGateModuleO, OrGateModuleI1, OrGateModuleI2)
+process(I1, I2, OrGateModule_TopLevel_O)
 begin
-	OrGateModule_TopLevel_OrGateModuleI1 <= OrGateModuleI1;
-	OrGateModule_TopLevel_OrGateModuleI2 <= OrGateModuleI2;
-OrGateModuleO <= OrGateModule_TopLevel_OrGateModuleO;
+	OrGateModule_TopLevel_I1 <= I1;
+	OrGateModule_TopLevel_I2 <= I2;
+O <= OrGateModule_TopLevel_O;
 end process;
-process(OrGateModule_TopLevel_OrGateModule_I1, OrGateModule_TopLevel_OrGateModule_I2, OrGateModule_TopLevel_OrGateModule_Inputs_I1, OrGateModule_TopLevel_OrGateModule_Inputs_I2, OrGateModule_TopLevel_OrGateModule_O, OrGateModule_TopLevel_OrGateModule_SimpleGates_L17F26T48_Expr, OrGateModule_TopLevel_OrGateModuleI1, OrGateModule_TopLevel_OrGateModuleI2)
+process(I1, I2, Inputs_I1, Inputs_I2, SimpleGates_L17F26T48_Expr)
 begin
-OrGateModule_TopLevel_OrGateModule_I1 <= OrGateModule_TopLevel_OrGateModuleI1;
-OrGateModule_TopLevel_OrGateModule_I2 <= OrGateModule_TopLevel_OrGateModuleI2;
-OrGateModule_TopLevel_OrGateModuleO <= OrGateModule_TopLevel_OrGateModule_O;
-OrGateModule_TopLevel_OrGateModule_SimpleGates_L17F26T48_Expr_1 <= OrGateModule_TopLevel_OrGateModule_Inputs_I1;
-OrGateModule_TopLevel_OrGateModule_SimpleGates_L17F26T48_Expr_2 <= OrGateModule_TopLevel_OrGateModule_Inputs_I2;
-OrGateModule_TopLevel_OrGateModule_Inputs_I1 <= OrGateModule_TopLevel_OrGateModule_I1;
-OrGateModule_TopLevel_OrGateModule_Inputs_I2 <= OrGateModule_TopLevel_OrGateModule_I2;
-OrGateModule_TopLevel_OrGateModule_O <= OrGateModule_TopLevel_OrGateModule_SimpleGates_L17F26T48_Expr;
+SimpleGates_L17F26T48_Expr_1 <= Inputs_I1;
+SimpleGates_L17F26T48_Expr_2 <= Inputs_I2;
+Inputs_I1 <= I1;
+Inputs_I2 <= I2;
+O <= SimpleGates_L17F26T48_Expr;
 end process;
 -- [BEGIN USER ARCHITECTURE]
 -- [END USER ARCHITECTURE]

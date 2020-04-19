@@ -314,10 +314,10 @@ constant State_BuffArrayInit: State_BuffArray:= (
 );
 signal State_Buff : State_BuffArray := State_BuffArrayInit;
 begin
-process (BoardSignals)
+process (Clock, Reset)
 begin
-if rising_edge(BoardSignals.Clock) then
-if ( BoardSignals.Reset = '1' ) then
+if rising_edge(Clock) then
+if ( Reset = '1' ) then
 else
 end if;
 end if;

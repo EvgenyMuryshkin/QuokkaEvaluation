@@ -22,43 +22,30 @@ module AndGateModule_TopLevel (
 // [BEGIN USER PORTS]
 // [END USER PORTS]
 
-	input  AndGateModuleI1,
-	input  AndGateModuleI2,
-	output AndGateModuleO
+	input  I1,
+	input  I2,
+	output O
     );
 
 // [BEGIN USER SIGNALS]
 // [END USER SIGNALS]
 localparam HiSignal = 1'b1;
 localparam LoSignal = 1'b0;
-wire  AndGateModule_TopLevel_AndGateModuleI1;
-wire  AndGateModule_TopLevel_AndGateModuleI2;
-wire  AndGateModule_TopLevel_AndGateModuleO;
-wire  AndGateModule_TopLevel_AndGateModule_I1;
-wire  AndGateModule_TopLevel_AndGateModule_I2;
-wire  AndGateModule_TopLevel_AndGateModule_O;
-wire  AndGateModule_TopLevel_AndGateModule_Zero = 1'b0;
-wire  AndGateModule_TopLevel_AndGateModule_One = 1'b1;
-wire  AndGateModule_TopLevel_AndGateModule_true = 1'b1;
-wire  AndGateModule_TopLevel_AndGateModule_false = 1'b0;
-wire  AndGateModule_TopLevel_AndGateModule_Inputs_I1;
-wire  AndGateModule_TopLevel_AndGateModule_Inputs_I2;
-wire  AndGateModule_TopLevel_AndGateModule_SimpleGates_L12F26T48_Expr;
-wire  AndGateModule_TopLevel_AndGateModule_SimpleGates_L12F26T48_Expr_1;
-wire  AndGateModule_TopLevel_AndGateModule_SimpleGates_L12F26T48_Expr_2;
-assign AndGateModule_TopLevel_AndGateModule_SimpleGates_L12F26T48_Expr = AndGateModule_TopLevel_AndGateModule_SimpleGates_L12F26T48_Expr_1 & AndGateModule_TopLevel_AndGateModule_SimpleGates_L12F26T48_Expr_2;
-	assign AndGateModule_TopLevel_AndGateModuleI1 = AndGateModuleI1;
-	assign AndGateModule_TopLevel_AndGateModuleI2 = AndGateModuleI2;
-// Top-level entity connections
-assign AndGateModuleO = AndGateModule_TopLevel_AndGateModuleO;
-assign AndGateModule_TopLevel_AndGateModule_I1 = AndGateModule_TopLevel_AndGateModuleI1;
-assign AndGateModule_TopLevel_AndGateModule_I2 = AndGateModule_TopLevel_AndGateModuleI2;
-assign AndGateModule_TopLevel_AndGateModuleO = AndGateModule_TopLevel_AndGateModule_O;
-assign AndGateModule_TopLevel_AndGateModule_SimpleGates_L12F26T48_Expr_1 = AndGateModule_TopLevel_AndGateModule_Inputs_I1;
-assign AndGateModule_TopLevel_AndGateModule_SimpleGates_L12F26T48_Expr_2 = AndGateModule_TopLevel_AndGateModule_Inputs_I2;
-assign AndGateModule_TopLevel_AndGateModule_Inputs_I1 = AndGateModule_TopLevel_AndGateModule_I1;
-assign AndGateModule_TopLevel_AndGateModule_Inputs_I2 = AndGateModule_TopLevel_AndGateModule_I2;
-assign AndGateModule_TopLevel_AndGateModule_O = AndGateModule_TopLevel_AndGateModule_SimpleGates_L12F26T48_Expr;
+wire  Zero = 1'b0;
+wire  One = 1'b1;
+wire  true = 1'b1;
+wire  false = 1'b0;
+wire  Inputs_I1;
+wire  Inputs_I2;
+wire  SimpleGates_L12F26T48_Expr;
+wire  SimpleGates_L12F26T48_Expr_1;
+wire  SimpleGates_L12F26T48_Expr_2;
+assign SimpleGates_L12F26T48_Expr = SimpleGates_L12F26T48_Expr_1 & SimpleGates_L12F26T48_Expr_2;
+assign SimpleGates_L12F26T48_Expr_1 = Inputs_I1;
+assign SimpleGates_L12F26T48_Expr_2 = Inputs_I2;
+assign Inputs_I1 = I1;
+assign Inputs_I2 = I2;
+assign O = SimpleGates_L12F26T48_Expr;
 // [BEGIN USER ARCHITECTURE]
 // [END USER ARCHITECTURE]
 endmodule
