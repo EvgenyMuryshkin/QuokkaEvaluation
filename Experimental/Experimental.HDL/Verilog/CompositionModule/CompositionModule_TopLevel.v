@@ -55,7 +55,6 @@ wire  Receiver_Ack;
 wire  Receiver_Bit;
 wire  Receiver_HasData;
 wire  [8:1] Receiver_Data;
-wire  [8:1] Receiver_PartialData;
 wire  EmitterIsEnabledEmitter_IsEnabledHardLink;
 wire  EmitterAckEmitter_AckHardLink;
 wire  [8:1] EmitterDataEmitter_DataHardLink;
@@ -72,7 +71,6 @@ wire  ReceiverAckReceiver_AckHardLink;
 wire  ReceiverBitReceiver_BitHardLink;
 wire  ReceiverHasDataReceiver_HasDataHardLink;
 wire  [8:1] ReceiverDataReceiver_DataHardLink;
-wire  [8:1] ReceiverPartialDataReceiver_PartialDataHardLink;
 wire  BoardSignals_Clock;
 wire  BoardSignals_Reset;
 wire  BoardSignals_Running;
@@ -126,8 +124,7 @@ CompositionModule_TopLevel_CompositionModule_Receiver CompositionModule_TopLevel
 	.Ack (ReceiverAckReceiver_AckHardLink),
 	.Bit (ReceiverBitReceiver_BitHardLink),
 	.HasData (ReceiverHasDataReceiver_HasDataHardLink),
-	.Data (ReceiverDataReceiver_DataHardLink),
-	.PartialData (ReceiverPartialDataReceiver_PartialDataHardLink)
+	.Data (ReceiverDataReceiver_DataHardLink)
 
 );
 assign Inputs_IsEnabled = IsEnabled;
@@ -157,7 +154,6 @@ assign ReceiverAckReceiver_AckHardLink = Receiver_Ack;
 assign ReceiverBitReceiver_BitHardLink = Receiver_Bit;
 assign Receiver_HasData = ReceiverHasDataReceiver_HasDataHardLink;
 assign Receiver_Data = ReceiverDataReceiver_DataHardLink/*cast*/;
-assign Receiver_PartialData = ReceiverPartialDataReceiver_PartialDataHardLink/*cast*/;
 // [BEGIN USER ARCHITECTURE]
 // [END USER ARCHITECTURE]
 endmodule

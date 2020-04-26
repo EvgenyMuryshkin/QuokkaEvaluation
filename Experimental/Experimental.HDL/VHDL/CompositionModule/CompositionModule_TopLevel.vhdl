@@ -64,7 +64,6 @@ signal Receiver_Ack : std_logic := '0';
 signal Receiver_Bit : std_logic := '0';
 signal Receiver_HasData : std_logic := '0';
 signal Receiver_Data : unsigned(8 downto 1)  := "00000000";
-signal Receiver_PartialData : unsigned(8 downto 1)  := "00000000";
 signal EmitterIsEnabledEmitter_IsEnabledHardLink : std_logic := '0';
 signal EmitterAckEmitter_AckHardLink : std_logic := '0';
 signal EmitterDataEmitter_DataHardLink : unsigned(8 downto 1)  := "00000000";
@@ -81,7 +80,6 @@ signal ReceiverAckReceiver_AckHardLink : std_logic := '0';
 signal ReceiverBitReceiver_BitHardLink : std_logic := '0';
 signal ReceiverHasDataReceiver_HasDataHardLink : std_logic := '0';
 signal ReceiverDataReceiver_DataHardLink : unsigned(8 downto 1)  := "00000000";
-signal ReceiverPartialDataReceiver_PartialDataHardLink : unsigned(8 downto 1)  := "00000000";
 signal BoardSignals : BoardSignalsType;
 signal InternalReset : std_logic := '0';
 begin
@@ -120,20 +118,10 @@ IsValid => ReceiverIsValidReceiver_IsValidHardLink,
 Ack => ReceiverAckReceiver_AckHardLink,
 Bit => ReceiverBitReceiver_BitHardLink,
 HasData => ReceiverHasDataReceiver_HasDataHardLink,
-Data => ReceiverDataReceiver_DataHardLink,
-PartialData => ReceiverPartialDataReceiver_PartialDataHardLink
+Data => ReceiverDataReceiver_DataHardLink
 
 );
--- Top-level entity connections
-process(Clock, CompositionModule_TopLevel_Data, CompositionModule_TopLevel_HasData, IsEnabled, Reset)
-begin
-	CompositionModule_TopLevel_IsEnabled <= IsEnabled;
-CompositionModule_TopLevel_Clock <= Clock;
-CompositionModule_TopLevel_Reset <= NOT Reset;
-HasData <= CompositionModule_TopLevel_HasData;
-Data <= CompositionModule_TopLevel_Data;
-end process;
-process(Emitter_Ack, Emitter_Data, Emitter_HasData, Emitter_IsEnabled, EmitterDataEmitter_DataHardLink, EmitterHasDataEmitter_HasDataHardLink, Inputs_IsEnabled, IsEnabled, Receiver_Ack, Receiver_Bit, Receiver_Data, Receiver_HasData, Receiver_IsValid, ReceiverDataReceiver_DataHardLink, ReceiverHasDataReceiver_HasDataHardLink, ReceiverPartialDataReceiver_PartialDataHardLink, Transmitter_Ack, Transmitter_Bit, Transmitter_Data, Transmitter_IsReady, Transmitter_IsTransmitting, Transmitter_Trigger, TransmitterBitTransmitter_BitHardLink, TransmitterIsReadyTransmitter_IsReadyHardLink, TransmitterIsTransmissionStartedTransmitter_IsTransmissionStartedHardLink, TransmitterIsTransmittingTransmitter_IsTransmittingHardLink)
+process(Emitter_Ack, Emitter_Data, Emitter_HasData, Emitter_IsEnabled, EmitterDataEmitter_DataHardLink, EmitterHasDataEmitter_HasDataHardLink, Inputs_IsEnabled, IsEnabled, Receiver_Ack, Receiver_Bit, Receiver_Data, Receiver_HasData, Receiver_IsValid, ReceiverDataReceiver_DataHardLink, ReceiverHasDataReceiver_HasDataHardLink, Transmitter_Ack, Transmitter_Bit, Transmitter_Data, Transmitter_IsReady, Transmitter_IsTransmitting, Transmitter_Trigger, TransmitterBitTransmitter_BitHardLink, TransmitterIsReadyTransmitter_IsReadyHardLink, TransmitterIsTransmissionStartedTransmitter_IsTransmissionStartedHardLink, TransmitterIsTransmittingTransmitter_IsTransmittingHardLink)
 begin
 Inputs_IsEnabled <= IsEnabled;
 Emitter_IsEnabled <= Inputs_IsEnabled;
@@ -162,7 +150,6 @@ ReceiverAckReceiver_AckHardLink <= Receiver_Ack;
 ReceiverBitReceiver_BitHardLink <= Receiver_Bit;
 Receiver_HasData <= ReceiverHasDataReceiver_HasDataHardLink;
 Receiver_Data <= unsigned(ReceiverDataReceiver_DataHardLink);
-Receiver_PartialData <= unsigned(ReceiverPartialDataReceiver_PartialDataHardLink);
 end process;
 -- [BEGIN USER ARCHITECTURE]
 -- [END USER ARCHITECTURE]

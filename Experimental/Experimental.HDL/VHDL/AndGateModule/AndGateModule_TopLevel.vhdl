@@ -56,13 +56,6 @@ begin
 SimpleGates_L12F26T48_Expr <= SimpleGates_L12F26T48_Expr_1 AND SimpleGates_L12F26T48_Expr_2;
 
     end process;
--- Top-level entity connections
-process(AndGateModule_TopLevel_O, I1, I2)
-begin
-	AndGateModule_TopLevel_I1 <= I1;
-	AndGateModule_TopLevel_I2 <= I2;
-O <= AndGateModule_TopLevel_O;
-end process;
 process(I1, I2, Inputs_I1, Inputs_I2, SimpleGates_L12F26T48_Expr)
 begin
 SimpleGates_L12F26T48_Expr_1 <= Inputs_I1;

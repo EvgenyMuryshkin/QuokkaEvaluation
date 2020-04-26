@@ -183,19 +183,6 @@ NextState_FSM <= (1 => TransmitterModule_L13F9L40T10_TransmitterModule_L37F41T60
 end if;
 end if;
 end process;
--- Top-level entity connections
-process(Ack, Clock, Data, Reset, TransmitterModule_TopLevel_Bit, TransmitterModule_TopLevel_IsReady, TransmitterModule_TopLevel_IsTransmissionStarted, TransmitterModule_TopLevel_IsTransmitting, Trigger)
-begin
-	TransmitterModule_TopLevel_Trigger <= Trigger;
-	TransmitterModule_TopLevel_Ack <= Ack;
-	TransmitterModule_TopLevel_Data <= Data;
-TransmitterModule_TopLevel_Clock <= Clock;
-TransmitterModule_TopLevel_Reset <= NOT Reset;
-Bit <= TransmitterModule_TopLevel_Bit;
-IsReady <= TransmitterModule_TopLevel_IsReady;
-IsTransmitting <= TransmitterModule_TopLevel_IsTransmitting;
-IsTransmissionStarted <= TransmitterModule_TopLevel_IsTransmissionStarted;
-end process;
 process(Ack, Data, NextState_FSM, State_Counter, State_Data, State_FSM, TransmitterModule_L10F39T79_Expr, TransmitterModule_L11F46T126_Expr, TransmitterModule_L11F46T78_Expr, TransmitterModule_L11F82T126_Expr, TransmitterModule_L13F9L40T10_TransmitterModule_L30F21L32T22_TransmitterModule_L31F52T69_Expr, TransmitterModule_L8F28T41_Index, TransmitterModule_L9F32T65_Expr, Trigger)
 begin
 TransmitterModule_L13F9L40T10_TransmitterModule_L16F17L23T27_CaseLhs <= signed(resize(State_FSM, TransmitterModule_L13F9L40T10_TransmitterModule_L16F17L23T27_CaseLhs'length));

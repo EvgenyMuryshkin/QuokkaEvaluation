@@ -27,7 +27,7 @@ namespace QuokkaTests.Experimental
 
         static byte[] GetBuffer()
         {
-            var rnd = new Random(Environment.TickCount);
+            var rnd = new Random(42);
 
             return Enumerable
                 .Range(0, 256)

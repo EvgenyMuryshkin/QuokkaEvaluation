@@ -53,12 +53,6 @@ begin
 InverterModule_L7F31T44_Expr <= NOT InverterModule_L7F31T44_Expr_1;
 
     end process;
--- Top-level entity connections
-process(Input, InverterModule_TopLevel_Output)
-begin
-	InverterModule_TopLevel_Input <= Input;
-Output <= InverterModule_TopLevel_Output;
-end process;
 process(Input, Inputs_Input, InverterModule_L7F31T44_Expr)
 begin
 InverterModule_L7F31T44_Expr_1 <= Inputs_Input;

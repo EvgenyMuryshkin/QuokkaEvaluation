@@ -96,15 +96,6 @@ begin
 FullAdder_L17F55T69_Expr <= FullAdder_L17F55T69_Expr_1 AND FullAdder_L17F55T69_Expr_2;
 
     end process;
--- Top-level entity connections
-process(A, B, CIn, FullAdderModule_TopLevel_COut, FullAdderModule_TopLevel_O)
-begin
-	FullAdderModule_TopLevel_A <= A;
-	FullAdderModule_TopLevel_B <= B;
-	FullAdderModule_TopLevel_CIn <= CIn;
-O <= FullAdderModule_TopLevel_O;
-COut <= FullAdderModule_TopLevel_COut;
-end process;
 process(A, B, CIn, FullAdder_L14F27T46_Expr, FullAdder_L16F26T40_Expr, FullAdder_L17F29T70_Expr, FullAdder_L17F30T49_Expr, FullAdder_L17F55T69_Expr, Inputs_A, Inputs_B, Inputs_CIn, P)
 begin
 FullAdder_L14F27T46_Expr_1 <= Inputs_A;

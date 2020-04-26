@@ -56,13 +56,6 @@ begin
 SimpleGates_L22F26T47_Expr <= SimpleGates_L22F26T47_Expr_1 XOR SimpleGates_L22F26T47_Expr_2;
 
     end process;
--- Top-level entity connections
-process(I1, I2, XorGateModule_TopLevel_O)
-begin
-	XorGateModule_TopLevel_I1 <= I1;
-	XorGateModule_TopLevel_I2 <= I2;
-O <= XorGateModule_TopLevel_O;
-end process;
 process(I1, I2, Inputs_I1, Inputs_I2, SimpleGates_L22F26T47_Expr)
 begin
 SimpleGates_L22F26T47_Expr_1 <= Inputs_I1;

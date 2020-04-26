@@ -7,7 +7,7 @@ namespace QuokkaTests.Experimental
         // public data points
         public bool HasData => State.FSM  == ReceiverFSM.WaitingForAck;
         public byte Data => State.Data;
-        public byte PartialData => (byte)(Inputs.Bit ? 0x80 : 0);
+        byte PartialData => (byte)(Inputs.Bit ? 0x80 : 0);
 
         protected override void OnStage()
         {

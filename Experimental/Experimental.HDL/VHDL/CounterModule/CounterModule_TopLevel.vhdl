@@ -92,14 +92,6 @@ begin
 NextState_Value <= unsigned(State_Value);
 NextState_Value <= unsigned(CounterModule_L20F9L22T10_CounterModule_L21F31T85_Expr);
 end process;
--- Top-level entity connections
-process(Clock, CounterModule_TopLevel_Value, Enabled, Reset)
-begin
-	CounterModule_TopLevel_Enabled <= Enabled;
-CounterModule_TopLevel_Clock <= Clock;
-CounterModule_TopLevel_Reset <= NOT Reset;
-Value <= CounterModule_TopLevel_Value;
-end process;
 process(CounterModule_L20F9L22T10_CounterModule_L21F38T84_Lookup, CounterModule_L20F9L22T10_CounterModule_L21F55T70_Expr, Enabled, Inputs_Enabled, State_Value)
 begin
 CounterModule_L20F9L22T10_CounterModule_L21F38T84_LookupMultiplexerAddress <= Inputs_Enabled;

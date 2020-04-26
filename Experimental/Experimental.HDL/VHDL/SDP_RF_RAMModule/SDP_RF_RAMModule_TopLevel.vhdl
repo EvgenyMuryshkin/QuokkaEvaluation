@@ -314,35 +314,17 @@ constant State_BuffArrayInit: State_BuffArray:= (
 );
 signal State_Buff : State_BuffArray := State_BuffArrayInit;
 begin
-process (Clock, Reset)
+-- inferred simple dual port RAM with read-first behaviour
+process (Clock)
 begin
-if rising_edge(Clock) then
-if ( Reset = '1' ) then
-else
-end if;
-end if;
+	if rising_edge(Clock) then
+		if (Inputs_WE = '1') then
+			State_Buff(TO_INTEGER(Inputs_WriteAddress)) <= Inputs_WriteData;
+		end if;
+		State_ReadData <= State_Buff(TO_INTEGER(Inputs_ReadAddress));
+	end if;
 end process;
-process(Inputs_WE)
-begin
-if ( Inputs_WE = '1' ) then
-end if;
-end process;
-	always @ (posedge <<clk>>)
-	begin
-        <<target1>> <= <<rom>>[<<read_address1>>];
-        <<target2>> <= <<rom>>[<<read_address2>>];
-	end
--- Top-level entity connections
-process(Clock, ReadAddress, Reset, SDP_RF_RAMModule_TopLevel_Data, WE, WriteAddress, WriteData)
-begin
-	SDP_RF_RAMModule_TopLevel_ReadAddress <= ReadAddress;
-	SDP_RF_RAMModule_TopLevel_WriteAddress <= WriteAddress;
-	SDP_RF_RAMModule_TopLevel_WriteData <= WriteData;
-	SDP_RF_RAMModule_TopLevel_WE <= WE;
-SDP_RF_RAMModule_TopLevel_Clock <= Clock;
-SDP_RF_RAMModule_TopLevel_Reset <= NOT Reset;
-Data <= SDP_RF_RAMModule_TopLevel_Data;
-end process;
+
 process(ReadAddress, State_ReadData, WE, WriteAddress, WriteData)
 begin
 Inputs_ReadAddress <= unsigned(ReadAddress);

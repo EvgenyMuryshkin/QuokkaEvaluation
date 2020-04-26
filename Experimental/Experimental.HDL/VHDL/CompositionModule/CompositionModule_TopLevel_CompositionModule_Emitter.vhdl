@@ -110,13 +110,6 @@ NextState_Data <= unsigned(EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_
 end if;
 end if;
 end process;
-process(Ack, BoardSignals, CompositionModule_TopLevel_CompositionModule_Emitter_Data, CompositionModule_TopLevel_CompositionModule_Emitter_HasData, IsEnabled)
-begin
-	CompositionModule_TopLevel_CompositionModule_Emitter_IsEnabled <= IsEnabled;
-	CompositionModule_TopLevel_CompositionModule_Emitter_Ack <= Ack;
-Data <= CompositionModule_TopLevel_CompositionModule_Emitter_Data;
-HasData <= CompositionModule_TopLevel_CompositionModule_Emitter_HasData;
-end process;
 process(Ack, EmitterModule_L26F32T64_Expr, EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L40F49T63_Expr, IsEnabled, State_Data, State_FSM)
 begin
 EmitterModule_L29F9L44T10_EmitterModule_L32F17L35T27_CaseLhs <= (1 => State_FSM, others => '0');

@@ -1,5 +1,5 @@
 Simulator report for Verilog
-Sun Apr 19 21:19:16 2020
+Sat Apr 25 17:06:05 2020
 Quartus II Version 9.1 Build 350 03/24/2010 Service Pack 2 SJ Web Edition
 
 
@@ -44,43 +44,43 @@ applicable agreement for further details.
 ; Type                        ; Value        ;
 +-----------------------------+--------------+
 ; Simulation Start Time       ; 0 ps         ;
-; Simulation End Time         ; 1.0 us       ;
-; Simulation Netlist Size     ; 44 nodes     ;
-; Simulation Coverage         ;       0.00 % ;
-; Total Number of Transitions ; 0            ;
+; Simulation End Time         ; 1.0 ms       ;
+; Simulation Netlist Size     ; 95 nodes     ;
+; Simulation Coverage         ;      99.15 % ;
+; Total Number of Transitions ; 1047         ;
 ; Simulation Breakpoints      ; 0            ;
 ; Family                      ; Cyclone II   ;
 ; Device                      ; EP2C5T144C6  ;
 +-----------------------------+--------------+
 
 
-+-------------------------------------------------------------------------------------------------------------------------------------+
-; Simulator Settings                                                                                                                  ;
-+--------------------------------------------------------------------------------------------+------------------------+---------------+
-; Option                                                                                     ; Setting                ; Default Value ;
-+--------------------------------------------------------------------------------------------+------------------------+---------------+
-; Simulation mode                                                                            ; Timing                 ; Timing        ;
-; Start time                                                                                 ; 0 ns                   ; 0 ns          ;
-; Simulation results format                                                                  ; CVWF                   ;               ;
-; Vector input source                                                                        ; Waveforms/BitArray.vwf ;               ;
-; Add pins automatically to simulation output waveforms                                      ; On                     ; On            ;
-; Check outputs                                                                              ; Off                    ; Off           ;
-; Report simulation coverage                                                                 ; On                     ; On            ;
-; Display complete 1/0 value coverage report                                                 ; On                     ; On            ;
-; Display missing 1-value coverage report                                                    ; On                     ; On            ;
-; Display missing 0-value coverage report                                                    ; On                     ; On            ;
-; Detect setup and hold time violations                                                      ; Off                    ; Off           ;
-; Detect glitches                                                                            ; Off                    ; Off           ;
-; Disable timing delays in Timing Simulation                                                 ; Off                    ; Off           ;
-; Generate Signal Activity File                                                              ; Off                    ; Off           ;
-; Generate VCD File for PowerPlay Power Analyzer                                             ; Off                    ; Off           ;
-; Group bus channels in simulation results                                                   ; Off                    ; Off           ;
-; Preserve fewer signal transitions to reduce memory requirements                            ; On                     ; On            ;
-; Trigger vector comparison with the specified mode                                          ; INPUT_EDGE             ; INPUT_EDGE    ;
-; Disable setup and hold time violations detection in input registers of bi-directional pins ; Off                    ; Off           ;
-; Overwrite Waveform Inputs With Simulation Outputs                                          ; Off                    ;               ;
-; Perform Glitch Filtering in Timing Simulation                                              ; Auto                   ; Auto          ;
-+--------------------------------------------------------------------------------------------+------------------------+---------------+
++-------------------------------------------------------------------------------------------------------------------------------------------+
+; Simulator Settings                                                                                                                        ;
++--------------------------------------------------------------------------------------------+------------------------------+---------------+
+; Option                                                                                     ; Setting                      ; Default Value ;
++--------------------------------------------------------------------------------------------+------------------------------+---------------+
+; Simulation mode                                                                            ; Timing                       ; Timing        ;
+; Start time                                                                                 ; 0 ns                         ; 0 ns          ;
+; Simulation results format                                                                  ; CVWF                         ;               ;
+; Vector input source                                                                        ; Waveforms/LogicRAMModule.vwf ;               ;
+; Add pins automatically to simulation output waveforms                                      ; On                           ; On            ;
+; Check outputs                                                                              ; Off                          ; Off           ;
+; Report simulation coverage                                                                 ; On                           ; On            ;
+; Display complete 1/0 value coverage report                                                 ; On                           ; On            ;
+; Display missing 1-value coverage report                                                    ; On                           ; On            ;
+; Display missing 0-value coverage report                                                    ; On                           ; On            ;
+; Detect setup and hold time violations                                                      ; Off                          ; Off           ;
+; Detect glitches                                                                            ; Off                          ; Off           ;
+; Disable timing delays in Timing Simulation                                                 ; Off                          ; Off           ;
+; Generate Signal Activity File                                                              ; Off                          ; Off           ;
+; Generate VCD File for PowerPlay Power Analyzer                                             ; Off                          ; Off           ;
+; Group bus channels in simulation results                                                   ; Off                          ; Off           ;
+; Preserve fewer signal transitions to reduce memory requirements                            ; On                           ; On            ;
+; Trigger vector comparison with the specified mode                                          ; INPUT_EDGE                   ; INPUT_EDGE    ;
+; Disable setup and hold time violations detection in input registers of bi-directional pins ; Off                          ; Off           ;
+; Overwrite Waveform Inputs With Simulation Outputs                                          ; On                           ;               ;
+; Perform Glitch Filtering in Timing Simulation                                              ; Auto                         ; Auto          ;
++--------------------------------------------------------------------------------------------+------------------------------+---------------+
 
 
 +----------------------+
@@ -95,128 +95,160 @@ Please use Quartus II to view the waveform report data.
 +-----------------------------------------------------+--------------+
 ; Type                                                ; Value        ;
 +-----------------------------------------------------+--------------+
-; Total coverage as a percentage                      ;       0.00 % ;
-; Total nodes checked                                 ; 44           ;
-; Total output ports checked                          ; 44           ;
-; Total output ports with complete 1/0-value coverage ; 0            ;
-; Total output ports with no 1/0-value coverage       ; 44           ;
-; Total output ports with no 1-value coverage         ; 44           ;
-; Total output ports with no 0-value coverage         ; 44           ;
+; Total coverage as a percentage                      ;      99.15 % ;
+; Total nodes checked                                 ; 95           ;
+; Total output ports checked                          ; 118          ;
+; Total output ports with complete 1/0-value coverage ; 117          ;
+; Total output ports with no 1/0-value coverage       ; 1            ;
+; Total output ports with no 1-value coverage         ; 1            ;
+; Total output ports with no 0-value coverage         ; 1            ;
 +-----------------------------------------------------+--------------+
 
 
 The following table displays output ports that toggle between 1 and 0 during simulation.
-+-------------------------------------------------+
-; Complete 1/0-Value Coverage                     ;
-+-----------+------------------+------------------+
-; Node Name ; Output Port Name ; Output Port Type ;
-+-----------+------------------+------------------+
++--------------------------------------------------------------------------------------------------------------+
+; Complete 1/0-Value Coverage                                                                                  ;
++---------------------------------------------+---------------------------------------------+------------------+
+; Node Name                                   ; Output Port Name                            ; Output Port Type ;
++---------------------------------------------+---------------------------------------------+------------------+
+; |LogicRAMModule_TopLevel|Add3~0             ; |LogicRAMModule_TopLevel|Add3~0             ; combout          ;
+; |LogicRAMModule_TopLevel|Add3~0             ; |LogicRAMModule_TopLevel|Add3~1             ; cout             ;
+; |LogicRAMModule_TopLevel|Add3~2             ; |LogicRAMModule_TopLevel|Add3~2             ; combout          ;
+; |LogicRAMModule_TopLevel|Add3~2             ; |LogicRAMModule_TopLevel|Add3~3             ; cout             ;
+; |LogicRAMModule_TopLevel|Add3~4             ; |LogicRAMModule_TopLevel|Add3~4             ; combout          ;
+; |LogicRAMModule_TopLevel|Add3~4             ; |LogicRAMModule_TopLevel|Add3~5             ; cout             ;
+; |LogicRAMModule_TopLevel|Add2~0             ; |LogicRAMModule_TopLevel|Add2~0             ; combout          ;
+; |LogicRAMModule_TopLevel|Add2~0             ; |LogicRAMModule_TopLevel|Add2~1             ; cout             ;
+; |LogicRAMModule_TopLevel|Add2~2             ; |LogicRAMModule_TopLevel|Add2~2             ; combout          ;
+; |LogicRAMModule_TopLevel|Add2~2             ; |LogicRAMModule_TopLevel|Add2~3             ; cout             ;
+; |LogicRAMModule_TopLevel|Add2~4             ; |LogicRAMModule_TopLevel|Add2~4             ; combout          ;
+; |LogicRAMModule_TopLevel|Add2~4             ; |LogicRAMModule_TopLevel|Add2~5             ; cout             ;
+; |LogicRAMModule_TopLevel|Add1~3             ; |LogicRAMModule_TopLevel|Add1~3             ; cout             ;
+; |LogicRAMModule_TopLevel|Add1~4             ; |LogicRAMModule_TopLevel|Add1~4             ; combout          ;
+; |LogicRAMModule_TopLevel|Add1~4             ; |LogicRAMModule_TopLevel|Add1~5             ; cout             ;
+; |LogicRAMModule_TopLevel|Add3~6             ; |LogicRAMModule_TopLevel|Add3~6             ; combout          ;
+; |LogicRAMModule_TopLevel|Add3~6             ; |LogicRAMModule_TopLevel|Add3~7             ; cout             ;
+; |LogicRAMModule_TopLevel|Add2~6             ; |LogicRAMModule_TopLevel|Add2~6             ; combout          ;
+; |LogicRAMModule_TopLevel|Add2~6             ; |LogicRAMModule_TopLevel|Add2~7             ; cout             ;
+; |LogicRAMModule_TopLevel|Add1~6             ; |LogicRAMModule_TopLevel|Add1~6             ; combout          ;
+; |LogicRAMModule_TopLevel|Add1~6             ; |LogicRAMModule_TopLevel|Add1~7             ; cout             ;
+; |LogicRAMModule_TopLevel|Add3~8             ; |LogicRAMModule_TopLevel|Add3~8             ; combout          ;
+; |LogicRAMModule_TopLevel|Add3~8             ; |LogicRAMModule_TopLevel|Add3~9             ; cout             ;
+; |LogicRAMModule_TopLevel|Add2~8             ; |LogicRAMModule_TopLevel|Add2~8             ; combout          ;
+; |LogicRAMModule_TopLevel|Add2~8             ; |LogicRAMModule_TopLevel|Add2~9             ; cout             ;
+; |LogicRAMModule_TopLevel|Add1~8             ; |LogicRAMModule_TopLevel|Add1~8             ; combout          ;
+; |LogicRAMModule_TopLevel|Add1~8             ; |LogicRAMModule_TopLevel|Add1~9             ; cout             ;
+; |LogicRAMModule_TopLevel|Add3~10            ; |LogicRAMModule_TopLevel|Add3~10            ; combout          ;
+; |LogicRAMModule_TopLevel|Add3~10            ; |LogicRAMModule_TopLevel|Add3~11            ; cout             ;
+; |LogicRAMModule_TopLevel|Add2~10            ; |LogicRAMModule_TopLevel|Add2~10            ; combout          ;
+; |LogicRAMModule_TopLevel|Add2~10            ; |LogicRAMModule_TopLevel|Add2~11            ; cout             ;
+; |LogicRAMModule_TopLevel|Add1~10            ; |LogicRAMModule_TopLevel|Add1~10            ; combout          ;
+; |LogicRAMModule_TopLevel|Add1~10            ; |LogicRAMModule_TopLevel|Add1~11            ; cout             ;
+; |LogicRAMModule_TopLevel|Add3~12            ; |LogicRAMModule_TopLevel|Add3~12            ; combout          ;
+; |LogicRAMModule_TopLevel|Add3~12            ; |LogicRAMModule_TopLevel|Add3~13            ; cout             ;
+; |LogicRAMModule_TopLevel|Add2~12            ; |LogicRAMModule_TopLevel|Add2~12            ; combout          ;
+; |LogicRAMModule_TopLevel|Add2~12            ; |LogicRAMModule_TopLevel|Add2~13            ; cout             ;
+; |LogicRAMModule_TopLevel|Add1~12            ; |LogicRAMModule_TopLevel|Add1~12            ; combout          ;
+; |LogicRAMModule_TopLevel|Add1~12            ; |LogicRAMModule_TopLevel|Add1~13            ; cout             ;
+; |LogicRAMModule_TopLevel|Add3~14            ; |LogicRAMModule_TopLevel|Add3~14            ; combout          ;
+; |LogicRAMModule_TopLevel|Add3~14            ; |LogicRAMModule_TopLevel|Add3~15            ; cout             ;
+; |LogicRAMModule_TopLevel|Add2~14            ; |LogicRAMModule_TopLevel|Add2~14            ; combout          ;
+; |LogicRAMModule_TopLevel|Add2~14            ; |LogicRAMModule_TopLevel|Add2~15            ; cout             ;
+; |LogicRAMModule_TopLevel|Add1~14            ; |LogicRAMModule_TopLevel|Add1~14            ; combout          ;
+; |LogicRAMModule_TopLevel|Add1~14            ; |LogicRAMModule_TopLevel|Add1~15            ; cout             ;
+; |LogicRAMModule_TopLevel|Add3~16            ; |LogicRAMModule_TopLevel|Add3~16            ; combout          ;
+; |LogicRAMModule_TopLevel|Add2~16            ; |LogicRAMModule_TopLevel|Add2~16            ; combout          ;
+; |LogicRAMModule_TopLevel|Add1~16            ; |LogicRAMModule_TopLevel|Add1~16            ; combout          ;
+; |LogicRAMModule_TopLevel|Add1~16            ; |LogicRAMModule_TopLevel|Add1~17            ; cout             ;
+; |LogicRAMModule_TopLevel|Add1~18            ; |LogicRAMModule_TopLevel|Add1~18            ; combout          ;
+; |LogicRAMModule_TopLevel|State_Index[2]     ; |LogicRAMModule_TopLevel|State_Index[2]     ; regout           ;
+; |LogicRAMModule_TopLevel|State_Buff[1][3]   ; |LogicRAMModule_TopLevel|State_Buff[1][3]   ; regout           ;
+; |LogicRAMModule_TopLevel|State_Buff[0][3]   ; |LogicRAMModule_TopLevel|State_Buff[0][3]   ; regout           ;
+; |LogicRAMModule_TopLevel|State_Buff[1][2]   ; |LogicRAMModule_TopLevel|State_Buff[1][2]   ; regout           ;
+; |LogicRAMModule_TopLevel|State_Buff[0][2]   ; |LogicRAMModule_TopLevel|State_Buff[0][2]   ; regout           ;
+; |LogicRAMModule_TopLevel|State_Buff[1][1]   ; |LogicRAMModule_TopLevel|State_Buff[1][1]   ; regout           ;
+; |LogicRAMModule_TopLevel|State_Buff[0][1]   ; |LogicRAMModule_TopLevel|State_Buff[0][1]   ; regout           ;
+; |LogicRAMModule_TopLevel|State_Buff[3][3]   ; |LogicRAMModule_TopLevel|State_Buff[3][3]   ; regout           ;
+; |LogicRAMModule_TopLevel|State_Buff[2][3]   ; |LogicRAMModule_TopLevel|State_Buff[2][3]   ; regout           ;
+; |LogicRAMModule_TopLevel|State_Buff[3][2]   ; |LogicRAMModule_TopLevel|State_Buff[3][2]   ; regout           ;
+; |LogicRAMModule_TopLevel|State_Buff[2][2]   ; |LogicRAMModule_TopLevel|State_Buff[2][2]   ; regout           ;
+; |LogicRAMModule_TopLevel|State_Buff[3][1]   ; |LogicRAMModule_TopLevel|State_Buff[3][1]   ; regout           ;
+; |LogicRAMModule_TopLevel|State_Buff[2][1]   ; |LogicRAMModule_TopLevel|State_Buff[2][1]   ; regout           ;
+; |LogicRAMModule_TopLevel|State_Buff[1][4]   ; |LogicRAMModule_TopLevel|State_Buff[1][4]   ; regout           ;
+; |LogicRAMModule_TopLevel|State_Buff[0][4]   ; |LogicRAMModule_TopLevel|State_Buff[0][4]   ; regout           ;
+; |LogicRAMModule_TopLevel|State_Buff[3][4]   ; |LogicRAMModule_TopLevel|State_Buff[3][4]   ; regout           ;
+; |LogicRAMModule_TopLevel|State_Buff[2][4]   ; |LogicRAMModule_TopLevel|State_Buff[2][4]   ; regout           ;
+; |LogicRAMModule_TopLevel|State_Buff[1][5]   ; |LogicRAMModule_TopLevel|State_Buff[1][5]   ; regout           ;
+; |LogicRAMModule_TopLevel|State_Buff[0][5]   ; |LogicRAMModule_TopLevel|State_Buff[0][5]   ; regout           ;
+; |LogicRAMModule_TopLevel|State_Buff[3][5]   ; |LogicRAMModule_TopLevel|State_Buff[3][5]   ; regout           ;
+; |LogicRAMModule_TopLevel|State_Buff[2][5]   ; |LogicRAMModule_TopLevel|State_Buff[2][5]   ; regout           ;
+; |LogicRAMModule_TopLevel|State_Buff[1][6]   ; |LogicRAMModule_TopLevel|State_Buff[1][6]   ; regout           ;
+; |LogicRAMModule_TopLevel|State_Buff[0][6]   ; |LogicRAMModule_TopLevel|State_Buff[0][6]   ; regout           ;
+; |LogicRAMModule_TopLevel|State_Buff[3][6]   ; |LogicRAMModule_TopLevel|State_Buff[3][6]   ; regout           ;
+; |LogicRAMModule_TopLevel|State_Buff[2][6]   ; |LogicRAMModule_TopLevel|State_Buff[2][6]   ; regout           ;
+; |LogicRAMModule_TopLevel|State_Buff[1][7]   ; |LogicRAMModule_TopLevel|State_Buff[1][7]   ; regout           ;
+; |LogicRAMModule_TopLevel|State_Buff[0][7]   ; |LogicRAMModule_TopLevel|State_Buff[0][7]   ; regout           ;
+; |LogicRAMModule_TopLevel|State_Buff[3][7]   ; |LogicRAMModule_TopLevel|State_Buff[3][7]   ; regout           ;
+; |LogicRAMModule_TopLevel|State_Buff[2][7]   ; |LogicRAMModule_TopLevel|State_Buff[2][7]   ; regout           ;
+; |LogicRAMModule_TopLevel|State_Buff[1][8]   ; |LogicRAMModule_TopLevel|State_Buff[1][8]   ; regout           ;
+; |LogicRAMModule_TopLevel|State_Buff[0][8]   ; |LogicRAMModule_TopLevel|State_Buff[0][8]   ; regout           ;
+; |LogicRAMModule_TopLevel|State_Buff[3][8]   ; |LogicRAMModule_TopLevel|State_Buff[3][8]   ; regout           ;
+; |LogicRAMModule_TopLevel|State_Buff[2][8]   ; |LogicRAMModule_TopLevel|State_Buff[2][8]   ; regout           ;
+; |LogicRAMModule_TopLevel|State_Buff~0       ; |LogicRAMModule_TopLevel|State_Buff~0       ; combout          ;
+; |LogicRAMModule_TopLevel|State_Index[1]     ; |LogicRAMModule_TopLevel|State_Index[1]     ; regout           ;
+; |LogicRAMModule_TopLevel|State_Buff[1][2]~1 ; |LogicRAMModule_TopLevel|State_Buff[1][2]~1 ; combout          ;
+; |LogicRAMModule_TopLevel|State_Buff[0][1]~2 ; |LogicRAMModule_TopLevel|State_Buff[0][1]~2 ; combout          ;
+; |LogicRAMModule_TopLevel|State_Buff~3       ; |LogicRAMModule_TopLevel|State_Buff~3       ; combout          ;
+; |LogicRAMModule_TopLevel|State_Buff~4       ; |LogicRAMModule_TopLevel|State_Buff~4       ; combout          ;
+; |LogicRAMModule_TopLevel|State_Buff[3][7]~5 ; |LogicRAMModule_TopLevel|State_Buff[3][7]~5 ; combout          ;
+; |LogicRAMModule_TopLevel|State_Buff[2][2]~6 ; |LogicRAMModule_TopLevel|State_Buff[2][2]~6 ; combout          ;
+; |LogicRAMModule_TopLevel|State_Buff~7       ; |LogicRAMModule_TopLevel|State_Buff~7       ; combout          ;
+; |LogicRAMModule_TopLevel|State_Buff~8       ; |LogicRAMModule_TopLevel|State_Buff~8       ; combout          ;
+; |LogicRAMModule_TopLevel|State_Buff~9       ; |LogicRAMModule_TopLevel|State_Buff~9       ; combout          ;
+; |LogicRAMModule_TopLevel|State_Buff~10      ; |LogicRAMModule_TopLevel|State_Buff~10      ; combout          ;
+; |LogicRAMModule_TopLevel|State_Buff~11      ; |LogicRAMModule_TopLevel|State_Buff~11      ; combout          ;
+; |LogicRAMModule_TopLevel|State_Index~0      ; |LogicRAMModule_TopLevel|State_Index~0      ; combout          ;
+; |LogicRAMModule_TopLevel|Add0~0             ; |LogicRAMModule_TopLevel|Add0~0             ; combout          ;
+; |LogicRAMModule_TopLevel|Avg[0]             ; |LogicRAMModule_TopLevel|Avg[0]             ; padio            ;
+; |LogicRAMModule_TopLevel|Avg[1]             ; |LogicRAMModule_TopLevel|Avg[1]             ; padio            ;
+; |LogicRAMModule_TopLevel|Avg[2]             ; |LogicRAMModule_TopLevel|Avg[2]             ; padio            ;
+; |LogicRAMModule_TopLevel|Avg[3]             ; |LogicRAMModule_TopLevel|Avg[3]             ; padio            ;
+; |LogicRAMModule_TopLevel|Avg[4]             ; |LogicRAMModule_TopLevel|Avg[4]             ; padio            ;
+; |LogicRAMModule_TopLevel|Avg[5]             ; |LogicRAMModule_TopLevel|Avg[5]             ; padio            ;
+; |LogicRAMModule_TopLevel|Avg[6]             ; |LogicRAMModule_TopLevel|Avg[6]             ; padio            ;
+; |LogicRAMModule_TopLevel|Avg[7]             ; |LogicRAMModule_TopLevel|Avg[7]             ; padio            ;
+; |LogicRAMModule_TopLevel|Value[2]           ; |LogicRAMModule_TopLevel|Value[2]~corein    ; combout          ;
+; |LogicRAMModule_TopLevel|Reset              ; |LogicRAMModule_TopLevel|Reset~corein       ; combout          ;
+; |LogicRAMModule_TopLevel|Clock              ; |LogicRAMModule_TopLevel|Clock~corein       ; combout          ;
+; |LogicRAMModule_TopLevel|Value[1]           ; |LogicRAMModule_TopLevel|Value[1]~corein    ; combout          ;
+; |LogicRAMModule_TopLevel|Value[0]           ; |LogicRAMModule_TopLevel|Value[0]~corein    ; combout          ;
+; |LogicRAMModule_TopLevel|Value[3]           ; |LogicRAMModule_TopLevel|Value[3]~corein    ; combout          ;
+; |LogicRAMModule_TopLevel|Value[4]           ; |LogicRAMModule_TopLevel|Value[4]~corein    ; combout          ;
+; |LogicRAMModule_TopLevel|Value[5]           ; |LogicRAMModule_TopLevel|Value[5]~corein    ; combout          ;
+; |LogicRAMModule_TopLevel|Value[6]           ; |LogicRAMModule_TopLevel|Value[6]~corein    ; combout          ;
+; |LogicRAMModule_TopLevel|Value[7]           ; |LogicRAMModule_TopLevel|Value[7]~corein    ; combout          ;
+; |LogicRAMModule_TopLevel|Clock~clkctrl      ; |LogicRAMModule_TopLevel|Clock~clkctrl      ; outclk           ;
++---------------------------------------------+---------------------------------------------+------------------+
 
 
 The following table displays output ports that do not toggle to 1 during simulation.
-+--------------------------------------------------------------------------------------------------------+
-; Missing 1-Value Coverage                                                                               ;
-+------------------------------------------+------------------------------------------+------------------+
-; Node Name                                ; Output Port Name                         ; Output Port Type ;
-+------------------------------------------+------------------------------------------+------------------+
-; |BitArrayModule_TopLevel|Direct[0]       ; |BitArrayModule_TopLevel|Direct[0]       ; padio            ;
-; |BitArrayModule_TopLevel|Direct[1]       ; |BitArrayModule_TopLevel|Direct[1]       ; padio            ;
-; |BitArrayModule_TopLevel|Direct[2]       ; |BitArrayModule_TopLevel|Direct[2]       ; padio            ;
-; |BitArrayModule_TopLevel|Direct[3]       ; |BitArrayModule_TopLevel|Direct[3]       ; padio            ;
-; |BitArrayModule_TopLevel|Direct[4]       ; |BitArrayModule_TopLevel|Direct[4]       ; padio            ;
-; |BitArrayModule_TopLevel|Direct[5]       ; |BitArrayModule_TopLevel|Direct[5]       ; padio            ;
-; |BitArrayModule_TopLevel|Direct[6]       ; |BitArrayModule_TopLevel|Direct[6]       ; padio            ;
-; |BitArrayModule_TopLevel|Direct[7]       ; |BitArrayModule_TopLevel|Direct[7]       ; padio            ;
-; |BitArrayModule_TopLevel|High[0]         ; |BitArrayModule_TopLevel|High[0]         ; padio            ;
-; |BitArrayModule_TopLevel|High[1]         ; |BitArrayModule_TopLevel|High[1]         ; padio            ;
-; |BitArrayModule_TopLevel|High[2]         ; |BitArrayModule_TopLevel|High[2]         ; padio            ;
-; |BitArrayModule_TopLevel|High[3]         ; |BitArrayModule_TopLevel|High[3]         ; padio            ;
-; |BitArrayModule_TopLevel|Low[0]          ; |BitArrayModule_TopLevel|Low[0]          ; padio            ;
-; |BitArrayModule_TopLevel|Low[1]          ; |BitArrayModule_TopLevel|Low[1]          ; padio            ;
-; |BitArrayModule_TopLevel|Low[2]          ; |BitArrayModule_TopLevel|Low[2]          ; padio            ;
-; |BitArrayModule_TopLevel|Low[3]          ; |BitArrayModule_TopLevel|Low[3]          ; padio            ;
-; |BitArrayModule_TopLevel|Reversed[0]     ; |BitArrayModule_TopLevel|Reversed[0]     ; padio            ;
-; |BitArrayModule_TopLevel|Reversed[1]     ; |BitArrayModule_TopLevel|Reversed[1]     ; padio            ;
-; |BitArrayModule_TopLevel|Reversed[2]     ; |BitArrayModule_TopLevel|Reversed[2]     ; padio            ;
-; |BitArrayModule_TopLevel|Reversed[3]     ; |BitArrayModule_TopLevel|Reversed[3]     ; padio            ;
-; |BitArrayModule_TopLevel|Reversed[4]     ; |BitArrayModule_TopLevel|Reversed[4]     ; padio            ;
-; |BitArrayModule_TopLevel|Reversed[5]     ; |BitArrayModule_TopLevel|Reversed[5]     ; padio            ;
-; |BitArrayModule_TopLevel|Reversed[6]     ; |BitArrayModule_TopLevel|Reversed[6]     ; padio            ;
-; |BitArrayModule_TopLevel|Reversed[7]     ; |BitArrayModule_TopLevel|Reversed[7]     ; padio            ;
-; |BitArrayModule_TopLevel|ReversedHigh[0] ; |BitArrayModule_TopLevel|ReversedHigh[0] ; padio            ;
-; |BitArrayModule_TopLevel|ReversedHigh[1] ; |BitArrayModule_TopLevel|ReversedHigh[1] ; padio            ;
-; |BitArrayModule_TopLevel|ReversedHigh[2] ; |BitArrayModule_TopLevel|ReversedHigh[2] ; padio            ;
-; |BitArrayModule_TopLevel|ReversedHigh[3] ; |BitArrayModule_TopLevel|ReversedHigh[3] ; padio            ;
-; |BitArrayModule_TopLevel|ReversedLow[0]  ; |BitArrayModule_TopLevel|ReversedLow[0]  ; padio            ;
-; |BitArrayModule_TopLevel|ReversedLow[1]  ; |BitArrayModule_TopLevel|ReversedLow[1]  ; padio            ;
-; |BitArrayModule_TopLevel|ReversedLow[2]  ; |BitArrayModule_TopLevel|ReversedLow[2]  ; padio            ;
-; |BitArrayModule_TopLevel|ReversedLow[3]  ; |BitArrayModule_TopLevel|ReversedLow[3]  ; padio            ;
-; |BitArrayModule_TopLevel|Picks[0]        ; |BitArrayModule_TopLevel|Picks[0]        ; padio            ;
-; |BitArrayModule_TopLevel|Picks[1]        ; |BitArrayModule_TopLevel|Picks[1]        ; padio            ;
-; |BitArrayModule_TopLevel|Picks[2]        ; |BitArrayModule_TopLevel|Picks[2]        ; padio            ;
-; |BitArrayModule_TopLevel|Picks[3]        ; |BitArrayModule_TopLevel|Picks[3]        ; padio            ;
-; |BitArrayModule_TopLevel|Value[0]        ; |BitArrayModule_TopLevel|Value[0]~corein ; combout          ;
-; |BitArrayModule_TopLevel|Value[1]        ; |BitArrayModule_TopLevel|Value[1]~corein ; combout          ;
-; |BitArrayModule_TopLevel|Value[2]        ; |BitArrayModule_TopLevel|Value[2]~corein ; combout          ;
-; |BitArrayModule_TopLevel|Value[3]        ; |BitArrayModule_TopLevel|Value[3]~corein ; combout          ;
-; |BitArrayModule_TopLevel|Value[4]        ; |BitArrayModule_TopLevel|Value[4]~corein ; combout          ;
-; |BitArrayModule_TopLevel|Value[5]        ; |BitArrayModule_TopLevel|Value[5]~corein ; combout          ;
-; |BitArrayModule_TopLevel|Value[6]        ; |BitArrayModule_TopLevel|Value[6]~corein ; combout          ;
-; |BitArrayModule_TopLevel|Value[7]        ; |BitArrayModule_TopLevel|Value[7]~corein ; combout          ;
-+------------------------------------------+------------------------------------------+------------------+
++--------------------------------------------------------------------------------------+
+; Missing 1-Value Coverage                                                             ;
++---------------------------------+---------------------------------+------------------+
+; Node Name                       ; Output Port Name                ; Output Port Type ;
++---------------------------------+---------------------------------+------------------+
+; |LogicRAMModule_TopLevel|Add1~1 ; |LogicRAMModule_TopLevel|Add1~1 ; cout             ;
++---------------------------------+---------------------------------+------------------+
 
 
 The following table displays output ports that do not toggle to 0 during simulation.
-+--------------------------------------------------------------------------------------------------------+
-; Missing 0-Value Coverage                                                                               ;
-+------------------------------------------+------------------------------------------+------------------+
-; Node Name                                ; Output Port Name                         ; Output Port Type ;
-+------------------------------------------+------------------------------------------+------------------+
-; |BitArrayModule_TopLevel|Direct[0]       ; |BitArrayModule_TopLevel|Direct[0]       ; padio            ;
-; |BitArrayModule_TopLevel|Direct[1]       ; |BitArrayModule_TopLevel|Direct[1]       ; padio            ;
-; |BitArrayModule_TopLevel|Direct[2]       ; |BitArrayModule_TopLevel|Direct[2]       ; padio            ;
-; |BitArrayModule_TopLevel|Direct[3]       ; |BitArrayModule_TopLevel|Direct[3]       ; padio            ;
-; |BitArrayModule_TopLevel|Direct[4]       ; |BitArrayModule_TopLevel|Direct[4]       ; padio            ;
-; |BitArrayModule_TopLevel|Direct[5]       ; |BitArrayModule_TopLevel|Direct[5]       ; padio            ;
-; |BitArrayModule_TopLevel|Direct[6]       ; |BitArrayModule_TopLevel|Direct[6]       ; padio            ;
-; |BitArrayModule_TopLevel|Direct[7]       ; |BitArrayModule_TopLevel|Direct[7]       ; padio            ;
-; |BitArrayModule_TopLevel|High[0]         ; |BitArrayModule_TopLevel|High[0]         ; padio            ;
-; |BitArrayModule_TopLevel|High[1]         ; |BitArrayModule_TopLevel|High[1]         ; padio            ;
-; |BitArrayModule_TopLevel|High[2]         ; |BitArrayModule_TopLevel|High[2]         ; padio            ;
-; |BitArrayModule_TopLevel|High[3]         ; |BitArrayModule_TopLevel|High[3]         ; padio            ;
-; |BitArrayModule_TopLevel|Low[0]          ; |BitArrayModule_TopLevel|Low[0]          ; padio            ;
-; |BitArrayModule_TopLevel|Low[1]          ; |BitArrayModule_TopLevel|Low[1]          ; padio            ;
-; |BitArrayModule_TopLevel|Low[2]          ; |BitArrayModule_TopLevel|Low[2]          ; padio            ;
-; |BitArrayModule_TopLevel|Low[3]          ; |BitArrayModule_TopLevel|Low[3]          ; padio            ;
-; |BitArrayModule_TopLevel|Reversed[0]     ; |BitArrayModule_TopLevel|Reversed[0]     ; padio            ;
-; |BitArrayModule_TopLevel|Reversed[1]     ; |BitArrayModule_TopLevel|Reversed[1]     ; padio            ;
-; |BitArrayModule_TopLevel|Reversed[2]     ; |BitArrayModule_TopLevel|Reversed[2]     ; padio            ;
-; |BitArrayModule_TopLevel|Reversed[3]     ; |BitArrayModule_TopLevel|Reversed[3]     ; padio            ;
-; |BitArrayModule_TopLevel|Reversed[4]     ; |BitArrayModule_TopLevel|Reversed[4]     ; padio            ;
-; |BitArrayModule_TopLevel|Reversed[5]     ; |BitArrayModule_TopLevel|Reversed[5]     ; padio            ;
-; |BitArrayModule_TopLevel|Reversed[6]     ; |BitArrayModule_TopLevel|Reversed[6]     ; padio            ;
-; |BitArrayModule_TopLevel|Reversed[7]     ; |BitArrayModule_TopLevel|Reversed[7]     ; padio            ;
-; |BitArrayModule_TopLevel|ReversedHigh[0] ; |BitArrayModule_TopLevel|ReversedHigh[0] ; padio            ;
-; |BitArrayModule_TopLevel|ReversedHigh[1] ; |BitArrayModule_TopLevel|ReversedHigh[1] ; padio            ;
-; |BitArrayModule_TopLevel|ReversedHigh[2] ; |BitArrayModule_TopLevel|ReversedHigh[2] ; padio            ;
-; |BitArrayModule_TopLevel|ReversedHigh[3] ; |BitArrayModule_TopLevel|ReversedHigh[3] ; padio            ;
-; |BitArrayModule_TopLevel|ReversedLow[0]  ; |BitArrayModule_TopLevel|ReversedLow[0]  ; padio            ;
-; |BitArrayModule_TopLevel|ReversedLow[1]  ; |BitArrayModule_TopLevel|ReversedLow[1]  ; padio            ;
-; |BitArrayModule_TopLevel|ReversedLow[2]  ; |BitArrayModule_TopLevel|ReversedLow[2]  ; padio            ;
-; |BitArrayModule_TopLevel|ReversedLow[3]  ; |BitArrayModule_TopLevel|ReversedLow[3]  ; padio            ;
-; |BitArrayModule_TopLevel|Picks[0]        ; |BitArrayModule_TopLevel|Picks[0]        ; padio            ;
-; |BitArrayModule_TopLevel|Picks[1]        ; |BitArrayModule_TopLevel|Picks[1]        ; padio            ;
-; |BitArrayModule_TopLevel|Picks[2]        ; |BitArrayModule_TopLevel|Picks[2]        ; padio            ;
-; |BitArrayModule_TopLevel|Picks[3]        ; |BitArrayModule_TopLevel|Picks[3]        ; padio            ;
-; |BitArrayModule_TopLevel|Value[0]        ; |BitArrayModule_TopLevel|Value[0]~corein ; combout          ;
-; |BitArrayModule_TopLevel|Value[1]        ; |BitArrayModule_TopLevel|Value[1]~corein ; combout          ;
-; |BitArrayModule_TopLevel|Value[2]        ; |BitArrayModule_TopLevel|Value[2]~corein ; combout          ;
-; |BitArrayModule_TopLevel|Value[3]        ; |BitArrayModule_TopLevel|Value[3]~corein ; combout          ;
-; |BitArrayModule_TopLevel|Value[4]        ; |BitArrayModule_TopLevel|Value[4]~corein ; combout          ;
-; |BitArrayModule_TopLevel|Value[5]        ; |BitArrayModule_TopLevel|Value[5]~corein ; combout          ;
-; |BitArrayModule_TopLevel|Value[6]        ; |BitArrayModule_TopLevel|Value[6]~corein ; combout          ;
-; |BitArrayModule_TopLevel|Value[7]        ; |BitArrayModule_TopLevel|Value[7]~corein ; combout          ;
-+------------------------------------------+------------------------------------------+------------------+
++--------------------------------------------------------------------------------------+
+; Missing 0-Value Coverage                                                             ;
++---------------------------------+---------------------------------+------------------+
+; Node Name                       ; Output Port Name                ; Output Port Type ;
++---------------------------------+---------------------------------+------------------+
+; |LogicRAMModule_TopLevel|Add1~1 ; |LogicRAMModule_TopLevel|Add1~1 ; cout             ;
++---------------------------------+---------------------------------+------------------+
 
 
 +---------------------+
@@ -232,18 +264,21 @@ The following table displays output ports that do not toggle to 0 during simulat
 Info: *******************************************************************
 Info: Running Quartus II Simulator
     Info: Version 9.1 Build 350 03/24/2010 Service Pack 2 SJ Web Edition
-    Info: Processing started: Sun Apr 19 21:19:16 2020
+    Info: Processing started: Sat Apr 25 17:06:05 2020
 Info: Command: quartus_sim --read_settings_files=on --write_settings_files=off Verilog -c Verilog
-Info: Using vector source file "Waveforms/BitArray.vwf"
+Info: Using vector source file "Waveforms/LogicRAMModule.vwf"
+Info: Overwriting simulation input file with simulation results
+    Info: A backup of LogicRAMModule.vwf called Verilog.sim_ori.vwf has been created in the db folder
 Info: Option to preserve fewer signal transitions to reduce memory requirements is enabled
     Info: Simulation has been partitioned into sub-simulations according to the maximum transition count determined by the engine. Transitions from memory will be flushed out to disk at the end of each sub-simulation to reduce memory requirements.
 Info: Simulation partitioned into 1 sub-simulations
-Info: Simulation coverage is       0.00 %
-Info: Number of transitions in simulation is 0
+Info: Simulation coverage is      99.15 %
+Info: Number of transitions in simulation is 1047
+Info: Vector file LogicRAMModule.vwf is saved in VWF text format. You can compress it into CVWF format in order to reduce file size. For more details please refer to the Quartus II Help.
 Info: Quartus II Simulator was successful. 0 errors, 0 warnings
-    Info: Peak virtual memory: 164 megabytes
-    Info: Processing ended: Sun Apr 19 21:19:16 2020
+    Info: Peak virtual memory: 163 megabytes
+    Info: Processing ended: Sat Apr 25 17:06:05 2020
     Info: Elapsed time: 00:00:00
-    Info: Total CPU time (on all processors): 00:00:00
+    Info: Total CPU time (on all processors): 00:00:01
 
 

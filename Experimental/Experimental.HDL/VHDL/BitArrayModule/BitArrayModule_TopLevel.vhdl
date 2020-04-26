@@ -60,18 +60,6 @@ signal BitArrayModule_L20F37T74_Source : unsigned(4 downto 1)  := "0000";
 signal BitArrayModule_L20F53T62_Index : unsigned(2 downto 1)  := "00";
 signal BitArrayModule_L20F64T73_Index : unsigned(2 downto 1)  := "00";
 begin
--- Top-level entity connections
-process(BitArrayModule_TopLevel_Direct, BitArrayModule_TopLevel_High, BitArrayModule_TopLevel_Low, BitArrayModule_TopLevel_Picks, BitArrayModule_TopLevel_Reversed, BitArrayModule_TopLevel_ReversedHigh, BitArrayModule_TopLevel_ReversedLow, Value)
-begin
-	BitArrayModule_TopLevel_Value <= Value;
-Direct <= BitArrayModule_TopLevel_Direct;
-High <= BitArrayModule_TopLevel_High;
-Low <= BitArrayModule_TopLevel_Low;
-Reversed <= BitArrayModule_TopLevel_Reversed;
-ReversedHigh <= BitArrayModule_TopLevel_ReversedHigh;
-ReversedLow <= BitArrayModule_TopLevel_ReversedLow;
-Picks <= BitArrayModule_TopLevel_Picks;
-end process;
 process(BitArrayModule_L15F36T46_Index, BitArrayModule_L16F35T45_Index, BitArrayModule_L17F40T50_Index, BitArrayModule_L18F44T54_Index, BitArrayModule_L19F43T53_Index, BitArrayModule_L20F37T74_Source, BitArrayModule_L20F53T62_Index, BitArrayModule_L20F64T73_Index, Bits, Inputs_Value, Value)
 begin
 Inputs_Value <= unsigned(Value);

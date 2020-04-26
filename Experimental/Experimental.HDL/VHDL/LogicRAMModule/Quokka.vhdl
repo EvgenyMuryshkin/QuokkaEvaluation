@@ -22,8 +22,6 @@ package Quokka is
 		signal clk: in std_logic;
 		signal reset: in std_logic;
 		signal internalReset: in std_logic);
-		
-	function bit_to_integer( s : std_logic ) return integer;
 end package Quokka;
 
 -- package implementation
@@ -55,16 +53,6 @@ package body Quokka is
 		
 		bs.Starting <= bs.Running AND NOT bs.Started;
 	end procedure;
-	
-	function bit_to_integer( s : std_logic ) return integer is
-		begin
-			  if s = '1' then
-			  return 1;
-		   else
-			  return 0;
-		   end if;
-		end function;
-
 end package body Quokka;
 
 library ieee;

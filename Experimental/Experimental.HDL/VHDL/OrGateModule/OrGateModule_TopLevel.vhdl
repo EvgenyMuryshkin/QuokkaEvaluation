@@ -56,13 +56,6 @@ begin
 SimpleGates_L17F26T48_Expr <= SimpleGates_L17F26T48_Expr_1 OR SimpleGates_L17F26T48_Expr_2;
 
     end process;
--- Top-level entity connections
-process(I1, I2, OrGateModule_TopLevel_O)
-begin
-	OrGateModule_TopLevel_I1 <= I1;
-	OrGateModule_TopLevel_I2 <= I2;
-O <= OrGateModule_TopLevel_O;
-end process;
 process(I1, I2, Inputs_I1, Inputs_I2, SimpleGates_L17F26T48_Expr)
 begin
 SimpleGates_L17F26T48_Expr_1 <= Inputs_I1;

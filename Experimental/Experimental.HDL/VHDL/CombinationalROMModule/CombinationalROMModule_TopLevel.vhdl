@@ -310,14 +310,6 @@ constant buffArrayInit: buffArray:= (
 );
 signal buff : buffArray := buffArrayInit;
 begin
--- Top-level entity connections
-process(CombinationalROMModule_TopLevel_Value1, CombinationalROMModule_TopLevel_Value2, ReadAddress1, ReadAddress2)
-begin
-	CombinationalROMModule_TopLevel_ReadAddress1 <= ReadAddress1;
-	CombinationalROMModule_TopLevel_ReadAddress2 <= ReadAddress2;
-Value1 <= CombinationalROMModule_TopLevel_Value1;
-Value2 <= CombinationalROMModule_TopLevel_Value2;
-end process;
 process(buff, CombinationalROMModule_L22F31T56_Index, CombinationalROMModule_L23F31T56_Index, Inputs_ReadAddress1, Inputs_ReadAddress2, ReadAddress1, ReadAddress2)
 begin
 CombinationalROMModule_L22F31T56_Index <= buff(TO_INTEGER(UNSIGNED(Inputs_ReadAddress1)));

@@ -111,16 +111,6 @@ NextState_Data <= unsigned(EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_
 end if;
 end if;
 end process;
--- Top-level entity connections
-process(Ack, Clock, EmitterModule_TopLevel_Data, EmitterModule_TopLevel_HasData, IsEnabled, Reset)
-begin
-	EmitterModule_TopLevel_IsEnabled <= IsEnabled;
-	EmitterModule_TopLevel_Ack <= Ack;
-EmitterModule_TopLevel_Clock <= Clock;
-EmitterModule_TopLevel_Reset <= NOT Reset;
-Data <= EmitterModule_TopLevel_Data;
-HasData <= EmitterModule_TopLevel_HasData;
-end process;
 process(Ack, EmitterModule_L26F32T64_Expr, EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L40F49T63_Expr, IsEnabled, State_Data, State_FSM)
 begin
 EmitterModule_L29F9L44T10_EmitterModule_L32F17L35T27_CaseLhs <= (1 => State_FSM, others => '0');

@@ -33,8 +33,7 @@ IsValid : in  std_logic;
 Ack : in  std_logic;
 Bit : in  std_logic;
 HasData : out  std_logic;
-Data : out  unsigned(7 downto 0);
-PartialData : out  unsigned(7 downto 0)
+Data : out  unsigned(7 downto 0)
     );
 end entity;
 
@@ -49,6 +48,8 @@ constant Zero : std_logic := '0';
 constant One : std_logic := '1';
 constant true : std_logic := '1';
 constant false : std_logic := '0';
+constant ReceiverModule_L10F49T53_Expr : unsigned(8 downto 1)  := "10000000";
+constant ReceiverModule_L10F56T57_Expr : std_logic := '0';
 constant ReceiverModule_L13F9L41T10_ReceiverModule_L16F22T38_Expr : std_logic := '0';
 constant ReceiverModule_L13F9L41T10_ReceiverModule_L18F21L21T22_ReceiverModule_L20F41T62_Expr : std_logic := '1';
 constant ReceiverModule_L13F9L41T10_ReceiverModule_L23F22T43_Expr : std_logic := '1';
@@ -58,15 +59,14 @@ constant ReceiverModule_L13F9L41T10_ReceiverModule_L33F22T47_Expr : unsigned(2 d
 constant ReceiverModule_L13F9L41T10_ReceiverModule_L35F21L38T22_ReceiverModule_L36F41T57_Expr : std_logic := '0';
 constant ReceiverModule_L13F9L41T10_ReceiverModule_L35F21L38T22_ReceiverModule_L37F42T43_Expr : std_logic := '0';
 constant ReceiverModule_L8F46T71_Expr : unsigned(2 downto 1)  := "10";
-constant ReceiverModule_L10F56T60_Expr : unsigned(8 downto 1)  := "10000000";
-constant ReceiverModule_L10F63T64_Expr : std_logic := '0';
 signal Inputs_IsValid : std_logic := '0';
 signal Inputs_Ack : std_logic := '0';
 signal Inputs_Bit : std_logic := '0';
 signal NextState_FSM : unsigned(2 downto 1)  := "00";
 signal NextState_Data : unsigned(8 downto 1)  := "00000000";
+signal ReceiverModule_L10F29T58_Expr : unsigned(8 downto 1)  := "00000000";
+signal PartialData : unsigned(8 downto 1)  := "00000000";
 signal ReceiverModule_L13F9L41T10_ReceiverModule_L25F21L27T22_ReceiverModule_L26F42T81_Expr : unsigned(8 downto 1)  := "00000000";
-signal ReceiverModule_L10F36T65_Expr : unsigned(8 downto 1)  := "00000000";
 signal State_FSM : unsigned(2 downto 1)  := "00";
 constant State_FSMDefault : unsigned(2 downto 1)  := "00";
 signal State_Data : unsigned(8 downto 1)  := "00000000";
@@ -88,10 +88,10 @@ signal ReceiverModule_L13F9L41T10_ReceiverModule_L33F17L39T27_CaseRhs : signed(3
 signal ReceiverModule_L8F32T71_Expr : std_logic := '0';
 signal ReceiverModule_L8F32T71_ExprLhs : signed(3 downto 1)  := "000";
 signal ReceiverModule_L8F32T71_ExprRhs : signed(3 downto 1)  := "000";
-signal ReceiverModule_L10F43T64_Lookup : unsigned(8 downto 1)  := "00000000";
-signal ReceiverModule_L10F43T64_LookupMultiplexerAddress : std_logic := '0';
-signal ReceiverModule_L10F43T64_Lookup1 : unsigned(8 downto 1)  := "00000000";
-signal ReceiverModule_L10F43T64_Lookup2 : unsigned(8 downto 1)  := "00000000";
+signal ReceiverModule_L10F36T57_Lookup : unsigned(8 downto 1)  := "00000000";
+signal ReceiverModule_L10F36T57_LookupMultiplexerAddress : std_logic := '0';
+signal ReceiverModule_L10F36T57_Lookup1 : unsigned(8 downto 1)  := "00000000";
+signal ReceiverModule_L10F36T57_Lookup2 : unsigned(8 downto 1)  := "00000000";
 begin
 process (Clock, NextState_Data, NextState_FSM, Reset)
 begin
@@ -132,15 +132,15 @@ output(6) <= source0(7);
 output(7) <= source0(8);
 output(8) <= '0';
 end process;
-process(ReceiverModule_L10F43T64_Lookup1, ReceiverModule_L10F43T64_Lookup2, ReceiverModule_L10F43T64_LookupMultiplexerAddress)
+process(ReceiverModule_L10F36T57_Lookup1, ReceiverModule_L10F36T57_Lookup2, ReceiverModule_L10F36T57_LookupMultiplexerAddress)
 begin
-case ReceiverModule_L10F43T64_LookupMultiplexerAddress is
+case ReceiverModule_L10F36T57_LookupMultiplexerAddress is
   when '0' => 
-ReceiverModule_L10F43T64_Lookup <= ReceiverModule_L10F43T64_Lookup1;
+ReceiverModule_L10F36T57_Lookup <= ReceiverModule_L10F36T57_Lookup1;
   when '1' => 
-ReceiverModule_L10F43T64_Lookup <= ReceiverModule_L10F43T64_Lookup2;
+ReceiverModule_L10F36T57_Lookup <= ReceiverModule_L10F36T57_Lookup2;
   when others => 
-ReceiverModule_L10F43T64_Lookup <= "00000000";
+ReceiverModule_L10F36T57_Lookup <= "00000000";
 end case;
 
 end process;
@@ -166,21 +166,9 @@ NextState_Data <= (1 => ReceiverModule_L13F9L41T10_ReceiverModule_L35F21L38T22_R
 end if;
 end if;
 end process;
--- Top-level entity connections
-process(Ack, Bit, Clock, IsValid, ReceiverModule_TopLevel_Data, ReceiverModule_TopLevel_HasData, ReceiverModule_TopLevel_PartialData, Reset)
+process(Ack, Bit, Inputs_Bit, IsValid, PartialData, ReceiverModule_L10F29T58_Expr, ReceiverModule_L10F36T57_Lookup, ReceiverModule_L13F9L41T10_ReceiverModule_L25F21L27T22_ReceiverModule_L26F49T80_Expr, ReceiverModule_L13F9L41T10_ReceiverModule_L25F21L27T22_ReceiverModule_L26F50T65_Expr, ReceiverModule_L8F32T71_Expr, State_Data, State_FSM)
 begin
-	ReceiverModule_TopLevel_IsValid <= IsValid;
-	ReceiverModule_TopLevel_Ack <= Ack;
-	ReceiverModule_TopLevel_Bit <= Bit;
-ReceiverModule_TopLevel_Clock <= Clock;
-ReceiverModule_TopLevel_Reset <= NOT Reset;
-HasData <= ReceiverModule_TopLevel_HasData;
-Data <= ReceiverModule_TopLevel_Data;
-PartialData <= ReceiverModule_TopLevel_PartialData;
-end process;
-process(Ack, Bit, Inputs_Bit, IsValid, PartialData, ReceiverModule_L10F36T65_Expr, ReceiverModule_L10F43T64_Lookup, ReceiverModule_L13F9L41T10_ReceiverModule_L25F21L27T22_ReceiverModule_L26F49T80_Expr, ReceiverModule_L13F9L41T10_ReceiverModule_L25F21L27T22_ReceiverModule_L26F50T65_Expr, ReceiverModule_L8F32T71_Expr, State_Data, State_FSM)
-begin
-ReceiverModule_L10F43T64_LookupMultiplexerAddress <= Inputs_Bit;
+ReceiverModule_L10F36T57_LookupMultiplexerAddress <= Inputs_Bit;
 ReceiverModule_L13F9L41T10_ReceiverModule_L16F17L22T27_CaseLhs <= signed(resize(State_FSM, ReceiverModule_L13F9L41T10_ReceiverModule_L16F17L22T27_CaseLhs'length));
 ReceiverModule_L13F9L41T10_ReceiverModule_L16F17L22T27_CaseRhs <= (1 => ReceiverModule_L13F9L41T10_ReceiverModule_L16F22T38_Expr, others => '0');
 ReceiverModule_L13F9L41T10_ReceiverModule_L23F17L32T27_CaseLhs <= signed(resize(State_FSM, ReceiverModule_L13F9L41T10_ReceiverModule_L23F17L32T27_CaseLhs'length));
@@ -195,13 +183,13 @@ ReceiverModule_L13F9L41T10_ReceiverModule_L25F21L27T22_ReceiverModule_L26F50T65_
 Inputs_IsValid <= IsValid;
 Inputs_Ack <= Ack;
 Inputs_Bit <= Bit;
+ReceiverModule_L10F29T58_Expr <= unsigned(ReceiverModule_L10F36T57_Lookup);
+PartialData <= unsigned(ReceiverModule_L10F29T58_Expr);
 ReceiverModule_L13F9L41T10_ReceiverModule_L25F21L27T22_ReceiverModule_L26F42T81_Expr <= unsigned(ReceiverModule_L13F9L41T10_ReceiverModule_L25F21L27T22_ReceiverModule_L26F49T80_Expr);
 HasData <= ReceiverModule_L8F32T71_Expr;
 Data <= unsigned(State_Data);
-ReceiverModule_L10F36T65_Expr <= unsigned(ReceiverModule_L10F43T64_Lookup);
-PartialData <= unsigned(ReceiverModule_L10F36T65_Expr);
-ReceiverModule_L10F43T64_Lookup1 <= (1 => ReceiverModule_L10F63T64_Expr, others => '0');
-ReceiverModule_L10F43T64_Lookup2 <= unsigned(ReceiverModule_L10F56T60_Expr);
+ReceiverModule_L10F36T57_Lookup1 <= (1 => ReceiverModule_L10F56T57_Expr, others => '0');
+ReceiverModule_L10F36T57_Lookup2 <= unsigned(ReceiverModule_L10F49T53_Expr);
 end process;
 -- [BEGIN USER ARCHITECTURE]
 -- [END USER ARCHITECTURE]

@@ -285,3 +285,5 @@ __pycache__/
 /VHDL/db/*
 /Experimental/Experimental.Tests/SimResults/*
 /Experimental/Experimental.HDL/db
+*.v.bak
+*.vhdl.bak

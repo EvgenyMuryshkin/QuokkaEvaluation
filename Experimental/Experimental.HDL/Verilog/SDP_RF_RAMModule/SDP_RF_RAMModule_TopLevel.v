@@ -54,11 +54,12 @@ end
 // inferred simple dual port RAM with read-first behaviour
 always @ (posedge Clock)
 begin
-	if (Inputs_WE) 
+	if (Inputs_WE)
 		State_Buff[Inputs_WriteAddress] <= Inputs_WriteData;
-		
+
 	State_ReadData <= State_Buff[Inputs_ReadAddress];
 end
+
 assign Inputs_ReadAddress = ReadAddress/*cast*/;
 assign Inputs_WriteAddress = WriteAddress/*cast*/;
 assign Inputs_WriteData = WriteData/*cast*/;
