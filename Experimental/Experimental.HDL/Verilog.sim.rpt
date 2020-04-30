@@ -1,5 +1,5 @@
 Simulator report for Verilog
-Sat Apr 25 17:06:05 2020
+Thu Apr 30 21:23:16 2020
 Quartus II Version 9.1 Build 350 03/24/2010 Service Pack 2 SJ Web Edition
 
 
@@ -264,8 +264,21 @@ The following table displays output ports that do not toggle to 0 during simulat
 Info: *******************************************************************
 Info: Running Quartus II Simulator
     Info: Version 9.1 Build 350 03/24/2010 Service Pack 2 SJ Web Edition
-    Info: Processing started: Sat Apr 25 17:06:05 2020
-Info: Command: quartus_sim --read_settings_files=on --write_settings_files=off Verilog -c Verilog
+    Info: Copyright (C) 1991-2010 Altera Corporation. All rights reserved.
+    Info: Your use of Altera Corporation's design tools, logic functions 
+    Info: and other software and tools, and its AMPP partner logic 
+    Info: functions, and any output files from any of the foregoing 
+    Info: (including device programming or simulation files), and any 
+    Info: associated documentation or information are expressly subject 
+    Info: to the terms and conditions of the Altera Program License 
+    Info: Subscription Agreement, Altera MegaCore Function License 
+    Info: Agreement, or other applicable license agreement, including, 
+    Info: without limitation, that your use is for the sole purpose of 
+    Info: programming logic devices manufactured by Altera and sold by 
+    Info: Altera or its authorized distributors.  Please refer to the 
+    Info: applicable agreement for further details.
+    Info: Processing started: Thu Apr 30 21:23:16 2020
+Info: Command: quartus_sim C:\code\QuokkaEvaluation\Experimental\Experimental.HDL\Verilog.qpf --read_settings_files=on --write_settings_files=off -c Verilog
 Info: Using vector source file "Waveforms/LogicRAMModule.vwf"
 Info: Overwriting simulation input file with simulation results
     Info: A backup of LogicRAMModule.vwf called Verilog.sim_ori.vwf has been created in the db folder
@@ -277,7 +290,7 @@ Info: Number of transitions in simulation is 1047
 Info: Vector file LogicRAMModule.vwf is saved in VWF text format. You can compress it into CVWF format in order to reduce file size. For more details please refer to the Quartus II Help.
 Info: Quartus II Simulator was successful. 0 errors, 0 warnings
     Info: Peak virtual memory: 163 megabytes
-    Info: Processing ended: Sat Apr 25 17:06:05 2020
+    Info: Processing ended: Thu Apr 30 21:23:16 2020
     Info: Elapsed time: 00:00:00
     Info: Total CPU time (on all processors): 00:00:01
 

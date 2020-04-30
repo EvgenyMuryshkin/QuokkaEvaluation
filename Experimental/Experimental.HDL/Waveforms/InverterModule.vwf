@@ -25,14 +25,14 @@ HEADER
 	VERSION = 1;
 	TIME_UNIT = ns;
 	DATA_OFFSET = 0.0;
-	DATA_DURATION = 1000.0;
-	SIMULATION_TIME = 0.0;
+	DATA_DURATION = 10000.0;
+	SIMULATION_TIME = 10000.0;
 	GRID_PHASE = 0.0;
 	GRID_PERIOD = 10.0;
 	GRID_DUTY_CYCLE = 50;
 }
 
-SIGNAL("InverterModuleInput")
+SIGNAL("Input")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
@@ -42,7 +42,7 @@ SIGNAL("InverterModuleInput")
 	PARENT = "";
 }
 
-SIGNAL("InverterModuleOutput")
+SIGNAL("Output")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
@@ -52,31 +52,31 @@ SIGNAL("InverterModuleOutput")
 	PARENT = "";
 }
 
-TRANSITION_LIST("InverterModuleInput")
+TRANSITION_LIST("Input")
 {
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL 0 FOR 50.0;
-		LEVEL 1 FOR 50.0;
-		LEVEL 0 FOR 130.0;
-		LEVEL 1 FOR 40.0;
-		LEVEL 0 FOR 730.0;
+		LEVEL 0 FOR 960.0;
+		LEVEL 1 FOR 960.0;
+		LEVEL 0 FOR 8080.0;
 	}
 }
 
-TRANSITION_LIST("InverterModuleOutput")
+TRANSITION_LIST("Output")
 {
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL X FOR 1000.0;
+		LEVEL 1 FOR 967.91;
+		LEVEL 0 FOR 960.0;
+		LEVEL 1 FOR 8072.09;
 	}
 }
 
 DISPLAY_LINE
 {
-	CHANNEL = "InverterModuleInput";
+	CHANNEL = "Input";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 0;
@@ -85,7 +85,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "InverterModuleOutput";
+	CHANNEL = "Output";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Hexadecimal;
 	TREE_INDEX = 1;
@@ -94,7 +94,7 @@ DISPLAY_LINE
 
 TIME_BAR
 {
-	TIME = 12400;
+	TIME = 14325;
 	MASTER = TRUE;
 }
 ;

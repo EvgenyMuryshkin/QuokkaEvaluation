@@ -57,9 +57,10 @@ set_global_assignment -name VERILOG_FILE Verilog/CompositionModule/CompositionMo
 set_global_assignment -name VERILOG_FILE Verilog/CompositionModule/CompositionModule_TopLevel_CompositionModule_Transmitter.v
 set_global_assignment -name VERILOG_FILE Verilog/EmitterModule/EmitterModule_TopLevel.v
 set_global_assignment -name VERILOG_FILE Verilog/CounterModule/CounterModule_TopLevel.v
+set_global_assignment -name VERILOG_FILE Verilog/InverterModule/InverterModule_TopLevel.v
 set_global_assignment -name VERILOG_FILE Quokka.v
 set_global_assignment -name VERILOG_FILE Verilog/FullAdderModule/FullAdderModule_TopLevel.v
-set_global_assignment -name VECTOR_WAVEFORM_FILE Waveforms/InverterMobule.vwf
+set_global_assignment -name VECTOR_WAVEFORM_FILE Waveforms/InverterModule.vwf
 set_global_assignment -name VECTOR_WAVEFORM_FILE Waveforms/FullAdder.vwf
 set_global_assignment -name VECTOR_WAVEFORM_FILE Waveforms/Counter.vwf
 set_global_assignment -name VECTOR_WAVEFORM_FILE Waveforms/Emitter.vwf
