@@ -45,19 +45,20 @@ constant Zero : std_logic := '0';
 constant One : std_logic := '1';
 constant true : std_logic := '1';
 constant false : std_logic := '0';
-constant CounterModule_L20F9L22T10_CounterModule_L21F69T70_Expr : std_logic := '1';
+constant CounterModule_L19F65T66_Expr : std_logic := '1';
 signal Inputs_Enabled : std_logic := '0';
 signal NextState_Value : unsigned(8 downto 1)  := "00000000";
-signal CounterModule_L20F9L22T10_CounterModule_L21F31T85_Expr : unsigned(8 downto 1)  := "00000000";
+signal CounterModule_L19F27T81_Expr : unsigned(8 downto 1)  := "00000000";
+signal NextValue : unsigned(8 downto 1)  := "00000000";
 signal State_Value : unsigned(8 downto 1)  := "00000000";
 constant State_ValueDefault : unsigned(8 downto 1)  := "00000000";
-signal CounterModule_L20F9L22T10_CounterModule_L21F55T70_Expr : unsigned(10 downto 1)  := "0000000000";
-signal CounterModule_L20F9L22T10_CounterModule_L21F55T70_Expr_1 : signed(10 downto 1)  := "0000000000";
-signal CounterModule_L20F9L22T10_CounterModule_L21F55T70_Expr_2 : signed(10 downto 1)  := "0000000000";
-signal CounterModule_L20F9L22T10_CounterModule_L21F38T84_Lookup : unsigned(8 downto 1)  := "00000000";
-signal CounterModule_L20F9L22T10_CounterModule_L21F38T84_LookupMultiplexerAddress : std_logic := '0';
-signal CounterModule_L20F9L22T10_CounterModule_L21F38T84_Lookup1 : unsigned(8 downto 1)  := "00000000";
-signal CounterModule_L20F9L22T10_CounterModule_L21F38T84_Lookup2 : unsigned(8 downto 1)  := "00000000";
+signal CounterModule_L19F51T66_Expr : unsigned(10 downto 1)  := "0000000000";
+signal CounterModule_L19F51T66_Expr_1 : signed(10 downto 1)  := "0000000000";
+signal CounterModule_L19F51T66_Expr_2 : signed(10 downto 1)  := "0000000000";
+signal CounterModule_L19F34T80_Lookup : unsigned(8 downto 1)  := "00000000";
+signal CounterModule_L19F34T80_LookupMultiplexerAddress : std_logic := '0';
+signal CounterModule_L19F34T80_Lookup1 : unsigned(8 downto 1)  := "00000000";
+signal CounterModule_L19F34T80_Lookup2 : unsigned(8 downto 1)  := "00000000";
 begin
 process (Clock, NextState_Value, Reset)
 begin
@@ -70,38 +71,39 @@ end if;
 end if;
 end process;
 
-process(CounterModule_L20F9L22T10_CounterModule_L21F55T70_Expr_1, CounterModule_L20F9L22T10_CounterModule_L21F55T70_Expr_2)
+process(CounterModule_L19F51T66_Expr_1, CounterModule_L19F51T66_Expr_2)
 begin
-    CounterModule_L20F9L22T10_CounterModule_L21F55T70_Expr <= resize(unsigned(signed(resize(CounterModule_L20F9L22T10_CounterModule_L21F55T70_Expr_1, CounterModule_L20F9L22T10_CounterModule_L21F55T70_Expr_1'length + 1)) + signed(resize(CounterModule_L20F9L22T10_CounterModule_L21F55T70_Expr_2, CounterModule_L20F9L22T10_CounterModule_L21F55T70_Expr_2'length + 1))), CounterModule_L20F9L22T10_CounterModule_L21F55T70_Expr'length);
+    CounterModule_L19F51T66_Expr <= resize(unsigned(signed(resize(CounterModule_L19F51T66_Expr_1, CounterModule_L19F51T66_Expr_1'length + 1)) + signed(resize(CounterModule_L19F51T66_Expr_2, CounterModule_L19F51T66_Expr_2'length + 1))), CounterModule_L19F51T66_Expr'length);
 
 end process;
-process(CounterModule_L20F9L22T10_CounterModule_L21F38T84_Lookup1, CounterModule_L20F9L22T10_CounterModule_L21F38T84_Lookup2, CounterModule_L20F9L22T10_CounterModule_L21F38T84_LookupMultiplexerAddress)
+process(CounterModule_L19F34T80_Lookup1, CounterModule_L19F34T80_Lookup2, CounterModule_L19F34T80_LookupMultiplexerAddress)
 begin
-case CounterModule_L20F9L22T10_CounterModule_L21F38T84_LookupMultiplexerAddress is
+case CounterModule_L19F34T80_LookupMultiplexerAddress is
   when '0' => 
-CounterModule_L20F9L22T10_CounterModule_L21F38T84_Lookup <= CounterModule_L20F9L22T10_CounterModule_L21F38T84_Lookup1;
+CounterModule_L19F34T80_Lookup <= CounterModule_L19F34T80_Lookup1;
   when '1' => 
-CounterModule_L20F9L22T10_CounterModule_L21F38T84_Lookup <= CounterModule_L20F9L22T10_CounterModule_L21F38T84_Lookup2;
+CounterModule_L19F34T80_Lookup <= CounterModule_L19F34T80_Lookup2;
   when others => 
-CounterModule_L20F9L22T10_CounterModule_L21F38T84_Lookup <= "00000000";
+CounterModule_L19F34T80_Lookup <= "00000000";
 end case;
 
 end process;
-process(CounterModule_L20F9L22T10_CounterModule_L21F31T85_Expr, State_Value)
+process(NextValue, State_Value)
 begin
 NextState_Value <= unsigned(State_Value);
-NextState_Value <= unsigned(CounterModule_L20F9L22T10_CounterModule_L21F31T85_Expr);
+NextState_Value <= unsigned(NextValue);
 end process;
-process(CounterModule_L20F9L22T10_CounterModule_L21F38T84_Lookup, CounterModule_L20F9L22T10_CounterModule_L21F55T70_Expr, Enabled, Inputs_Enabled, State_Value)
+process(CounterModule_L19F27T81_Expr, CounterModule_L19F34T80_Lookup, CounterModule_L19F51T66_Expr, Enabled, Inputs_Enabled, State_Value)
 begin
-CounterModule_L20F9L22T10_CounterModule_L21F38T84_LookupMultiplexerAddress <= Inputs_Enabled;
-CounterModule_L20F9L22T10_CounterModule_L21F55T70_Expr_1 <= signed(resize(State_Value, CounterModule_L20F9L22T10_CounterModule_L21F55T70_Expr_1'length));
-CounterModule_L20F9L22T10_CounterModule_L21F55T70_Expr_2 <= (1 => CounterModule_L20F9L22T10_CounterModule_L21F69T70_Expr, others => '0');
+CounterModule_L19F34T80_LookupMultiplexerAddress <= Inputs_Enabled;
+CounterModule_L19F51T66_Expr_1 <= signed(resize(State_Value, CounterModule_L19F51T66_Expr_1'length));
+CounterModule_L19F51T66_Expr_2 <= (1 => CounterModule_L19F65T66_Expr, others => '0');
 Inputs_Enabled <= Enabled;
-CounterModule_L20F9L22T10_CounterModule_L21F31T85_Expr <= unsigned(CounterModule_L20F9L22T10_CounterModule_L21F38T84_Lookup);
+CounterModule_L19F27T81_Expr <= unsigned(CounterModule_L19F34T80_Lookup);
+NextValue <= unsigned(CounterModule_L19F27T81_Expr);
 Value <= unsigned(State_Value);
-CounterModule_L20F9L22T10_CounterModule_L21F38T84_Lookup1 <= unsigned(State_Value);
-CounterModule_L20F9L22T10_CounterModule_L21F38T84_Lookup2 <= unsigned(CounterModule_L20F9L22T10_CounterModule_L21F55T70_Expr(8 downto 1));
+CounterModule_L19F34T80_Lookup1 <= unsigned(State_Value);
+CounterModule_L19F34T80_Lookup2 <= unsigned(CounterModule_L19F51T66_Expr(8 downto 1));
 end process;
 -- [BEGIN USER ARCHITECTURE]
 -- [END USER ARCHITECTURE]

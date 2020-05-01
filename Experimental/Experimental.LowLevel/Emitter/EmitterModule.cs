@@ -2,12 +2,6 @@
 
 namespace QuokkaTests.Experimental
 {
-    public enum EmitterFSM
-    {
-        Emitting,
-        WaitingForAck,
-    }
-
     public class EmitterInputs
     {
         public bool IsEnabled = false;
@@ -16,31 +10,18 @@ namespace QuokkaTests.Experimental
 
     public class EmitterState
     {
-        public EmitterFSM FSM = EmitterFSM.Emitting;
         public byte Data = byte.MinValue;
     }
 
     public class EmitterModule : RTLSynchronousModule<EmitterInputs, EmitterState>
     {
         public byte Data => State.Data;
-        public bool HasData => State.FSM == EmitterFSM.Emitting;
+        public bool HasData => Inputs.IsEnabled;
         
         protected override void OnStage()
         {
-            switch(State.FSM)
-            {
-                case EmitterFSM.Emitting:
-                    if (Inputs.IsEnabled)
-                        NextState.FSM = EmitterFSM.WaitingForAck;
-                    break;
-                case EmitterFSM.WaitingForAck:
-                    if (Inputs.Ack)
-                    {
-                        NextState.FSM = EmitterFSM.Emitting;
-                        NextState.Data = (byte)(State.Data + 1);
-                    }
-                    break;
-            }
+            if (Inputs.IsEnabled && Inputs.Ack)
+                NextState.Data = (byte)(State.Data + 1);
         }
     }
 }

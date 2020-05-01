@@ -36,19 +36,20 @@ wire  Zero = 1'b0;
 wire  One = 1'b1;
 wire  true = 1'b1;
 wire  false = 1'b0;
-wire  CounterModule_L20F9L22T10_CounterModule_L21F69T70_Expr = 1'b1;
+wire  CounterModule_L19F65T66_Expr = 1'b1;
 wire  Inputs_Enabled;
 reg  [8:1] NextState_Value = 8'b00000000;
-wire  [8:1] CounterModule_L20F9L22T10_CounterModule_L21F31T85_Expr;
+wire  [8:1] CounterModule_L19F27T81_Expr;
+wire  [8:1] NextValue;
 reg  [8:1] State_Value = 8'b00000000;
 wire  [8:1] State_ValueDefault = 8'b00000000;
-wire  [10:1] CounterModule_L20F9L22T10_CounterModule_L21F55T70_Expr;
-wire signed  [10:1] CounterModule_L20F9L22T10_CounterModule_L21F55T70_Expr_1;
-wire signed  [10:1] CounterModule_L20F9L22T10_CounterModule_L21F55T70_Expr_2;
-reg  [8:1] CounterModule_L20F9L22T10_CounterModule_L21F38T84_Lookup = 8'b00000000;
-wire  CounterModule_L20F9L22T10_CounterModule_L21F38T84_LookupMultiplexerAddress;
-wire  [8:1] CounterModule_L20F9L22T10_CounterModule_L21F38T84_Lookup1;
-wire  [8:1] CounterModule_L20F9L22T10_CounterModule_L21F38T84_Lookup2;
+wire  [10:1] CounterModule_L19F51T66_Expr;
+wire signed  [10:1] CounterModule_L19F51T66_Expr_1;
+wire signed  [10:1] CounterModule_L19F51T66_Expr_2;
+reg  [8:1] CounterModule_L19F34T80_Lookup = 8'b00000000;
+wire  CounterModule_L19F34T80_LookupMultiplexerAddress;
+wire  [8:1] CounterModule_L19F34T80_Lookup1;
+wire  [8:1] CounterModule_L19F34T80_Lookup2;
 always @(posedge Clock)
 begin
 if ( Reset == 1 ) begin
@@ -58,33 +59,34 @@ else begin
 State_Value <= NextState_Value;
 end
 end
-assign CounterModule_L20F9L22T10_CounterModule_L21F55T70_Expr = CounterModule_L20F9L22T10_CounterModule_L21F55T70_Expr_1 + CounterModule_L20F9L22T10_CounterModule_L21F55T70_Expr_2;
+assign CounterModule_L19F51T66_Expr = CounterModule_L19F51T66_Expr_1 + CounterModule_L19F51T66_Expr_2;
 always @*
 begin
-case (CounterModule_L20F9L22T10_CounterModule_L21F38T84_LookupMultiplexerAddress)
+case (CounterModule_L19F34T80_LookupMultiplexerAddress)
     'b0:
-CounterModule_L20F9L22T10_CounterModule_L21F38T84_Lookup = CounterModule_L20F9L22T10_CounterModule_L21F38T84_Lookup1;
+CounterModule_L19F34T80_Lookup = CounterModule_L19F34T80_Lookup1;
     'b1:
-CounterModule_L20F9L22T10_CounterModule_L21F38T84_Lookup = CounterModule_L20F9L22T10_CounterModule_L21F38T84_Lookup2;
+CounterModule_L19F34T80_Lookup = CounterModule_L19F34T80_Lookup2;
   default:
-CounterModule_L20F9L22T10_CounterModule_L21F38T84_Lookup = 'b00000000;
+CounterModule_L19F34T80_Lookup = 'b00000000;
 endcase
 
 end
 always @*
 begin
 NextState_Value = State_Value/*cast*/;
-NextState_Value = CounterModule_L20F9L22T10_CounterModule_L21F31T85_Expr/*cast*/;
+NextState_Value = NextValue/*cast*/;
 
 end
-assign CounterModule_L20F9L22T10_CounterModule_L21F38T84_LookupMultiplexerAddress = Inputs_Enabled;
-assign CounterModule_L20F9L22T10_CounterModule_L21F55T70_Expr_1 = { {2{1'b0}}, State_Value }/*expand*/;
-assign CounterModule_L20F9L22T10_CounterModule_L21F55T70_Expr_2 = { {9{1'b0}}, CounterModule_L20F9L22T10_CounterModule_L21F69T70_Expr }/*expand*/;
+assign CounterModule_L19F34T80_LookupMultiplexerAddress = Inputs_Enabled;
+assign CounterModule_L19F51T66_Expr_1 = { {2{1'b0}}, State_Value }/*expand*/;
+assign CounterModule_L19F51T66_Expr_2 = { {9{1'b0}}, CounterModule_L19F65T66_Expr }/*expand*/;
 assign Inputs_Enabled = Enabled;
-assign CounterModule_L20F9L22T10_CounterModule_L21F31T85_Expr = CounterModule_L20F9L22T10_CounterModule_L21F38T84_Lookup/*cast*/;
+assign CounterModule_L19F27T81_Expr = CounterModule_L19F34T80_Lookup/*cast*/;
+assign NextValue = CounterModule_L19F27T81_Expr/*cast*/;
 assign Value = State_Value/*cast*/;
-assign CounterModule_L20F9L22T10_CounterModule_L21F38T84_Lookup1 = State_Value/*cast*/;
-assign CounterModule_L20F9L22T10_CounterModule_L21F38T84_Lookup2 = CounterModule_L20F9L22T10_CounterModule_L21F55T70_Expr[8:1]/*truncate*/;
+assign CounterModule_L19F34T80_Lookup1 = State_Value/*cast*/;
+assign CounterModule_L19F34T80_Lookup2 = CounterModule_L19F51T66_Expr[8:1]/*truncate*/;
 // [BEGIN USER ARCHITECTURE]
 // [END USER ARCHITECTURE]
 endmodule

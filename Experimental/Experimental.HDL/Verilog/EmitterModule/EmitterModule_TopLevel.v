@@ -38,78 +38,47 @@ wire  Zero = 1'b0;
 wire  One = 1'b1;
 wire  true = 1'b1;
 wire  false = 1'b0;
-wire  EmitterModule_L29F9L44T10_EmitterModule_L32F22T41_Expr = 1'b0;
-wire  EmitterModule_L29F9L44T10_EmitterModule_L34F41T65_Expr = 1'b1;
-wire  EmitterModule_L29F9L44T10_EmitterModule_L36F22T46_Expr = 1'b1;
-wire  EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L39F41T60_Expr = 1'b0;
-wire  EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L40F62T63_Expr = 1'b1;
-wire  EmitterModule_L26F45T64_Expr = 1'b0;
+wire  EmitterModule_L22F9L25T10_EmitterModule_L24F54T55_Expr = 1'b1;
 wire  Inputs_IsEnabled;
 wire  Inputs_Ack;
-reg  NextState_FSM = 1'b0;
 reg  [8:1] NextState_Data = 8'b00000000;
-wire  [8:1] EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L40F42T64_Expr;
-reg  State_FSM = 1'b0;
-wire  State_FSMDefault = 1'b0;
+wire  [8:1] EmitterModule_L22F9L25T10_EmitterModule_L24F34T56_Expr;
 reg  [8:1] State_Data = 8'b00000000;
 wire  [8:1] State_DataDefault = 8'b00000000;
-wire  [10:1] EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L40F49T63_Expr;
-wire signed  [10:1] EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L40F49T63_Expr_1;
-wire signed  [10:1] EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L40F49T63_Expr_2;
-wire  EmitterModule_L29F9L44T10_EmitterModule_L32F17L35T27_Case;
-wire signed  [2:1] EmitterModule_L29F9L44T10_EmitterModule_L32F17L35T27_CaseLhs;
-wire signed  [2:1] EmitterModule_L29F9L44T10_EmitterModule_L32F17L35T27_CaseRhs;
-wire  EmitterModule_L29F9L44T10_EmitterModule_L36F17L42T27_Case;
-wire signed  [2:1] EmitterModule_L29F9L44T10_EmitterModule_L36F17L42T27_CaseLhs;
-wire signed  [2:1] EmitterModule_L29F9L44T10_EmitterModule_L36F17L42T27_CaseRhs;
-wire  EmitterModule_L26F32T64_Expr;
-wire signed  [2:1] EmitterModule_L26F32T64_ExprLhs;
-wire signed  [2:1] EmitterModule_L26F32T64_ExprRhs;
+wire  EmitterModule_L22F9L25T10_EmitterModule_L23F17T47_Expr;
+wire  EmitterModule_L22F9L25T10_EmitterModule_L23F17T47_Expr_1;
+wire  EmitterModule_L22F9L25T10_EmitterModule_L23F17T47_Expr_2;
+wire  [10:1] EmitterModule_L22F9L25T10_EmitterModule_L24F41T55_Expr;
+wire signed  [10:1] EmitterModule_L22F9L25T10_EmitterModule_L24F41T55_Expr_1;
+wire signed  [10:1] EmitterModule_L22F9L25T10_EmitterModule_L24F41T55_Expr_2;
 always @(posedge Clock)
 begin
 if ( Reset == 1 ) begin
-State_FSM <= State_FSMDefault;
 State_Data <= State_DataDefault;
 end
 else begin
-State_FSM <= NextState_FSM;
 State_Data <= NextState_Data;
 end
 end
-assign EmitterModule_L29F9L44T10_EmitterModule_L32F17L35T27_Case = EmitterModule_L29F9L44T10_EmitterModule_L32F17L35T27_CaseLhs == EmitterModule_L29F9L44T10_EmitterModule_L32F17L35T27_CaseRhs ? 1'b1 : 1'b0;
-assign EmitterModule_L29F9L44T10_EmitterModule_L36F17L42T27_Case = EmitterModule_L29F9L44T10_EmitterModule_L36F17L42T27_CaseLhs == EmitterModule_L29F9L44T10_EmitterModule_L36F17L42T27_CaseRhs ? 1'b1 : 1'b0;
-assign EmitterModule_L26F32T64_Expr = EmitterModule_L26F32T64_ExprLhs == EmitterModule_L26F32T64_ExprRhs ? 1'b1 : 1'b0;
-assign EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L40F49T63_Expr = EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L40F49T63_Expr_1 + EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L40F49T63_Expr_2;
+assign EmitterModule_L22F9L25T10_EmitterModule_L23F17T47_Expr = EmitterModule_L22F9L25T10_EmitterModule_L23F17T47_Expr_1 & EmitterModule_L22F9L25T10_EmitterModule_L23F17T47_Expr_2;
+assign EmitterModule_L22F9L25T10_EmitterModule_L24F41T55_Expr = EmitterModule_L22F9L25T10_EmitterModule_L24F41T55_Expr_1 + EmitterModule_L22F9L25T10_EmitterModule_L24F41T55_Expr_2;
 always @*
 begin
-NextState_FSM = State_FSM;
 NextState_Data = State_Data/*cast*/;
-if ( EmitterModule_L29F9L44T10_EmitterModule_L32F17L35T27_Case == 1 ) begin
-if ( Inputs_IsEnabled == 1 ) begin
-NextState_FSM = EmitterModule_L29F9L44T10_EmitterModule_L34F41T65_Expr;
-end
-end
-else if ( EmitterModule_L29F9L44T10_EmitterModule_L36F17L42T27_Case == 1 ) begin
-if ( Inputs_Ack == 1 ) begin
-NextState_FSM = EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L39F41T60_Expr;
-NextState_Data = EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L40F42T64_Expr/*cast*/;
-end
+if ( EmitterModule_L22F9L25T10_EmitterModule_L23F17T47_Expr == 1 ) begin
+NextState_Data = EmitterModule_L22F9L25T10_EmitterModule_L24F34T56_Expr/*cast*/;
 end
 
 end
-assign EmitterModule_L29F9L44T10_EmitterModule_L32F17L35T27_CaseLhs = { {1{1'b0}}, State_FSM }/*expand*/;
-assign EmitterModule_L29F9L44T10_EmitterModule_L32F17L35T27_CaseRhs = { {1{1'b0}}, EmitterModule_L29F9L44T10_EmitterModule_L32F22T41_Expr }/*expand*/;
-assign EmitterModule_L29F9L44T10_EmitterModule_L36F17L42T27_CaseLhs = { {1{1'b0}}, State_FSM }/*expand*/;
-assign EmitterModule_L29F9L44T10_EmitterModule_L36F17L42T27_CaseRhs = { {1{1'b0}}, EmitterModule_L29F9L44T10_EmitterModule_L36F22T46_Expr }/*expand*/;
-assign EmitterModule_L26F32T64_ExprLhs = { {1{1'b0}}, State_FSM }/*expand*/;
-assign EmitterModule_L26F32T64_ExprRhs = { {1{1'b0}}, EmitterModule_L26F45T64_Expr }/*expand*/;
-assign EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L40F49T63_Expr_1 = { {2{1'b0}}, State_Data }/*expand*/;
-assign EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L40F49T63_Expr_2 = { {9{1'b0}}, EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L40F62T63_Expr }/*expand*/;
+assign EmitterModule_L22F9L25T10_EmitterModule_L23F17T47_Expr_1 = Inputs_IsEnabled;
+assign EmitterModule_L22F9L25T10_EmitterModule_L23F17T47_Expr_2 = Inputs_Ack;
+assign EmitterModule_L22F9L25T10_EmitterModule_L24F41T55_Expr_1 = { {2{1'b0}}, State_Data }/*expand*/;
+assign EmitterModule_L22F9L25T10_EmitterModule_L24F41T55_Expr_2 = { {9{1'b0}}, EmitterModule_L22F9L25T10_EmitterModule_L24F54T55_Expr }/*expand*/;
 assign Inputs_IsEnabled = IsEnabled;
 assign Inputs_Ack = Ack;
-assign EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L40F42T64_Expr = EmitterModule_L29F9L44T10_EmitterModule_L38F21L41T22_EmitterModule_L40F49T63_Expr[8:1]/*truncate*/;
+assign EmitterModule_L22F9L25T10_EmitterModule_L24F34T56_Expr = EmitterModule_L22F9L25T10_EmitterModule_L24F41T55_Expr[8:1]/*truncate*/;
 assign Data = State_Data/*cast*/;
-assign HasData = EmitterModule_L26F32T64_Expr;
+assign HasData = Inputs_IsEnabled;
 // [BEGIN USER ARCHITECTURE]
 // [END USER ARCHITECTURE]
 endmodule

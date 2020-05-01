@@ -16,9 +16,11 @@ namespace QuokkaTests.Experimental
     {
         public byte Value => State.Value;
 
+        byte NextValue => (byte)(Inputs.Enabled ? State.Value + 1 : State.Value);
+        
         protected override void OnStage()
         {
-            NextState.Value = (byte)(Inputs.Enabled ? State.Value + 1 : State.Value);
+            NextState.Value = NextValue;
         }
     }
 }
