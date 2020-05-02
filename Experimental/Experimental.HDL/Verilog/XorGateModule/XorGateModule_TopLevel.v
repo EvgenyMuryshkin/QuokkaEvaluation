@@ -37,15 +37,15 @@ wire  true = 1'b1;
 wire  false = 1'b0;
 wire  Inputs_I1;
 wire  Inputs_I2;
-wire  SimpleGates_L22F26T47_Expr;
-wire  SimpleGates_L22F26T47_Expr_1;
-wire  SimpleGates_L22F26T47_Expr_2;
-assign SimpleGates_L22F26T47_Expr = SimpleGates_L22F26T47_Expr_1 ^ SimpleGates_L22F26T47_Expr_2;
-assign SimpleGates_L22F26T47_Expr_1 = Inputs_I1;
-assign SimpleGates_L22F26T47_Expr_2 = Inputs_I2;
+wire  XorGateModule_L8F26T47_Expr;
+wire  XorGateModule_L8F26T47_Expr_1;
+wire  XorGateModule_L8F26T47_Expr_2;
+assign XorGateModule_L8F26T47_Expr = XorGateModule_L8F26T47_Expr_1 ^ XorGateModule_L8F26T47_Expr_2;
+assign XorGateModule_L8F26T47_Expr_1 = Inputs_I1;
+assign XorGateModule_L8F26T47_Expr_2 = Inputs_I2;
 assign Inputs_I1 = I1;
 assign Inputs_I2 = I2;
-assign O = SimpleGates_L22F26T47_Expr;
+assign O = XorGateModule_L8F26T47_Expr;
 // [BEGIN USER ARCHITECTURE]
 // [END USER ARCHITECTURE]
 endmodule

@@ -46,23 +46,23 @@ constant true : std_logic := '1';
 constant false : std_logic := '0';
 signal Inputs_I1 : std_logic := '0';
 signal Inputs_I2 : std_logic := '0';
-signal SimpleGates_L17F26T48_Expr : std_logic := '0';
-signal SimpleGates_L17F26T48_Expr_1 : std_logic := '0';
-signal SimpleGates_L17F26T48_Expr_2 : std_logic := '0';
+signal OrGateModule_L7F26T48_Expr : std_logic := '0';
+signal OrGateModule_L7F26T48_Expr_1 : std_logic := '0';
+signal OrGateModule_L7F26T48_Expr_2 : std_logic := '0';
 begin
 
-process(SimpleGates_L17F26T48_Expr_1, SimpleGates_L17F26T48_Expr_2)
+process(OrGateModule_L7F26T48_Expr_1, OrGateModule_L7F26T48_Expr_2)
 begin
-SimpleGates_L17F26T48_Expr <= SimpleGates_L17F26T48_Expr_1 OR SimpleGates_L17F26T48_Expr_2;
+OrGateModule_L7F26T48_Expr <= OrGateModule_L7F26T48_Expr_1 OR OrGateModule_L7F26T48_Expr_2;
 
     end process;
-process(I1, I2, Inputs_I1, Inputs_I2, SimpleGates_L17F26T48_Expr)
+process(I1, I2, Inputs_I1, Inputs_I2, OrGateModule_L7F26T48_Expr)
 begin
-SimpleGates_L17F26T48_Expr_1 <= Inputs_I1;
-SimpleGates_L17F26T48_Expr_2 <= Inputs_I2;
+OrGateModule_L7F26T48_Expr_1 <= Inputs_I1;
+OrGateModule_L7F26T48_Expr_2 <= Inputs_I2;
 Inputs_I1 <= I1;
 Inputs_I2 <= I2;
-O <= SimpleGates_L17F26T48_Expr;
+O <= OrGateModule_L7F26T48_Expr;
 end process;
 -- [BEGIN USER ARCHITECTURE]
 -- [END USER ARCHITECTURE]

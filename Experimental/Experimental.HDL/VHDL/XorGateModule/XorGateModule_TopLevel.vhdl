@@ -46,23 +46,23 @@ constant true : std_logic := '1';
 constant false : std_logic := '0';
 signal Inputs_I1 : std_logic := '0';
 signal Inputs_I2 : std_logic := '0';
-signal SimpleGates_L22F26T47_Expr : std_logic := '0';
-signal SimpleGates_L22F26T47_Expr_1 : std_logic := '0';
-signal SimpleGates_L22F26T47_Expr_2 : std_logic := '0';
+signal XorGateModule_L8F26T47_Expr : std_logic := '0';
+signal XorGateModule_L8F26T47_Expr_1 : std_logic := '0';
+signal XorGateModule_L8F26T47_Expr_2 : std_logic := '0';
 begin
 
-process(SimpleGates_L22F26T47_Expr_1, SimpleGates_L22F26T47_Expr_2)
+process(XorGateModule_L8F26T47_Expr_1, XorGateModule_L8F26T47_Expr_2)
 begin
-SimpleGates_L22F26T47_Expr <= SimpleGates_L22F26T47_Expr_1 XOR SimpleGates_L22F26T47_Expr_2;
+XorGateModule_L8F26T47_Expr <= XorGateModule_L8F26T47_Expr_1 XOR XorGateModule_L8F26T47_Expr_2;
 
     end process;
-process(I1, I2, Inputs_I1, Inputs_I2, SimpleGates_L22F26T47_Expr)
+process(I1, I2, Inputs_I1, Inputs_I2, XorGateModule_L8F26T47_Expr)
 begin
-SimpleGates_L22F26T47_Expr_1 <= Inputs_I1;
-SimpleGates_L22F26T47_Expr_2 <= Inputs_I2;
+XorGateModule_L8F26T47_Expr_1 <= Inputs_I1;
+XorGateModule_L8F26T47_Expr_2 <= Inputs_I2;
 Inputs_I1 <= I1;
 Inputs_I2 <= I2;
-O <= SimpleGates_L22F26T47_Expr;
+O <= XorGateModule_L8F26T47_Expr;
 end process;
 -- [BEGIN USER ARCHITECTURE]
 -- [END USER ARCHITECTURE]

@@ -22,7 +22,7 @@ namespace QuokkaTests.Experimental
         {
             base.Schedule(inputsFactory);
 
-            Inverter.Schedule(() => new InverterInputs() { Input = Inverter.Output });
+            Inverter.Schedule(() => new NotGateInputs() { Input = Inverter.Output });
         }
     }
 
@@ -47,7 +47,7 @@ namespace QuokkaTests.Experimental
             var sim = new RTLSimulator<InverterModule>();
             sim.IsRunning = (cb) => cb.Clock == 0;
             sim.Trace(PathTools.VCDOutputPath());
-            sim.TopLevel.Schedule(() => new InverterInputs() { Input = true }); ;
+            sim.TopLevel.Schedule(() => new NotGateInputs() { Input = true }); ;
 
             Assert.AreEqual(true, sim.TopLevel.Output);
             sim.Run();

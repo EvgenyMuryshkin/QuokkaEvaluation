@@ -14,14 +14,14 @@
 --   Code comes AS-IS, it is your responsibility to make sure it is working as expected
 --   no responsibility will be taken for any loss or damage caused by use of Quokka toolkit.
 -- 
--- System configuration name is InverterModule_TopLevel, clock frequency is 1Hz, Top-level
+-- System configuration name is NotGateModule_TopLevel, clock frequency is 1Hz, Top-level
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 use work.Quokka.all;
 
-entity InverterModule_TopLevel is
+entity NotGateModule_TopLevel is
     port
     (
 -- [BEGIN USER PORTS]
@@ -34,7 +34,7 @@ end entity;
 
 -- FSM summary
 -- Packages
-architecture rtl of InverterModule_TopLevel is
+architecture rtl of NotGateModule_TopLevel is
 -- [BEGIN USER SIGNALS]
 -- [END USER SIGNALS]
 constant HiSignal : std_logic := '1';
@@ -44,20 +44,20 @@ constant One : std_logic := '1';
 constant true : std_logic := '1';
 constant false : std_logic := '0';
 signal Inputs_Input : std_logic := '0';
-signal InverterModule_L7F31T44_Expr : std_logic := '0';
-signal InverterModule_L7F31T44_Expr_1 : std_logic := '0';
+signal NotGateModule_L17F31T44_Expr : std_logic := '0';
+signal NotGateModule_L17F31T44_Expr_1 : std_logic := '0';
 begin
 
-process(InverterModule_L7F31T44_Expr_1)
+process(NotGateModule_L17F31T44_Expr_1)
 begin
-InverterModule_L7F31T44_Expr <= NOT InverterModule_L7F31T44_Expr_1;
+NotGateModule_L17F31T44_Expr <= NOT NotGateModule_L17F31T44_Expr_1;
 
     end process;
-process(Input, Inputs_Input, InverterModule_L7F31T44_Expr)
+process(Input, Inputs_Input, NotGateModule_L17F31T44_Expr)
 begin
-InverterModule_L7F31T44_Expr_1 <= Inputs_Input;
+NotGateModule_L17F31T44_Expr_1 <= Inputs_Input;
 Inputs_Input <= Input;
-Output <= InverterModule_L7F31T44_Expr;
+Output <= NotGateModule_L17F31T44_Expr;
 end process;
 -- [BEGIN USER ARCHITECTURE]
 -- [END USER ARCHITECTURE]

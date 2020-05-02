@@ -37,15 +37,15 @@ wire  true = 1'b1;
 wire  false = 1'b0;
 wire  Inputs_I1;
 wire  Inputs_I2;
-wire  SimpleGates_L12F26T48_Expr;
-wire  SimpleGates_L12F26T48_Expr_1;
-wire  SimpleGates_L12F26T48_Expr_2;
-assign SimpleGates_L12F26T48_Expr = SimpleGates_L12F26T48_Expr_1 & SimpleGates_L12F26T48_Expr_2;
-assign SimpleGates_L12F26T48_Expr_1 = Inputs_I1;
-assign SimpleGates_L12F26T48_Expr_2 = Inputs_I2;
+wire  AndGateModule_L7F26T48_Expr;
+wire  AndGateModule_L7F26T48_Expr_1;
+wire  AndGateModule_L7F26T48_Expr_2;
+assign AndGateModule_L7F26T48_Expr = AndGateModule_L7F26T48_Expr_1 & AndGateModule_L7F26T48_Expr_2;
+assign AndGateModule_L7F26T48_Expr_1 = Inputs_I1;
+assign AndGateModule_L7F26T48_Expr_2 = Inputs_I2;
 assign Inputs_I1 = I1;
 assign Inputs_I2 = I2;
-assign O = SimpleGates_L12F26T48_Expr;
+assign O = AndGateModule_L7F26T48_Expr;
 // [BEGIN USER ARCHITECTURE]
 // [END USER ARCHITECTURE]
 endmodule
