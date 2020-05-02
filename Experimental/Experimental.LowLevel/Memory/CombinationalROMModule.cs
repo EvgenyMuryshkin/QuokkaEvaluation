@@ -12,7 +12,7 @@ namespace QuokkaTests.Experimental
 
     public class CombinationalROMModule : RTLCombinationalModule<CombinationalROMModuleInputs>
     {
-        static byte[] GetBuffer() 
+        public static byte[] GetBuffer() 
         {
             return Enumerable.Range(0, 256).Select(b => (byte)(32 + b * 192.0 / 256.0)).ToArray();
         }

@@ -41,7 +41,7 @@ namespace Quokka.RTL
             Directory.CreateDirectory(directory);
         }
 
-        public void Trace(string outputFileName)
+        public void TraceToVCD(string outputFileName)
         {
             Console.WriteLine($"Tracing to: {outputFileName}");
             RecursiveCreateTargetDirectory(Path.GetDirectoryName(outputFileName));
@@ -59,14 +59,13 @@ namespace Quokka.RTL
             _vcdBuilder.Init(_topLevelSnapshot);
         }
 
-        void VCDSnapshot()
+        protected virtual void Trace()
         {
             if (_vcdBuilder == null)
                 return;
 
             _topLevel.PopulateSnapshot(_topLevelSnapshot);
             _vcdBuilder.Snapshot(_simulatorContext.CurrentTime, _topLevelSnapshot);
-
         }
 
         public void Run()
@@ -93,7 +92,7 @@ namespace Quokka.RTL
 
                     var modified = _topLevel.Stage(_simulatorContext.Iteration);
 
-                    VCDSnapshot();
+                    Trace();
 
                     // no modules were modified during stage iteration, all converged
                     if (!modified)
@@ -109,7 +108,7 @@ namespace Quokka.RTL
                 _simulatorContext.CurrentTime = _simulatorContext.Clock * 2 * _simulatorContext.MaxStageIterations + _simulatorContext.MaxStageIterations;
 
                 clockSignal?.SetValue(false);
-                VCDSnapshot();
+                Trace();
 
                 _topLevel.Commit();
                 _simulatorContext.Clock++;

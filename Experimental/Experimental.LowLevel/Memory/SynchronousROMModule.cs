@@ -25,7 +25,7 @@ namespace QuokkaTests.Experimental
             State.Buff = GetBuffer();
         }
 
-        static byte[] GetBuffer()
+        public static byte[] GetBuffer()
         {
             var rnd = new Random(42);
 
