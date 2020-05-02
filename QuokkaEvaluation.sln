@@ -113,6 +113,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		run-all.cmd = run-all.cmd
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quokka.RTL.Simulator", "Experimental\Quokka.RTL.Simulator\Quokka.RTL.Simulator.csproj", "{7CC20352-F48A-4E6B-8F5C-F410C536F79F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -265,6 +267,10 @@ Global
 		{A76063D4-A240-482D-B7E2-A4069BAFBFC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A76063D4-A240-482D-B7E2-A4069BAFBFC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A76063D4-A240-482D-B7E2-A4069BAFBFC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CC20352-F48A-4E6B-8F5C-F410C536F79F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CC20352-F48A-4E6B-8F5C-F410C536F79F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CC20352-F48A-4E6B-8F5C-F410C536F79F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CC20352-F48A-4E6B-8F5C-F410C536F79F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -296,6 +302,7 @@ Global
 		{1A45239C-5E68-4058-A1B2-1B7F87302641} = {DE2F823E-ADCA-43FD-97E0-25B8E79DB8DE}
 		{3E095421-D0E9-4404-8B20-3CAEC6C705BF} = {DE2F823E-ADCA-43FD-97E0-25B8E79DB8DE}
 		{CAC5E557-CB17-4177-9BF0-7A41BC65CC52} = {DE2F823E-ADCA-43FD-97E0-25B8E79DB8DE}
+		{7CC20352-F48A-4E6B-8F5C-F410C536F79F} = {49F137C7-01F3-4899-A365-F5E93A128425}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0BE3F9BA-A23D-459E-8A7D-2D9F1612D011}

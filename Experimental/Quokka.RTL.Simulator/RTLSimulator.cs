@@ -2,7 +2,7 @@
 using System;
 using System.IO;
 
-namespace Quokka.RTL
+namespace Quokka.RTL.Simulatot
 {
     public class RTLSimulator<TModule>
         where TModule : IRTLCombinationalModule, new()

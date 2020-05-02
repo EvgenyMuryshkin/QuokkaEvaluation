@@ -1,4 +1,4 @@
-﻿namespace Quokka.RTL
+﻿namespace Quokka.RTL.Simulatot
 {
     public class RTLSimulatorCallback<TModule>
     {

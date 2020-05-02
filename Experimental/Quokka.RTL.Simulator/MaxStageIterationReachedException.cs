@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Quokka.RTL
+namespace Quokka.RTL.Simulatot
 {
     public class MaxStageIterationReachedException : Exception
     {
