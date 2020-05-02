@@ -3,6 +3,7 @@ using Quokka.VCD;
 using QuokkaTests.Experimental;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -10,11 +11,14 @@ using System.Text;
 namespace Experimental.Tests
 {
     [TestClass]
-    public class WaveformBuilderTests
+    public class VCDBuilderTests
     {
         [TestMethod]
         public void Test()
         {
+            if (!Debugger.IsAttached)
+                Assert.Inconclusive("Run under debugger");
+
             var vcd = new VCDBuilder(@"C:\tmp\1.vcd");
             var topScope = new VCDSignalsSnapshot("TOP");
             topScope.Add(new VCDVariable("data", (byte)0, 1));

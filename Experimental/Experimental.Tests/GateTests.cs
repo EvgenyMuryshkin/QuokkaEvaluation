@@ -14,9 +14,9 @@ namespace QuokkaTests.Experimental
 
     }
 
-    class InverterFeedback : RTLCombinationalModule<Empty>
+    class NotGateFeedbackModule : RTLCombinationalModule<Empty>
     {
-        InverterModule Inverter = new InverterModule();
+        NotGateModule Inverter = new NotGateModule();
 
         public override void Schedule(Func<Empty> inputsFactory)
         {
@@ -32,7 +32,7 @@ namespace QuokkaTests.Experimental
         [TestMethod]
         public void InverterFeedback()
         {
-            var sim = new RTLSimulator<InverterFeedback>();
+            var sim = new RTLSimulator<NotGateFeedbackModule>();
             sim.Trace(PathTools.VCDOutputPath());
 
             Assert.ThrowsException<MaxStageIterationReachedException>(() =>
@@ -44,7 +44,7 @@ namespace QuokkaTests.Experimental
         [TestMethod]
         public void InverterTest()
         {
-            var sim = new RTLSimulator<InverterModule>();
+            var sim = new RTLSimulator<NotGateModule>();
             sim.IsRunning = (cb) => cb.Clock == 0;
             sim.Trace(PathTools.VCDOutputPath());
             sim.TopLevel.Schedule(() => new NotGateInputs() { Input = true }); ;

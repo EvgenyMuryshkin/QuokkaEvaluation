@@ -13,7 +13,7 @@ namespace QuokkaTests.Experimental
             var sim = new RTLSimulator<CounterModule>();
             sim.IsRunning = (cb) => cb.Clock < 100;
             sim.Trace(PathTools.VCDOutputPath());
-            sim.TopLevel.Schedule(() => new CounterInputs() { InReset = false });
+            sim.TopLevel.Schedule(() => new CounterInputs() { Enabled = true });
 
             Assert.AreEqual(0, sim.TopLevel.Value);
             sim.Run();

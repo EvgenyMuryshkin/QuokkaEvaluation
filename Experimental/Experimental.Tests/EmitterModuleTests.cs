@@ -18,21 +18,15 @@ namespace QuokkaTests.Experimental
 
             foreach (var idx in Enumerable.Range(0, 256))
             {
-                Assert.AreEqual(EmitterFSM.Emitting, module.State.FSM);
-
-                module.Cycle(new EmitterInputs() {
-                    IsEnabled = true
-                });
-                Assert.AreEqual(EmitterFSM.WaitingForAck, module.State.FSM);
-
                 actual.Add(module.Data);
-
-                module.Cycle(new EmitterInputs() { Ack = true });
+                module.Cycle(new EmitterInputs() {
+                    IsEnabled = true,
+                    Ack = true
+                });
             }
 
             var missing = expected.Zip(actual, (e, a) => new { e, a }).Where(v => v.e != v.a).ToList();
-            Assert.AreEqual(0, missing.Count, missing.Select(v => $"E: {v.e}, A: {v.a}").ToCSV());
-
+            Assert.AreEqual(0, missing.Count, missing.Select(v => $"Exp: {v.e}, Act: {v.a}").ToCSV());
         }
     }
 }
