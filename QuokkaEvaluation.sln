@@ -72,11 +72,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Indicators", "Indicators\In
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Indicators.Tests", "Indicators.Tests\Indicators.Tests.csproj", "{4E2F755F-F751-493C-B67C-693A2D80D987}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Experimental", "Experimental", "{49F137C7-01F3-4899-A365-F5E93A128425}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RTL", "RTL", "{49F137C7-01F3-4899-A365-F5E93A128425}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Experimental.Tests", "Experimental\Experimental.Tests\Experimental.Tests.csproj", "{44E47688-AB6C-4CED-A3A0-65716C4BA0FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RTL.Tests", "RTL\RTL.Tests\RTL.Tests.csproj", "{44E47688-AB6C-4CED-A3A0-65716C4BA0FC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Experimental.LowLevel", "Experimental\Experimental.LowLevel\Experimental.LowLevel.csproj", "{67E209B5-FC41-40BE-ACC2-49D991037F66}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RTL.Modules", "RTL\RTL.Modules\RTL.Modules.csproj", "{67E209B5-FC41-40BE-ACC2-49D991037F66}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VRCamera", "VRCamera", "{A5E1BA5C-7BBF-437C-A550-0E08139AEACF}"
 EndProject
@@ -113,7 +113,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		run-all.cmd = run-all.cmd
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quokka.RTL.Simulator", "Experimental\Quokka.RTL.Simulator\Quokka.RTL.Simulator.csproj", "{7CC20352-F48A-4E6B-8F5C-F410C536F79F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quokka.RTL.Simulator", "RTL\Quokka.RTL.Simulator\Quokka.RTL.Simulator.csproj", "{7CC20352-F48A-4E6B-8F5C-F410C536F79F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

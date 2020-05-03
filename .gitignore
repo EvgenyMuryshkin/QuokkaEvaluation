@@ -283,7 +283,7 @@ __pycache__/
 *.tan.rpt
 *.tan.summary
 /VHDL/db/*
-/Experimental/Experimental.Tests/SimResults/*
-/Experimental/Experimental.HDL/db
+/RTL/RTL.Tests/SimResults/*
+/RTL/RTL.HDL/db
 *.v.bak
 *.vhdl.bak
