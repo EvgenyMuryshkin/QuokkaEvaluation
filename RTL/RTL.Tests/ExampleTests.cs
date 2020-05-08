@@ -17,9 +17,9 @@ namespace RTL.Modules
     {
         NotGateModule Inverter = new NotGateModule();
 
-        public override void Schedule(Func<NotGateFeedbackInputs> inputsFactory)
+        protected override void OnSchedule(Func<NotGateFeedbackInputs> inputsFactory)
         {
-            base.Schedule(inputsFactory);
+            base.OnSchedule(inputsFactory);
 
             Inverter.Schedule(() => new NotGateInputs() { Input = Inverter.Output });
         }
@@ -150,7 +150,7 @@ namespace RTL.Modules
             var receivedData = new List<byte>();
 
             var sim = new RTLSimulator<CompositionModule>();
-            sim.TraceToVCD(PathTools.VCDOutputPath());
+            //sim.TraceToVCD(PathTools.VCDOutputPath());
 
             sim.IsRunning = (simulatorCallback) => receivedData.Count < bytesToProcess;
 

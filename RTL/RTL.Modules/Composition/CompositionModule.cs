@@ -17,9 +17,9 @@ namespace RTL.Modules
         public bool HasData => Receiver.HasData;
         public byte Data => Receiver.Data;
 
-        public override void Schedule(Func<CompositionInputs> inputsFactory)
+        protected override void OnSchedule(Func<CompositionInputs> inputsFactory)
         {
-            base.Schedule(inputsFactory);
+            base.OnSchedule(inputsFactory);
 
             Emitter.Schedule(() => new EmitterInputs()
                 {
