@@ -259,11 +259,14 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+
+
+# Quokka Evaluation Solution
+!/RTL/RTL.HDL/*
 /VHDL/generated/**/*
 /Verilog/generated/**/*
-/BumperHero/Quartus/BumperHero/db/**/*
-/**/generated/**/*
 /**/incremental_db/**/*
+/BumperHero/Quartus/BumperHero/db/**/*
 *.asm.rpt
 *.cdf
 *.done
@@ -287,3 +290,7 @@ __pycache__/
 /RTL/RTL.HDL/db
 *.v.bak
 *.vhdl.bak
+
+/SensorsBoard/**/generated/*
+/SunTracker/**/generated/*
+/BumperHero/**/generated/*
