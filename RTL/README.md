@@ -1,6 +1,6 @@
 Setup Dev Environment
 
-* Install .NET Core from https://dotnet.microsoft.com/ for your OS
+* Install .NET Core SDK from https://dotnet.microsoft.com/ for your OS
 * Clone QuokkaEvaluation repository
 * Install Visual Studio or Visual Studio Code
 * Open solution QuokkaEvaluation.RTL.sln in VS or QuokkaEvaluation folder in VSCode.
