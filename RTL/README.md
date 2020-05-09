@@ -3,7 +3,7 @@ Setup Dev Environment
 * Install .NET Core from https://dotnet.microsoft.com/ for your OS
 * Clone QuokkaEvaluation repository
 * Install Visual Studio or Visual Studio Code
-* Open QuokkaEvaluation.RTL.sln in VS of QuokkaEvaluation in VSCode.
+* Open solution QuokkaEvaluation.RTL.sln in VS or QuokkaEvaluation folder in VSCode.
 
 RTL folder contains examples and test cases for RTL module demos.
 RTL.Modules - modules source code
