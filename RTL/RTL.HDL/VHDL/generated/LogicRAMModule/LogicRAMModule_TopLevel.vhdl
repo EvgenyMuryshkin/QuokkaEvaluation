@@ -77,21 +77,9 @@ signal LogicRAMModule_L25F36T65_Expr : unsigned(10 downto 1)  := "0000000000";
 signal LogicRAMModule_L25F36T65_Expr_1 : signed(10 downto 1)  := "0000000000";
 signal LogicRAMModule_L25F36T65_Expr_2 : signed(10 downto 1)  := "0000000000";
 type State_BuffArray is array(0 to 3) of unsigned(8 downto 1);
-constant State_BuffArrayInit: State_BuffArray:= (
-"00000000",
-"00000000",
-"00000000",
-"00000000"
-);
-signal State_Buff : State_BuffArray := State_BuffArrayInit;
+signal State_Buff : State_BuffArray := (others => (others => '0'));
 type NextState_BuffArray is array(0 to 3) of unsigned(8 downto 1);
-constant NextState_BuffArrayInit: NextState_BuffArray:= (
-"00000000",
-"00000000",
-"00000000",
-"00000000"
-);
-signal NextState_Buff : NextState_BuffArray := NextState_BuffArrayInit;
+signal NextState_Buff : NextState_BuffArray := (others => (others => '0'));
 begin
 process (Clock, NextState_Index, Reset)
 begin
