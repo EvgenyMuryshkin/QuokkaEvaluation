@@ -12,5 +12,6 @@
         "Device": "generic"
     },
     "HDL": "VHDL",
-    "ProjectLocation": "../RTL.HDL/VHDL/generated"
+    "ProjectLocation": "../RTL.HDL/VHDL/generated",
+    "PostRun": "postrun.cmd"
 }

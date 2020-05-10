@@ -12,5 +12,6 @@
         "Device": "generic"
     },
     "HDL": "Verilog",
-    "ProjectLocation": "../RTL.HDL/Verilog/generated"
+    "ProjectLocation": "../RTL.HDL/Verilog/generated",
+    "PostRun": "postrun.cmd"
 }
