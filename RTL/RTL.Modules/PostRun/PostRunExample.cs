@@ -9,6 +9,11 @@ using System.Text;
 
 namespace RTL.Modules.PostRun
 {
+    // Example of code-defined post run handler
+    // Every exposed assembly type, that implements ILowLevelTransformationPostRun interface
+    // will be constructed and called.
+    // USE WITH CAUTION
+    // All runtime artefacts are injected into class constructor.
     public class PostRunExample : ILowLevelTransformationPostRun
     {
         private readonly ILogStream _logStream;

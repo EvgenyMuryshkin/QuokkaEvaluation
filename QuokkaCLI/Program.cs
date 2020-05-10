@@ -1,4 +1,6 @@
-﻿using Quokka.Core.Bootstrap;
+﻿using System;
+using Quokka.Core.Bootstrap;
+using Quokka.RTL;
 
 namespace QuokkaCLI
 {
@@ -6,6 +8,9 @@ namespace QuokkaCLI
     {
         static void Main(string[] args)
         {
+            Console.WriteLine($"Quokka.FPGA version: {typeof(QuokkaRunner).Assembly.GetName().Version}");
+            Console.WriteLine($"Quokka.RTL version: {typeof(RTLBitArray).Assembly.GetName().Version}");
+      
             QuokkaRunner.Default(args);
         }
     }
