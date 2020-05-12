@@ -11,8 +11,13 @@ This is simple class with raw fields\properties
     }
 ```
 
+Inputs class and module logic fully define state of the output signals of combinational module.
+No synchronization logic will be added to RTL code during translation.
+
 ### Declare combinational module
 Every combinational module must derive from base generic class **RTLCombinationalModule<>**, and must provide type of module inputs.
+
+Source code for base RTL module classes can be found [here](https://github.com/EvgenyMuryshkin/Quokka.RTL/tree/master/Quokka.RTL/RTLModule)
 
 Every public property on class are **module outputs** (e.g. Direct, High, Low etc.)
 
