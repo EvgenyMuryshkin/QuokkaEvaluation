@@ -294,3 +294,4 @@ __pycache__/
 /SensorsBoard/**/generated/*
 /SunTracker/**/generated/*
 /BumperHero/**/generated/*
+/QRV32/QRV32.HDL/db/**
