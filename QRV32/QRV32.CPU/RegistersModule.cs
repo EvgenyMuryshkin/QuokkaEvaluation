@@ -12,12 +12,16 @@ namespace QRV32.CPU
         public uint WriteData;
 
         public RTLBitArray ReadAddress = new RTLBitArray().Resized(5);
+
+        public uint PCOffset;
+        public bool PCOverwrite;
     }
 
     public class RegistersModuleState
     {
         public uint[] x = new uint[32];
         public uint ReadData;
+        public uint PC;
     }
 
     public class RegistersModule : RTLSynchronousModule<RegistersModuleInput, RegistersModuleState>
@@ -25,6 +29,8 @@ namespace QRV32.CPU
         public uint ReadData => State.ReadData;
         protected override void OnStage()
         {
+            NextState.PC = Inputs.PCOverwrite ? Inputs.PCOffset : State.PC + Inputs.PCOffset;
+             
             var we = Inputs.WE && Inputs.WriteAddress != 0;
 
             if (we)
