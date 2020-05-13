@@ -31,10 +31,8 @@ namespace RTL.Modules
         [TestMethod]
         public void BitArrayModuleTest()
         {
-            var sim = new RTLSimulator<BitArrayModule>();
-            sim.IsRunning = (cb) => cb.Clock == 0;
-            sim.TopLevel.Schedule(() => new BitArrayInputs() { Value = 0xC2 });
-            sim.Run();
+            var sim = new CombinationalRTLSimulator<BitArrayModule>();
+            sim.TopLevel.Cycle(new BitArrayInputs() { Value = 0xC2 });
             Assert.AreEqual(0xC2, (byte)sim.TopLevel.Direct);
             Assert.AreEqual(0xC,  (byte)sim.TopLevel.High);
             Assert.AreEqual(0x2,  (byte)sim.TopLevel.Low);
