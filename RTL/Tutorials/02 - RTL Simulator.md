@@ -7,6 +7,9 @@ RTL Simulator is an experimental project. [Source code](https://github.com/Evgen
 **Functionality of simulator is under constant development, it most certainly will change**
 
 #### Simulator instance
+
+Create instance of RTL simulator with module type as argument.
+
 ```
     var sim = new RTLSimulator<CounterModule>();
 ```
@@ -31,7 +34,7 @@ There is default support for tracing into VCD file. Source code for VCD trace ca
 
 Support for custom tracing will be added as part of future work. 
 
-**Hardcode VCD tracer will be remove from RTL simulator and will be available as trace option**
+**Hardcoded VCD tracer will be removed from RTL simulator and will be available as trace option**
 
 #### Scheduling
 Top level module is scheduled with instance of input parameters. This functions is called every time simulator needs a fresh state of input parameters.
@@ -54,7 +57,7 @@ On every delta cycle, it will call scheduling function for each module in hierar
 This process will repeat until all modules in hierarchy are converged, or max iterations is reached.
 
 #### Asserting results
-Once simulations is completed (or in runnign callback), state of the module can be tested for validity.
+Once simulations is completed (or in running callback), state of the module can be tested for validity.
 
 ```
     Assert.AreEqual(0, sim.TopLevel.Value);
