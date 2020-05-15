@@ -25,7 +25,7 @@ module JTypeDecoderModule_TopLevel (
 	input  [31: 0] Instruction,
 	output [6: 0] OpCode,
 	output [4: 0] RD,
-	output [31: 0] Imm
+	output signed [31: 0] Imm
     );
 
 // [BEGIN USER SIGNALS]
@@ -36,64 +36,55 @@ wire  Zero = 1'b0;
 wire  One = 1'b1;
 wire  true = 1'b1;
 wire  false = 1'b0;
-wire  RDecoders_L14F42T43_Expr = 1'b0;
-wire  RDecoders_L60F111T116_Expr = 1'b0;
+wire  InstructionDecoders_L14F42T43_Expr = 1'b0;
+wire  InstructionDecoders_L60F99T104_Expr = 1'b0;
 wire  [32:1] Inputs_Instruction;
 wire  [32:1] Bits;
 wire signed  [32:1] ZeroU32;
-wire  [7:1] RDecoders_L15F38T48_Index;
-wire  [5:1] RDecoders_L59F34T45_Index;
-wire  [32:1] RDecoders_L60F35T117_Source;
-wire  [11:1] RDecoders_L60F51T63_Index;
-wire  RDecoders_L60F65T73_Index;
-wire  [8:1] RDecoders_L60F75T86_Index;
-wire  RDecoders_L60F88T96_Index;
-wire  [10:1] RDecoders_L60F98T109_Index;
+wire  [7:1] InstructionDecoders_L15F38T48_Index;
+wire  [5:1] InstructionDecoders_L59F34T45_Index;
+wire  [21:1] InstructionDecoders_L60F35T105_Source;
+wire  InstructionDecoders_L60F51T59_Index;
+wire  [8:1] InstructionDecoders_L60F61T73_Index;
+wire  InstructionDecoders_L60F75T83_Index;
+wire  [10:1] InstructionDecoders_L60F85T97_Index;
+wire signed  [21:1] InstructionDecoders_L60F35T114_SignChange;
+wire signed  [32:1] InstructionDecoders_L60F35T126_Resize;
 assign Inputs_Instruction = Instruction/*cast*/;
 assign Bits = Inputs_Instruction/*cast*/;
-assign ZeroU32 = { {31{1'b0}}, RDecoders_L14F42T43_Expr }/*expand*/;
-assign RDecoders_L15F38T48_Index = Bits[7:1]/*cast*/;
-assign OpCode = RDecoders_L15F38T48_Index/*cast*/;
-assign RDecoders_L59F34T45_Index = Bits[12:8]/*cast*/;
-assign RD = RDecoders_L59F34T45_Index/*cast*/;
-assign RDecoders_L60F51T63_Index = Bits[31:21]/*cast*/;
-assign RDecoders_L60F65T73_Index = Bits[32];
-assign RDecoders_L60F75T86_Index = Bits[20:13]/*cast*/;
-assign RDecoders_L60F88T96_Index = Bits[21];
-assign RDecoders_L60F98T109_Index = Bits[31:22]/*cast*/;
-assign RDecoders_L60F35T117_Source[1] = RDecoders_L60F51T63_Index[1];
-assign RDecoders_L60F35T117_Source[2] = RDecoders_L60F51T63_Index[2];
-assign RDecoders_L60F35T117_Source[3] = RDecoders_L60F51T63_Index[3];
-assign RDecoders_L60F35T117_Source[4] = RDecoders_L60F51T63_Index[4];
-assign RDecoders_L60F35T117_Source[5] = RDecoders_L60F51T63_Index[5];
-assign RDecoders_L60F35T117_Source[6] = RDecoders_L60F51T63_Index[6];
-assign RDecoders_L60F35T117_Source[7] = RDecoders_L60F51T63_Index[7];
-assign RDecoders_L60F35T117_Source[8] = RDecoders_L60F51T63_Index[8];
-assign RDecoders_L60F35T117_Source[9] = RDecoders_L60F51T63_Index[9];
-assign RDecoders_L60F35T117_Source[10] = RDecoders_L60F51T63_Index[10];
-assign RDecoders_L60F35T117_Source[11] = RDecoders_L60F51T63_Index[11];
-assign RDecoders_L60F35T117_Source[12] = RDecoders_L60F65T73_Index;
-assign RDecoders_L60F35T117_Source[13] = RDecoders_L60F75T86_Index[1];
-assign RDecoders_L60F35T117_Source[14] = RDecoders_L60F75T86_Index[2];
-assign RDecoders_L60F35T117_Source[15] = RDecoders_L60F75T86_Index[3];
-assign RDecoders_L60F35T117_Source[16] = RDecoders_L60F75T86_Index[4];
-assign RDecoders_L60F35T117_Source[17] = RDecoders_L60F75T86_Index[5];
-assign RDecoders_L60F35T117_Source[18] = RDecoders_L60F75T86_Index[6];
-assign RDecoders_L60F35T117_Source[19] = RDecoders_L60F75T86_Index[7];
-assign RDecoders_L60F35T117_Source[20] = RDecoders_L60F75T86_Index[8];
-assign RDecoders_L60F35T117_Source[21] = RDecoders_L60F88T96_Index;
-assign RDecoders_L60F35T117_Source[22] = RDecoders_L60F98T109_Index[1];
-assign RDecoders_L60F35T117_Source[23] = RDecoders_L60F98T109_Index[2];
-assign RDecoders_L60F35T117_Source[24] = RDecoders_L60F98T109_Index[3];
-assign RDecoders_L60F35T117_Source[25] = RDecoders_L60F98T109_Index[4];
-assign RDecoders_L60F35T117_Source[26] = RDecoders_L60F98T109_Index[5];
-assign RDecoders_L60F35T117_Source[27] = RDecoders_L60F98T109_Index[6];
-assign RDecoders_L60F35T117_Source[28] = RDecoders_L60F98T109_Index[7];
-assign RDecoders_L60F35T117_Source[29] = RDecoders_L60F98T109_Index[8];
-assign RDecoders_L60F35T117_Source[30] = RDecoders_L60F98T109_Index[9];
-assign RDecoders_L60F35T117_Source[31] = RDecoders_L60F98T109_Index[10];
-assign RDecoders_L60F35T117_Source[32] = RDecoders_L60F111T116_Expr;
-assign Imm = RDecoders_L60F35T117_Source/*cast*/;
+assign ZeroU32 = { {31{1'b0}}, InstructionDecoders_L14F42T43_Expr }/*expand*/;
+assign InstructionDecoders_L15F38T48_Index = Bits[7:1]/*cast*/;
+assign OpCode = InstructionDecoders_L15F38T48_Index/*cast*/;
+assign InstructionDecoders_L59F34T45_Index = Bits[12:8]/*cast*/;
+assign RD = InstructionDecoders_L59F34T45_Index/*cast*/;
+assign InstructionDecoders_L60F51T59_Index = Bits[32];
+assign InstructionDecoders_L60F61T73_Index = Bits[20:13]/*cast*/;
+assign InstructionDecoders_L60F75T83_Index = Bits[21];
+assign InstructionDecoders_L60F85T97_Index = Bits[31:22]/*cast*/;
+assign InstructionDecoders_L60F35T105_Source[1] = InstructionDecoders_L60F51T59_Index;
+assign InstructionDecoders_L60F35T105_Source[2] = InstructionDecoders_L60F61T73_Index[1];
+assign InstructionDecoders_L60F35T105_Source[3] = InstructionDecoders_L60F61T73_Index[2];
+assign InstructionDecoders_L60F35T105_Source[4] = InstructionDecoders_L60F61T73_Index[3];
+assign InstructionDecoders_L60F35T105_Source[5] = InstructionDecoders_L60F61T73_Index[4];
+assign InstructionDecoders_L60F35T105_Source[6] = InstructionDecoders_L60F61T73_Index[5];
+assign InstructionDecoders_L60F35T105_Source[7] = InstructionDecoders_L60F61T73_Index[6];
+assign InstructionDecoders_L60F35T105_Source[8] = InstructionDecoders_L60F61T73_Index[7];
+assign InstructionDecoders_L60F35T105_Source[9] = InstructionDecoders_L60F61T73_Index[8];
+assign InstructionDecoders_L60F35T105_Source[10] = InstructionDecoders_L60F75T83_Index;
+assign InstructionDecoders_L60F35T105_Source[11] = InstructionDecoders_L60F85T97_Index[1];
+assign InstructionDecoders_L60F35T105_Source[12] = InstructionDecoders_L60F85T97_Index[2];
+assign InstructionDecoders_L60F35T105_Source[13] = InstructionDecoders_L60F85T97_Index[3];
+assign InstructionDecoders_L60F35T105_Source[14] = InstructionDecoders_L60F85T97_Index[4];
+assign InstructionDecoders_L60F35T105_Source[15] = InstructionDecoders_L60F85T97_Index[5];
+assign InstructionDecoders_L60F35T105_Source[16] = InstructionDecoders_L60F85T97_Index[6];
+assign InstructionDecoders_L60F35T105_Source[17] = InstructionDecoders_L60F85T97_Index[7];
+assign InstructionDecoders_L60F35T105_Source[18] = InstructionDecoders_L60F85T97_Index[8];
+assign InstructionDecoders_L60F35T105_Source[19] = InstructionDecoders_L60F85T97_Index[9];
+assign InstructionDecoders_L60F35T105_Source[20] = InstructionDecoders_L60F85T97_Index[10];
+assign InstructionDecoders_L60F35T105_Source[21] = InstructionDecoders_L60F99T104_Expr;
+assign InstructionDecoders_L60F35T114_SignChange = InstructionDecoders_L60F35T105_Source/*cast*/;
+assign InstructionDecoders_L60F35T126_Resize = { {11{InstructionDecoders_L60F35T114_SignChange[21]}}, InstructionDecoders_L60F35T114_SignChange }/*expand*/;
+assign Imm = InstructionDecoders_L60F35T126_Resize/*cast*/;
 // [BEGIN USER ARCHITECTURE]
 // [END USER ARCHITECTURE]
 endmodule

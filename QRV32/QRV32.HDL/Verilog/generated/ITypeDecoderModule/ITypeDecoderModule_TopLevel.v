@@ -27,7 +27,7 @@ module ITypeDecoderModule_TopLevel (
 	output [4: 0] RD,
 	output [2: 0] Funct3,
 	output [4: 0] RS1,
-	output [31: 0] Imm
+	output signed [31: 0] Imm
     );
 
 // [BEGIN USER SIGNALS]
@@ -38,63 +38,34 @@ wire  Zero = 1'b0;
 wire  One = 1'b1;
 wire  true = 1'b1;
 wire  false = 1'b0;
-wire  RDecoders_L14F42T43_Expr = 1'b0;
+wire  InstructionDecoders_L14F42T43_Expr = 1'b0;
 wire  [32:1] Inputs_Instruction;
 wire  [32:1] Bits;
 wire signed  [32:1] ZeroU32;
-wire  [7:1] RDecoders_L15F38T48_Index;
-wire  [5:1] RDecoders_L29F34T45_Index;
-wire  [3:1] RDecoders_L30F38T50_Index;
-wire  [5:1] RDecoders_L31F35T47_Index;
-wire  [32:1] RDecoders_L32F35T81_Source;
-wire  [20:1] RDecoders_L32F51T66_Index;
-wire  [12:1] RDecoders_L32F68T80_Index;
+wire  [7:1] InstructionDecoders_L15F38T48_Index;
+wire  [5:1] InstructionDecoders_L29F34T45_Index;
+wire  [3:1] InstructionDecoders_L30F38T50_Index;
+wire  [5:1] InstructionDecoders_L31F35T47_Index;
+wire  [12:1] InstructionDecoders_L32F35T64_Source;
+wire  [12:1] InstructionDecoders_L32F51T63_Index;
+wire signed  [12:1] InstructionDecoders_L32F35T73_SignChange;
+wire signed  [32:1] InstructionDecoders_L32F35T85_Resize;
 assign Inputs_Instruction = Instruction/*cast*/;
 assign Bits = Inputs_Instruction/*cast*/;
-assign ZeroU32 = { {31{1'b0}}, RDecoders_L14F42T43_Expr }/*expand*/;
-assign RDecoders_L15F38T48_Index = Bits[7:1]/*cast*/;
-assign OpCode = RDecoders_L15F38T48_Index/*cast*/;
-assign RDecoders_L29F34T45_Index = Bits[12:8]/*cast*/;
-assign RD = RDecoders_L29F34T45_Index/*cast*/;
-assign RDecoders_L30F38T50_Index = Bits[15:13]/*cast*/;
-assign Funct3 = RDecoders_L30F38T50_Index/*cast*/;
-assign RDecoders_L31F35T47_Index = Bits[20:16]/*cast*/;
-assign RS1 = RDecoders_L31F35T47_Index/*cast*/;
-assign RDecoders_L32F51T66_Index = ZeroU32[32:13]/*cast*/;
-assign RDecoders_L32F68T80_Index = Bits[32:21]/*cast*/;
-assign RDecoders_L32F35T81_Source[1] = RDecoders_L32F51T66_Index[1];
-assign RDecoders_L32F35T81_Source[2] = RDecoders_L32F51T66_Index[2];
-assign RDecoders_L32F35T81_Source[3] = RDecoders_L32F51T66_Index[3];
-assign RDecoders_L32F35T81_Source[4] = RDecoders_L32F51T66_Index[4];
-assign RDecoders_L32F35T81_Source[5] = RDecoders_L32F51T66_Index[5];
-assign RDecoders_L32F35T81_Source[6] = RDecoders_L32F51T66_Index[6];
-assign RDecoders_L32F35T81_Source[7] = RDecoders_L32F51T66_Index[7];
-assign RDecoders_L32F35T81_Source[8] = RDecoders_L32F51T66_Index[8];
-assign RDecoders_L32F35T81_Source[9] = RDecoders_L32F51T66_Index[9];
-assign RDecoders_L32F35T81_Source[10] = RDecoders_L32F51T66_Index[10];
-assign RDecoders_L32F35T81_Source[11] = RDecoders_L32F51T66_Index[11];
-assign RDecoders_L32F35T81_Source[12] = RDecoders_L32F51T66_Index[12];
-assign RDecoders_L32F35T81_Source[13] = RDecoders_L32F51T66_Index[13];
-assign RDecoders_L32F35T81_Source[14] = RDecoders_L32F51T66_Index[14];
-assign RDecoders_L32F35T81_Source[15] = RDecoders_L32F51T66_Index[15];
-assign RDecoders_L32F35T81_Source[16] = RDecoders_L32F51T66_Index[16];
-assign RDecoders_L32F35T81_Source[17] = RDecoders_L32F51T66_Index[17];
-assign RDecoders_L32F35T81_Source[18] = RDecoders_L32F51T66_Index[18];
-assign RDecoders_L32F35T81_Source[19] = RDecoders_L32F51T66_Index[19];
-assign RDecoders_L32F35T81_Source[20] = RDecoders_L32F51T66_Index[20];
-assign RDecoders_L32F35T81_Source[21] = RDecoders_L32F68T80_Index[1];
-assign RDecoders_L32F35T81_Source[22] = RDecoders_L32F68T80_Index[2];
-assign RDecoders_L32F35T81_Source[23] = RDecoders_L32F68T80_Index[3];
-assign RDecoders_L32F35T81_Source[24] = RDecoders_L32F68T80_Index[4];
-assign RDecoders_L32F35T81_Source[25] = RDecoders_L32F68T80_Index[5];
-assign RDecoders_L32F35T81_Source[26] = RDecoders_L32F68T80_Index[6];
-assign RDecoders_L32F35T81_Source[27] = RDecoders_L32F68T80_Index[7];
-assign RDecoders_L32F35T81_Source[28] = RDecoders_L32F68T80_Index[8];
-assign RDecoders_L32F35T81_Source[29] = RDecoders_L32F68T80_Index[9];
-assign RDecoders_L32F35T81_Source[30] = RDecoders_L32F68T80_Index[10];
-assign RDecoders_L32F35T81_Source[31] = RDecoders_L32F68T80_Index[11];
-assign RDecoders_L32F35T81_Source[32] = RDecoders_L32F68T80_Index[12];
-assign Imm = RDecoders_L32F35T81_Source/*cast*/;
+assign ZeroU32 = { {31{1'b0}}, InstructionDecoders_L14F42T43_Expr }/*expand*/;
+assign InstructionDecoders_L15F38T48_Index = Bits[7:1]/*cast*/;
+assign OpCode = InstructionDecoders_L15F38T48_Index/*cast*/;
+assign InstructionDecoders_L29F34T45_Index = Bits[12:8]/*cast*/;
+assign RD = InstructionDecoders_L29F34T45_Index/*cast*/;
+assign InstructionDecoders_L30F38T50_Index = Bits[15:13]/*cast*/;
+assign Funct3 = InstructionDecoders_L30F38T50_Index/*cast*/;
+assign InstructionDecoders_L31F35T47_Index = Bits[20:16]/*cast*/;
+assign RS1 = InstructionDecoders_L31F35T47_Index/*cast*/;
+assign InstructionDecoders_L32F51T63_Index = Bits[32:21]/*cast*/;
+assign InstructionDecoders_L32F35T64_Source = InstructionDecoders_L32F51T63_Index/*cast*/;
+assign InstructionDecoders_L32F35T73_SignChange = InstructionDecoders_L32F35T64_Source/*cast*/;
+assign InstructionDecoders_L32F35T85_Resize = { {20{InstructionDecoders_L32F35T73_SignChange[12]}}, InstructionDecoders_L32F35T73_SignChange }/*expand*/;
+assign Imm = InstructionDecoders_L32F35T85_Resize/*cast*/;
 // [BEGIN USER ARCHITECTURE]
 // [END USER ARCHITECTURE]
 endmodule
