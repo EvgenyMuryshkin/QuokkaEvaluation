@@ -50,7 +50,7 @@ wire  [8:1] LogicRAMModule_L25F36T49_Index;
 wire  [8:1] LogicRAMModule_L25F52T65_Index;
 wire  [8:1] LogicRAMModule_L25F68T81_Index;
 wire  [8:1] LogicRAMModule_L25F84T97_Index;
-wire  [8:1] LogicRAMModule_L25F28T104_Expr;
+wire  [8:1] LogicRAMModule_L25F28T104_Cast;
 reg  [2:1] State_Index = 2'b00;
 wire  [2:1] State_IndexDefault = 2'b00;
 wire  [11:1] LogicRAMModule_L25F35T103_Expr;
@@ -147,8 +147,8 @@ assign LogicRAMModule_L25F36T65_Expr_1 = { {2{1'b0}}, LogicRAMModule_L25F36T49_I
 assign LogicRAMModule_L25F36T65_Expr_2 = { {2{1'b0}}, LogicRAMModule_L25F52T65_Index }/*expand*/;
 assign Inputs_Value = Value/*cast*/;
 assign LogicRAMModule_L28F9L31T10_LogicRAMModule_L30F31T54_Index = LogicRAMModule_L28F9L31T10_LogicRAMModule_L30F32T47_Expr[2:1]/*cast*/;
-assign LogicRAMModule_L25F28T104_Expr = LogicRAMModule_L25F35T103_Expr[8:1]/*truncate*/;
-assign Avg = LogicRAMModule_L25F28T104_Expr/*cast*/;
+assign LogicRAMModule_L25F28T104_Cast = LogicRAMModule_L25F35T103_Expr[8:1]/*truncate*/;
+assign Avg = LogicRAMModule_L25F28T104_Cast/*cast*/;
 // [BEGIN USER ARCHITECTURE]
 // [END USER ARCHITECTURE]
 endmodule

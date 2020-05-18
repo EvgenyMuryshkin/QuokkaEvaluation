@@ -1,4 +1,6 @@
-﻿namespace Quokka.RTL.Simulatot
+﻿using Quokka.VCD;
+
+namespace Quokka.RTL.Simulator
 {
     public class RTLSimulatorContext
     {
@@ -9,5 +11,8 @@
 
         public int Clock { get; set; }
         public int Iteration { get; set; }
+
+        public VCDSignalsSnapshot ControlScope { get; set; }
+        public VCDVariable ClockSignal { get; set; }
     }
 }

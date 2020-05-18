@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\RTL\Quokka.RTL.Simulator\Quokka.RTL.Simulator.csproj" />
     <ProjectReference Include="..\QRV32.CPU\QRV32.CPU.csproj" />
   </ItemGroup>
 

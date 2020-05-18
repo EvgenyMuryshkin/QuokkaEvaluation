@@ -58,9 +58,9 @@ wire  Inputs_Ack;
 wire  Inputs_Bit;
 reg  [2:1] NextState_FSM = 2'b00;
 reg  [8:1] NextState_Data = 8'b00000000;
-wire  [8:1] ReceiverModule_L10F29T58_Expr;
 wire  [8:1] PartialData;
-wire  [8:1] ReceiverModule_L13F9L41T10_ReceiverModule_L25F21L27T22_ReceiverModule_L26F42T81_Expr;
+wire  [8:1] ReceiverModule_L10F29T58_Cast;
+wire  [8:1] ReceiverModule_L13F9L41T10_ReceiverModule_L25F21L27T22_ReceiverModule_L26F42T81_Cast;
 reg  [2:1] State_FSM = 2'b00;
 wire  [2:1] State_FSMDefault = 2'b00;
 reg  [8:1] State_Data = 8'b00000000;
@@ -135,7 +135,7 @@ end
 end
 else if ( ReceiverModule_L13F9L41T10_ReceiverModule_L23F17L32T27_Case == 1 ) begin
 if ( Inputs_IsValid == 1 ) begin
-NextState_Data = ReceiverModule_L13F9L41T10_ReceiverModule_L25F21L27T22_ReceiverModule_L26F42T81_Expr/*cast*/;
+NextState_Data = ReceiverModule_L13F9L41T10_ReceiverModule_L25F21L27T22_ReceiverModule_L26F42T81_Cast/*cast*/;
 end
 else begin
 NextState_FSM = ReceiverModule_L13F9L41T10_ReceiverModule_L29F21L31T22_ReceiverModule_L30F41T66_Expr/*cast*/;
@@ -164,9 +164,9 @@ assign ReceiverModule_L13F9L41T10_ReceiverModule_L25F21L27T22_ReceiverModule_L26
 assign Inputs_IsValid = IsValid;
 assign Inputs_Ack = Ack;
 assign Inputs_Bit = Bit;
-assign ReceiverModule_L10F29T58_Expr = ReceiverModule_L10F36T57_Lookup/*cast*/;
-assign PartialData = ReceiverModule_L10F29T58_Expr/*cast*/;
-assign ReceiverModule_L13F9L41T10_ReceiverModule_L25F21L27T22_ReceiverModule_L26F42T81_Expr = ReceiverModule_L13F9L41T10_ReceiverModule_L25F21L27T22_ReceiverModule_L26F49T80_Expr/*cast*/;
+assign ReceiverModule_L10F29T58_Cast = ReceiverModule_L10F36T57_Lookup/*cast*/;
+assign PartialData = ReceiverModule_L10F29T58_Cast/*cast*/;
+assign ReceiverModule_L13F9L41T10_ReceiverModule_L25F21L27T22_ReceiverModule_L26F42T81_Cast = ReceiverModule_L13F9L41T10_ReceiverModule_L25F21L27T22_ReceiverModule_L26F49T80_Expr/*cast*/;
 assign HasData = ReceiverModule_L8F32T71_Expr;
 assign Data = State_Data/*cast*/;
 assign ReceiverModule_L10F36T57_Lookup1 = { {7{1'b0}}, ReceiverModule_L10F56T57_Expr }/*expand*/;

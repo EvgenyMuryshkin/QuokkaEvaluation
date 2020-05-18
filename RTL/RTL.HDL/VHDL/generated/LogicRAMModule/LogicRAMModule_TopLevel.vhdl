@@ -59,7 +59,7 @@ signal LogicRAMModule_L25F36T49_Index : unsigned(8 downto 1)  := "00000000";
 signal LogicRAMModule_L25F52T65_Index : unsigned(8 downto 1)  := "00000000";
 signal LogicRAMModule_L25F68T81_Index : unsigned(8 downto 1)  := "00000000";
 signal LogicRAMModule_L25F84T97_Index : unsigned(8 downto 1)  := "00000000";
-signal LogicRAMModule_L25F28T104_Expr : unsigned(8 downto 1)  := "00000000";
+signal LogicRAMModule_L25F28T104_Cast : unsigned(8 downto 1)  := "00000000";
 signal State_Index : unsigned(2 downto 1)  := "00";
 constant State_IndexDefault : unsigned(2 downto 1)  := "00";
 signal LogicRAMModule_L25F35T103_Expr : unsigned(11 downto 1)  := "00000000000";
@@ -155,7 +155,7 @@ end loop;
 NextState_Buff(TO_INTEGER(State_Index)) <= unsigned(Inputs_Value);
 NextState_Index <= unsigned(LogicRAMModule_L28F9L31T10_LogicRAMModule_L30F31T54_Index);
 end process;
-process(LogicRAMModule_L25F28T104_Expr, LogicRAMModule_L25F35T103_Expr, LogicRAMModule_L25F36T49_Index, LogicRAMModule_L25F36T65_Expr, LogicRAMModule_L25F36T81_Expr, LogicRAMModule_L25F36T97_Expr, LogicRAMModule_L25F52T65_Index, LogicRAMModule_L25F68T81_Index, LogicRAMModule_L25F84T97_Index, LogicRAMModule_L28F9L31T10_LogicRAMModule_L30F32T47_Expr, State_Buff, State_Index, Value)
+process(LogicRAMModule_L25F28T104_Cast, LogicRAMModule_L25F35T103_Expr, LogicRAMModule_L25F36T49_Index, LogicRAMModule_L25F36T65_Expr, LogicRAMModule_L25F36T81_Expr, LogicRAMModule_L25F36T97_Expr, LogicRAMModule_L25F52T65_Index, LogicRAMModule_L25F68T81_Index, LogicRAMModule_L25F84T97_Index, LogicRAMModule_L28F9L31T10_LogicRAMModule_L30F32T47_Expr, State_Buff, State_Index, Value)
 begin
 LogicRAMModule_L25F36T49_Index <= State_Buff(bit_to_integer(LogicRAMModule_L25F47T48_Expr));
 LogicRAMModule_L25F52T65_Index <= State_Buff(bit_to_integer(LogicRAMModule_L25F63T64_Expr));
@@ -172,8 +172,8 @@ LogicRAMModule_L25F36T65_Expr_1 <= signed(resize(LogicRAMModule_L25F36T49_Index,
 LogicRAMModule_L25F36T65_Expr_2 <= signed(resize(LogicRAMModule_L25F52T65_Index, LogicRAMModule_L25F36T65_Expr_2'length));
 Inputs_Value <= unsigned(Value);
 LogicRAMModule_L28F9L31T10_LogicRAMModule_L30F31T54_Index <= unsigned(LogicRAMModule_L28F9L31T10_LogicRAMModule_L30F32T47_Expr(2 downto 1));
-LogicRAMModule_L25F28T104_Expr <= unsigned(LogicRAMModule_L25F35T103_Expr(8 downto 1));
-Avg <= unsigned(LogicRAMModule_L25F28T104_Expr);
+LogicRAMModule_L25F28T104_Cast <= unsigned(LogicRAMModule_L25F35T103_Expr(8 downto 1));
+Avg <= unsigned(LogicRAMModule_L25F28T104_Cast);
 end process;
 -- [BEGIN USER ARCHITECTURE]
 -- [END USER ARCHITECTURE]

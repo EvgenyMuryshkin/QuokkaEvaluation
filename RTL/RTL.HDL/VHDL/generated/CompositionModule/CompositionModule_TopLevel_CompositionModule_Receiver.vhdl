@@ -63,9 +63,9 @@ signal Inputs_Ack : std_logic := '0';
 signal Inputs_Bit : std_logic := '0';
 signal NextState_FSM : unsigned(2 downto 1)  := "00";
 signal NextState_Data : unsigned(8 downto 1)  := "00000000";
-signal ReceiverModule_L10F29T58_Expr : unsigned(8 downto 1)  := "00000000";
 signal PartialData : unsigned(8 downto 1)  := "00000000";
-signal ReceiverModule_L13F9L41T10_ReceiverModule_L25F21L27T22_ReceiverModule_L26F42T81_Expr : unsigned(8 downto 1)  := "00000000";
+signal ReceiverModule_L10F29T58_Cast : unsigned(8 downto 1)  := "00000000";
+signal ReceiverModule_L13F9L41T10_ReceiverModule_L25F21L27T22_ReceiverModule_L26F42T81_Cast : unsigned(8 downto 1)  := "00000000";
 signal State_FSM : unsigned(2 downto 1)  := "00";
 constant State_FSMDefault : unsigned(2 downto 1)  := "00";
 signal State_Data : unsigned(8 downto 1)  := "00000000";
@@ -143,7 +143,7 @@ ReceiverModule_L10F36T57_Lookup <= "00000000";
 end case;
 
 end process;
-process(Inputs_Ack, Inputs_IsValid, PartialData, ReceiverModule_L13F9L41T10_ReceiverModule_L16F17L22T27_Case, ReceiverModule_L13F9L41T10_ReceiverModule_L23F17L32T27_Case, ReceiverModule_L13F9L41T10_ReceiverModule_L25F21L27T22_ReceiverModule_L26F42T81_Expr, ReceiverModule_L13F9L41T10_ReceiverModule_L33F17L39T27_Case, State_Data, State_FSM)
+process(Inputs_Ack, Inputs_IsValid, PartialData, ReceiverModule_L13F9L41T10_ReceiverModule_L16F17L22T27_Case, ReceiverModule_L13F9L41T10_ReceiverModule_L23F17L32T27_Case, ReceiverModule_L13F9L41T10_ReceiverModule_L25F21L27T22_ReceiverModule_L26F42T81_Cast, ReceiverModule_L13F9L41T10_ReceiverModule_L33F17L39T27_Case, State_Data, State_FSM)
 begin
 NextState_FSM <= unsigned(State_FSM);
 NextState_Data <= unsigned(State_Data);
@@ -154,7 +154,7 @@ NextState_FSM <= (1 => ReceiverModule_L13F9L41T10_ReceiverModule_L18F21L21T22_Re
 end if;
 elsif ( ReceiverModule_L13F9L41T10_ReceiverModule_L23F17L32T27_Case = '1' ) then
 if ( Inputs_IsValid = '1' ) then
-NextState_Data <= unsigned(ReceiverModule_L13F9L41T10_ReceiverModule_L25F21L27T22_ReceiverModule_L26F42T81_Expr);
+NextState_Data <= unsigned(ReceiverModule_L13F9L41T10_ReceiverModule_L25F21L27T22_ReceiverModule_L26F42T81_Cast);
 else
 NextState_FSM <= unsigned(ReceiverModule_L13F9L41T10_ReceiverModule_L29F21L31T22_ReceiverModule_L30F41T66_Expr);
 end if;
@@ -165,7 +165,7 @@ NextState_Data <= (1 => ReceiverModule_L13F9L41T10_ReceiverModule_L35F21L38T22_R
 end if;
 end if;
 end process;
-process(Ack, Bit, Inputs_Bit, IsValid, PartialData, ReceiverModule_L10F29T58_Expr, ReceiverModule_L10F36T57_Lookup, ReceiverModule_L13F9L41T10_ReceiverModule_L25F21L27T22_ReceiverModule_L26F49T80_Expr, ReceiverModule_L13F9L41T10_ReceiverModule_L25F21L27T22_ReceiverModule_L26F50T65_Expr, ReceiverModule_L8F32T71_Expr, State_Data, State_FSM)
+process(Ack, Bit, Inputs_Bit, IsValid, PartialData, ReceiverModule_L10F29T58_Cast, ReceiverModule_L10F36T57_Lookup, ReceiverModule_L13F9L41T10_ReceiverModule_L25F21L27T22_ReceiverModule_L26F49T80_Expr, ReceiverModule_L13F9L41T10_ReceiverModule_L25F21L27T22_ReceiverModule_L26F50T65_Expr, ReceiverModule_L8F32T71_Expr, State_Data, State_FSM)
 begin
 ReceiverModule_L10F36T57_LookupMultiplexerAddress <= Inputs_Bit;
 ReceiverModule_L13F9L41T10_ReceiverModule_L16F17L22T27_CaseLhs <= signed(resize(State_FSM, ReceiverModule_L13F9L41T10_ReceiverModule_L16F17L22T27_CaseLhs'length));
@@ -182,9 +182,9 @@ ReceiverModule_L13F9L41T10_ReceiverModule_L25F21L27T22_ReceiverModule_L26F50T65_
 Inputs_IsValid <= IsValid;
 Inputs_Ack <= Ack;
 Inputs_Bit <= Bit;
-ReceiverModule_L10F29T58_Expr <= unsigned(ReceiverModule_L10F36T57_Lookup);
-PartialData <= unsigned(ReceiverModule_L10F29T58_Expr);
-ReceiverModule_L13F9L41T10_ReceiverModule_L25F21L27T22_ReceiverModule_L26F42T81_Expr <= unsigned(ReceiverModule_L13F9L41T10_ReceiverModule_L25F21L27T22_ReceiverModule_L26F49T80_Expr);
+ReceiverModule_L10F29T58_Cast <= unsigned(ReceiverModule_L10F36T57_Lookup);
+PartialData <= unsigned(ReceiverModule_L10F29T58_Cast);
+ReceiverModule_L13F9L41T10_ReceiverModule_L25F21L27T22_ReceiverModule_L26F42T81_Cast <= unsigned(ReceiverModule_L13F9L41T10_ReceiverModule_L25F21L27T22_ReceiverModule_L26F49T80_Expr);
 HasData <= ReceiverModule_L8F32T71_Expr;
 Data <= unsigned(State_Data);
 ReceiverModule_L10F36T57_Lookup1 <= (1 => ReceiverModule_L10F56T57_Expr, others => '0');

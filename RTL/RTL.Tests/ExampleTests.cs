@@ -1,7 +1,7 @@
 ﻿using Experimental.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Quokka.RTL;
-using Quokka.RTL.Simulatot;
+using Quokka.RTL.Simulator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,7 +51,7 @@ namespace RTL.Modules
             
             for (var idx = 0; idx < buff.Length; idx++)
             {
-                sim.TopLevel.Schedule(() => new CombinationalROMModuleInputs() 
+                sim.TopLevel.Cycle(new CombinationalROMModuleInputs() 
                 {
                     ReadAddress1 = (byte)idx,
                     ReadAddress2 = (byte)(255 - idx)
@@ -268,12 +268,10 @@ namespace RTL.Modules
             sim.IsRunning = (cb) => cb.Clock == 0;
             Assert.AreEqual(false, sim.TopLevel.O);
 
-            sim.TopLevel.Schedule(() => new GateInputs() { I1 = true, I2 = false });
-            sim.Run();
+            sim.TopLevel.Cycle(new GateInputs() { I1 = true, I2 = false });
             Assert.AreEqual(false, sim.TopLevel.O);
 
-            sim.TopLevel.Schedule(() => new GateInputs() { I1 = true, I2 = true });
-            sim.Run();
+            sim.TopLevel.Cycle(new GateInputs() { I1 = true, I2 = true });
             Assert.AreEqual(true, sim.TopLevel.O);
         }
 
@@ -284,12 +282,10 @@ namespace RTL.Modules
             sim.IsRunning = (cb) => cb.Clock == 0;
             Assert.AreEqual(false, sim.TopLevel.O);
 
-            sim.TopLevel.Schedule(() => new GateInputs() { I1 = false, I2 = false });
-            sim.Run();
+            sim.TopLevel.Cycle(new GateInputs() { I1 = false, I2 = false });
             Assert.AreEqual(false, sim.TopLevel.O);
 
-            sim.TopLevel.Schedule(() => new GateInputs() { I1 = true, I2 = false });
-            sim.Run();
+            sim.TopLevel.Cycle(new GateInputs() { I1 = true, I2 = false });
             Assert.AreEqual(true, sim.TopLevel.O);
         }
 
@@ -300,16 +296,13 @@ namespace RTL.Modules
             sim.IsRunning = (cb) => cb.Clock == 0;
             Assert.AreEqual(false, sim.TopLevel.O);
 
-            sim.TopLevel.Schedule(() => new GateInputs() { I1 = false, I2 = false });
-            sim.Run();
+            sim.TopLevel.Cycle(new GateInputs() { I1 = false, I2 = false });
             Assert.AreEqual(false, sim.TopLevel.O);
 
-            sim.TopLevel.Schedule(() => new GateInputs() { I1 = true, I2 = false });
-            sim.Run();
+            sim.TopLevel.Cycle(new GateInputs() { I1 = true, I2 = false });
             Assert.AreEqual(true, sim.TopLevel.O);
 
-            sim.TopLevel.Schedule(() => new GateInputs() { I1 = true, I2 = true });
-            sim.Run();
+            sim.TopLevel.Cycle(new GateInputs() { I1 = true, I2 = true });
             Assert.AreEqual(false, sim.TopLevel.O);
         }
 

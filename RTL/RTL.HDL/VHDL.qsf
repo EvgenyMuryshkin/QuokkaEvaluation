@@ -1,4 +1,4 @@
-set_global_assignment -name TOP_LEVEL_ENTITY CombinationalROMModule_TopLevel
+set_global_assignment -name TOP_LEVEL_ENTITY XorGateModule_TopLevel
 # -------------------------------------------------------------------------- #
 #
 # Copyright (C) 1991-2010 Altera Corporation
