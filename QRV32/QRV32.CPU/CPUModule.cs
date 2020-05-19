@@ -72,6 +72,17 @@ namespace QRV32.CPU
             ALU.Schedule(() => new ALUModuleInputs() { Op1 = ALUOp1, Op2 = ALUOp2 });
         }
 
+        void OnOPIMM()
+        {
+            NextState.WBDataReady = true;
+            switch((OPIMMCodes)(byte)ID.Funct3)
+            {
+                case OPIMMCodes.ADDI:
+                    NextState.WBData = ALU.ADD;
+                    break;
+            }
+        }
+
         protected override void OnStage()
         {
             switch (State.State)
@@ -99,8 +110,7 @@ namespace QRV32.CPU
                     switch ((OpCodes)(byte)ID.OpCode)
                     {
                         case OpCodes.OPIMM:
-                            NextState.WBDataReady = true;
-                            NextState.WBData = ALU.ADD;
+                            OnOPIMM();
                             break;
                         default:
                             NextState.State = CPUState.Halt;

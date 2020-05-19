@@ -63,6 +63,11 @@ namespace QRV32.Tests
             sim.RunTillInstructionFetch();
 
             Assert.AreEqual((uint)0xA, tl.Regs.State.x[1]);
+
+            // ADDI r1, r1, FF6 (-10)
+            sim.ClockCycle(new CPUModuleInputs() { MemReady = true, MemReadValue = 0xFF608093 });
+            sim.RunTillInstructionFetch();
+            Assert.AreEqual((uint)0, tl.Regs.State.x[1]);
         }
     }
 }
