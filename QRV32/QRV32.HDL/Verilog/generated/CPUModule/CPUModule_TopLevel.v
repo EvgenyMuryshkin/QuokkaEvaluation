@@ -46,23 +46,26 @@ wire  [3:1] CPUModule_L46F79T80_Expr = 3'b100;
 wire  CPUModule_L47F44T58_Expr = 1'b0;
 wire  [2:1] CPUModule_L52F41T52_Expr = 2'b10;
 wire  [3:1] CPUModule_L53F39T50_Expr = 3'b101;
-wire  CPUModule_L87F9L128T10_CPUModule_L90F22T36_Expr = 1'b0;
-wire  CPUModule_L87F9L128T10_CPUModule_L91F39T50_Expr = 1'b1;
-wire  CPUModule_L87F9L128T10_CPUModule_L93F22T33_Expr = 1'b1;
-wire  [2:1] CPUModule_L87F9L128T10_CPUModule_L95F21L98T22_CPUModule_L96F43T54_Expr = 2'b10;
-wire  [2:1] CPUModule_L87F9L128T10_CPUModule_L100F22T33_Expr = 2'b10;
-wire  [2:1] CPUModule_L87F9L128T10_CPUModule_L102F21L104T22_CPUModule_L103F43T54_Expr = 2'b11;
-wire  [2:1] CPUModule_L87F9L128T10_CPUModule_L106F22T33_Expr = 2'b11;
-wire  [3:1] CPUModule_L87F9L128T10_CPUModule_L107F39T51_Expr = 3'b100;
-wire  CPUModule_L87F9L128T10_CPUModule_L108F45T50_Expr = 1'b0;
-wire  [5:1] CPUModule_L87F9L128T10_CPUModule_L112F30T43_Expr = 5'b10011;
-wire  CPUModule_L87F9L128T10_OnOPIMM_CPUModule_L76F9L84T10_CPUModule_L77F37T41_Expr = 1'b1;
-wire  CPUModule_L87F9L128T10_OnOPIMM_CPUModule_L76F9L84T10_CPUModule_L80F22T37_Expr = 1'b0;
-wire  [3:1] CPUModule_L87F9L128T10_CPUModule_L116F47T60_Expr = 3'b110;
-wire  [3:1] CPUModule_L87F9L128T10_CPUModule_L121F22T34_Expr = 3'b100;
-wire  [3:1] CPUModule_L87F9L128T10_CPUModule_L122F39T50_Expr = 3'b101;
-wire  [3:1] CPUModule_L87F9L128T10_CPUModule_L124F22T33_Expr = 3'b101;
-wire  CPUModule_L87F9L128T10_CPUModule_L125F39T50_Expr = 1'b1;
+wire  CPUModule_L99F9L140T10_CPUModule_L102F22T36_Expr = 1'b0;
+wire  CPUModule_L99F9L140T10_CPUModule_L103F39T50_Expr = 1'b1;
+wire  CPUModule_L99F9L140T10_CPUModule_L105F22T33_Expr = 1'b1;
+wire  [2:1] CPUModule_L99F9L140T10_CPUModule_L107F21L110T22_CPUModule_L108F43T54_Expr = 2'b10;
+wire  [2:1] CPUModule_L99F9L140T10_CPUModule_L112F22T33_Expr = 2'b10;
+wire  [2:1] CPUModule_L99F9L140T10_CPUModule_L114F21L116T22_CPUModule_L115F43T54_Expr = 2'b11;
+wire  [2:1] CPUModule_L99F9L140T10_CPUModule_L118F22T33_Expr = 2'b11;
+wire  [3:1] CPUModule_L99F9L140T10_CPUModule_L119F39T51_Expr = 3'b100;
+wire  CPUModule_L99F9L140T10_CPUModule_L120F45T50_Expr = 1'b0;
+wire  [5:1] CPUModule_L99F9L140T10_CPUModule_L124F30T43_Expr = 5'b10011;
+wire  CPUModule_L99F9L140T10_OnOPIMM_CPUModule_L85F9L96T10_CPUModule_L86F37T41_Expr = 1'b1;
+wire  CPUModule_L99F9L140T10_OnOPIMM_CPUModule_L85F9L96T10_CPUModule_L89F22T37_Expr = 1'b0;
+wire  [2:1] CPUModule_L99F9L140T10_OnOPIMM_CPUModule_L85F9L96T10_CPUModule_L92F22T37_Expr = 2'b10;
+wire  CPUModule_L99F9L140T10_OnOPIMM_CPUModule_L85F9L96T10_CPUModule_L93F57T58_Expr = 1'b1;
+wire  CPUModule_L99F9L140T10_OnOPIMM_CPUModule_L85F9L96T10_CPUModule_L93F61T62_Expr = 1'b0;
+wire  [3:1] CPUModule_L99F9L140T10_CPUModule_L128F47T60_Expr = 3'b110;
+wire  [3:1] CPUModule_L99F9L140T10_CPUModule_L133F22T34_Expr = 3'b100;
+wire  [3:1] CPUModule_L99F9L140T10_CPUModule_L134F39T50_Expr = 3'b101;
+wire  [3:1] CPUModule_L99F9L140T10_CPUModule_L136F22T33_Expr = 3'b101;
+wire  CPUModule_L99F9L140T10_CPUModule_L137F39T50_Expr = 1'b1;
 wire  CPUModule_L42F47T58_Expr = 1'b1;
 wire  [32:1] Inputs_BaseAddress;
 wire  [32:1] Inputs_MemReadValue;
@@ -78,6 +81,10 @@ wire  [32:1] ALUOp1;
 wire signed  [32:1] ALUOp2;
 wire  RegsRead;
 wire  RegsWE;
+wire  [32:1] CMPLhs;
+wire  [32:1] CMPRhs;
+wire  [6:1] OpCode;
+wire  [3:1] OPIMMCode;
 wire  [32:1] ID_Instruction;
 wire  [7:1] ID_OpCode;
 wire  [5:1] ID_RD;
@@ -108,10 +115,19 @@ wire  [32:1] ALU_Op1;
 wire  [32:1] ALU_Op2;
 wire  [32:1] ALU_ADD;
 wire  ALU_ADDOverflow;
-wire  [8:1] CPUModule_L87F9L128T10_CPUModule_L110F38T53_Cast;
-reg  [6:1] CPUModule_L87F9L128T10_CPUModule_L110F29T53_Cast = 6'b000000;
-wire  [8:1] CPUModule_L87F9L128T10_OnOPIMM_CPUModule_L76F9L84T10_CPUModule_L78F32T47_Cast;
-reg  [3:1] CPUModule_L87F9L128T10_OnOPIMM_CPUModule_L76F9L84T10_CPUModule_L78F20T47_Cast = 3'b000;
+wire  [32:1] CMP_Lhs;
+wire  [32:1] CMP_Rhs;
+wire  CMP_EQ;
+wire  CMP_NEQ;
+wire  CMP_UGT;
+wire  CMP_ULT;
+wire  CMP_SGT;
+wire  CMP_SLT;
+wire  [8:1] CPUModule_L58F36T51_Cast;
+reg  [6:1] CPUModule_L58F27T51_Cast = 6'b000000;
+wire  [8:1] CPUModule_L59F45T60_Cast;
+reg  [3:1] CPUModule_L59F33T60_Cast = 3'b000;
+wire  [32:1] CPUModule_L99F9L140T10_OnOPIMM_CPUModule_L85F9L96T10_CPUModule_L93F40T63_Cast;
 wire  [32:1] IDInstructionID_InstructionHardLink;
 wire  [7:1] IDOpCodeID_OpCodeHardLink;
 wire  [5:1] IDRDID_RDHardLink;
@@ -142,6 +158,14 @@ wire  [32:1] ALUOp1ALU_Op1HardLink;
 wire  [32:1] ALUOp2ALU_Op2HardLink;
 wire  [32:1] ALUADDALU_ADDHardLink;
 wire  ALUADDOverflowALU_ADDOverflowHardLink;
+wire  [32:1] CMPLhsCMP_LhsHardLink;
+wire  [32:1] CMPRhsCMP_RhsHardLink;
+wire  CMPEQCMP_EQHardLink;
+wire  CMPNEQCMP_NEQHardLink;
+wire  CMPUGTCMP_UGTHardLink;
+wire  CMPULTCMP_ULTHardLink;
+wire  CMPSGTCMP_SGTHardLink;
+wire  CMPSLTCMP_SLTHardLink;
 reg  [3:1] State_State = 3'b000;
 wire  [3:1] State_StateDefault = 3'b000;
 reg  [32:1] State_Instruction = 32'b00000000000000000000000000000000;
@@ -174,37 +198,44 @@ wire signed  [4:1] CPUModule_L52F26T52_ExprRhs;
 wire  CPUModule_L53F24T50_Expr;
 wire signed  [4:1] CPUModule_L53F24T50_ExprLhs;
 wire signed  [4:1] CPUModule_L53F24T50_ExprRhs;
-wire  CPUModule_L87F9L128T10_CPUModule_L90F17L92T27_Case;
-wire signed  [4:1] CPUModule_L87F9L128T10_CPUModule_L90F17L92T27_CaseLhs;
-wire signed  [4:1] CPUModule_L87F9L128T10_CPUModule_L90F17L92T27_CaseRhs;
-wire  CPUModule_L87F9L128T10_CPUModule_L93F17L99T27_Case;
-wire signed  [4:1] CPUModule_L87F9L128T10_CPUModule_L93F17L99T27_CaseLhs;
-wire signed  [4:1] CPUModule_L87F9L128T10_CPUModule_L93F17L99T27_CaseRhs;
-wire  CPUModule_L87F9L128T10_CPUModule_L100F17L105T27_Case;
-wire signed  [4:1] CPUModule_L87F9L128T10_CPUModule_L100F17L105T27_CaseLhs;
-wire signed  [4:1] CPUModule_L87F9L128T10_CPUModule_L100F17L105T27_CaseRhs;
-wire  CPUModule_L87F9L128T10_CPUModule_L106F17L120T27_Case;
-wire signed  [4:1] CPUModule_L87F9L128T10_CPUModule_L106F17L120T27_CaseLhs;
-wire signed  [4:1] CPUModule_L87F9L128T10_CPUModule_L106F17L120T27_CaseRhs;
-wire  CPUModule_L87F9L128T10_CPUModule_L112F25L114T35_Case;
-wire signed  [7:1] CPUModule_L87F9L128T10_CPUModule_L112F25L114T35_CaseLhs;
-wire signed  [7:1] CPUModule_L87F9L128T10_CPUModule_L112F25L114T35_CaseRhs;
-wire  CPUModule_L87F9L128T10_OnOPIMM_CPUModule_L76F9L84T10_CPUModule_L80F17L82T27_Case;
-wire signed  [4:1] CPUModule_L87F9L128T10_OnOPIMM_CPUModule_L76F9L84T10_CPUModule_L80F17L82T27_CaseLhs;
-wire signed  [4:1] CPUModule_L87F9L128T10_OnOPIMM_CPUModule_L76F9L84T10_CPUModule_L80F17L82T27_CaseRhs;
-wire  CPUModule_L87F9L128T10_CPUModule_L121F17L123T27_Case;
-wire signed  [4:1] CPUModule_L87F9L128T10_CPUModule_L121F17L123T27_CaseLhs;
-wire signed  [4:1] CPUModule_L87F9L128T10_CPUModule_L121F17L123T27_CaseRhs;
-wire  CPUModule_L87F9L128T10_CPUModule_L124F17L126T27_Case;
-wire signed  [4:1] CPUModule_L87F9L128T10_CPUModule_L124F17L126T27_CaseLhs;
-wire signed  [4:1] CPUModule_L87F9L128T10_CPUModule_L124F17L126T27_CaseRhs;
+wire  CPUModule_L99F9L140T10_CPUModule_L102F17L104T27_Case;
+wire signed  [4:1] CPUModule_L99F9L140T10_CPUModule_L102F17L104T27_CaseLhs;
+wire signed  [4:1] CPUModule_L99F9L140T10_CPUModule_L102F17L104T27_CaseRhs;
+wire  CPUModule_L99F9L140T10_CPUModule_L105F17L111T27_Case;
+wire signed  [4:1] CPUModule_L99F9L140T10_CPUModule_L105F17L111T27_CaseLhs;
+wire signed  [4:1] CPUModule_L99F9L140T10_CPUModule_L105F17L111T27_CaseRhs;
+wire  CPUModule_L99F9L140T10_CPUModule_L112F17L117T27_Case;
+wire signed  [4:1] CPUModule_L99F9L140T10_CPUModule_L112F17L117T27_CaseLhs;
+wire signed  [4:1] CPUModule_L99F9L140T10_CPUModule_L112F17L117T27_CaseRhs;
+wire  CPUModule_L99F9L140T10_CPUModule_L118F17L132T27_Case;
+wire signed  [4:1] CPUModule_L99F9L140T10_CPUModule_L118F17L132T27_CaseLhs;
+wire signed  [4:1] CPUModule_L99F9L140T10_CPUModule_L118F17L132T27_CaseRhs;
+wire  CPUModule_L99F9L140T10_CPUModule_L124F25L126T35_Case;
+wire signed  [7:1] CPUModule_L99F9L140T10_CPUModule_L124F25L126T35_CaseLhs;
+wire signed  [7:1] CPUModule_L99F9L140T10_CPUModule_L124F25L126T35_CaseRhs;
+wire  CPUModule_L99F9L140T10_OnOPIMM_CPUModule_L85F9L96T10_CPUModule_L89F17L91T27_Case;
+wire signed  [4:1] CPUModule_L99F9L140T10_OnOPIMM_CPUModule_L85F9L96T10_CPUModule_L89F17L91T27_CaseLhs;
+wire signed  [4:1] CPUModule_L99F9L140T10_OnOPIMM_CPUModule_L85F9L96T10_CPUModule_L89F17L91T27_CaseRhs;
+wire  CPUModule_L99F9L140T10_OnOPIMM_CPUModule_L85F9L96T10_CPUModule_L92F17L94T27_Case;
+wire signed  [4:1] CPUModule_L99F9L140T10_OnOPIMM_CPUModule_L85F9L96T10_CPUModule_L92F17L94T27_CaseLhs;
+wire signed  [4:1] CPUModule_L99F9L140T10_OnOPIMM_CPUModule_L85F9L96T10_CPUModule_L92F17L94T27_CaseRhs;
+wire  CPUModule_L99F9L140T10_CPUModule_L133F17L135T27_Case;
+wire signed  [4:1] CPUModule_L99F9L140T10_CPUModule_L133F17L135T27_CaseLhs;
+wire signed  [4:1] CPUModule_L99F9L140T10_CPUModule_L133F17L135T27_CaseRhs;
+wire  CPUModule_L99F9L140T10_CPUModule_L136F17L138T27_Case;
+wire signed  [4:1] CPUModule_L99F9L140T10_CPUModule_L136F17L138T27_CaseLhs;
+wire signed  [4:1] CPUModule_L99F9L140T10_CPUModule_L136F17L138T27_CaseRhs;
 wire  CPUModule_L42F32T58_Expr;
 wire signed  [4:1] CPUModule_L42F32T58_ExprLhs;
 wire signed  [4:1] CPUModule_L42F32T58_ExprRhs;
 reg  [32:1] CPUModule_L46F26T80_Lookup = 32'b00000000000000000000000000000000;
+reg  [32:1] CPUModule_L99F9L140T10_OnOPIMM_CPUModule_L85F9L96T10_CPUModule_L93F47T62_Lookup = 32'b00000000000000000000000000000000;
 wire  CPUModule_L46F26T80_LookupMultiplexerAddress;
 wire  [32:1] CPUModule_L46F26T80_Lookup1;
 wire  [32:1] CPUModule_L46F26T80_Lookup2;
+wire  CPUModule_L99F9L140T10_OnOPIMM_CPUModule_L85F9L96T10_CPUModule_L93F47T62_LookupMultiplexerAddress;
+wire  [32:1] CPUModule_L99F9L140T10_OnOPIMM_CPUModule_L85F9L96T10_CPUModule_L93F47T62_Lookup1;
+wire  [32:1] CPUModule_L99F9L140T10_OnOPIMM_CPUModule_L85F9L96T10_CPUModule_L93F47T62_Lookup2;
 wire  BoardSignals_Clock;
 wire  BoardSignals_Reset;
 wire  BoardSignals_Running;
@@ -233,14 +264,15 @@ assign CPUModule_L46F26T55_Expr = CPUModule_L46F26T55_ExprLhs == CPUModule_L46F2
 assign CPUModule_L47F29T58_Expr = CPUModule_L47F29T58_ExprLhs == CPUModule_L47F29T58_ExprRhs ? 1'b1 : 1'b0;
 assign CPUModule_L52F26T52_Expr = CPUModule_L52F26T52_ExprLhs == CPUModule_L52F26T52_ExprRhs ? 1'b1 : 1'b0;
 assign CPUModule_L53F24T50_Expr = CPUModule_L53F24T50_ExprLhs == CPUModule_L53F24T50_ExprRhs ? 1'b1 : 1'b0;
-assign CPUModule_L87F9L128T10_CPUModule_L90F17L92T27_Case = CPUModule_L87F9L128T10_CPUModule_L90F17L92T27_CaseLhs == CPUModule_L87F9L128T10_CPUModule_L90F17L92T27_CaseRhs ? 1'b1 : 1'b0;
-assign CPUModule_L87F9L128T10_CPUModule_L93F17L99T27_Case = CPUModule_L87F9L128T10_CPUModule_L93F17L99T27_CaseLhs == CPUModule_L87F9L128T10_CPUModule_L93F17L99T27_CaseRhs ? 1'b1 : 1'b0;
-assign CPUModule_L87F9L128T10_CPUModule_L100F17L105T27_Case = CPUModule_L87F9L128T10_CPUModule_L100F17L105T27_CaseLhs == CPUModule_L87F9L128T10_CPUModule_L100F17L105T27_CaseRhs ? 1'b1 : 1'b0;
-assign CPUModule_L87F9L128T10_CPUModule_L106F17L120T27_Case = CPUModule_L87F9L128T10_CPUModule_L106F17L120T27_CaseLhs == CPUModule_L87F9L128T10_CPUModule_L106F17L120T27_CaseRhs ? 1'b1 : 1'b0;
-assign CPUModule_L87F9L128T10_CPUModule_L112F25L114T35_Case = CPUModule_L87F9L128T10_CPUModule_L112F25L114T35_CaseLhs == CPUModule_L87F9L128T10_CPUModule_L112F25L114T35_CaseRhs ? 1'b1 : 1'b0;
-assign CPUModule_L87F9L128T10_OnOPIMM_CPUModule_L76F9L84T10_CPUModule_L80F17L82T27_Case = CPUModule_L87F9L128T10_OnOPIMM_CPUModule_L76F9L84T10_CPUModule_L80F17L82T27_CaseLhs == CPUModule_L87F9L128T10_OnOPIMM_CPUModule_L76F9L84T10_CPUModule_L80F17L82T27_CaseRhs ? 1'b1 : 1'b0;
-assign CPUModule_L87F9L128T10_CPUModule_L121F17L123T27_Case = CPUModule_L87F9L128T10_CPUModule_L121F17L123T27_CaseLhs == CPUModule_L87F9L128T10_CPUModule_L121F17L123T27_CaseRhs ? 1'b1 : 1'b0;
-assign CPUModule_L87F9L128T10_CPUModule_L124F17L126T27_Case = CPUModule_L87F9L128T10_CPUModule_L124F17L126T27_CaseLhs == CPUModule_L87F9L128T10_CPUModule_L124F17L126T27_CaseRhs ? 1'b1 : 1'b0;
+assign CPUModule_L99F9L140T10_CPUModule_L102F17L104T27_Case = CPUModule_L99F9L140T10_CPUModule_L102F17L104T27_CaseLhs == CPUModule_L99F9L140T10_CPUModule_L102F17L104T27_CaseRhs ? 1'b1 : 1'b0;
+assign CPUModule_L99F9L140T10_CPUModule_L105F17L111T27_Case = CPUModule_L99F9L140T10_CPUModule_L105F17L111T27_CaseLhs == CPUModule_L99F9L140T10_CPUModule_L105F17L111T27_CaseRhs ? 1'b1 : 1'b0;
+assign CPUModule_L99F9L140T10_CPUModule_L112F17L117T27_Case = CPUModule_L99F9L140T10_CPUModule_L112F17L117T27_CaseLhs == CPUModule_L99F9L140T10_CPUModule_L112F17L117T27_CaseRhs ? 1'b1 : 1'b0;
+assign CPUModule_L99F9L140T10_CPUModule_L118F17L132T27_Case = CPUModule_L99F9L140T10_CPUModule_L118F17L132T27_CaseLhs == CPUModule_L99F9L140T10_CPUModule_L118F17L132T27_CaseRhs ? 1'b1 : 1'b0;
+assign CPUModule_L99F9L140T10_CPUModule_L124F25L126T35_Case = CPUModule_L99F9L140T10_CPUModule_L124F25L126T35_CaseLhs == CPUModule_L99F9L140T10_CPUModule_L124F25L126T35_CaseRhs ? 1'b1 : 1'b0;
+assign CPUModule_L99F9L140T10_OnOPIMM_CPUModule_L85F9L96T10_CPUModule_L89F17L91T27_Case = CPUModule_L99F9L140T10_OnOPIMM_CPUModule_L85F9L96T10_CPUModule_L89F17L91T27_CaseLhs == CPUModule_L99F9L140T10_OnOPIMM_CPUModule_L85F9L96T10_CPUModule_L89F17L91T27_CaseRhs ? 1'b1 : 1'b0;
+assign CPUModule_L99F9L140T10_OnOPIMM_CPUModule_L85F9L96T10_CPUModule_L92F17L94T27_Case = CPUModule_L99F9L140T10_OnOPIMM_CPUModule_L85F9L96T10_CPUModule_L92F17L94T27_CaseLhs == CPUModule_L99F9L140T10_OnOPIMM_CPUModule_L85F9L96T10_CPUModule_L92F17L94T27_CaseRhs ? 1'b1 : 1'b0;
+assign CPUModule_L99F9L140T10_CPUModule_L133F17L135T27_Case = CPUModule_L99F9L140T10_CPUModule_L133F17L135T27_CaseLhs == CPUModule_L99F9L140T10_CPUModule_L133F17L135T27_CaseRhs ? 1'b1 : 1'b0;
+assign CPUModule_L99F9L140T10_CPUModule_L136F17L138T27_Case = CPUModule_L99F9L140T10_CPUModule_L136F17L138T27_CaseLhs == CPUModule_L99F9L140T10_CPUModule_L136F17L138T27_CaseRhs ? 1'b1 : 1'b0;
 assign CPUModule_L42F32T58_Expr = CPUModule_L42F32T58_ExprLhs == CPUModule_L42F32T58_ExprRhs ? 1'b1 : 1'b0;
 assign CPUModule_L45F22T81_Expr = CPUModule_L45F22T81_Expr_1 | CPUModule_L45F22T81_Expr_2;
 assign CPUModule_L53F24T71_Expr = CPUModule_L53F24T71_Expr_1 & CPUModule_L53F24T71_Expr_2;
@@ -318,6 +350,25 @@ CPUModule_TopLevel_CPUModule_ALU CPUModule_TopLevel_CPUModule_ALU
 	.ADDOverflow (ALUADDOverflowALU_ADDOverflowHardLink)
 
 );
+CPUModule_TopLevel_CPUModule_CMP CPUModule_TopLevel_CPUModule_CMP
+(
+// [BEGIN USER MAP FOR CMP]
+// [END USER MAP FOR CMP]
+	.BoardSignals_Clock (BoardSignals_Clock),
+	.BoardSignals_Reset (BoardSignals_Reset),
+	.BoardSignals_Running (BoardSignals_Running),
+	.BoardSignals_Starting (BoardSignals_Starting),
+	.BoardSignals_Started (BoardSignals_Started),
+	.Lhs (CMPLhsCMP_LhsHardLink),
+	.Rhs (CMPRhsCMP_RhsHardLink),
+	.EQ (CMPEQCMP_EQHardLink),
+	.NEQ (CMPNEQCMP_NEQHardLink),
+	.UGT (CMPUGTCMP_UGTHardLink),
+	.ULT (CMPULTCMP_ULTHardLink),
+	.SGT (CMPSGTCMP_SGTHardLink),
+	.SLT (CMPSLTCMP_SLTHardLink)
+
+);
 always @*
 begin
 case (CPUModule_L46F26T80_LookupMultiplexerAddress)
@@ -332,46 +383,62 @@ endcase
 end
 always @*
 begin
+case (CPUModule_L99F9L140T10_OnOPIMM_CPUModule_L85F9L96T10_CPUModule_L93F47T62_LookupMultiplexerAddress)
+    'b0:
+CPUModule_L99F9L140T10_OnOPIMM_CPUModule_L85F9L96T10_CPUModule_L93F47T62_Lookup = CPUModule_L99F9L140T10_OnOPIMM_CPUModule_L85F9L96T10_CPUModule_L93F47T62_Lookup1;
+    'b1:
+CPUModule_L99F9L140T10_OnOPIMM_CPUModule_L85F9L96T10_CPUModule_L93F47T62_Lookup = CPUModule_L99F9L140T10_OnOPIMM_CPUModule_L85F9L96T10_CPUModule_L93F47T62_Lookup2;
+  default:
+CPUModule_L99F9L140T10_OnOPIMM_CPUModule_L85F9L96T10_CPUModule_L93F47T62_Lookup = 'b00000000000000000000000000000000;
+endcase
+
+end
+always @*
+begin
 NextState_State = State_State/*cast*/;
 NextState_Instruction = State_Instruction/*cast*/;
 NextState_WBDataReady = State_WBDataReady;
 NextState_WBData = State_WBData/*cast*/;
-if ( CPUModule_L87F9L128T10_CPUModule_L90F17L92T27_Case == 1 ) begin
-NextState_State = { {2{1'b0}}, CPUModule_L87F9L128T10_CPUModule_L91F39T50_Expr }/*expand*/;
+if ( CPUModule_L99F9L140T10_CPUModule_L102F17L104T27_Case == 1 ) begin
+NextState_State = { {2{1'b0}}, CPUModule_L99F9L140T10_CPUModule_L103F39T50_Expr }/*expand*/;
 end
-else if ( CPUModule_L87F9L128T10_CPUModule_L93F17L99T27_Case == 1 ) begin
+else if ( CPUModule_L99F9L140T10_CPUModule_L105F17L111T27_Case == 1 ) begin
 if ( Inputs_MemReady == 1 ) begin
-NextState_State = { {1{1'b0}}, CPUModule_L87F9L128T10_CPUModule_L95F21L98T22_CPUModule_L96F43T54_Expr }/*expand*/;
+NextState_State = { {1{1'b0}}, CPUModule_L99F9L140T10_CPUModule_L107F21L110T22_CPUModule_L108F43T54_Expr }/*expand*/;
 NextState_Instruction = Inputs_MemReadValue/*cast*/;
 end
 end
-else if ( CPUModule_L87F9L128T10_CPUModule_L100F17L105T27_Case == 1 ) begin
+else if ( CPUModule_L99F9L140T10_CPUModule_L112F17L117T27_Case == 1 ) begin
 if ( Regs_Ready == 1 ) begin
-NextState_State = { {1{1'b0}}, CPUModule_L87F9L128T10_CPUModule_L102F21L104T22_CPUModule_L103F43T54_Expr }/*expand*/;
+NextState_State = { {1{1'b0}}, CPUModule_L99F9L140T10_CPUModule_L114F21L116T22_CPUModule_L115F43T54_Expr }/*expand*/;
 end
 end
-else if ( CPUModule_L87F9L128T10_CPUModule_L106F17L120T27_Case == 1 ) begin
-NextState_State = CPUModule_L87F9L128T10_CPUModule_L107F39T51_Expr/*cast*/;
-NextState_WBDataReady = CPUModule_L87F9L128T10_CPUModule_L108F45T50_Expr;
-if ( CPUModule_L87F9L128T10_CPUModule_L112F25L114T35_Case == 1 ) begin
-NextState_WBDataReady = CPUModule_L87F9L128T10_OnOPIMM_CPUModule_L76F9L84T10_CPUModule_L77F37T41_Expr;
-if ( CPUModule_L87F9L128T10_OnOPIMM_CPUModule_L76F9L84T10_CPUModule_L80F17L82T27_Case == 1 ) begin
+else if ( CPUModule_L99F9L140T10_CPUModule_L118F17L132T27_Case == 1 ) begin
+NextState_State = CPUModule_L99F9L140T10_CPUModule_L119F39T51_Expr/*cast*/;
+NextState_WBDataReady = CPUModule_L99F9L140T10_CPUModule_L120F45T50_Expr;
+if ( CPUModule_L99F9L140T10_CPUModule_L124F25L126T35_Case == 1 ) begin
+NextState_WBDataReady = CPUModule_L99F9L140T10_OnOPIMM_CPUModule_L85F9L96T10_CPUModule_L86F37T41_Expr;
+if ( CPUModule_L99F9L140T10_OnOPIMM_CPUModule_L85F9L96T10_CPUModule_L89F17L91T27_Case == 1 ) begin
 NextState_WBData = ALU_ADD/*cast*/;
+end
+else if ( CPUModule_L99F9L140T10_OnOPIMM_CPUModule_L85F9L96T10_CPUModule_L92F17L94T27_Case == 1 ) begin
+NextState_WBData = CPUModule_L99F9L140T10_OnOPIMM_CPUModule_L85F9L96T10_CPUModule_L93F40T63_Cast/*cast*/;
 end
 end
 else begin
-NextState_State = CPUModule_L87F9L128T10_CPUModule_L116F47T60_Expr/*cast*/;
+NextState_State = CPUModule_L99F9L140T10_CPUModule_L128F47T60_Expr/*cast*/;
 end
 end
-else if ( CPUModule_L87F9L128T10_CPUModule_L121F17L123T27_Case == 1 ) begin
-NextState_State = CPUModule_L87F9L128T10_CPUModule_L122F39T50_Expr/*cast*/;
+else if ( CPUModule_L99F9L140T10_CPUModule_L133F17L135T27_Case == 1 ) begin
+NextState_State = CPUModule_L99F9L140T10_CPUModule_L134F39T50_Expr/*cast*/;
 end
-else if ( CPUModule_L87F9L128T10_CPUModule_L124F17L126T27_Case == 1 ) begin
-NextState_State = { {2{1'b0}}, CPUModule_L87F9L128T10_CPUModule_L125F39T50_Expr }/*expand*/;
+else if ( CPUModule_L99F9L140T10_CPUModule_L136F17L138T27_Case == 1 ) begin
+NextState_State = { {2{1'b0}}, CPUModule_L99F9L140T10_CPUModule_L137F39T50_Expr }/*expand*/;
 end
 
 end
 assign CPUModule_L46F26T80_LookupMultiplexerAddress = CPUModule_L46F26T55_Expr;
+assign CPUModule_L99F9L140T10_OnOPIMM_CPUModule_L85F9L96T10_CPUModule_L93F47T62_LookupMultiplexerAddress = CMP_SLT;
 assign CPUModule_L45F22T51_ExprLhs = { {1{1'b0}}, State_State }/*expand*/;
 assign CPUModule_L45F22T51_ExprRhs = { {3{1'b0}}, CPUModule_L45F37T51_Expr }/*expand*/;
 assign CPUModule_L45F55T81_ExprLhs = { {1{1'b0}}, State_State }/*expand*/;
@@ -384,22 +451,24 @@ assign CPUModule_L52F26T52_ExprLhs = { {1{1'b0}}, State_State }/*expand*/;
 assign CPUModule_L52F26T52_ExprRhs = { {2{1'b0}}, CPUModule_L52F41T52_Expr }/*expand*/;
 assign CPUModule_L53F24T50_ExprLhs = { {1{1'b0}}, State_State }/*expand*/;
 assign CPUModule_L53F24T50_ExprRhs = { {1{1'b0}}, CPUModule_L53F39T50_Expr }/*expand*/;
-assign CPUModule_L87F9L128T10_CPUModule_L90F17L92T27_CaseLhs = { {1{1'b0}}, State_State }/*expand*/;
-assign CPUModule_L87F9L128T10_CPUModule_L90F17L92T27_CaseRhs = { {3{1'b0}}, CPUModule_L87F9L128T10_CPUModule_L90F22T36_Expr }/*expand*/;
-assign CPUModule_L87F9L128T10_CPUModule_L93F17L99T27_CaseLhs = { {1{1'b0}}, State_State }/*expand*/;
-assign CPUModule_L87F9L128T10_CPUModule_L93F17L99T27_CaseRhs = { {3{1'b0}}, CPUModule_L87F9L128T10_CPUModule_L93F22T33_Expr }/*expand*/;
-assign CPUModule_L87F9L128T10_CPUModule_L100F17L105T27_CaseLhs = { {1{1'b0}}, State_State }/*expand*/;
-assign CPUModule_L87F9L128T10_CPUModule_L100F17L105T27_CaseRhs = { {2{1'b0}}, CPUModule_L87F9L128T10_CPUModule_L100F22T33_Expr }/*expand*/;
-assign CPUModule_L87F9L128T10_CPUModule_L106F17L120T27_CaseLhs = { {1{1'b0}}, State_State }/*expand*/;
-assign CPUModule_L87F9L128T10_CPUModule_L106F17L120T27_CaseRhs = { {2{1'b0}}, CPUModule_L87F9L128T10_CPUModule_L106F22T33_Expr }/*expand*/;
-assign CPUModule_L87F9L128T10_CPUModule_L112F25L114T35_CaseLhs = { {1{1'b0}}, CPUModule_L87F9L128T10_CPUModule_L110F29T53_Cast }/*expand*/;
-assign CPUModule_L87F9L128T10_CPUModule_L112F25L114T35_CaseRhs = { {2{1'b0}}, CPUModule_L87F9L128T10_CPUModule_L112F30T43_Expr }/*expand*/;
-assign CPUModule_L87F9L128T10_OnOPIMM_CPUModule_L76F9L84T10_CPUModule_L80F17L82T27_CaseLhs = { {1{1'b0}}, CPUModule_L87F9L128T10_OnOPIMM_CPUModule_L76F9L84T10_CPUModule_L78F20T47_Cast }/*expand*/;
-assign CPUModule_L87F9L128T10_OnOPIMM_CPUModule_L76F9L84T10_CPUModule_L80F17L82T27_CaseRhs = { {3{1'b0}}, CPUModule_L87F9L128T10_OnOPIMM_CPUModule_L76F9L84T10_CPUModule_L80F22T37_Expr }/*expand*/;
-assign CPUModule_L87F9L128T10_CPUModule_L121F17L123T27_CaseLhs = { {1{1'b0}}, State_State }/*expand*/;
-assign CPUModule_L87F9L128T10_CPUModule_L121F17L123T27_CaseRhs = { {1{1'b0}}, CPUModule_L87F9L128T10_CPUModule_L121F22T34_Expr }/*expand*/;
-assign CPUModule_L87F9L128T10_CPUModule_L124F17L126T27_CaseLhs = { {1{1'b0}}, State_State }/*expand*/;
-assign CPUModule_L87F9L128T10_CPUModule_L124F17L126T27_CaseRhs = { {1{1'b0}}, CPUModule_L87F9L128T10_CPUModule_L124F22T33_Expr }/*expand*/;
+assign CPUModule_L99F9L140T10_CPUModule_L102F17L104T27_CaseLhs = { {1{1'b0}}, State_State }/*expand*/;
+assign CPUModule_L99F9L140T10_CPUModule_L102F17L104T27_CaseRhs = { {3{1'b0}}, CPUModule_L99F9L140T10_CPUModule_L102F22T36_Expr }/*expand*/;
+assign CPUModule_L99F9L140T10_CPUModule_L105F17L111T27_CaseLhs = { {1{1'b0}}, State_State }/*expand*/;
+assign CPUModule_L99F9L140T10_CPUModule_L105F17L111T27_CaseRhs = { {3{1'b0}}, CPUModule_L99F9L140T10_CPUModule_L105F22T33_Expr }/*expand*/;
+assign CPUModule_L99F9L140T10_CPUModule_L112F17L117T27_CaseLhs = { {1{1'b0}}, State_State }/*expand*/;
+assign CPUModule_L99F9L140T10_CPUModule_L112F17L117T27_CaseRhs = { {2{1'b0}}, CPUModule_L99F9L140T10_CPUModule_L112F22T33_Expr }/*expand*/;
+assign CPUModule_L99F9L140T10_CPUModule_L118F17L132T27_CaseLhs = { {1{1'b0}}, State_State }/*expand*/;
+assign CPUModule_L99F9L140T10_CPUModule_L118F17L132T27_CaseRhs = { {2{1'b0}}, CPUModule_L99F9L140T10_CPUModule_L118F22T33_Expr }/*expand*/;
+assign CPUModule_L99F9L140T10_CPUModule_L124F25L126T35_CaseLhs = { {1{1'b0}}, OpCode }/*expand*/;
+assign CPUModule_L99F9L140T10_CPUModule_L124F25L126T35_CaseRhs = { {2{1'b0}}, CPUModule_L99F9L140T10_CPUModule_L124F30T43_Expr }/*expand*/;
+assign CPUModule_L99F9L140T10_OnOPIMM_CPUModule_L85F9L96T10_CPUModule_L89F17L91T27_CaseLhs = { {1{1'b0}}, OPIMMCode }/*expand*/;
+assign CPUModule_L99F9L140T10_OnOPIMM_CPUModule_L85F9L96T10_CPUModule_L89F17L91T27_CaseRhs = { {3{1'b0}}, CPUModule_L99F9L140T10_OnOPIMM_CPUModule_L85F9L96T10_CPUModule_L89F22T37_Expr }/*expand*/;
+assign CPUModule_L99F9L140T10_OnOPIMM_CPUModule_L85F9L96T10_CPUModule_L92F17L94T27_CaseLhs = { {1{1'b0}}, OPIMMCode }/*expand*/;
+assign CPUModule_L99F9L140T10_OnOPIMM_CPUModule_L85F9L96T10_CPUModule_L92F17L94T27_CaseRhs = { {2{1'b0}}, CPUModule_L99F9L140T10_OnOPIMM_CPUModule_L85F9L96T10_CPUModule_L92F22T37_Expr }/*expand*/;
+assign CPUModule_L99F9L140T10_CPUModule_L133F17L135T27_CaseLhs = { {1{1'b0}}, State_State }/*expand*/;
+assign CPUModule_L99F9L140T10_CPUModule_L133F17L135T27_CaseRhs = { {1{1'b0}}, CPUModule_L99F9L140T10_CPUModule_L133F22T34_Expr }/*expand*/;
+assign CPUModule_L99F9L140T10_CPUModule_L136F17L138T27_CaseLhs = { {1{1'b0}}, State_State }/*expand*/;
+assign CPUModule_L99F9L140T10_CPUModule_L136F17L138T27_CaseRhs = { {1{1'b0}}, CPUModule_L99F9L140T10_CPUModule_L136F22T33_Expr }/*expand*/;
 assign CPUModule_L42F32T58_ExprLhs = { {1{1'b0}}, State_State }/*expand*/;
 assign CPUModule_L42F32T58_ExprRhs = { {3{1'b0}}, CPUModule_L42F47T58_Expr }/*expand*/;
 assign CPUModule_L45F22T81_Expr_1 = CPUModule_L45F22T51_Expr;
@@ -416,6 +485,12 @@ assign ALUOp1 = Regs_RS1/*cast*/;
 assign ALUOp2 = ID_ITypeImm/*cast*/;
 assign RegsRead = CPUModule_L52F26T52_Expr;
 assign RegsWE = CPUModule_L53F24T71_Expr;
+assign CMPLhs = Regs_RS1/*cast*/;
+assign CMPRhs = Regs_RS2/*cast*/;
+assign CPUModule_L58F36T51_Cast = { {1{1'b0}}, ID_OpCode }/*expand*/;
+assign OpCode = CPUModule_L58F27T51_Cast/*cast*/;
+assign CPUModule_L59F45T60_Cast = { {5{1'b0}}, ID_Funct3 }/*expand*/;
+assign OPIMMCode = CPUModule_L59F33T60_Cast/*cast*/;
 assign ID_Instruction = State_Instruction/*cast*/;
 assign PC_WE = PCWE;
 assign PC_Offset = PCOffset/*cast*/;
@@ -428,8 +503,9 @@ assign Regs_WriteData = State_WBData/*cast*/;
 assign Regs_WE = RegsWE;
 assign ALU_Op1 = ALUOp1/*cast*/;
 assign ALU_Op2 = ALUOp2/*cast*/;
-assign CPUModule_L87F9L128T10_CPUModule_L110F38T53_Cast = { {1{1'b0}}, ID_OpCode }/*expand*/;
-assign CPUModule_L87F9L128T10_OnOPIMM_CPUModule_L76F9L84T10_CPUModule_L78F32T47_Cast = { {5{1'b0}}, ID_Funct3 }/*expand*/;
+assign CMP_Lhs = CMPLhs/*cast*/;
+assign CMP_Rhs = CMPRhs/*cast*/;
+assign CPUModule_L99F9L140T10_OnOPIMM_CPUModule_L85F9L96T10_CPUModule_L93F40T63_Cast = CPUModule_L99F9L140T10_OnOPIMM_CPUModule_L85F9L96T10_CPUModule_L93F47T62_Lookup/*cast*/;
 assign MemRead = CPUModule_L42F32T58_Expr;
 assign MemAddress = PC_PC/*cast*/;
 assign IDInstructionID_InstructionHardLink = ID_Instruction/*cast*/;
@@ -462,8 +538,18 @@ assign ALUOp1ALU_Op1HardLink = ALU_Op1/*cast*/;
 assign ALUOp2ALU_Op2HardLink = ALU_Op2/*cast*/;
 assign ALU_ADD = ALUADDALU_ADDHardLink/*cast*/;
 assign ALU_ADDOverflow = ALUADDOverflowALU_ADDOverflowHardLink;
+assign CMPLhsCMP_LhsHardLink = CMP_Lhs/*cast*/;
+assign CMPRhsCMP_RhsHardLink = CMP_Rhs/*cast*/;
+assign CMP_EQ = CMPEQCMP_EQHardLink;
+assign CMP_NEQ = CMPNEQCMP_NEQHardLink;
+assign CMP_UGT = CMPUGTCMP_UGTHardLink;
+assign CMP_ULT = CMPULTCMP_ULTHardLink;
+assign CMP_SGT = CMPSGTCMP_SGTHardLink;
+assign CMP_SLT = CMPSLTCMP_SLTHardLink;
 assign CPUModule_L46F26T80_Lookup1 = { {29{1'b0}}, CPUModule_L46F79T80_Expr }/*expand*/;
 assign CPUModule_L46F26T80_Lookup2 = Inputs_BaseAddress/*cast*/;
+assign CPUModule_L99F9L140T10_OnOPIMM_CPUModule_L85F9L96T10_CPUModule_L93F47T62_Lookup1 = { {31{1'b0}}, CPUModule_L99F9L140T10_OnOPIMM_CPUModule_L85F9L96T10_CPUModule_L93F61T62_Expr }/*expand*/;
+assign CPUModule_L99F9L140T10_OnOPIMM_CPUModule_L85F9L96T10_CPUModule_L93F47T62_Lookup2 = { {31{1'b0}}, CPUModule_L99F9L140T10_OnOPIMM_CPUModule_L85F9L96T10_CPUModule_L93F57T58_Expr }/*expand*/;
 // [BEGIN USER ARCHITECTURE]
 // [END USER ARCHITECTURE]
 endmodule

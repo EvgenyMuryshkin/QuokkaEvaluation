@@ -38,7 +38,7 @@ namespace QRV32.CPU
         internal PCModule PC = new PCModule();
         internal RegistersBlockModule Regs = new RegistersBlockModule();
         internal ALUModule ALU = new ALUModule();
-
+        internal CompareModule CMP = new CompareModule();
         public bool MemRead => State.State == CPUState.IF;
         public uint MemAddress => PC.PC;
 
@@ -51,6 +51,13 @@ namespace QRV32.CPU
 
         bool RegsRead => State.State == CPUState.ID;
         bool RegsWE => State.State == CPUState.WB && State.WBDataReady;
+
+        RTLBitArray CMPLhs => Regs.RS1;
+        RTLBitArray CMPRhs => Regs.RS2;
+
+        OpCodes OpCode => (OpCodes)(byte)ID.OpCode;
+        OPIMMCodes OPIMMCode => (OPIMMCodes)(byte)ID.Funct3;
+
         protected override void OnSchedule(Func<CPUModuleInputs> inputsFactory)
         {
             base.OnSchedule(inputsFactory);
@@ -70,15 +77,20 @@ namespace QRV32.CPU
             });
 
             ALU.Schedule(() => new ALUModuleInputs() { Op1 = ALUOp1, Op2 = ALUOp2 });
+
+            CMP.Schedule(() => new CompareModuleInputs() { Lhs = CMPLhs, Rhs = CMPRhs });
         }
 
         void OnOPIMM()
         {
             NextState.WBDataReady = true;
-            switch((OPIMMCodes)(byte)ID.Funct3)
+            switch(OPIMMCode)
             {
                 case OPIMMCodes.ADDI:
                     NextState.WBData = ALU.ADD;
+                    break;
+                case OPIMMCodes.SLTI:
+                    NextState.WBData = (uint)(CMP.SLT ? 1 : 0);
                     break;
             }
         }
@@ -107,7 +119,7 @@ namespace QRV32.CPU
                     NextState.State = CPUState.MEM;
                     NextState.WBDataReady = false;
 
-                    switch ((OpCodes)(byte)ID.OpCode)
+                    switch (OpCode)
                     {
                         case OpCodes.OPIMM:
                             OnOPIMM();
