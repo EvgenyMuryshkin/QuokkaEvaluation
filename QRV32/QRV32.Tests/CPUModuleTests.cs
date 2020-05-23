@@ -1,44 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using QRV32.CPU;
-using Quokka.RTL.Simulator;
-using System;
 
 namespace QRV32.Tests
 {
-    class CPUSimulator : RTLSimulator<CPUModule, CPUModuleInputs>
-    {
-        public CPUSimulator()
-        {
-
-        }
-
-        public void RunTillInstructionFetch()
-        {
-            int counter = 0;
-
-            while (!TopLevel.MemRead)
-            {
-                if (++counter > 100)
-                    throw new Exception("CPU seems to hang");
-
-                switch (TopLevel.State.State)
-                {
-                    case CPUState.Halt:
-                        throw new Exception($"Halted");
-                    case CPUState.MEM:
-                        // TODO: implement memory operation
-                        break;
-                    case CPUState.IF:
-                        return;
-                }
-
-                ClockCycle();
-            }
-        }
-    }
-
     [TestClass]
-    public class CPUModuleTests
+    public class CPUModuleTests : CPUModuleBaseTest
     {
         [TestMethod]
         public void ResetTest()
@@ -57,16 +23,15 @@ namespace QRV32.Tests
             var sim = new CPUSimulator();
             var tl = sim.TopLevel;
             sim.ClockCycle();
+
+            var instructions = FromAsmFile("addi");
+
             // ADDI r1, r0, 10
-            sim.ClockCycle(new CPUModuleInputs() { MemReady = true, MemReadValue = 0xA00093 });
-
-            sim.RunTillInstructionFetch();
-
+            sim.RunInstruction(instructions[0]);
             Assert.AreEqual((uint)0xA, tl.Regs.State.x[1]);
 
             // ADDI r1, r1, FF6 (-10)
-            sim.ClockCycle(new CPUModuleInputs() { MemReady = true, MemReadValue = 0xFF608093 });
-            sim.RunTillInstructionFetch();
+            sim.RunInstruction(instructions[1]);
             Assert.AreEqual((uint)0, tl.Regs.State.x[1]);
         }
     }
