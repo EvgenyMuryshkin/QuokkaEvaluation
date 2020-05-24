@@ -13,8 +13,8 @@ namespace QRV32.CPU
         bool internalEQ => Inputs.Lhs == Inputs.Rhs;
         public bool EQ => internalEQ;
         public bool NEQ => !internalEQ;
-        public bool UGT => Inputs.Lhs > Inputs.Rhs;
-        public bool ULT => Inputs.Lhs < Inputs.Rhs;
+        public bool UGT => Inputs.Lhs.Unsigned() > Inputs.Rhs.Unsigned();
+        public bool ULT => Inputs.Lhs.Unsigned() < Inputs.Rhs.Unsigned();
 
         public bool SGT => Inputs.Lhs.Signed() > Inputs.Rhs.Signed();
         public bool SLT => Inputs.Lhs.Signed() < Inputs.Rhs.Signed();

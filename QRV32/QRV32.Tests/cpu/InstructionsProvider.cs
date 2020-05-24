@@ -1,13 +1,14 @@
 ﻿using Quokka.RISCV.Integration.Client;
+using Quokka.RISCV.Integration.Engine;
 using System;
 using System.IO;
 using System.Linq;
 
 namespace QRV32.Tests
 {
-    public class CPUModuleBaseTest
+    public class InstructionsProvider
     {
-        protected virtual string ProjectLocation(string current = null)
+        public virtual string ProjectLocation(string current = null)
         {
             if (current == "")
                 return "";
@@ -19,8 +20,8 @@ namespace QRV32.Tests
             return ProjectLocation(Path.GetDirectoryName(current));
         }
 
-        protected virtual string AsmFilesLocation => Path.Combine(ProjectLocation(), "asm");
-        protected virtual uint[] FromAsmFile(string fileName)
+        public virtual string AsmFilesLocation => Path.Combine(ProjectLocation(), "asm");
+        public virtual uint[] FromAsmFile(string fileName)
         {
             var files = Directory.EnumerateFiles(AsmFilesLocation, $"{fileName}.*").ToList();
 
@@ -33,11 +34,19 @@ namespace QRV32.Tests
             return FromAsmSource(File.ReadAllText(files[0]));
         }
 
-        protected virtual uint[] FromAsmSource(string asm)
+        public virtual uint[] FromAsmSource(string asmSource)
         {
             // making a API call to integration server.
-            // default implemetation just call locally running server (in docker or WSL on Windows or local process on Linux)
-            var instructions = RISCVIntegrationClient.Asm(new RISCVIntegrationEndpoint(), asm);
+
+            // on Linux, just uncomment next line and make local call to RISCV toolchain
+            // return Toolchain.Asm(asmSource);
+
+            // on Windows, integration server is required to run in Docker or WSL.
+            // Installation steps are same for WSL and for docker.
+            // https://github.com/EvgenyMuryshkin/Quokka.RISCV.Docker/blob/master/Dockerfile
+
+            // default implemetation calls locally running server running in Docker or WSL
+            var instructions = RISCVIntegrationClient.Asm(new RISCVIntegrationEndpoint(), asmSource);
             return instructions.Result;
         }
     }

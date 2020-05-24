@@ -4,7 +4,7 @@ using System;
 
 namespace QRV32.Tests
 {
-    class CPUSimulator : RTLSimulator<CPUModule, CPUModuleInputs>
+    public class CPUSimulator : RTLSimulator<CPUModule, CPUModuleInputs>
     {
         public CPUSimulator()
         {

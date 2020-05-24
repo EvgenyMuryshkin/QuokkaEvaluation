@@ -20,19 +20,34 @@ namespace QRV32.Tests
         [TestMethod]
         public void ADDI()
         {
-            var sim = new CPUSimulator();
+            var sim = PowerUp();
             var tl = sim.TopLevel;
-            sim.ClockCycle();
 
-            var instructions = FromAsmFile("addi");
+            var instructions = Inst.FromAsmFile("addi");
 
-            // ADDI r1, r0, 10
             sim.RunInstruction(instructions[0]);
             Assert.AreEqual((uint)0xA, tl.Regs.State.x[1]);
 
-            // ADDI r1, r1, FF6 (-10)
             sim.RunInstruction(instructions[1]);
             Assert.AreEqual((uint)0, tl.Regs.State.x[1]);
+        }
+
+        [TestMethod]
+        public void SLTI()
+        {
+            var sim = PowerUp();
+            var tl = sim.TopLevel;
+
+            var instructions = Inst.FromAsmFile("slti");
+
+            sim.RunInstruction(instructions[0]);
+            Assert.AreEqual(0xAU, tl.Regs.State.x[1]);
+
+            sim.RunInstruction(instructions[1]);
+            Assert.AreEqual(1U, tl.Regs.State.x[2]);
+
+            sim.RunInstruction(instructions[2]);
+            Assert.AreEqual(0U, tl.Regs.State.x[2]);
         }
     }
 }

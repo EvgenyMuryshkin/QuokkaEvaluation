@@ -53,7 +53,7 @@ namespace QRV32.CPU
         bool RegsWE => State.State == CPUState.WB && State.WBDataReady;
 
         RTLBitArray CMPLhs => Regs.RS1;
-        RTLBitArray CMPRhs => Regs.RS2;
+        RTLBitArray CMPRhs => ID.ITypeImm;
 
         OpCodes OpCode => (OpCodes)(byte)ID.OpCode;
         OPIMMCodes OPIMMCode => (OPIMMCodes)(byte)ID.Funct3;
@@ -62,9 +62,17 @@ namespace QRV32.CPU
         {
             base.OnSchedule(inputsFactory);
 
-            ID.Schedule(() => new InstructionDecoderInputs() { Instruction = State.Instruction });
+            ID.Schedule(() => new InstructionDecoderInputs() 
+            { 
+                Instruction = State.Instruction 
+            });
 
-            PC.Schedule(() => new PCModuleInputs() { WE = PCWE, Offset = PCOffset, Overwrite = PCOverwrite });
+            PC.Schedule(() => new PCModuleInputs() 
+            { 
+                WE = PCWE, 
+                Offset = PCOffset, 
+                Overwrite = PCOverwrite 
+            });
 
             Regs.Schedule(() => new RegistersModuleInput()
             {
@@ -76,9 +84,17 @@ namespace QRV32.CPU
                 WE = RegsWE
             });
 
-            ALU.Schedule(() => new ALUModuleInputs() { Op1 = ALUOp1, Op2 = ALUOp2 });
+            ALU.Schedule(() => new ALUModuleInputs() 
+            { 
+                Op1 = ALUOp1, 
+                Op2 = ALUOp2 
+            });
 
-            CMP.Schedule(() => new CompareModuleInputs() { Lhs = CMPLhs, Rhs = CMPRhs });
+            CMP.Schedule(() => new CompareModuleInputs() 
+            { 
+                Lhs = CMPLhs, 
+                Rhs = CMPRhs 
+            });
         }
 
         void OnOPIMM()
@@ -90,7 +106,10 @@ namespace QRV32.CPU
                     NextState.WBData = ALU.ADD;
                     break;
                 case OPIMMCodes.SLTI:
-                    NextState.WBData = (uint)(CMP.SLT ? 1 : 0);
+                    NextState.WBData = CMP.SLT ? 1U : 0U;
+                    break;
+                case OPIMMCodes.SLTIU:
+                    NextState.WBData = CMP.ULT ? 1U : 0U;
                     break;
             }
         }
