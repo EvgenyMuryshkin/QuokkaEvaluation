@@ -26,10 +26,10 @@ namespace QRV32.Tests
             var instructions = Inst.FromAsmFile("addi");
 
             sim.RunInstruction(instructions[0]);
-            Assert.AreEqual((uint)0xA, tl.Regs.State.x[1]);
+            Assert.AreEqual(0xAU, tl.Regs.State.x[1]);
 
             sim.RunInstruction(instructions[1]);
-            Assert.AreEqual((uint)0, tl.Regs.State.x[1]);
+            Assert.AreEqual(0U, tl.Regs.State.x[1]);
         }
 
         [TestMethod]
