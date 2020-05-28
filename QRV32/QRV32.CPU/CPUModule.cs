@@ -87,7 +87,8 @@ namespace QRV32.CPU
             ALU.Schedule(() => new ALUModuleInputs() 
             { 
                 Op1 = ALUOp1, 
-                Op2 = ALUOp2 
+                Op2 = ALUOp2,
+                SHAMT = ID.SHAMT
             });
 
             CMP.Schedule(() => new CompareModuleInputs() 
@@ -117,13 +118,26 @@ namespace QRV32.CPU
                     NextState.WBData = CMP.ULT ? 1U : 0U;
                     break;
                 case OPIMMCodes.ANDI:
-                    NextState.WBData = ALU.AND;
+                    NextState.WBData = ALU.resAND;
                     break;
                 case OPIMMCodes.ORI:
-                    NextState.WBData = ALU.OR;
+                    NextState.WBData = ALU.resOR;
                     break;
                 case OPIMMCodes.XORI:
-                    NextState.WBData = ALU.XOR;
+                    NextState.WBData = ALU.resXOR;
+                    break;
+                case OPIMMCodes.SLLI:
+                    NextState.WBData = ALU.SHLL;
+                    break;
+                case OPIMMCodes.SRLI_SRAI:
+                    if (ID.SHARITH)
+                    {
+                        NextState.WBData = ALU.SHRA;
+                    }
+                    else
+                    {
+                        NextState.WBData = ALU.SHRL;
+                    }
                     break;
                 default:
                     Halt();

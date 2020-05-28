@@ -2,8 +2,7 @@
   "profiles": {
     "Quokka.LocalCLI": {
       "commandName": "Project",
-      "commandLineArgs": "\"../../../QuokkaEvaluation/QRV32/QRV.32CPU/rtl.verilog.json\" -w",
-      "workingDirectory": "..\\SensorsBoard\\Device"
+      "commandLineArgs": "\"../../../QuokkaEvaluation/QRV32/QRV.32CPU/rtl.verilog.json\" -w"
     }
   }
 }

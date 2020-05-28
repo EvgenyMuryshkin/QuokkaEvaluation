@@ -384,10 +384,11 @@ namespace RTL.Modules
             var shifter = new ShifterModule();
             foreach (var shiftBy in Enumerable.Range(0, 8))
             {
+                var sb = new RTLBitArray(shiftBy).Unsigned().Resized(3);
                 shifter.Cycle(new ShifterInputs() 
                 { 
                     Value = shlData, 
-                    ShiftBy = new RTLBitArray(shiftBy).Unsigned().Resized(3)
+                    ShiftBy = sb
                 });
 
                 Assert.AreEqual(shlData >> shiftBy, shifter.SHRL);

@@ -10,22 +10,23 @@ namespace QRV32.CPU
 
     public class InstructionDecoderModule : RTLCombinationalModule<InstructionDecoderInputs>
     {
-        protected RTLBitArray Bits => Inputs.Instruction;
+        protected RTLBitArray internalBits => Inputs.Instruction;
+        protected RTLBitArray internalITypeImm => new RTLBitArray(internalBits[31, 20]).Signed().Resized(32);
         protected RTLBitArray ZeroU32 => 0;
-        public RTLBitArray OpCode => Bits[6, 0];
-        public RTLBitArray RD => Bits[11, 7];
-        public RTLBitArray RS1 => Bits[19, 15];
-        public RTLBitArray RS2 => Bits[24, 20];
-        public RTLBitArray Funct3 => Bits[14, 12];
-        public RTLBitArray Funct7 => Bits[31, 25];
-        public RTLBitArray RTypeImm => new RTLBitArray(Bits[31, 20]).Signed().Resized(32);
-        public RTLBitArray ITypeImm => new RTLBitArray(Bits[31, 20]).Signed().Resized(32);
-        public RTLBitArray STypeImm => new RTLBitArray(Bits[31, 25], Bits[11, 7]).Signed().Resized(32);
-        public RTLBitArray BTypeImm => new RTLBitArray(Bits[31], Bits[7], Bits[30, 25], Bits[11, 8], false).Signed().Resized(32);
-        public RTLBitArray UTypeImm => new RTLBitArray(Bits[31, 12], ZeroU32[11, 0]).Signed().Resized(32);
-        public RTLBitArray JTypeImm => new RTLBitArray(Bits[31], Bits[19, 12], Bits[20], Bits[30, 21], false).Signed().Resized(32);
+        public RTLBitArray OpCode => internalBits[6, 0];
+        public RTLBitArray RD => internalBits[11, 7];
+        public RTLBitArray RS1 => internalBits[19, 15];
+        public RTLBitArray RS2 => internalBits[24, 20];
+        public RTLBitArray Funct3 => internalBits[14, 12];
+        public RTLBitArray Funct7 => internalBits[31, 25];
+        public RTLBitArray RTypeImm => new RTLBitArray(internalBits[31, 20]).Signed().Resized(32);
+        public RTLBitArray ITypeImm => new RTLBitArray(internalBits[31, 20]).Signed().Resized(32);
+        public RTLBitArray STypeImm => new RTLBitArray(internalBits[31, 25], internalBits[11, 7]).Signed().Resized(32);
+        public RTLBitArray BTypeImm => new RTLBitArray(internalBits[31], internalBits[7], internalBits[30, 25], internalBits[11, 8], false).Signed().Resized(32);
+        public RTLBitArray UTypeImm => new RTLBitArray(internalBits[31, 12], ZeroU32[11, 0]).Signed().Resized(32);
+        public RTLBitArray JTypeImm => new RTLBitArray(internalBits[31], internalBits[19, 12], internalBits[20], internalBits[30, 21], false).Signed().Resized(32);
 
-        public RTLBitArray SHAMT => ITypeImm[4, 0];
-        public bool SHARITH => ITypeImm[10];
+        public RTLBitArray SHAMT => internalITypeImm[4, 0];
+        public bool SHARITH => internalITypeImm[10];
     }
 }
