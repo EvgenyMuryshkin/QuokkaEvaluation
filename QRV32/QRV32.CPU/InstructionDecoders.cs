@@ -24,5 +24,8 @@ namespace QRV32.CPU
         public RTLBitArray BTypeImm => new RTLBitArray(Bits[31], Bits[7], Bits[30, 25], Bits[11, 8], false).Signed().Resized(32);
         public RTLBitArray UTypeImm => new RTLBitArray(Bits[31, 12], ZeroU32[11, 0]).Signed().Resized(32);
         public RTLBitArray JTypeImm => new RTLBitArray(Bits[31], Bits[19, 12], Bits[20], Bits[30, 21], false).Signed().Resized(32);
+
+        public RTLBitArray SHAMT => ITypeImm[4, 0];
+        public bool SHARITH => ITypeImm[10];
     }
 }

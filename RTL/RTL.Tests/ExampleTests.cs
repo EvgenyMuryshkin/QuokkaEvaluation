@@ -374,6 +374,27 @@ namespace RTL.Modules
 
             Assert.AreEqual((byte)sourceData, (byte)result);
         }
+
+        [TestMethod]
+        public void ShifterTests()
+        {
+            var shlData = new RTLBitArray((byte)0x81);
+            var shaData = shlData.Signed();
+
+            var shifter = new ShifterModule();
+            foreach (var shiftBy in Enumerable.Range(0, 8))
+            {
+                shifter.Cycle(new ShifterInputs() 
+                { 
+                    Value = shlData, 
+                    ShiftBy = new RTLBitArray(shiftBy).Unsigned().Resized(3)
+                });
+
+                Assert.AreEqual(shlData >> shiftBy, shifter.SHRL);
+                Assert.AreEqual(shaData >> shiftBy, shifter.SHRA);
+                Assert.AreEqual(shlData << shiftBy, shifter.SHLL);
+            }
+        }
     }
 }
 

@@ -97,6 +97,11 @@ namespace QRV32.CPU
             });
         }
 
+        void Halt()
+        {
+            NextState.State = CPUState.Halt;
+        }
+
         void OnOPIMM()
         {
             NextState.WBDataReady = true;
@@ -110,6 +115,18 @@ namespace QRV32.CPU
                     break;
                 case OPIMMCodes.SLTIU:
                     NextState.WBData = CMP.ULT ? 1U : 0U;
+                    break;
+                case OPIMMCodes.ANDI:
+                    NextState.WBData = ALU.AND;
+                    break;
+                case OPIMMCodes.ORI:
+                    NextState.WBData = ALU.OR;
+                    break;
+                case OPIMMCodes.XORI:
+                    NextState.WBData = ALU.XOR;
+                    break;
+                default:
+                    Halt();
                     break;
             }
         }
@@ -144,7 +161,7 @@ namespace QRV32.CPU
                             OnOPIMM();
                             break;
                         default:
-                            NextState.State = CPUState.Halt;
+                            Halt();
                             break;
                     }
 
