@@ -28,5 +28,6 @@ namespace QRV32.CPU
 
         public RTLBitArray SHAMT => internalITypeImm[4, 0];
         public bool SHARITH => internalITypeImm[10];
+        public bool SUB => internalITypeImm[10];
     }
 }

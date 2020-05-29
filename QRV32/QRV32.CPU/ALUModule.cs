@@ -12,10 +12,13 @@ namespace QRV32.CPU
 
     public class ALUModule : RTLCombinationalModule<ALUModuleInputs>
     {
-        RTLBitArray Sum => Inputs.Op1.Signed() + Inputs.Op2.Signed();
+        protected RTLBitArray internalAdd => Inputs.Op1.Signed() + Inputs.Op2.Signed();
+        protected RTLBitArray internalSub => Inputs.Op1.Signed().Resized(33) - Inputs.Op2.Signed().Resized(33);
 
-        public RTLBitArray ADD => Sum[31, 0];
-        public bool ADDOverflow => Sum[32];
+        public RTLBitArray ADD => internalAdd[31, 0];
+        public bool ADDOverflow => internalAdd[32];
+        public RTLBitArray SUB => internalSub[31, 0];
+        public bool SUBUnderflow => internalSub[32];
 
         public RTLBitArray resAND => Inputs.Op1 & Inputs.Op2;
         public RTLBitArray resOR => Inputs.Op1 | Inputs.Op2;

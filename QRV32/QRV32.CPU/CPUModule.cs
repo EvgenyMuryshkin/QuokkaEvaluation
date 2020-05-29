@@ -47,16 +47,17 @@ namespace QRV32.CPU
         bool PCOverwrite => State.State == CPUState.Reset;
 
         RTLBitArray ALUOp1 => Regs.RS1;
-        RTLBitArray ALUOp2 => ID.ITypeImm;
+        RTLBitArray ALUOp2 => OpCode == OpTypeCodes.OPIMM ? ID.ITypeImm : Regs.RS2;
 
         bool RegsRead => State.State == CPUState.ID;
         bool RegsWE => State.State == CPUState.WB && State.WBDataReady;
 
         RTLBitArray CMPLhs => Regs.RS1;
-        RTLBitArray CMPRhs => ID.ITypeImm;
+        RTLBitArray CMPRhs => OpCode == OpTypeCodes.OPIMM ? ID.ITypeImm : Regs.RS2;
 
-        OpCodes OpCode => (OpCodes)(byte)ID.OpCode;
+        OpTypeCodes OpCode => (OpTypeCodes)(byte)ID.OpCode;
         OPIMMCodes OPIMMCode => (OPIMMCodes)(byte)ID.Funct3;
+        OPCodes OPCode => (OPCodes)(byte)ID.Funct3;
 
         protected override void OnSchedule(Func<CPUModuleInputs> inputsFactory)
         {
@@ -145,6 +146,33 @@ namespace QRV32.CPU
             }
         }
 
+        void OnOP()
+        {
+            NextState.WBDataReady = true;
+            switch (OPCode)
+            {
+                case OPCodes.ADD_SUB:
+                    if (ID.SUB)
+                    {
+                        NextState.WBData = ALU.SUB;
+                    }
+                    else
+                    {
+                        NextState.WBData = ALU.ADD;
+                    }
+                    break;
+                case OPCodes.SLT:
+                    NextState.WBData = CMP.SLT ? 1U : 0U;
+                    break;
+                case OPCodes.SLTU:
+                    NextState.WBData = CMP.ULT ? 1U : 0U;
+                    break;
+                default:
+                    Halt();
+                    break;
+            }
+        }
+
         protected override void OnStage()
         {
             switch (State.State)
@@ -171,8 +199,11 @@ namespace QRV32.CPU
 
                     switch (OpCode)
                     {
-                        case OpCodes.OPIMM:
+                        case OpTypeCodes.OPIMM:
                             OnOPIMM();
+                            break;
+                        case OpTypeCodes.OP:
+                            OnOP();
                             break;
                         default:
                             Halt();

@@ -12,8 +12,8 @@ namespace QRV32.CPU
 
     public class RegistersBlockModule : RegistersModule<RegistersBlockModuleState>
     {
-        public override uint RS1 => State.x[Inputs.RS1Addr];
-        public override uint RS2 => State.x[Inputs.RS2Addr];
+        public override RTLBitArray RS1 => State.x[Inputs.RS1Addr];
+        public override RTLBitArray RS2 => State.x[Inputs.RS2Addr];
         public override bool Ready => Inputs.Read;
 
         protected override void OnStage()

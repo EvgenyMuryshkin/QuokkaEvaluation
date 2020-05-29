@@ -17,8 +17,8 @@ namespace QRV32.CPU
 
     public class RegistersRAMModule : RegistersModule<RegistersRAMModuleState>
     {
-        public override uint RS1 => State.RS1;
-        public override uint RS2 => State.RS2;
+        public override RTLBitArray RS1 => State.RS1;
+        public override RTLBitArray RS2 => State.RS2;
         public override bool Ready => State.Ready;
 
         RTLBitArray ReadAddress => State.Mode == 0 ? Inputs.RS1Addr : Inputs.RS2Addr;

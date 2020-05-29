@@ -1,11 +1,12 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using QRV32.CPU;
+using QRV32.Tests;
 using Quokka.RTL;
 
-namespace QRV32.Tests
+namespace QRV32.CPUModuleTests
 {
     [TestClass]
-    public class CPUModuleTests : CPUModuleBaseTest
+    public class OPIMMTests : CPUModuleBaseTest
     {
         [TestMethod]
         public void ResetTest()

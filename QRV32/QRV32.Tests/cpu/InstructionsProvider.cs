@@ -23,7 +23,7 @@ namespace QRV32.Tests
         public virtual string AsmFilesLocation => Path.Combine(ProjectLocation(), "asm");
         public virtual uint[] FromAsmFile(string fileName)
         {
-            var files = Directory.EnumerateFiles(AsmFilesLocation, $"{fileName}.*").ToList();
+            var files = Directory.EnumerateFiles(AsmFilesLocation, $"{fileName}.*", SearchOption.AllDirectories).ToList();
 
             if (files.Count == 0)
                 throw new Exception($"No files found for '{fileName}' in {AsmFilesLocation}");

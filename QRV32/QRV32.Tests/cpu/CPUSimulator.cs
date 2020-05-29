@@ -11,6 +11,14 @@ namespace QRV32.Tests
 
         }
 
+        public void RunAll(uint[] instructions)
+        {
+            foreach (var inst in instructions)
+            {
+                RunInstruction(inst);
+            }
+        }
+
         public void RunInstruction(uint instruction)
         {
             ClockCycle(new CPUModuleInputs() { MemReady = true, MemReadValue = instruction });

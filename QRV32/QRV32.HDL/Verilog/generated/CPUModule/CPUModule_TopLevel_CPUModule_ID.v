@@ -36,7 +36,8 @@ module CPUModule_TopLevel_CPUModule_ID (
 	output signed [32: 1] UTypeImm,
 	output signed [32: 1] JTypeImm,
 	output [5: 1] SHAMT,
-	output SHARITH
+	output SHARITH,
+	output SUB
     );
 
 // [BEGIN USER SIGNALS]
@@ -98,6 +99,7 @@ wire signed  [21:1] InstructionDecoders_L27F40T151_SignChange;
 wire signed  [32:1] InstructionDecoders_L27F40T163_Resize;
 wire  [5:1] InstructionDecoders_L29F37T59_Index;
 wire  InstructionDecoders_L30F32T52_Index;
+wire  InstructionDecoders_L31F28T48_Index;
 assign Inputs_Instruction = Instruction/*cast*/;
 assign internalBits = Inputs_Instruction/*cast*/;
 assign InstructionDecoders_L14F67T87_Index = internalBits[32:21]/*cast*/;
@@ -234,6 +236,8 @@ assign InstructionDecoders_L29F37T59_Index = internalITypeImm[5:1]/*cast*/;
 assign SHAMT = InstructionDecoders_L29F37T59_Index/*cast*/;
 assign InstructionDecoders_L30F32T52_Index = internalITypeImm[11];
 assign SHARITH = InstructionDecoders_L30F32T52_Index;
+assign InstructionDecoders_L31F28T48_Index = internalITypeImm[11];
+assign SUB = InstructionDecoders_L31F28T48_Index;
 // [BEGIN USER ARCHITECTURE]
 // [END USER ARCHITECTURE]
 endmodule

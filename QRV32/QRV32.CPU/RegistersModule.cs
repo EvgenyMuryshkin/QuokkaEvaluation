@@ -26,15 +26,15 @@ namespace QRV32.CPU
         where TState : IRegistersModuleState
     {
         bool Ready { get; }
-        uint RS1 { get; }
-        uint RS2 { get; }
+        RTLBitArray RS1 { get; }
+        RTLBitArray RS2 { get; }
     }
 
     public abstract class RegistersModule<TState> : RTLSynchronousModule<RegistersModuleInput, TState>, IRegistersModule<TState>
         where TState : class, IRegistersModuleState, new()
     {
         public abstract bool Ready { get; }
-        public abstract uint RS1 { get; }
-        public abstract uint RS2 { get; }
+        public abstract RTLBitArray RS1 { get; }
+        public abstract RTLBitArray RS2 { get; }
     }
 }
