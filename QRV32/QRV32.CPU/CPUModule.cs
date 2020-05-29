@@ -49,6 +49,7 @@ namespace QRV32.CPU
         RTLBitArray ALUOp1 => Regs.RS1;
         RTLBitArray ALUOp2 => OpCode == OpTypeCodes.OPIMM ? ID.ITypeImm : Regs.RS2;
 
+        RTLBitArray ALUSHAMT => OpCode == OpTypeCodes.OPIMM ? ID.SHAMT : Regs.RS2[4, 0];
         bool RegsRead => State.State == CPUState.ID;
         bool RegsWE => State.State == CPUState.WB && State.WBDataReady;
 
@@ -89,7 +90,7 @@ namespace QRV32.CPU
             { 
                 Op1 = ALUOp1, 
                 Op2 = ALUOp2,
-                SHAMT = ID.SHAMT
+                SHAMT = ALUSHAMT
             });
 
             CMP.Schedule(() => new CompareModuleInputs() 
@@ -166,6 +167,28 @@ namespace QRV32.CPU
                     break;
                 case OPCodes.SLTU:
                     NextState.WBData = CMP.ULT ? 1U : 0U;
+                    break;
+                case OPCodes.AND:
+                    NextState.WBData = ALU.resAND;
+                    break;
+                case OPCodes.OR:
+                    NextState.WBData = ALU.resOR;
+                    break;
+                case OPCodes.XOR:
+                    NextState.WBData = ALU.resXOR;
+                    break;
+                case OPCodes.SLL:
+                    NextState.WBData = ALU.SHLL;
+                    break;
+                case OPCodes.SRL_SRA:
+                    if (ID.SHARITH)
+                    {
+                        NextState.WBData = ALU.SHRA;
+                    }
+                    else
+                    {
+                        NextState.WBData = ALU.SHRL;
+                    }
                     break;
                 default:
                     Halt();
