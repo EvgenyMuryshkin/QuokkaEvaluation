@@ -196,6 +196,29 @@ namespace QRV32.CPU
             }
         }
 
+        void ExecuteStage()
+        {
+            NextState.State = CPUState.MEM;
+            NextState.WBDataReady = false;
+
+            switch (OpCode)
+            {
+                case OpTypeCodes.OPIMM:
+                    OnOPIMM();
+                    break;
+                case OpTypeCodes.OP:
+                    OnOP();
+                    break;
+                case OpTypeCodes.LUI:
+                    NextState.WBDataReady = true;
+                    NextState.WBData = ID.UTypeImm;
+                    break;
+                default:
+                    Halt();
+                    break;
+            }
+        }
+
         protected override void OnStage()
         {
             switch (State.State)
@@ -217,22 +240,7 @@ namespace QRV32.CPU
                     }
                     break;
                 case CPUState.EX:
-                    NextState.State = CPUState.MEM;
-                    NextState.WBDataReady = false;
-
-                    switch (OpCode)
-                    {
-                        case OpTypeCodes.OPIMM:
-                            OnOPIMM();
-                            break;
-                        case OpTypeCodes.OP:
-                            OnOP();
-                            break;
-                        default:
-                            Halt();
-                            break;
-                    }
-
+                    ExecuteStage();
                     break;
                 case CPUState.MEM:
                     NextState.State = CPUState.WB;

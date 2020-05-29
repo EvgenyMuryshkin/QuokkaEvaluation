@@ -4,6 +4,8 @@
     {
         OPIMM = 0x13,
         OP = 0x33,
+        LUI = 0x37,
+        AUIPC = 0x17,
     }
 
     public enum OPIMMCodes : byte
