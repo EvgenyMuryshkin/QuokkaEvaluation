@@ -27,6 +27,7 @@ module PCModule_TopLevel (
 	input  WE,
 	input  Overwrite,
 	input  [31: 0] Offset,
+	output PCMisaligned,
 	output [31: 0] PC
     );
 
@@ -38,19 +39,25 @@ wire  Zero = 1'b0;
 wire  One = 1'b1;
 wire  true = 1'b1;
 wire  false = 1'b0;
+wire  PCModule_L22F72T73_Expr = 1'b0;
 wire  Inputs_WE;
 wire  Inputs_Overwrite;
 wire  [32:1] Inputs_Offset;
 reg  [32:1] NextState_PC = 32'b00000000000000000000000000000000;
+wire  [2:1] PCModule_L22F37T68_Source;
+wire  [2:1] PCModule_L22F53T67_Index;
 reg  [32:1] State_PC = 32'b00000000000000000000000000000000;
 wire  [32:1] State_PCDefault = 32'b00000000000000000000000000000000;
-wire  [34:1] PCModule_L24F9L29T10_PCModule_L26F13L28T14_PCModule_L27F67T91_Expr;
-wire signed  [34:1] PCModule_L24F9L29T10_PCModule_L26F13L28T14_PCModule_L27F67T91_Expr_1;
-wire signed  [34:1] PCModule_L24F9L29T10_PCModule_L26F13L28T14_PCModule_L27F67T91_Expr_2;
-reg  [32:1] PCModule_L24F9L29T10_PCModule_L26F13L28T14_PCModule_L27F32T91_Lookup = 32'b00000000000000000000000000000000;
-wire  PCModule_L24F9L29T10_PCModule_L26F13L28T14_PCModule_L27F32T91_LookupMultiplexerAddress;
-wire  [32:1] PCModule_L24F9L29T10_PCModule_L26F13L28T14_PCModule_L27F32T91_Lookup1;
-wire  [32:1] PCModule_L24F9L29T10_PCModule_L26F13L28T14_PCModule_L27F32T91_Lookup2;
+wire  [34:1] PCModule_L26F9L31T10_PCModule_L28F13L30T14_PCModule_L29F67T91_Expr;
+wire signed  [34:1] PCModule_L26F9L31T10_PCModule_L28F13L30T14_PCModule_L29F67T91_Expr_1;
+wire signed  [34:1] PCModule_L26F9L31T10_PCModule_L28F13L30T14_PCModule_L29F67T91_Expr_2;
+wire  PCModule_L22F37T73_Expr;
+wire signed  [3:1] PCModule_L22F37T73_ExprLhs;
+wire signed  [3:1] PCModule_L22F37T73_ExprRhs;
+reg  [32:1] PCModule_L26F9L31T10_PCModule_L28F13L30T14_PCModule_L29F32T91_Lookup = 32'b00000000000000000000000000000000;
+wire  PCModule_L26F9L31T10_PCModule_L28F13L30T14_PCModule_L29F32T91_LookupMultiplexerAddress;
+wire  [32:1] PCModule_L26F9L31T10_PCModule_L28F13L30T14_PCModule_L29F32T91_Lookup1;
+wire  [32:1] PCModule_L26F9L31T10_PCModule_L28F13L30T14_PCModule_L29F32T91_Lookup2;
 always @(posedge Clock)
 begin
 if ( Reset == 1 ) begin
@@ -60,16 +67,17 @@ else begin
 State_PC <= NextState_PC;
 end
 end
-assign PCModule_L24F9L29T10_PCModule_L26F13L28T14_PCModule_L27F67T91_Expr = PCModule_L24F9L29T10_PCModule_L26F13L28T14_PCModule_L27F67T91_Expr_1 + PCModule_L24F9L29T10_PCModule_L26F13L28T14_PCModule_L27F67T91_Expr_2;
+assign PCModule_L22F37T73_Expr = PCModule_L22F37T73_ExprLhs != PCModule_L22F37T73_ExprRhs ? 1'b1 : 1'b0;
+assign PCModule_L26F9L31T10_PCModule_L28F13L30T14_PCModule_L29F67T91_Expr = PCModule_L26F9L31T10_PCModule_L28F13L30T14_PCModule_L29F67T91_Expr_1 + PCModule_L26F9L31T10_PCModule_L28F13L30T14_PCModule_L29F67T91_Expr_2;
 always @*
 begin
-case (PCModule_L24F9L29T10_PCModule_L26F13L28T14_PCModule_L27F32T91_LookupMultiplexerAddress)
+case (PCModule_L26F9L31T10_PCModule_L28F13L30T14_PCModule_L29F32T91_LookupMultiplexerAddress)
     'b0:
-PCModule_L24F9L29T10_PCModule_L26F13L28T14_PCModule_L27F32T91_Lookup = PCModule_L24F9L29T10_PCModule_L26F13L28T14_PCModule_L27F32T91_Lookup1;
+PCModule_L26F9L31T10_PCModule_L28F13L30T14_PCModule_L29F32T91_Lookup = PCModule_L26F9L31T10_PCModule_L28F13L30T14_PCModule_L29F32T91_Lookup1;
     'b1:
-PCModule_L24F9L29T10_PCModule_L26F13L28T14_PCModule_L27F32T91_Lookup = PCModule_L24F9L29T10_PCModule_L26F13L28T14_PCModule_L27F32T91_Lookup2;
+PCModule_L26F9L31T10_PCModule_L28F13L30T14_PCModule_L29F32T91_Lookup = PCModule_L26F9L31T10_PCModule_L28F13L30T14_PCModule_L29F32T91_Lookup2;
   default:
-PCModule_L24F9L29T10_PCModule_L26F13L28T14_PCModule_L27F32T91_Lookup = 'b00000000000000000000000000000000;
+PCModule_L26F9L31T10_PCModule_L28F13L30T14_PCModule_L29F32T91_Lookup = 'b00000000000000000000000000000000;
 endcase
 
 end
@@ -77,19 +85,24 @@ always @*
 begin
 NextState_PC = State_PC/*cast*/;
 if ( Inputs_WE == 1 ) begin
-NextState_PC = PCModule_L24F9L29T10_PCModule_L26F13L28T14_PCModule_L27F32T91_Lookup/*cast*/;
+NextState_PC = PCModule_L26F9L31T10_PCModule_L28F13L30T14_PCModule_L29F32T91_Lookup/*cast*/;
 end
 
 end
-assign PCModule_L24F9L29T10_PCModule_L26F13L28T14_PCModule_L27F32T91_LookupMultiplexerAddress = Inputs_Overwrite;
-assign PCModule_L24F9L29T10_PCModule_L26F13L28T14_PCModule_L27F67T91_Expr_1 = { {2{1'b0}}, State_PC }/*expand*/;
-assign PCModule_L24F9L29T10_PCModule_L26F13L28T14_PCModule_L27F67T91_Expr_2 = { {2{1'b0}}, Inputs_Offset }/*expand*/;
+assign PCModule_L26F9L31T10_PCModule_L28F13L30T14_PCModule_L29F32T91_LookupMultiplexerAddress = Inputs_Overwrite;
+assign PCModule_L22F37T73_ExprLhs = { {1{1'b0}}, PCModule_L22F37T68_Source }/*expand*/;
+assign PCModule_L22F37T73_ExprRhs = { {2{1'b0}}, PCModule_L22F72T73_Expr }/*expand*/;
+assign PCModule_L26F9L31T10_PCModule_L28F13L30T14_PCModule_L29F67T91_Expr_1 = { {2{1'b0}}, State_PC }/*expand*/;
+assign PCModule_L26F9L31T10_PCModule_L28F13L30T14_PCModule_L29F67T91_Expr_2 = { {2{1'b0}}, Inputs_Offset }/*expand*/;
 assign Inputs_WE = WE;
 assign Inputs_Overwrite = Overwrite;
 assign Inputs_Offset = Offset/*cast*/;
+assign PCModule_L22F53T67_Index = State_PC[2:1]/*cast*/;
+assign PCModule_L22F37T68_Source = PCModule_L22F53T67_Index/*cast*/;
+assign PCMisaligned = PCModule_L22F37T73_Expr;
 assign PC = State_PC/*cast*/;
-assign PCModule_L24F9L29T10_PCModule_L26F13L28T14_PCModule_L27F32T91_Lookup1 = PCModule_L24F9L29T10_PCModule_L26F13L28T14_PCModule_L27F67T91_Expr[32:1]/*truncate*/;
-assign PCModule_L24F9L29T10_PCModule_L26F13L28T14_PCModule_L27F32T91_Lookup2 = Inputs_Offset/*cast*/;
+assign PCModule_L26F9L31T10_PCModule_L28F13L30T14_PCModule_L29F32T91_Lookup1 = PCModule_L26F9L31T10_PCModule_L28F13L30T14_PCModule_L29F67T91_Expr[32:1]/*truncate*/;
+assign PCModule_L26F9L31T10_PCModule_L28F13L30T14_PCModule_L29F32T91_Lookup2 = Inputs_Offset/*cast*/;
 // [BEGIN USER ARCHITECTURE]
 // [END USER ARCHITECTURE]
 endmodule

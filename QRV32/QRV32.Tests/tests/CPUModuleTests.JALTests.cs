@@ -7,27 +7,30 @@ using System.Linq;
 namespace QRV32.CPUModuleTests
 {
     [TestClass]
-    public class LUITests : CPUModuleBaseTest
+    public class JALTests : CPUModuleBaseTest
     {
         [TestMethod]
-        public void LUI()
+        public void JAL()
         {
             var sim = PowerUp();
             var tl = sim.TopLevel;
-            var instructions = Inst.FromAsmFile("lui");
+            var instructions = Inst.FromAsmFile("jal");
             sim.RunAll(instructions);
-            Assert.AreEqual((uint)(0xFF << 12), tl.Regs.State.x[1]);
+
+            Assert.AreEqual(0xCU, tl.Regs.State.x[1]);
+            Assert.AreEqual(0x100U, tl.PC.PC);
         }
 
         [TestMethod]
-        public void LI()
+        public void J()
         {
             var sim = PowerUp();
             var tl = sim.TopLevel;
-            var instructions = Inst.FromAsmFile("li");
+            var instructions = Inst.FromAsmFile("j");
             sim.RunAll(instructions);
-            Assert.AreEqual(0xFEFEFEFE, tl.Regs.State.x[1]);
-            Assert.AreEqual(0xF000FFFF, tl.Regs.State.x[2]);
+
+            Assert.IsTrue(tl.Regs.State.x.All(x => x == 0));
+            Assert.AreEqual(0x100U, tl.PC.PC);
         }
     }
 }

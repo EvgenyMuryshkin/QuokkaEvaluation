@@ -1,0 +1,2 @@
+﻿li x1, 0xFEFEFEFE
+li x2, 0xF000FFFF

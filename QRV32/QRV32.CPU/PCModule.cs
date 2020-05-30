@@ -9,16 +9,18 @@ namespace QRV32.CPU
     {
         public bool WE;
         public bool Overwrite;
-        public uint Offset;
+        public RTLBitArray Offset = new RTLBitArray(uint.MinValue);
     }
 
     public class PCModuleState
     {
-        public uint PC;
+        public RTLBitArray PC = new RTLBitArray(uint.MinValue);
     }
 
     public class PCModule : RTLSynchronousModule<PCModuleInputs, PCModuleState>
     {
+        public bool PCMisaligned => new RTLBitArray(State.PC[1, 0]) != 0;
+
         public uint PC => State.PC;
         protected override void OnStage()
         {

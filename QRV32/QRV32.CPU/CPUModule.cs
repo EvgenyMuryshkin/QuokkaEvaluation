@@ -42,8 +42,14 @@ namespace QRV32.CPU
         public bool MemRead => State.State == CPUState.IF;
         public uint MemAddress => PC.PC;
 
+        bool IsJump => OpCode == OpTypeCodes.JAL || OpCode == OpTypeCodes.JALR;
+        RTLBitArray ResetAddress => Inputs.BaseAddress;
+        RTLBitArray InstructionOffset => new RTLBitArray(4).Unsigned();
+        RTLBitArray JumpOffset => OpCode == OpTypeCodes.JAL ? ID.JTypeImm : new RTLBitArray(new RTLBitArray(Regs.RS1 + ID.ITypeImm)[31, 1], false);
+
         bool PCWE => State.State == CPUState.Reset || State.State == CPUState.WB;
-        uint PCOffset => State.State == CPUState.Reset ? Inputs.BaseAddress : 4;
+        RTLBitArray PCInstOffset => IsJump ? JumpOffset : InstructionOffset;
+        RTLBitArray PCOffset => State.State == CPUState.Reset ? ResetAddress : PCInstOffset;
         bool PCOverwrite => State.State == CPUState.Reset;
 
         RTLBitArray ALUOp1 => Regs.RS1;
@@ -212,6 +218,18 @@ namespace QRV32.CPU
                 case OpTypeCodes.LUI:
                     NextState.WBDataReady = true;
                     NextState.WBData = ID.UTypeImm;
+                    break;
+                case OpTypeCodes.AUIPC:
+                    NextState.WBDataReady = true;
+                    NextState.WBData = PC.PC + ID.UTypeImm;
+                    break;
+                case OpTypeCodes.JAL:
+                    NextState.WBDataReady = true;
+                    NextState.WBData = PC.PC + InstructionOffset;
+                    break;
+                case OpTypeCodes.JALR:
+                    NextState.WBDataReady = true;
+                    NextState.WBData = PC.PC + InstructionOffset;
                     break;
                 default:
                     Halt();
