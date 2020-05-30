@@ -1,1 +1,1 @@
-Warning (10268): Verilog HDL information at SDP_WF_RAMModule_TopLevel.v(55): always construct contains both blocking and non-blocking assignments
+Info (10281): Verilog HDL Declaration information at CPUModule_TopLevel.v(134): object "OpCode" differs only in case from object "OPCode" in the same scope
