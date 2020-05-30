@@ -264,7 +264,14 @@ namespace QRV32.CPU
                     NextState.State = CPUState.WB;
                     break;
                 case CPUState.WB:
-                    NextState.State = CPUState.IF;
+                    if (PC.PCMisaligned)
+                    {
+                        Halt();
+                    }
+                    else
+                    {
+                        NextState.State = CPUState.IF;
+                    }
                     break;
             }
         }

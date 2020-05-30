@@ -19,14 +19,15 @@ namespace QRV32.CPU
 
     public class PCModule : RTLSynchronousModule<PCModuleInputs, PCModuleState>
     {
-        public bool PCMisaligned => new RTLBitArray(State.PC[1, 0]) != 0;
+        RTLBitArray internalNextPC => Inputs.Overwrite ? Inputs.Offset : State.PC + Inputs.Offset;
+        public bool PCMisaligned => new RTLBitArray(internalNextPC[1, 0]) != 0;
 
         public uint PC => State.PC;
         protected override void OnStage()
         {
             if (Inputs.WE)
             {
-                NextState.PC = Inputs.Overwrite ? Inputs.Offset : State.PC + Inputs.Offset;
+                NextState.PC = internalNextPC;
             }
         }
     }
