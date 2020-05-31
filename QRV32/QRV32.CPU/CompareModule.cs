@@ -12,11 +12,11 @@ namespace QRV32.CPU
     {
         bool internalEQ => Inputs.Lhs == Inputs.Rhs;
         public bool EQ => internalEQ;
-        public bool NEQ => !internalEQ;
-        public bool UGT => Inputs.Lhs.Unsigned() > Inputs.Rhs.Unsigned();
-        public bool ULT => Inputs.Lhs.Unsigned() < Inputs.Rhs.Unsigned();
+        public bool NE => !internalEQ;
+        public bool GTU => Inputs.Lhs.Unsigned() > Inputs.Rhs.Unsigned();
+        public bool LTU => Inputs.Lhs.Unsigned() < Inputs.Rhs.Unsigned();
 
-        public bool SGT => Inputs.Lhs.Signed() > Inputs.Rhs.Signed();
-        public bool SLT => Inputs.Lhs.Signed() < Inputs.Rhs.Signed();
+        public bool GTS => Inputs.Lhs.Signed() > Inputs.Rhs.Signed();
+        public bool LTS => Inputs.Lhs.Signed() < Inputs.Rhs.Signed();
     }
 }

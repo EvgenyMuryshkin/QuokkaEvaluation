@@ -8,6 +8,7 @@
         AUIPC = 0x17,
         JAL = 0x6F,
         JALR = 0x67,
+        B = 0x63,
     }
 
     public enum OPIMMCodes : byte
@@ -32,5 +33,15 @@
         SRL_SRA = 5,
         OR = 6,
         AND = 7
+    }
+
+    public enum BranchTypeCodes : byte
+    {
+        EQ = 0,
+        NE = 1,
+        LT = 4,
+        GE = 5,
+        LTU = 6,
+        GEU = 7,
     }
 }

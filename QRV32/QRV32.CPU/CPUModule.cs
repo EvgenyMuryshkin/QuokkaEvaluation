@@ -30,6 +30,8 @@ namespace QRV32.CPU
 
         public bool WBDataReady;
         public uint WBData;
+
+        public RTLBitArray PCOffset = new RTLBitArray(uint.MinValue);
     }
 
     public class CPUModule : RTLSynchronousModule<CPUModuleInputs, CPUModuleState>
@@ -42,14 +44,11 @@ namespace QRV32.CPU
         public bool MemRead => State.State == CPUState.IF;
         public uint MemAddress => PC.PC;
 
-        bool IsJump => OpCode == OpTypeCodes.JAL || OpCode == OpTypeCodes.JALR;
         RTLBitArray ResetAddress => Inputs.BaseAddress;
         RTLBitArray InstructionOffset => new RTLBitArray(4).Unsigned();
-        RTLBitArray JumpOffset => OpCode == OpTypeCodes.JAL ? ID.JTypeImm : new RTLBitArray(new RTLBitArray(Regs.RS1 + ID.ITypeImm)[31, 1], false);
 
         bool PCWE => State.State == CPUState.Reset || State.State == CPUState.WB;
-        RTLBitArray PCInstOffset => IsJump ? JumpOffset : InstructionOffset;
-        RTLBitArray PCOffset => State.State == CPUState.Reset ? ResetAddress : PCInstOffset;
+        RTLBitArray PCOffset => State.State == CPUState.Reset ? ResetAddress : State.PCOffset;
         bool PCOverwrite => State.State == CPUState.Reset;
 
         RTLBitArray ALUOp1 => Regs.RS1;
@@ -65,6 +64,7 @@ namespace QRV32.CPU
         OpTypeCodes OpCode => (OpTypeCodes)(byte)ID.OpCode;
         OPIMMCodes OPIMMCode => (OPIMMCodes)(byte)ID.Funct3;
         OPCodes OPCode => (OPCodes)(byte)ID.Funct3;
+        BranchTypeCodes BranchTypeCode => (BranchTypeCodes)(byte)ID.Funct3;
 
         protected override void OnSchedule(Func<CPUModuleInputs> inputsFactory)
         {
@@ -120,10 +120,10 @@ namespace QRV32.CPU
                     NextState.WBData = ALU.ADD;
                     break;
                 case OPIMMCodes.SLTI:
-                    NextState.WBData = CMP.SLT ? 1U : 0U;
+                    NextState.WBData = CMP.LTS ? 1U : 0U;
                     break;
                 case OPIMMCodes.SLTIU:
-                    NextState.WBData = CMP.ULT ? 1U : 0U;
+                    NextState.WBData = CMP.LTU ? 1U : 0U;
                     break;
                 case OPIMMCodes.ANDI:
                     NextState.WBData = ALU.resAND;
@@ -169,10 +169,10 @@ namespace QRV32.CPU
                     }
                     break;
                 case OPCodes.SLT:
-                    NextState.WBData = CMP.SLT ? 1U : 0U;
+                    NextState.WBData = CMP.LTS ? 1U : 0U;
                     break;
                 case OPCodes.SLTU:
-                    NextState.WBData = CMP.ULT ? 1U : 0U;
+                    NextState.WBData = CMP.LTU ? 1U : 0U;
                     break;
                 case OPCodes.AND:
                     NextState.WBData = ALU.resAND;
@@ -202,10 +202,52 @@ namespace QRV32.CPU
             }
         }
 
+        RTLBitArray BranchOffset => PC.PC + ID.BTypeImm;
+        void OnBranch()
+        {
+            /*
+            TODO:
+            var cmpRes = new RTLBitArray(CMP.EQ, CMP.NE...)
+            if (cmpRes[BranchTypeCode])
+                NextState.PCOffset = PC.PC + ID.BTypeImm;
+            */
+            switch (BranchTypeCode)
+            {
+                case BranchTypeCodes.EQ:
+                    if (CMP.EQ)
+                        NextState.PCOffset = BranchOffset;
+                    break;
+                case BranchTypeCodes.NE:
+                    if (CMP.NE)
+                        NextState.PCOffset = BranchOffset;
+                    break;
+                case BranchTypeCodes.GE:
+                    if (CMP.GTS || CMP.EQ)
+                        NextState.PCOffset = BranchOffset;
+                    break;
+                case BranchTypeCodes.GEU:
+                    if (CMP.GTU || CMP.EQ)
+                        NextState.PCOffset = BranchOffset;
+                    break;
+                case BranchTypeCodes.LT:
+                    if (CMP.LTS)
+                        NextState.PCOffset = BranchOffset;
+                    break;
+                case BranchTypeCodes.LTU:
+                    if (CMP.LTU)
+                        NextState.PCOffset = BranchOffset;
+                    break;
+                default:
+                    Halt();
+                    break;
+            }
+        }
+
         void ExecuteStage()
         {
             NextState.State = CPUState.MEM;
             NextState.WBDataReady = false;
+            NextState.PCOffset = InstructionOffset;
 
             switch (OpCode)
             {
@@ -214,6 +256,9 @@ namespace QRV32.CPU
                     break;
                 case OpTypeCodes.OP:
                     OnOP();
+                    break;
+                case OpTypeCodes.B:
+                    OnBranch();
                     break;
                 case OpTypeCodes.LUI:
                     NextState.WBDataReady = true;
@@ -226,10 +271,12 @@ namespace QRV32.CPU
                 case OpTypeCodes.JAL:
                     NextState.WBDataReady = true;
                     NextState.WBData = PC.PC + InstructionOffset;
+                    NextState.PCOffset = ID.JTypeImm;
                     break;
                 case OpTypeCodes.JALR:
                     NextState.WBDataReady = true;
                     NextState.WBData = PC.PC + InstructionOffset;
+                    NextState.PCOffset = new RTLBitArray(new RTLBitArray(Regs.RS1 + ID.ITypeImm)[31, 1], false);
                     break;
                 default:
                     Halt();
