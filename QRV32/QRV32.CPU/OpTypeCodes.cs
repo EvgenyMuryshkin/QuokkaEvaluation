@@ -9,6 +9,7 @@
         JAL = 0x6F,
         JALR = 0x67,
         B = 0x63,
+        LOAD = 0x03,
     }
 
     public enum OPIMMCodes : byte
@@ -43,5 +44,14 @@
         GE = 5,
         LTU = 6,
         GEU = 7,
+    }
+
+    public enum LoadTypeCodes : byte
+    {
+        LB = 0,
+        LH = 1,
+        LW = 2,
+        LBU = 4,
+        LHU = 5
     }
 }

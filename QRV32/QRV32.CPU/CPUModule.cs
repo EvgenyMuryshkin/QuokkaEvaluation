@@ -18,8 +18,8 @@ namespace QRV32.CPU
 
     public class CPUModuleInputs
     {
-        public uint BaseAddress;
-        public uint MemReadValue;
+        public RTLBitArray BaseAddress = new RTLBitArray(uint.MinValue);
+        public RTLBitArray MemReadValue = new RTLBitArray(uint.MinValue);
         public bool MemReady;
     }
 
@@ -41,8 +41,8 @@ namespace QRV32.CPU
         internal RegistersBlockModule Regs = new RegistersBlockModule();
         internal ALUModule ALU = new ALUModule();
         internal CompareModule CMP = new CompareModule();
-        public bool MemRead => State.State == CPUState.IF;
-        public uint MemAddress => PC.PC;
+        public bool MemRead => State.State == CPUState.IF || State.State == CPUState.MEM;
+        public uint MemAddress => State.State == CPUState.IF ? PC.PC : (uint)(Regs.RS1 + ID.ITypeImm);
 
         RTLBitArray ResetAddress => Inputs.BaseAddress;
         RTLBitArray InstructionOffset => new RTLBitArray(4).Unsigned();
@@ -65,6 +65,7 @@ namespace QRV32.CPU
         OPIMMCodes OPIMMCode => (OPIMMCodes)(byte)ID.Funct3;
         OPCodes OPCode => (OPCodes)(byte)ID.Funct3;
         BranchTypeCodes BranchTypeCode => (BranchTypeCodes)(byte)ID.Funct3;
+        LoadTypeCodes LoadTypeCode => (LoadTypeCodes)(byte)ID.Funct3;
 
         protected override void OnSchedule(Func<CPUModuleInputs> inputsFactory)
         {
@@ -245,7 +246,7 @@ namespace QRV32.CPU
 
         void ExecuteStage()
         {
-            NextState.State = CPUState.MEM;
+            NextState.State = CPUState.WB;
             NextState.WBDataReady = false;
             NextState.PCOffset = InstructionOffset;
 
@@ -278,9 +279,76 @@ namespace QRV32.CPU
                     NextState.WBData = PC.PC + InstructionOffset;
                     NextState.PCOffset = new RTLBitArray(new RTLBitArray(Regs.RS1 + ID.ITypeImm)[31, 1], false);
                     break;
+                case OpTypeCodes.LOAD:
+                    NextState.State = CPUState.MEM;
+                    break;
                 default:
                     Halt();
                     break;
+            }
+        }
+
+        RTLBitArray LWData => Inputs.MemReadValue;
+        RTLBitArray LHData => Inputs.MemReadValue[15, 0].Signed().Resized(32);
+        RTLBitArray LHUData => Inputs.MemReadValue[15, 0].Unsigned().Resized(32);
+        RTLBitArray LBData => Inputs.MemReadValue[7, 0].Signed().Resized(32);
+        RTLBitArray LBUData => Inputs.MemReadValue[7, 0].Unsigned().Resized(32);
+
+        // TODO: inlined RTLBitArray operations
+        void MemStage()
+        {
+            if (Inputs.MemReady)
+            {
+                NextState.State = CPUState.WB;
+                NextState.WBDataReady = true;
+
+                switch (LoadTypeCode)
+                {
+                    case LoadTypeCodes.LW:
+                        NextState.WBData = LWData;
+                        break;
+                    case LoadTypeCodes.LH:
+                        NextState.WBData = LHData;
+                        break;
+                    case LoadTypeCodes.LHU:
+                        NextState.WBData = LHUData;
+                        break;
+                    case LoadTypeCodes.LB:
+                        NextState.WBData = LBData;
+                        break;
+                    case LoadTypeCodes.LBU:
+                        NextState.WBData = LBUData;
+                        break;
+                }
+            }
+        }
+
+        void WriteBackStage()
+        {
+            if (PC.PCMisaligned)
+            {
+                Halt();
+            }
+            else
+            {
+                NextState.State = CPUState.IF;
+            }
+        }
+
+        void InstructionFetchStage()
+        {
+            if (Inputs.MemReady)
+            {
+                NextState.State = CPUState.ID;
+                NextState.Instruction = Inputs.MemReadValue;
+            }
+        }
+
+        void InstructionDecodeStage()
+        {
+            if (Regs.Ready)
+            {
+                NextState.State = CPUState.EX;
             }
         }
 
@@ -292,33 +360,19 @@ namespace QRV32.CPU
                     NextState.State = CPUState.IF;
                     break;
                 case CPUState.IF:
-                    if (Inputs.MemReady)
-                    {
-                        NextState.State = CPUState.ID;
-                        NextState.Instruction = Inputs.MemReadValue;
-                    }
+                    InstructionFetchStage();
                     break;
                 case CPUState.ID:
-                    if (Regs.Ready)
-                    {
-                        NextState.State = CPUState.EX;
-                    }
+                    InstructionDecodeStage();
                     break;
                 case CPUState.EX:
                     ExecuteStage();
                     break;
                 case CPUState.MEM:
-                    NextState.State = CPUState.WB;
+                    MemStage();
                     break;
                 case CPUState.WB:
-                    if (PC.PCMisaligned)
-                    {
-                        Halt();
-                    }
-                    else
-                    {
-                        NextState.State = CPUState.IF;
-                    }
+                    WriteBackStage();
                     break;
             }
         }

@@ -6,8 +6,9 @@ using System.Linq;
 
 namespace QRV32.CPUModuleTests
 {
+
     [TestClass]
-    public class BTests : CPUModuleBaseTest
+    public class BranchTests : CPUModuleBaseTest
     {
         [TestMethod]
         public void BEQ()

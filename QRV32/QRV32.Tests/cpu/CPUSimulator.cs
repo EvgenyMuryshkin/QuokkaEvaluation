@@ -1,4 +1,5 @@
 ﻿using QRV32.CPU;
+using Quokka.RTL;
 using Quokka.RTL.Simulator;
 using System;
 
@@ -6,6 +7,8 @@ namespace QRV32.Tests
 {
     public class CPUSimulator : RTLSimulator<CPUModule, CPUModuleInputs>
     {
+        public uint[] MemoryBlock = new uint[32768];
+
         public CPUSimulator()
         {
 
@@ -29,24 +32,28 @@ namespace QRV32.Tests
         {
             int counter = 0;
 
-            while (!TopLevel.MemRead)
+            while (counter++ < 100)
             {
-                if (++counter > 100)
-                    throw new Exception("CPU seems to hang");
-
                 switch (TopLevel.State.State)
                 {
                     case CPUState.Halt:
                         throw new Exception($"Halted");
                     case CPUState.MEM:
-                        // TODO: implement memory operation
+                        var wordAddress = TopLevel.MemAddress & 0xFFFFFFFC;
+                        var byteAddress = TopLevel.MemAddress & 0x3;
+                        var word = new RTLBitArray(MemoryBlock[wordAddress]);
+                        var data = word >> (int)(byteAddress * 8);
+                        ClockCycle(new CPUModuleInputs() { MemReady = true, MemReadValue = data });
                         break;
                     case CPUState.IF:
                         return;
+                    default:
+                        ClockCycle();
+                        break;
                 }
-
-                ClockCycle();
             }
+
+            throw new Exception("CPU seems to hang");
         }
     }
 }
