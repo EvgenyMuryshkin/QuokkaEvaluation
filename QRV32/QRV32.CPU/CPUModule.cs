@@ -19,7 +19,7 @@ namespace QRV32.CPU
     public class CPUModuleInputs
     {
         public RTLBitArray BaseAddress = new RTLBitArray(uint.MinValue);
-        public RTLBitArray MemReadValue = new RTLBitArray(uint.MinValue);
+        public RTLBitArray MemReadData = new RTLBitArray(uint.MinValue);
         public bool MemReady;
     }
 
@@ -41,8 +41,24 @@ namespace QRV32.CPU
         internal RegistersBlockModule Regs = new RegistersBlockModule();
         internal ALUModule ALU = new ALUModule();
         internal CompareModule CMP = new CompareModule();
-        public bool MemRead => State.State == CPUState.IF || State.State == CPUState.MEM;
-        public uint MemAddress => State.State == CPUState.IF ? PC.PC : (uint)(Regs.RS1 + ID.ITypeImm);
+
+        internal bool IsLoadOp => OpCode == OpTypeCodes.LOAD;
+        internal RTLBitArray LoadAdress => Regs.RS1 + ID.ITypeImm;
+        internal bool IsStoreOp => OpCode == OpTypeCodes.STORE;
+        internal RTLBitArray StoreAddress => Regs.RS1 + ID.STypeImm;
+
+        public bool MemRead => State.State == CPUState.IF || (State.State == CPUState.MEM && IsLoadOp);
+        public uint MemAddress => State.State == CPUState.IF
+            ? PC.PC
+            : IsLoadOp
+                ? LoadAdress
+                : IsStoreOp
+                    ? StoreAddress
+                    : new RTLBitArray(uint.MinValue);
+
+        public bool MemWrite => State.State == CPUState.MEM && IsStoreOp;
+        public RTLBitArray MemWriteData => Regs.RS2;
+        public RTLBitArray MemWriteMode => ID.Funct3;
 
         RTLBitArray ResetAddress => Inputs.BaseAddress;
         RTLBitArray InstructionOffset => new RTLBitArray(4).Unsigned();
@@ -66,6 +82,7 @@ namespace QRV32.CPU
         OPCodes OPCode => (OPCodes)(byte)ID.Funct3;
         BranchTypeCodes BranchTypeCode => (BranchTypeCodes)(byte)ID.Funct3;
         LoadTypeCodes LoadTypeCode => (LoadTypeCodes)(byte)ID.Funct3;
+        StoreTypeCodes StoreTypeCode => (StoreTypeCodes)(byte)ID.Funct3;
 
         protected override void OnSchedule(Func<CPUModuleInputs> inputsFactory)
         {
@@ -282,17 +299,20 @@ namespace QRV32.CPU
                 case OpTypeCodes.LOAD:
                     NextState.State = CPUState.MEM;
                     break;
+                case OpTypeCodes.STORE:
+                    NextState.State = CPUState.MEM;
+                    break;
                 default:
                     Halt();
                     break;
             }
         }
 
-        RTLBitArray LWData => Inputs.MemReadValue;
-        RTLBitArray LHData => Inputs.MemReadValue[15, 0].Signed().Resized(32);
-        RTLBitArray LHUData => Inputs.MemReadValue[15, 0].Unsigned().Resized(32);
-        RTLBitArray LBData => Inputs.MemReadValue[7, 0].Signed().Resized(32);
-        RTLBitArray LBUData => Inputs.MemReadValue[7, 0].Unsigned().Resized(32);
+        RTLBitArray LWData => Inputs.MemReadData;
+        RTLBitArray LHData => Inputs.MemReadData[15, 0].Signed().Resized(32);
+        RTLBitArray LHUData => Inputs.MemReadData[15, 0].Unsigned().Resized(32);
+        RTLBitArray LBData => Inputs.MemReadData[7, 0].Signed().Resized(32);
+        RTLBitArray LBUData => Inputs.MemReadData[7, 0].Unsigned().Resized(32);
 
         // TODO: inlined RTLBitArray operations
         void MemStage()
@@ -300,25 +320,28 @@ namespace QRV32.CPU
             if (Inputs.MemReady)
             {
                 NextState.State = CPUState.WB;
-                NextState.WBDataReady = true;
-
-                switch (LoadTypeCode)
+                if (IsLoadOp)
                 {
-                    case LoadTypeCodes.LW:
-                        NextState.WBData = LWData;
-                        break;
-                    case LoadTypeCodes.LH:
-                        NextState.WBData = LHData;
-                        break;
-                    case LoadTypeCodes.LHU:
-                        NextState.WBData = LHUData;
-                        break;
-                    case LoadTypeCodes.LB:
-                        NextState.WBData = LBData;
-                        break;
-                    case LoadTypeCodes.LBU:
-                        NextState.WBData = LBUData;
-                        break;
+                    NextState.WBDataReady = true;
+
+                    switch (LoadTypeCode)
+                    {
+                        case LoadTypeCodes.LW:
+                            NextState.WBData = LWData;
+                            break;
+                        case LoadTypeCodes.LH:
+                            NextState.WBData = LHData;
+                            break;
+                        case LoadTypeCodes.LHU:
+                            NextState.WBData = LHUData;
+                            break;
+                        case LoadTypeCodes.LB:
+                            NextState.WBData = LBData;
+                            break;
+                        case LoadTypeCodes.LBU:
+                            NextState.WBData = LBUData;
+                            break;
+                    }
                 }
             }
         }
@@ -340,7 +363,7 @@ namespace QRV32.CPU
             if (Inputs.MemReady)
             {
                 NextState.State = CPUState.ID;
-                NextState.Instruction = Inputs.MemReadValue;
+                NextState.Instruction = Inputs.MemReadData;
             }
         }
 

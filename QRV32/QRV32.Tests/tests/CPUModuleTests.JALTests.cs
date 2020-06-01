@@ -18,7 +18,7 @@ namespace QRV32.CPUModuleTests
             sim.RunAll(instructions);
 
             Assert.AreEqual(0xCU, tl.Regs.State.x[1]);
-            Assert.AreEqual(0x100U, tl.PC.PC);
+            Assert.AreEqual(0x100U, (uint)tl.PC.PC);
         }
 
         [TestMethod]
@@ -30,7 +30,7 @@ namespace QRV32.CPUModuleTests
             sim.RunAll(instructions);
 
             Assert.IsTrue(tl.Regs.State.x.All(x => x == 0));
-            Assert.AreEqual(0x100U, tl.PC.PC);
+            Assert.AreEqual(0x100U, (uint)tl.PC.PC);
         }
     }
 }

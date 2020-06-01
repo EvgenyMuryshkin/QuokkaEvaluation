@@ -19,7 +19,7 @@ namespace QRV32.CPUModuleTests
 
             Assert.AreEqual(0x8U, tl.Regs.State.x[2]);
             // 4(PC) + 12(x1) + 256(imm)
-            Assert.AreEqual(272U, tl.PC.PC);
+            Assert.AreEqual(272U, (uint)tl.PC.PC);
         }
     }
 }

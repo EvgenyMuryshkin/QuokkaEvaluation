@@ -10,6 +10,7 @@
         JALR = 0x67,
         B = 0x63,
         LOAD = 0x03,
+        STORE = 0x23,
     }
 
     public enum OPIMMCodes : byte
@@ -53,5 +54,12 @@
         LW = 2,
         LBU = 4,
         LHU = 5
+    }
+
+    public enum StoreTypeCodes : byte
+    {
+        SB = 0,
+        SH = 1,
+        SW = 2,
     }
 }

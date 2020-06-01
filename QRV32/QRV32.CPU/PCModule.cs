@@ -21,8 +21,8 @@ namespace QRV32.CPU
     {
         RTLBitArray internalNextPC => Inputs.Overwrite ? Inputs.Offset : State.PC + Inputs.Offset;
         public bool PCMisaligned => new RTLBitArray(internalNextPC[1, 0]) != 0;
+        public RTLBitArray PC => State.PC;
 
-        public uint PC => State.PC;
         protected override void OnStage()
         {
             if (Inputs.WE)
