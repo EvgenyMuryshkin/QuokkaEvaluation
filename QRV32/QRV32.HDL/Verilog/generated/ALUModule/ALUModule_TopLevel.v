@@ -29,9 +29,9 @@ module ALUModule_TopLevel (
 	output ADDOverflow,
 	output [31: 0] SUB,
 	output SUBUnderflow,
-	output [32: 0] resAND,
-	output [32: 0] resOR,
-	output [32: 0] resXOR,
+	output [31: 0] resAND,
+	output [31: 0] resOR,
+	output [31: 0] resXOR,
 	output [31: 0] SHLL,
 	output [31: 0] SHRL,
 	output [31: 0] SHRA
@@ -126,9 +126,9 @@ assign ALUModule_L20F35T53_Index = internalSub[32:1]/*cast*/;
 assign SUB = ALUModule_L20F35T53_Index/*cast*/;
 assign ALUModule_L21F37T52_Index = internalSub[33];
 assign SUBUnderflow = ALUModule_L21F37T52_Index;
-assign resAND = { {1{1'b0}}, ALUModule_L23F38T61_Expr }/*expand*/;
-assign resOR = { {1{1'b0}}, ALUModule_L24F37T60_Expr }/*expand*/;
-assign resXOR = { {1{1'b0}}, ALUModule_L25F38T61_Expr }/*expand*/;
+assign resAND = ALUModule_L23F38T61_Expr/*cast*/;
+assign resOR = ALUModule_L24F37T60_Expr/*cast*/;
+assign resXOR = ALUModule_L25F38T61_Expr/*cast*/;
 assign ALUModule_L27F36T71_Index = ALUModule_L27F37T63_Expr/*cast*/;
 assign SHLL = ALUModule_L27F36T71_Index/*cast*/;
 assign ALUModule_L28F37T58_SignChange = Inputs_Op1/*cast*/;
