@@ -25,12 +25,13 @@ namespace QRV32.CPUModuleTests
         {
             var sim = PowerUp();
             var tl = sim.TopLevel;
-            var nop = 19U;
+            var nops = Enumerable.Range(0, 500).Select(idx => 19U).ToArray();
+            sim.SetInstructions(nops);
 
-            foreach (var idx in Enumerable.Range(0, 1000))
+            foreach (var idx in Enumerable.Range(0, nops.Length))
             {
                 Assert.AreEqual((uint)(idx * 4), tl.MemAddress);
-                sim.RunInstruction(nop);
+                sim.Step();
             }
         }
     }

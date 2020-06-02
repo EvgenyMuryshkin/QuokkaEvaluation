@@ -13,31 +13,71 @@ namespace QRV32.Tests
         public List<uint> ECalls = new List<uint>();
 
         public uint[] MemoryBlock = new uint[32768];
+        int instructionsCount = 0;
+        uint lastRequestedAddress = uint.MaxValue;
 
         public CPUSimulator()
         {
 
         }
 
-        public void RunAll(uint[] instructions)
+        public void SetInstructions(uint[] instructions)
         {
-            foreach (var inst in instructions)
+            for (instructionsCount = 0; instructionsCount < instructions.Length; instructionsCount++)
             {
-                RunInstruction(inst);
+                MemoryBlock[instructionsCount] = instructions[instructionsCount];
             }
         }
 
-        public void RunInstruction(uint instruction)
+        public void RunAll(params uint[] instructions)
         {
-            ClockCycle(new CPUModuleInputs() { MemReady = true, MemReadData = instruction });
-            RunTillInstructionFetch();
+            SetInstructions(instructions);
+            RunAllInstructions();
         }
 
-        public void RunTillInstructionFetch()
+        public void RunAllInstructions()
+        {
+            while (Step()) ;
+        }
+
+        public bool Step()
+        {
+            if (!RunTillInstructionFetch())
+                return false;
+
+            if (!FeedNextInstruction())
+                return false;
+
+            if (!RunTillInstructionFetch())
+                return false;
+
+            return true;
+        }
+
+        bool FeedNextInstruction()
+        {
+            var address = (TopLevel.MemAddress >> 2);
+            if (address >= MemoryBlock.Length)
+                throw new IndexOutOfRangeException($"Requested address in IF was outside of memory block: {address}");
+
+            // end state condition
+            if (address >= instructionsCount)
+                return false;
+
+            if (lastRequestedAddress == address)
+                return false;
+
+            lastRequestedAddress = address;
+            ClockCycle(new CPUModuleInputs() { MemReady = true, MemReadData = MemoryBlock[address] });
+
+            return true;
+        }
+
+        public bool RunTillInstructionFetch()
         {
             int counter = 0;
 
-            while (counter++ < 100)
+            while (counter++ < 1000)
             {
                 switch (TopLevel.State.State)
                 {
@@ -58,9 +98,12 @@ namespace QRV32.Tests
                         ClockCycle();
                         break;
                     case CPUState.MEM:
+                        var wordAddress = TopLevel.MemAddress & 0xFFFFFFFC;
+                        if (wordAddress >= MemoryBlock.Length)
+                            throw new IndexOutOfRangeException($"Requested address in IF was outside of memory block: {wordAddress}");
+
                         if (TopLevel.MemRead)
                         {
-                            var wordAddress = TopLevel.MemAddress & 0xFFFFFFFC;
                             var byteAddress = TopLevel.MemAddress & 0x3;
                             var word = new RTLBitArray(MemoryBlock[wordAddress]);
                             var data = word >> (int)(byteAddress * 8);
@@ -68,7 +111,6 @@ namespace QRV32.Tests
                         }
                         else if (TopLevel.MemWrite)
                         {
-                            var wordAddress = TopLevel.MemAddress & 0xFFFFFFFC;
                             var byteAddress = (int)((TopLevel.MemAddress & 0x3) << 3);
                             var word = new RTLBitArray(MemoryBlock[wordAddress]);
                             var mask = new RTLBitArray(uint.MinValue);
@@ -103,7 +145,7 @@ namespace QRV32.Tests
                         }
                         break;
                     case CPUState.IF:
-                        return;
+                        return true;
                     default:
                         ClockCycle();
                         break;

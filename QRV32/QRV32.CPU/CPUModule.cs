@@ -221,7 +221,7 @@ namespace QRV32.CPU
             }
         }
 
-        RTLBitArray BranchOffset => PC.PC + ID.BTypeImm;
+        RTLBitArray BranchOffset => ID.BTypeImm;
         void OnBranch()
         {
             /*
@@ -381,7 +381,7 @@ namespace QRV32.CPU
 
         void EStage()
         {
-            NextState.State = CPUState.IF;
+            NextState.State = CPUState.WB;
         }
 
         protected override void OnStage()

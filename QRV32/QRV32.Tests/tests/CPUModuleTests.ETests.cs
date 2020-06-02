@@ -19,6 +19,8 @@ namespace QRV32.CPUModuleTests
             Assert.AreEqual(2, sim.ECalls.Count());
             Assert.AreEqual(1U, sim.ECalls[0]);
             Assert.AreEqual(10U, sim.ECalls[1]);
+            Assert.AreEqual(1U, tl.Regs.State.x[1]);
+            Assert.AreEqual(2U, tl.Regs.State.x[2]);
         }
 
         [TestMethod]
@@ -29,6 +31,8 @@ namespace QRV32.CPUModuleTests
             var instructions = Inst.FromAsmFile("ebreak");
             sim.RunAll(instructions);
             Assert.AreEqual(2, sim.DebuggerCalls);
+            Assert.AreEqual(1U, tl.Regs.State.x[1]);
+            Assert.AreEqual(2U, tl.Regs.State.x[2]);
         }
     }
 }
