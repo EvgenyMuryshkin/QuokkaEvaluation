@@ -2,11 +2,16 @@
 using Quokka.RTL;
 using Quokka.RTL.Simulator;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace QRV32.Tests
 {
     public class CPUSimulator : RTLSimulator<CPUModule, CPUModuleInputs>
     {
+        public int DebuggerCalls = 0;
+        public List<uint> ECalls = new List<uint>();
+
         public uint[] MemoryBlock = new uint[32768];
 
         public CPUSimulator()
@@ -38,6 +43,20 @@ namespace QRV32.Tests
                 {
                     case CPUState.Halt:
                         throw new Exception($"Halted");
+                    case CPUState.E:
+                        if (TopLevel.ID.ITypeImm[0])
+                        {
+                            // ebreak
+                            Debugger.Break();
+                            DebuggerCalls++;
+                        }
+                        else
+                        {
+                            // ecall, do something with ecall
+                            ECalls.Add(TopLevel.Regs.State.x[17]);
+                        }
+                        ClockCycle();
+                        break;
                     case CPUState.MEM:
                         if (TopLevel.MemRead)
                         {

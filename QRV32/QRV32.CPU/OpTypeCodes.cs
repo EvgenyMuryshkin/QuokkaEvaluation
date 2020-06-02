@@ -11,6 +11,7 @@
         B = 0x63,
         LOAD = 0x03,
         STORE = 0x23,
+        E = 0x73
     }
 
     public enum OPIMMCodes : byte

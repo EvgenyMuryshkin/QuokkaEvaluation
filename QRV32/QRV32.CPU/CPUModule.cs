@@ -13,6 +13,7 @@ namespace QRV32.CPU
         EX,
         MEM,
         WB,
+        E,
         Halt
     }
 
@@ -302,6 +303,9 @@ namespace QRV32.CPU
                 case OpTypeCodes.STORE:
                     NextState.State = CPUState.MEM;
                     break;
+                case OpTypeCodes.E:
+                    NextState.State = CPUState.E;
+                    break;
                 default:
                     Halt();
                     break;
@@ -375,6 +379,11 @@ namespace QRV32.CPU
             }
         }
 
+        void EStage()
+        {
+            NextState.State = CPUState.IF;
+        }
+
         protected override void OnStage()
         {
             switch (State.State)
@@ -396,6 +405,9 @@ namespace QRV32.CPU
                     break;
                 case CPUState.WB:
                     WriteBackStage();
+                    break;
+                case CPUState.E:
+                    EStage();
                     break;
             }
         }
