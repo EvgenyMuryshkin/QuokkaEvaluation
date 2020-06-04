@@ -32,9 +32,10 @@ namespace QRV32.CPU
 
             NextState.ReadData = State.x[ReadAddress];
 
+            NextState.Ready = false;
+
             if (Inputs.Read && State.Mode == 0)
             {
-                NextState.Ready = false;
                 NextState.Mode = 1;
             }
 

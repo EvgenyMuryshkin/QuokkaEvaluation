@@ -16,17 +16,12 @@ namespace QRV32.CPU
         protected RTLBitArray internalSub => Inputs.Op1.Signed().Resized(33) - Inputs.Op2.Signed().Resized(33);
 
         public RTLBitArray ADD => internalAdd[31, 0];
-        public bool ADDOverflow => internalAdd[32];
         public RTLBitArray SUB => internalSub[31, 0];
-        public bool SUBUnderflow => internalSub[32];
-
         public RTLBitArray resAND => Inputs.Op1 & Inputs.Op2;
         public RTLBitArray resOR => Inputs.Op1 | Inputs.Op2;
         public RTLBitArray resXOR => Inputs.Op1 ^ Inputs.Op2;
-
         public RTLBitArray SHLL => (Inputs.Op1 << Inputs.SHAMT)[31, 0];
         public RTLBitArray SHRL => (Inputs.Op1.Unsigned() >> Inputs.SHAMT)[31, 0];
         public RTLBitArray SHRA => (Inputs.Op1.Signed() >> Inputs.SHAMT)[31, 0];
-
     }
 }

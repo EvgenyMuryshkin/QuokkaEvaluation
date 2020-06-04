@@ -88,9 +88,9 @@ else begin
 State_ReadData <= NextState_ReadData;
 end
 end
-always @(posedge Clock)
+always @(posedge BoardSignals_Clock)
 begin
-if ( Reset == 1 ) begin
+if ( BoardSignals_Reset == 1 ) begin
 for (State_x_Iterator = 0; State_x_Iterator < 32; State_x_Iterator = State_x_Iterator + 1)
 begin
 State_x[State_x_Iterator] <= State_xDefault;

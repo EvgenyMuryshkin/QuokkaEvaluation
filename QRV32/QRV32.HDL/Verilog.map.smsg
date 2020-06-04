@@ -1,1 +1,1 @@
-Info (10281): Verilog HDL Declaration information at CPUModule_TopLevel.v(134): object "OpCode" differs only in case from object "OPCode" in the same scope
+Info (10281): Verilog HDL Declaration information at CPUModule_TopLevel.v(162): object "OpCode" differs only in case from object "OPCode" in the same scope

@@ -26,9 +26,7 @@ module ALUModule_TopLevel (
 	input  [31: 0] Op2,
 	input  [4: 0] SHAMT,
 	output [31: 0] ADD,
-	output ADDOverflow,
 	output [31: 0] SUB,
-	output SUBUnderflow,
 	output [31: 0] resAND,
 	output [31: 0] resOR,
 	output [31: 0] resXOR,
@@ -57,52 +55,50 @@ wire signed  [33:1] ALUModule_L16F46T77_Resize;
 wire signed  [32:1] ALUModule_L16F80T99_SignChange;
 wire signed  [33:1] ALUModule_L16F80T111_Resize;
 wire  [32:1] ALUModule_L18F35T53_Index;
-wire  ALUModule_L19F36T51_Index;
-wire  [32:1] ALUModule_L20F35T53_Index;
-wire  ALUModule_L21F37T52_Index;
-wire  [32:1] ALUModule_L27F36T71_Index;
-wire  [32:1] ALUModule_L28F37T58_SignChange;
-wire  [32:1] ALUModule_L28F36T82_Index;
-wire signed  [32:1] ALUModule_L29F37T56_SignChange;
-wire  [32:1] ALUModule_L29F36T80_Index;
-wire  [32:1] ALUModule_L23F38T61_Expr;
-wire  [32:1] ALUModule_L23F38T61_Expr_1;
-wire  [32:1] ALUModule_L23F38T61_Expr_2;
-wire  [32:1] ALUModule_L24F37T60_Expr;
-wire  [32:1] ALUModule_L24F37T60_Expr_1;
-wire  [32:1] ALUModule_L24F37T60_Expr_2;
-wire  [32:1] ALUModule_L25F38T61_Expr;
-wire  [32:1] ALUModule_L25F38T61_Expr_1;
-wire  [32:1] ALUModule_L25F38T61_Expr_2;
-wire  [32:1] ALUModule_L27F37T63_Expr;
-wire  [32:1] ALUModule_L27F37T63_Expr_1;
-wire  [32:1] ALUModule_L28F37T74_Expr;
-wire  [32:1] ALUModule_L28F37T74_Expr_1;
-wire signed  [32:1] ALUModule_L29F37T72_Expr;
-wire signed  [32:1] ALUModule_L29F37T72_Expr_1;
+wire  [32:1] ALUModule_L19F35T53_Index;
+wire  [32:1] ALUModule_L23F36T71_Index;
+wire  [32:1] ALUModule_L24F37T58_SignChange;
+wire  [32:1] ALUModule_L24F36T82_Index;
+wire signed  [32:1] ALUModule_L25F37T56_SignChange;
+wire  [32:1] ALUModule_L25F36T80_Index;
+wire  [32:1] ALUModule_L20F38T61_Expr;
+wire  [32:1] ALUModule_L20F38T61_Expr_1;
+wire  [32:1] ALUModule_L20F38T61_Expr_2;
+wire  [32:1] ALUModule_L21F37T60_Expr;
+wire  [32:1] ALUModule_L21F37T60_Expr_1;
+wire  [32:1] ALUModule_L21F37T60_Expr_2;
+wire  [32:1] ALUModule_L22F38T61_Expr;
+wire  [32:1] ALUModule_L22F38T61_Expr_1;
+wire  [32:1] ALUModule_L22F38T61_Expr_2;
+wire  [32:1] ALUModule_L23F37T63_Expr;
+wire  [32:1] ALUModule_L23F37T63_Expr_1;
+wire  [32:1] ALUModule_L24F37T74_Expr;
+wire  [32:1] ALUModule_L24F37T74_Expr_1;
+wire signed  [32:1] ALUModule_L25F37T72_Expr;
+wire signed  [32:1] ALUModule_L25F37T72_Expr_1;
 wire signed  [33:1] ALUModule_L15F46T87_Expr;
 wire signed  [33:1] ALUModule_L15F46T87_Expr_1;
 wire signed  [33:1] ALUModule_L15F46T87_Expr_2;
 wire signed  [34:1] ALUModule_L16F46T111_Expr;
 wire signed  [34:1] ALUModule_L16F46T111_Expr_1;
 wire signed  [34:1] ALUModule_L16F46T111_Expr_2;
-assign ALUModule_L23F38T61_Expr = ALUModule_L23F38T61_Expr_1 & ALUModule_L23F38T61_Expr_2;
-assign ALUModule_L24F37T60_Expr = ALUModule_L24F37T60_Expr_1 | ALUModule_L24F37T60_Expr_2;
-assign ALUModule_L25F38T61_Expr = ALUModule_L25F38T61_Expr_1 ^ ALUModule_L25F38T61_Expr_2;
-assign ALUModule_L27F37T63_Expr = ALUModule_L27F37T63_Expr_1 << Inputs_SHAMT;
-assign ALUModule_L28F37T74_Expr = ALUModule_L28F37T74_Expr_1 >> Inputs_SHAMT;
-assign ALUModule_L29F37T72_Expr = ALUModule_L29F37T72_Expr_1 >> Inputs_SHAMT;
+assign ALUModule_L20F38T61_Expr = ALUModule_L20F38T61_Expr_1 & ALUModule_L20F38T61_Expr_2;
+assign ALUModule_L21F37T60_Expr = ALUModule_L21F37T60_Expr_1 | ALUModule_L21F37T60_Expr_2;
+assign ALUModule_L22F38T61_Expr = ALUModule_L22F38T61_Expr_1 ^ ALUModule_L22F38T61_Expr_2;
+assign ALUModule_L23F37T63_Expr = ALUModule_L23F37T63_Expr_1 << Inputs_SHAMT;
+assign ALUModule_L24F37T74_Expr = ALUModule_L24F37T74_Expr_1 >> Inputs_SHAMT;
+assign ALUModule_L25F37T72_Expr = ALUModule_L25F37T72_Expr_1 >> Inputs_SHAMT;
 assign ALUModule_L15F46T87_Expr = ALUModule_L15F46T87_Expr_1 + ALUModule_L15F46T87_Expr_2;
 assign ALUModule_L16F46T111_Expr = ALUModule_L16F46T111_Expr_1 - ALUModule_L16F46T111_Expr_2;
-assign ALUModule_L23F38T61_Expr_1 = Inputs_Op1/*cast*/;
-assign ALUModule_L23F38T61_Expr_2 = Inputs_Op2/*cast*/;
-assign ALUModule_L24F37T60_Expr_1 = Inputs_Op1/*cast*/;
-assign ALUModule_L24F37T60_Expr_2 = Inputs_Op2/*cast*/;
-assign ALUModule_L25F38T61_Expr_1 = Inputs_Op1/*cast*/;
-assign ALUModule_L25F38T61_Expr_2 = Inputs_Op2/*cast*/;
-assign ALUModule_L27F37T63_Expr_1 = Inputs_Op1/*cast*/;
-assign ALUModule_L28F37T74_Expr_1 = ALUModule_L28F37T58_SignChange/*cast*/;
-assign ALUModule_L29F37T72_Expr_1 = ALUModule_L29F37T56_SignChange/*cast*/;
+assign ALUModule_L20F38T61_Expr_1 = Inputs_Op1/*cast*/;
+assign ALUModule_L20F38T61_Expr_2 = Inputs_Op2/*cast*/;
+assign ALUModule_L21F37T60_Expr_1 = Inputs_Op1/*cast*/;
+assign ALUModule_L21F37T60_Expr_2 = Inputs_Op2/*cast*/;
+assign ALUModule_L22F38T61_Expr_1 = Inputs_Op1/*cast*/;
+assign ALUModule_L22F38T61_Expr_2 = Inputs_Op2/*cast*/;
+assign ALUModule_L23F37T63_Expr_1 = Inputs_Op1/*cast*/;
+assign ALUModule_L24F37T74_Expr_1 = ALUModule_L24F37T58_SignChange/*cast*/;
+assign ALUModule_L25F37T72_Expr_1 = ALUModule_L25F37T56_SignChange/*cast*/;
 assign ALUModule_L15F46T87_Expr_1 = { {1{ALUModule_L15F46T65_SignChange[32]}}, ALUModule_L15F46T65_SignChange }/*expand*/;
 assign ALUModule_L15F46T87_Expr_2 = { {1{ALUModule_L15F68T87_SignChange[32]}}, ALUModule_L15F68T87_SignChange }/*expand*/;
 assign ALUModule_L16F46T111_Expr_1 = { {1{ALUModule_L16F46T77_Resize[33]}}, ALUModule_L16F46T77_Resize }/*expand*/;
@@ -120,23 +116,19 @@ assign ALUModule_L16F80T111_Resize = { {1{ALUModule_L16F80T99_SignChange[32]}}, 
 assign internalSub = ALUModule_L16F46T111_Expr/*cast*/;
 assign ALUModule_L18F35T53_Index = internalAdd[32:1]/*cast*/;
 assign ADD = ALUModule_L18F35T53_Index/*cast*/;
-assign ALUModule_L19F36T51_Index = internalAdd[33];
-assign ADDOverflow = ALUModule_L19F36T51_Index;
-assign ALUModule_L20F35T53_Index = internalSub[32:1]/*cast*/;
-assign SUB = ALUModule_L20F35T53_Index/*cast*/;
-assign ALUModule_L21F37T52_Index = internalSub[33];
-assign SUBUnderflow = ALUModule_L21F37T52_Index;
-assign resAND = ALUModule_L23F38T61_Expr/*cast*/;
-assign resOR = ALUModule_L24F37T60_Expr/*cast*/;
-assign resXOR = ALUModule_L25F38T61_Expr/*cast*/;
-assign ALUModule_L27F36T71_Index = ALUModule_L27F37T63_Expr/*cast*/;
-assign SHLL = ALUModule_L27F36T71_Index/*cast*/;
-assign ALUModule_L28F37T58_SignChange = Inputs_Op1/*cast*/;
-assign ALUModule_L28F36T82_Index = ALUModule_L28F37T74_Expr/*cast*/;
-assign SHRL = ALUModule_L28F36T82_Index/*cast*/;
-assign ALUModule_L29F37T56_SignChange = Inputs_Op1/*cast*/;
-assign ALUModule_L29F36T80_Index = ALUModule_L29F37T72_Expr/*cast*/;
-assign SHRA = ALUModule_L29F36T80_Index/*cast*/;
+assign ALUModule_L19F35T53_Index = internalSub[32:1]/*cast*/;
+assign SUB = ALUModule_L19F35T53_Index/*cast*/;
+assign resAND = ALUModule_L20F38T61_Expr/*cast*/;
+assign resOR = ALUModule_L21F37T60_Expr/*cast*/;
+assign resXOR = ALUModule_L22F38T61_Expr/*cast*/;
+assign ALUModule_L23F36T71_Index = ALUModule_L23F37T63_Expr/*cast*/;
+assign SHLL = ALUModule_L23F36T71_Index/*cast*/;
+assign ALUModule_L24F37T58_SignChange = Inputs_Op1/*cast*/;
+assign ALUModule_L24F36T82_Index = ALUModule_L24F37T74_Expr/*cast*/;
+assign SHRL = ALUModule_L24F36T82_Index/*cast*/;
+assign ALUModule_L25F37T56_SignChange = Inputs_Op1/*cast*/;
+assign ALUModule_L25F36T80_Index = ALUModule_L25F37T72_Expr/*cast*/;
+assign SHRA = ALUModule_L25F36T80_Index/*cast*/;
 // [BEGIN USER ARCHITECTURE]
 // [END USER ARCHITECTURE]
 endmodule

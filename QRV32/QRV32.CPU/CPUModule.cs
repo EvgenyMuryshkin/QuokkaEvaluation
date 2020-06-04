@@ -40,6 +40,7 @@ namespace QRV32.CPU
         internal InstructionDecoderModule ID = new InstructionDecoderModule();
         internal PCModule PC = new PCModule();
         internal RegistersBlockModule Regs = new RegistersBlockModule();
+        //internal RegistersRAMModule Regs = new RegistersRAMModule();
         internal ALUModule ALU = new ALUModule();
         internal CompareModule CMP = new CompareModule();
 
@@ -83,7 +84,6 @@ namespace QRV32.CPU
         OPCodes OPCode => (OPCodes)(byte)ID.Funct3;
         BranchTypeCodes BranchTypeCode => (BranchTypeCodes)(byte)ID.Funct3;
         LoadTypeCodes LoadTypeCode => (LoadTypeCodes)(byte)ID.Funct3;
-        StoreTypeCodes StoreTypeCode => (StoreTypeCodes)(byte)ID.Funct3;
 
         protected override void OnSchedule(Func<CPUModuleInputs> inputsFactory)
         {

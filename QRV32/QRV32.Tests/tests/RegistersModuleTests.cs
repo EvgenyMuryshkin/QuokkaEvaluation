@@ -11,7 +11,7 @@ namespace QRV32.Tests
         where TModule: IRegistersModule<TState>, new()
         where TState: IRegistersModuleState, new()
     {
-        IEnumerable<uint> IncRange => Enumerable.Range(0, 32).Select(i => (uint)i);
+        IEnumerable<RTLBitArray> IncRange => Enumerable.Range(0, 32).Select(i => new RTLBitArray((uint)i));
 
         [TestMethod]
         public void FillTest()
@@ -24,9 +24,9 @@ namespace QRV32.Tests
                 sim.ClockCycle(new RegistersModuleInput() { RD = idx, WE = true, WriteData = idx + 1 });
 
                 if (idx == 0)
-                    Assert.AreEqual(idx, tl.State.x[0]);
+                    Assert.AreEqual(0U, tl.State.x[0]);
                 else
-                    Assert.AreEqual(idx + 1, tl.State.x[idx]);
+                    Assert.AreEqual((uint)(idx + 1), tl.State.x[idx]);
             }
         }
 
