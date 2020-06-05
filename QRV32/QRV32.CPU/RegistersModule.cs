@@ -22,12 +22,17 @@ namespace QRV32.CPU
         public uint[] x { get; set; } = new uint[32];
     }
 
-    public interface IRegistersModule<TState> : IRTLSynchronousModule<RegistersModuleInput, TState>
-        where TState : IRegistersModuleState
+    public interface IRegistersModule : IRTLCombinationalModule<RegistersModuleInput>
     {
         bool Ready { get; }
         RTLBitArray RS1 { get; }
         RTLBitArray RS2 { get; }
+        IRegistersModuleState State { get; }
+    }
+
+    public interface IRegistersModule<TState> : IRegistersModule, IRTLSynchronousModule<RegistersModuleInput, TState>
+        where TState : IRegistersModuleState
+    {
     }
 
     public abstract class RegistersModule<TState> : RTLSynchronousModule<RegistersModuleInput, TState>, IRegistersModule<TState>
@@ -36,5 +41,7 @@ namespace QRV32.CPU
         public abstract bool Ready { get; }
         public abstract RTLBitArray RS1 { get; }
         public abstract RTLBitArray RS2 { get; }
+
+        IRegistersModuleState IRegistersModule.State => base.State;
     }
 }

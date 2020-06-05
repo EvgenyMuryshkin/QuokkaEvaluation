@@ -7,7 +7,7 @@ using System.Diagnostics;
 
 namespace QRV32.Tests
 {
-    public class CPUSimulator : RTLSimulator<CPUModule, CPUModuleInputs>
+    public class CPUSimulator : RTLSimulator<RISCVModule, CPUModuleInputs>
     {
         public int DebuggerCalls = 0;
         public List<uint> ECalls = new List<uint>();

@@ -15,10 +15,10 @@
 //   Code comes AS-IS, it is your responsibility to make sure it is working as expected
 //   no responsibility will be taken for any loss or damage caused by use of Quokka toolkit.
 // 
-// System configuration name is CPUModule_TopLevel_CPUModule_ALU, clock frequency is 1Hz, Embedded
+// System configuration name is RISCVModule_TopLevel_RISCVModule_ALU, clock frequency is 1Hz, Embedded
 // FSM summary
 // -- Packages
-module CPUModule_TopLevel_CPUModule_ALU (
+module RISCVModule_TopLevel_RISCVModule_ALU (
 // [BEGIN USER PORTS]
 // [END USER PORTS]
 

@@ -7,9 +7,8 @@ using System.Linq;
 
 namespace QRV32.Tests
 {
-    public class RegistersModuleTests<TModule, TState>
-        where TModule: IRegistersModule<TState>, new()
-        where TState: IRegistersModuleState, new()
+    public class RegistersModuleTests<TModule>
+        where TModule: IRegistersModule, new()
     {
         IEnumerable<RTLBitArray> IncRange => Enumerable.Range(0, 32).Select(i => new RTLBitArray((uint)i));
 
@@ -64,12 +63,12 @@ namespace QRV32.Tests
     }
 
     [TestClass]
-    public class RegistersBlockModuleTests : RegistersModuleTests<RegistersBlockModule, RegistersBlockModuleState>
+    public class RegistersBlockModuleTests : RegistersModuleTests<RegistersBlockModule>
     {
     }
 
     [TestClass]
-    public class RegistersRAMModuleTests : RegistersModuleTests<RegistersRAMModule, RegistersRAMModuleState>
+    public class RegistersRAMModuleTests : RegistersModuleTests<RegistersRAMModule>
     {
     }
 }

@@ -35,12 +35,11 @@ namespace QRV32.CPU
         public RTLBitArray PCOffset = new RTLBitArray(uint.MinValue);
     }
 
-    public class CPUModule : RTLSynchronousModule<CPUModuleInputs, CPUModuleState>
+    public class RISCVModule : RTLSynchronousModule<CPUModuleInputs, CPUModuleState>
     {
         internal InstructionDecoderModule ID = new InstructionDecoderModule();
         internal PCModule PC = new PCModule();
-        internal RegistersBlockModule Regs = new RegistersBlockModule();
-        //internal RegistersRAMModule Regs = new RegistersRAMModule();
+        internal IRegistersModule Regs = null;
         internal ALUModule ALU = new ALUModule();
         internal CompareModule CMP = new CompareModule();
 
@@ -84,6 +83,21 @@ namespace QRV32.CPU
         OPCodes OPCode => (OPCodes)(byte)ID.Funct3;
         BranchTypeCodes BranchTypeCode => (BranchTypeCodes)(byte)ID.Funct3;
         LoadTypeCodes LoadTypeCode => (LoadTypeCodes)(byte)ID.Funct3;
+
+        public RISCVModule() : base(false)
+        {
+            var ramRegs = true;
+            if (ramRegs)
+            {
+                Regs = new RegistersRAMModule();
+            }
+            else
+            {
+                Regs = new RegistersBlockModule();
+            }
+
+            Initialize();
+        }
 
         protected override void OnSchedule(Func<CPUModuleInputs> inputsFactory)
         {
