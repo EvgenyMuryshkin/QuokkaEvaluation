@@ -7,7 +7,7 @@ using System.Diagnostics;
 
 namespace QRV32.Tests
 {
-    public class CPUSimulator : RTLSimulator<RISCVModule, CPUModuleInputs>
+    public class CPUSimulator : RTLSimulator<RISCVModule, RISCVModuleInputs>
     {
         public int DebuggerCalls = 0;
         public List<uint> ECalls = new List<uint>();
@@ -54,21 +54,23 @@ namespace QRV32.Tests
             return true;
         }
 
+        RTLBitArray wordAddress => TopLevel.MemAddress >> 2;
+        byte byteAddress => (byte)((TopLevel.MemAddress & 0x3) << 3);
+
         bool FeedNextInstruction()
         {
-            var address = (TopLevel.MemAddress >> 2);
-            if (address >= MemoryBlock.Length)
-                throw new IndexOutOfRangeException($"Requested address in IF was outside of memory block: {address}");
+            if (wordAddress >= MemoryBlock.Length)
+                throw new IndexOutOfRangeException($"Requested address in IF was outside of memory block: {wordAddress}");
 
             // end state condition
-            if (address >= instructionsCount)
+            if (wordAddress >= instructionsCount)
                 return false;
 
-            if (lastRequestedAddress == address)
+            if (lastRequestedAddress == wordAddress)
                 return false;
 
-            lastRequestedAddress = address;
-            ClockCycle(new CPUModuleInputs() { MemReady = true, MemReadData = MemoryBlock[address] });
+            lastRequestedAddress = wordAddress;
+            ClockCycle(new RISCVModuleInputs() { MemReady = true, MemReadData = MemoryBlock[wordAddress] });
 
             return true;
         }
@@ -98,20 +100,17 @@ namespace QRV32.Tests
                         ClockCycle();
                         break;
                     case CPUState.MEM:
-                        var wordAddress = TopLevel.MemAddress & 0xFFFFFFFC;
                         if (wordAddress >= MemoryBlock.Length)
                             throw new IndexOutOfRangeException($"Requested address in IF was outside of memory block: {wordAddress}");
 
                         if (TopLevel.MemRead)
                         {
-                            var byteAddress = TopLevel.MemAddress & 0x3;
                             var word = new RTLBitArray(MemoryBlock[wordAddress]);
-                            var data = word >> (int)(byteAddress * 8);
-                            ClockCycle(new CPUModuleInputs() { MemReady = true, MemReadData = data });
+                            var data = word >> byteAddress;
+                            ClockCycle(new RISCVModuleInputs() { MemReady = true, MemReadData = data });
                         }
                         else if (TopLevel.MemWrite)
                         {
-                            var byteAddress = (int)((TopLevel.MemAddress & 0x3) << 3);
                             var word = new RTLBitArray(MemoryBlock[wordAddress]);
                             var mask = new RTLBitArray(uint.MinValue);
 
@@ -137,7 +136,7 @@ namespace QRV32.Tests
                             // write data back to mem
                             MemoryBlock[wordAddress] = word;
 
-                            ClockCycle(new CPUModuleInputs() { MemReady = true });
+                            ClockCycle(new RISCVModuleInputs() { MemReady = true });
                         }
                         else
                         {

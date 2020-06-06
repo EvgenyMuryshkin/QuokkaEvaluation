@@ -15,23 +15,26 @@
 //   Code comes AS-IS, it is your responsibility to make sure it is working as expected
 //   no responsibility will be taken for any loss or damage caused by use of Quokka toolkit.
 // 
-// System configuration name is RISCVModule_TopLevel, clock frequency is 1Hz, Top-level
+// System configuration name is QuSoCModule_TopLevel_QuSoCModule_CPU, clock frequency is 1Hz, Embedded
 // FSM summary
 // -- Packages
-module RISCVModule_TopLevel (
+module QuSoCModule_TopLevel_QuSoCModule_CPU (
 // [BEGIN USER PORTS]
 // [END USER PORTS]
 
-	input  Clock,
-	input  Reset,
-	input  [31: 0] BaseAddress,
-	input  [31: 0] MemReadData,
+	input  BoardSignals_Clock,
+	input  BoardSignals_Reset,
+	input  BoardSignals_Running,
+	input  BoardSignals_Starting,
+	input  BoardSignals_Started,
+	input  [32: 1] BaseAddress,
+	input  [32: 1] MemReadData,
 	input  MemReady,
 	output MemRead,
-	output [31: 0] MemAddress,
+	output [32: 1] MemAddress,
 	output MemWrite,
-	output [31: 0] MemWriteData,
-	output [2: 0] MemWriteMode
+	output [32: 1] MemWriteData,
+	output [3: 1] MemWriteMode
     );
 
 // [BEGIN USER SIGNALS]
@@ -567,16 +570,9 @@ wire  [32:1] RISCVModule_L55F15L59T53_Lookup2;
 wire  RISCVModule_L53F35L59T53_LookupMultiplexerAddress;
 wire  [32:1] RISCVModule_L53F35L59T53_Lookup1;
 wire  [32:1] RISCVModule_L53F35L59T53_Lookup2;
-wire  BoardSignals_Clock;
-wire  BoardSignals_Reset;
-wire  BoardSignals_Running;
-wire  BoardSignals_Starting;
-wire  BoardSignals_Started;
-reg  InternalReset = 1'b0;
-work_Quokka_BoardSignalsProc BoardSignalsConnection(BoardSignals_Clock,BoardSignals_Reset,BoardSignals_Running,BoardSignals_Starting,BoardSignals_Started,Clock,Reset,InternalReset);
-always @(posedge Clock)
+always @(posedge BoardSignals_Clock)
 begin
-if ( Reset == 1 ) begin
+if ( BoardSignals_Reset == 1 ) begin
 State_State <= State_StateDefault;
 State_Instruction <= State_InstructionDefault;
 State_WBDataReady <= State_WBDataReadyDefault;
@@ -663,7 +659,7 @@ assign RISCVModule_L403F9L428T10_ExecuteStage_RISCVModule_L281F9L328T10_RISCVMod
 assign RISCVModule_L403F9L428T10_ExecuteStage_RISCVModule_L281F9L328T10_RISCVModule_L307F40T65_Expr = RISCVModule_L403F9L428T10_ExecuteStage_RISCVModule_L281F9L328T10_RISCVModule_L307F40T65_Expr_1 + RISCVModule_L403F9L428T10_ExecuteStage_RISCVModule_L281F9L328T10_RISCVModule_L307F40T65_Expr_2;
 assign RISCVModule_L403F9L428T10_ExecuteStage_RISCVModule_L281F9L328T10_RISCVModule_L312F40T65_Expr = RISCVModule_L403F9L428T10_ExecuteStage_RISCVModule_L281F9L328T10_RISCVModule_L312F40T65_Expr_1 + RISCVModule_L403F9L428T10_ExecuteStage_RISCVModule_L281F9L328T10_RISCVModule_L312F40T65_Expr_2;
 assign RISCVModule_L403F9L428T10_ExecuteStage_RISCVModule_L281F9L328T10_RISCVModule_L313F74T96_Expr = RISCVModule_L403F9L428T10_ExecuteStage_RISCVModule_L281F9L328T10_RISCVModule_L313F74T96_Expr_1 + RISCVModule_L403F9L428T10_ExecuteStage_RISCVModule_L281F9L328T10_RISCVModule_L313F74T96_Expr_2;
-RISCVModule_TopLevel_RISCVModule_ID RISCVModule_TopLevel_RISCVModule_ID
+QuSoCModule_TopLevel_QuSoCModule_CPU_RISCVModule_ID QuSoCModule_TopLevel_QuSoCModule_CPU_RISCVModule_ID
 (
 // [BEGIN USER MAP FOR ID]
 // [END USER MAP FOR ID]
@@ -685,7 +681,7 @@ RISCVModule_TopLevel_RISCVModule_ID RISCVModule_TopLevel_RISCVModule_ID
 	.SUB (IDSUBID_SUBHardLink)
 
 );
-RISCVModule_TopLevel_RISCVModule_PC RISCVModule_TopLevel_RISCVModule_PC
+QuSoCModule_TopLevel_QuSoCModule_CPU_RISCVModule_PC QuSoCModule_TopLevel_QuSoCModule_CPU_RISCVModule_PC
 (
 // [BEGIN USER MAP FOR PC]
 // [END USER MAP FOR PC]
@@ -701,7 +697,7 @@ RISCVModule_TopLevel_RISCVModule_PC RISCVModule_TopLevel_RISCVModule_PC
 	.PC (PCPCPC_PCHardLink)
 
 );
-RISCVModule_TopLevel_RISCVModule_Regs RISCVModule_TopLevel_RISCVModule_Regs
+QuSoCModule_TopLevel_QuSoCModule_CPU_RISCVModule_Regs QuSoCModule_TopLevel_QuSoCModule_CPU_RISCVModule_Regs
 (
 // [BEGIN USER MAP FOR Regs]
 // [END USER MAP FOR Regs]
@@ -721,7 +717,7 @@ RISCVModule_TopLevel_RISCVModule_Regs RISCVModule_TopLevel_RISCVModule_Regs
 	.Ready (RegsReadyRegs_ReadyHardLink)
 
 );
-RISCVModule_TopLevel_RISCVModule_ALU RISCVModule_TopLevel_RISCVModule_ALU
+QuSoCModule_TopLevel_QuSoCModule_CPU_RISCVModule_ALU QuSoCModule_TopLevel_QuSoCModule_CPU_RISCVModule_ALU
 (
 // [BEGIN USER MAP FOR ALU]
 // [END USER MAP FOR ALU]
@@ -738,7 +734,7 @@ RISCVModule_TopLevel_RISCVModule_ALU RISCVModule_TopLevel_RISCVModule_ALU
 	.SHRA (ALUSHRAALU_SHRAHardLink)
 
 );
-RISCVModule_TopLevel_RISCVModule_CMP RISCVModule_TopLevel_RISCVModule_CMP
+QuSoCModule_TopLevel_QuSoCModule_CPU_RISCVModule_CMP QuSoCModule_TopLevel_QuSoCModule_CPU_RISCVModule_CMP
 (
 // [BEGIN USER MAP FOR CMP]
 // [END USER MAP FOR CMP]

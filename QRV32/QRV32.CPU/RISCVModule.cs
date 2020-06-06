@@ -1,6 +1,7 @@
 ﻿using Quokka.RTL;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace QRV32.CPU
@@ -17,7 +18,7 @@ namespace QRV32.CPU
         Halt
     }
 
-    public class CPUModuleInputs
+    public class RISCVModuleInputs
     {
         public RTLBitArray BaseAddress = new RTLBitArray(uint.MinValue);
         public RTLBitArray MemReadData = new RTLBitArray(uint.MinValue);
@@ -35,7 +36,7 @@ namespace QRV32.CPU
         public RTLBitArray PCOffset = new RTLBitArray(uint.MinValue);
     }
 
-    public class RISCVModule : RTLSynchronousModule<CPUModuleInputs, CPUModuleState>
+    public class RISCVModule : RTLSynchronousModule<RISCVModuleInputs, CPUModuleState>
     {
         internal InstructionDecoderModule ID = new InstructionDecoderModule();
         internal PCModule PC = new PCModule();
@@ -99,7 +100,7 @@ namespace QRV32.CPU
             Initialize();
         }
 
-        protected override void OnSchedule(Func<CPUModuleInputs> inputsFactory)
+        protected override void OnSchedule(Func<RISCVModuleInputs> inputsFactory)
         {
             base.OnSchedule(inputsFactory);
 
@@ -424,6 +425,23 @@ namespace QRV32.CPU
                     EStage();
                     break;
             }
+        }
+
+        public override string ToString()
+        {
+            var dump = new StringBuilder();
+
+            dump.AppendLine($"RISC-V Dump:");
+            dump.AppendLine($"PC: 0x{PC.PC}");
+            dump.AppendLine($"State: {State.State.ToString()}");
+            dump.AppendLine($"=== REGS ===");
+            Regs
+                .State
+                .x
+                .Select((r, idx) => $"X[{idx.ToString("D2")}]: 0x{(r.ToString("X8"))}")
+                .ForEach(l => dump.AppendLine(l));
+
+            return dump.ToString();
         }
     }
 }

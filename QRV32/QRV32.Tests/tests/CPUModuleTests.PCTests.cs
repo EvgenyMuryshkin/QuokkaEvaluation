@@ -15,7 +15,7 @@ namespace QRV32.CPUModuleTests
             var sim = new CPUSimulator();
             var tl = sim.TopLevel;
             Assert.IsFalse(tl.MemRead);
-            sim.ClockCycle(new CPUModuleInputs() { BaseAddress = 0xF0000000 });
+            sim.ClockCycle(new RISCVModuleInputs() { BaseAddress = 0xF0000000 });
             Assert.IsTrue(tl.MemRead);
             Assert.AreEqual(0xF0000000, tl.MemAddress);
         }

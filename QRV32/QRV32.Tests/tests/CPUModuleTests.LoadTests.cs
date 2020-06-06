@@ -11,7 +11,7 @@ namespace QRV32.CPUModuleTests
         public void LB()
         {
             var sim = PowerUp();
-            sim.MemoryBlock[0x100] = 0xF4030201;
+            sim.MemoryBlock[0x40] = 0xF4030201;
 
             var tl = sim.TopLevel;
             var instructions = Inst.FromAsmFile("lb");
@@ -26,7 +26,7 @@ namespace QRV32.CPUModuleTests
         public void LBU()
         {
             var sim = PowerUp();
-            sim.MemoryBlock[0x100] = 0xF4030201;
+            sim.MemoryBlock[0x40] = 0xF4030201;
 
             var tl = sim.TopLevel;
             var instructions = Inst.FromAsmFile("lbu");
@@ -41,9 +41,9 @@ namespace QRV32.CPUModuleTests
         public void LH()
         {
             var sim = PowerUp();
-            sim.MemoryBlock[0x0FC] = 0xE4030201U;
-            sim.MemoryBlock[0x100] = 0xF4030201U;
-            sim.MemoryBlock[0x104] = 0x07030201U;
+            sim.MemoryBlock[0x3F] = 0xE4030201U;
+            sim.MemoryBlock[0x40] = 0xF4030201U;
+            sim.MemoryBlock[0x41] = 0x07030201U;
 
             var tl = sim.TopLevel;
             var instructions = Inst.FromAsmFile("lh");
@@ -57,9 +57,9 @@ namespace QRV32.CPUModuleTests
         public void LHU()
         {
             var sim = PowerUp();
-            sim.MemoryBlock[0x0FC] = 0xE4030201U;
-            sim.MemoryBlock[0x100] = 0xF4030201U;
-            sim.MemoryBlock[0x104] = 0x07030201U;
+            sim.MemoryBlock[0x3F] = 0xE4030201U;
+            sim.MemoryBlock[0x40] = 0xF4030201U;
+            sim.MemoryBlock[0x41] = 0x07030201U;
 
             var tl = sim.TopLevel;
             var instructions = Inst.FromAsmFile("lhu");
@@ -73,9 +73,9 @@ namespace QRV32.CPUModuleTests
         public void LW()
         {
             var sim = PowerUp();
-            sim.MemoryBlock[0x0FC] = 0xE4030201U;
-            sim.MemoryBlock[0x100] = 0xF4030201U;
-            sim.MemoryBlock[0x104] = 0x07030201U;
+            sim.MemoryBlock[0x3F] = 0xE4030201U;
+            sim.MemoryBlock[0x40] = 0xF4030201U;
+            sim.MemoryBlock[0x41] = 0x07030201U;
 
             var tl = sim.TopLevel;
             var instructions = Inst.FromAsmFile("lw");
