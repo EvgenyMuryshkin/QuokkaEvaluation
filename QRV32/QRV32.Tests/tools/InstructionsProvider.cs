@@ -3,6 +3,7 @@ using Quokka.RISCV.Integration.Engine;
 using System;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace QRV32.Tests
 {
@@ -38,16 +39,20 @@ namespace QRV32.Tests
         {
             // making a API call to integration server.
 
-            // on Linux, just uncomment next line and make local call to RISCV toolchain
-            // return Toolchain.Asm(asmSource);
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                // on Windows, integration server is required to run in Docker or WSL.
+                // Installation steps are same for WSL and for docker.
+                // https://github.com/EvgenyMuryshkin/Quokka.RISCV.Docker/blob/master/Dockerfile
 
-            // on Windows, integration server is required to run in Docker or WSL.
-            // Installation steps are same for WSL and for docker.
-            // https://github.com/EvgenyMuryshkin/Quokka.RISCV.Docker/blob/master/Dockerfile
-
-            // default implemetation calls locally running server running in Docker or WSL
-            var instructions = RISCVIntegrationClient.Asm(new RISCVIntegrationEndpoint(), asmSource);
-            return instructions.Result;
+                var instructions = RISCVIntegrationClient.Asm(new RISCVIntegrationEndpoint(), asmSource);
+                return instructions.Result;
+            }
+            else
+            {
+                // on Linux, just make local call to RISCV toolchain
+                return RISCVIntegrationClient.ToInstructions(Toolchain.Asm(asmSource)).ToArray();
+            }
         }
     }
 }

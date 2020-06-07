@@ -9,7 +9,7 @@ namespace QRV32.CPU
 
     public class QuSoCModuleState
     {
-        public uint[] BlockRAM = new uint[32768];
+        public uint[] BlockRAM = new uint[1024];
         public bool BlockRAMWE;
 
         public RTLBitArray MemReadData = 0U;
@@ -18,10 +18,31 @@ namespace QRV32.CPU
         public bool Blink { get; set; }
     }
 
+    /*
+    public class QuSoCBlinkerModule : QuSoCModule
+    {
+        public QuSoCBlinkerModule()
+        {
+        }
+
+        protected override void OnSchedule(Func<QuSoCModuleInputs> inputsFactory)
+        {
+            base.OnSchedule(inputsFactory);
+        }
+    }
+    */
+
     public class QuSoCModule : RTLSynchronousModule<QuSoCModuleInputs, QuSoCModuleState>
     {
         internal RISCVModule CPU = new RISCVModule();
         public bool Blink => State.Blink;
+
+        public void SetInstructions(uint[] instructions)
+        {
+            instructions.CopyTo(State.BlockRAM, 0);
+
+            Setup();
+        }
 
         protected override void OnSchedule(Func<QuSoCModuleInputs> inputsFactory)
         {
@@ -52,6 +73,10 @@ namespace QRV32.CPU
         RTLBitArray blockRAMWriteData =>
             (State.MemReadData & !mask) | (CPU.MemWriteData & mask);
 
+        RTLBitArray internalMemReadAddress => (CPU.MemRead || CPU.MemWrite)
+            ? wordAddress
+            : new RTLBitArray(0U);
+
         protected override void OnStage()
         {
             if (State.BlockRAMWE)
@@ -59,17 +84,19 @@ namespace QRV32.CPU
                 NextState.BlockRAM[wordAddress] = blockRAMWriteData;
             }
 
-            NextState.MemReadData = State.BlockRAM[wordAddress];
-            NextState.MemReady = CPU.MemRead | State.BlockRAMWE;
+            NextState.MemReadData = State.BlockRAM[internalMemReadAddress];
+            NextState.MemReady = CPU.MemRead;
 
             // TODO: 32768U
             // TODO: State.BlockRAM.Length
 
-            var blockRAMWrite = CPU.MemWrite && CPU.MemAddress < 32768;
+            NextState.BlockRAMWE = false;
+            var blockRAMWrite = !State.BlockRAMWE && CPU.MemWrite && CPU.MemAddress < 32768;
             if (blockRAMWrite)
             {
                 // write back to block ram on next cycle
                 NextState.BlockRAMWE = true;
+                NextState.MemReady = true;
             }
         }
     }

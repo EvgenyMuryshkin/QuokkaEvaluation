@@ -44,9 +44,9 @@ namespace QRV32.CPU
         internal ALUModule ALU = new ALUModule();
         internal CompareModule CMP = new CompareModule();
 
-        internal bool IsLoadOp => OpCode == OpTypeCodes.LOAD;
+        internal bool IsLoadOp => OpTypeCode == OpTypeCodes.LOAD;
         internal RTLBitArray LoadAdress => Regs.RS1 + ID.ITypeImm;
-        internal bool IsStoreOp => OpCode == OpTypeCodes.STORE;
+        internal bool IsStoreOp => OpTypeCode == OpTypeCodes.STORE;
         internal RTLBitArray StoreAddress => Regs.RS1 + ID.STypeImm;
 
         public bool MemRead => State.State == CPUState.IF || (State.State == CPUState.MEM && IsLoadOp);
@@ -70,22 +70,22 @@ namespace QRV32.CPU
         bool PCOverwrite => State.State == CPUState.Reset;
 
         RTLBitArray ALUOp1 => Regs.RS1;
-        RTLBitArray ALUOp2 => OpCode == OpTypeCodes.OPIMM ? ID.ITypeImm : Regs.RS2;
+        RTLBitArray ALUOp2 => OpTypeCode == OpTypeCodes.OPIMM ? ID.ITypeImm : Regs.RS2;
 
-        RTLBitArray ALUSHAMT => OpCode == OpTypeCodes.OPIMM ? ID.SHAMT : Regs.RS2[4, 0];
+        RTLBitArray ALUSHAMT => OpTypeCode == OpTypeCodes.OPIMM ? ID.SHAMT : Regs.RS2[4, 0];
         bool RegsRead => State.State == CPUState.ID;
         bool RegsWE => State.State == CPUState.WB && State.WBDataReady;
 
         RTLBitArray CMPLhs => Regs.RS1;
-        RTLBitArray CMPRhs => OpCode == OpTypeCodes.OPIMM ? ID.ITypeImm : Regs.RS2;
+        RTLBitArray CMPRhs => OpTypeCode == OpTypeCodes.OPIMM ? ID.ITypeImm : Regs.RS2;
 
-        OpTypeCodes OpCode => (OpTypeCodes)(byte)ID.OpCode;
+        OpTypeCodes OpTypeCode => (OpTypeCodes)(byte)ID.OpCode;
         OPIMMCodes OPIMMCode => (OPIMMCodes)(byte)ID.Funct3;
         OPCodes OPCode => (OPCodes)(byte)ID.Funct3;
         BranchTypeCodes BranchTypeCode => (BranchTypeCodes)(byte)ID.Funct3;
         LoadTypeCodes LoadTypeCode => (LoadTypeCodes)(byte)ID.Funct3;
 
-        public RISCVModule() : base(false)
+        public RISCVModule()
         {
             var ramRegs = true;
             if (ramRegs)
@@ -96,8 +96,6 @@ namespace QRV32.CPU
             {
                 Regs = new RegistersBlockModule();
             }
-
-            Initialize();
         }
 
         protected override void OnSchedule(Func<RISCVModuleInputs> inputsFactory)
@@ -283,7 +281,7 @@ namespace QRV32.CPU
             NextState.WBDataReady = false;
             NextState.PCOffset = InstructionOffset;
 
-            switch (OpCode)
+            switch (OpTypeCode)
             {
                 case OpTypeCodes.OPIMM:
                     OnOPIMM();
@@ -433,7 +431,9 @@ namespace QRV32.CPU
 
             dump.AppendLine($"RISC-V Dump:");
             dump.AppendLine($"PC: 0x{PC.PC}");
-            dump.AppendLine($"State: {State.State.ToString()}");
+            dump.AppendLine($"State: {State.State}");
+            dump.AppendLine($"Instruction: 0x{State.Instruction}");
+            dump.AppendLine($"OpCode: {OpTypeCode}");
             dump.AppendLine($"=== REGS ===");
             Regs
                 .State

@@ -28,6 +28,15 @@ namespace RTL.Modules
     [TestClass]
     public class ExampleTests
     {
+        T Module<T>()
+            where T : IRTLCombinationalModule, new()
+        {
+            var module = new T();
+            module.Setup();
+
+            return module;
+        }
+
         [TestMethod]
         public void BitArrayModuleTest()
         {
@@ -176,7 +185,7 @@ namespace RTL.Modules
         [TestMethod]
         public void EmitterModuleTest()
         {
-            var module = new EmitterModule();
+            var module = Module<EmitterModule>();
 
             var expected = Enumerable.Range(0, 256).Select(idx => (byte)idx).ToList();
             List<byte> actual = new List<byte>();
@@ -309,7 +318,7 @@ namespace RTL.Modules
         [TestMethod]
         public void ReceiverModuleTest()
         {
-            var module = new ReceiverModule();
+            var module = Module<ReceiverModule>();
 
             Assert.AreEqual(ReceiverFSM.Idle, module.State.FSM);
 
@@ -331,7 +340,7 @@ namespace RTL.Modules
         [TestMethod]
         public void TransmitterModule_IdleTest()
         {
-            var module = new TransmitterModule();
+            var module = Module<TransmitterModule>();
             module.Cycle(new TransmitterInputs());
             Assert.AreEqual(TransmitterFSM.Idle, module.State.FSM);
         }
@@ -339,7 +348,7 @@ namespace RTL.Modules
         [TestMethod]
         public void TransmitterModuleTest()
         {
-            var module = new TransmitterModule();
+            var module = Module<TransmitterModule>();
             RTLBitArray sourceData = (byte)0xAA;
 
             Assert.IsTrue(module.IsReady);
@@ -381,7 +390,7 @@ namespace RTL.Modules
             var shlData = new RTLBitArray((byte)0x81);
             var shaData = shlData.Signed();
 
-            var shifter = new ShifterModule();
+            var shifter = Module<ShifterModule>();
             foreach (var shiftBy in Enumerable.Range(0, 8))
             {
                 var sb = new RTLBitArray(shiftBy).Unsigned().Resized(3);
