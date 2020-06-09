@@ -4,8 +4,8 @@ using System.IO;
 
 namespace Quokka.RTL.Simulator
 {
-    public class RTLSimulator<TModule>
-        where TModule : IRTLCombinationalModule, new()
+    public class RTLInstanceSimulator<TModule>
+        where TModule : IRTLCombinationalModule
     {
         protected TModule _topLevel;
 
@@ -25,9 +25,9 @@ namespace Quokka.RTL.Simulator
         public Action<TModule> OnPostStage { get; set; }
         public Func<RTLSimulatorCallback<TModule>, bool> IsRunning { get; set; }
 
-        public RTLSimulator()
+        public RTLInstanceSimulator(TModule topLevel)
         {
-            _topLevel = new TModule();
+            _topLevel = topLevel;
             _topLevel.Setup();
             _simulatorContext = new RTLSimulatorContext();
         }
@@ -110,10 +110,15 @@ namespace Quokka.RTL.Simulator
         }
     }
 
-    public class RTLSimulator<TModule, TInputs> : RTLSimulator<TModule>
-        where TModule : IRTLCombinationalModule<TInputs>, new()
+    public class RTLInstanceSimulator<TModule, TInputs> : RTLInstanceSimulator<TModule>
+        where TModule : IRTLCombinationalModule<TInputs>
         where TInputs : new()
     {
+        public RTLInstanceSimulator(TModule topLevel) : base(topLevel)
+        {
+
+        }
+
         public void ClockCycle(TInputs inputs)
         {
             _topLevel.Schedule(() => inputs);
@@ -121,4 +126,22 @@ namespace Quokka.RTL.Simulator
         }
     }
 
+    public class RTLSimulator<TModule> : RTLInstanceSimulator<TModule>
+        where TModule : IRTLCombinationalModule, new()
+    {
+        public RTLSimulator() : base(new TModule())
+        {
+
+        }
+    }
+     
+    public class RTLSimulator<TModule, TInputs> : RTLInstanceSimulator<TModule, TInputs>
+        where TModule : IRTLCombinationalModule<TInputs>, new()
+        where TInputs : new()
+    {
+        public RTLSimulator() : base(new TModule())
+        {
+
+        }
+    }
 }

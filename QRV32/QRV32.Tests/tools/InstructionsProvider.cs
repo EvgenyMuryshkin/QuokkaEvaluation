@@ -21,6 +21,18 @@ namespace QRV32.Tests
             return ProjectLocation(Path.GetDirectoryName(current));
         }
 
+        public virtual string SolutionLocation(string current = null)
+        {
+            if (current == "")
+                return "";
+
+            current = current ?? Directory.GetCurrentDirectory();
+            if (Directory.EnumerateFiles(current, "*.sln").Any())
+                return current;
+
+            return SolutionLocation(Path.GetDirectoryName(current));
+        }
+
         public virtual string AsmFilesLocation => Path.Combine(ProjectLocation(), "asm");
         public virtual uint[] FromAsmFile(string fileName)
         {

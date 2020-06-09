@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Experimental.Tests
 {
-    class PathTools
+    public class PathTools
     {
         public static string VCDOutputPath([CallerMemberName]string testName = "")
         {

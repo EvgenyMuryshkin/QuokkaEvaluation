@@ -6,20 +6,18 @@ using System.Linq;
 
 namespace QuSoC.Tests
 {
-    public class QuSoCModuleSimulator : RTLSimulator<QuSoCModule, QuSoCModuleInputs>
+    public class QuSoCModuleSimulator : RTLInstanceSimulator<QuSoCModule, QuSoCModuleInputs>
     {
         protected HashSet<uint> InfiniteLoopAddresses = new HashSet<uint>();
 
-        public QuSoCModuleSimulator(uint[] instructions)
+        public QuSoCModuleSimulator(uint[] instructions) : base(new QuSoCModule(instructions))
         {
-            instructions.CopyTo(TopLevel.State.BlockRAM, 0);
-
             InfiniteLoopAddresses.AddRange(
                 instructions
                 .Select((i, idx) => new { i, idx })
                 .Where(p => p.i == 0x6F) // j loop code
                 .Select(p => (uint)(p.idx * 4))
-            );
+            );            
         }
 
         public void RunToCompletion(uint maxClockCycles = 10000)

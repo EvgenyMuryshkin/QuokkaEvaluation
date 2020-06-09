@@ -35,30 +35,35 @@ wire  Zero = 1'b0;
 wire  One = 1'b1;
 wire  true = 1'b1;
 wire  false = 1'b0;
-wire  [2:1] QuSoCModule_L61F81T82_Expr = 2'b11;
-wire  QuSoCModule_L67F33T34_Expr = 1'b0;
-wire  [8:1] QuSoCModule_L68F32T45_Expr = 8'b11111111;
-wire  QuSoCModule_L69F35T36_Expr = 1'b1;
-wire  [16:1] QuSoCModule_L70F36T51_Expr = 16'b1111111111111111;
-wire  [32:1] QuSoCModule_L71F35T48_Expr = 32'b11111111111111111111111111111111;
-wire  QuSoCModule_L78F31T33_Expr = 1'b0;
-wire  QuSoCModule_L53F31T33_Expr = 1'b0;
-wire  QuSoCModule_L81F9L101T10_QuSoCModule_L93F36T41_Expr = 1'b0;
-wire  [16:1] QuSoCModule_L81F9L101T10_QuSoCModule_L94F87T92_Expr = 16'b1000000000000000;
-wire  QuSoCModule_L81F9L101T10_QuSoCModule_L96F13L100T14_QuSoCModule_L98F40T44_Expr = 1'b1;
-wire  QuSoCModule_L81F9L101T10_QuSoCModule_L96F13L100T14_QuSoCModule_L99F38T42_Expr = 1'b1;
-reg  NextState_Blink = 1'b1;
+wire  [2:1] QuSoCModule_L58F58T59_Expr = 2'b10;
+wire  [2:1] QuSoCModule_L59F81T82_Expr = 2'b11;
+wire  QuSoCModule_L62F27T28_Expr = 1'b1;
+wire  QuSoCModule_L68F33T34_Expr = 1'b0;
+wire  [8:1] QuSoCModule_L69F32T45_Expr = 8'b11111111;
+wire  QuSoCModule_L70F35T36_Expr = 1'b1;
+wire  [16:1] QuSoCModule_L71F36T51_Expr = 16'b1111111111111111;
+wire  [32:1] QuSoCModule_L72F35T48_Expr = 32'b11111111111111111111111111111111;
+wire  QuSoCModule_L79F31T33_Expr = 1'b0;
+wire  QuSoCModule_L51F31T33_Expr = 1'b0;
+wire  QuSoCModule_L85F9L116T10_QuSoCModule_L97F36T41_Expr = 1'b0;
+wire  QuSoCModule_L85F9L116T10_QuSoCModule_L99F13L115T14_QuSoCModule_L102F26T27_Expr = 1'b0;
+wire  QuSoCModule_L85F9L116T10_QuSoCModule_L99F13L115T14_QuSoCModule_L104F25L108T26_QuSoCModule_L106F52T56_Expr = 1'b1;
+wire  QuSoCModule_L85F9L116T10_QuSoCModule_L99F13L115T14_QuSoCModule_L104F25L108T26_QuSoCModule_L107F50T54_Expr = 1'b1;
+wire  QuSoCModule_L85F9L116T10_QuSoCModule_L99F13L115T14_QuSoCModule_L110F26T27_Expr = 1'b1;
+wire  QuSoCModule_L85F9L116T10_QuSoCModule_L99F13L115T14_QuSoCModule_L112F46T50_Expr = 1'b1;
 reg  NextState_BlockRAMWE = 1'b1;
-reg  [32:1] NextState_MemReadData = 32'b00000000000000000000000000000000;
 reg  NextState_MemReady = 1'b1;
+reg  [8:1] NextState_Counter = 8'b00000000;
 wire  [32:1] internalMemAddress;
-wire  [30:1] wordAddress;
+wire  [32:1] wordAddress;
 wire  [5:1] byteAddress;
 wire  [32:1] internalMemReadData;
 wire  internalMemReady;
 wire  [32:1] mask;
 wire  [32:1] blockRAMWriteData;
 wire  [32:1] internalMemReadAddress;
+wire  [22:1] memSegment;
+wire  [10:1] blockRamAddress;
 wire  [32:1] CPU_BaseAddress;
 wire  [32:1] CPU_MemReadData;
 wire  CPU_MemReady;
@@ -67,19 +72,21 @@ wire  [32:1] CPU_MemAddress;
 wire  CPU_MemWrite;
 wire  [32:1] CPU_MemWriteData;
 wire  [3:1] CPU_MemWriteMode;
-wire  [32:1] QuSoCModule_L59F43T74_Source;
-wire  [30:1] QuSoCModule_L60F36T61_Index;
-wire  [2:1] QuSoCModule_L61F36T77_Source;
-wire  [2:1] QuSoCModule_L61F52T76_Index;
-wire  [8:1] QuSoCModule_L68F16T46_Source;
-wire  [32:1] QuSoCModule_L68F15T74_Resize;
-wire  [16:1] QuSoCModule_L70F20T52_Source;
-wire  [32:1] QuSoCModule_L70F19T80_Resize;
-wire  [32:1] QuSoCModule_L71F19T49_Source;
-wire  QuSoCModule_L78F15T34_Source;
-wire  [32:1] QuSoCModule_L81F9L101T10_QuSoCModule_L87F37T75_Index;
-wire  QuSoCModule_L81F9L101T10_blockRAMWrite;
-reg  [32:1] State_BlockRAMDefault = 32'b00000000000000000000000000000000;
+wire  [32:1] QuSoCModule_L57F43T74_Source;
+wire  [2:1] QuSoCModule_L59F36T77_Source;
+wire  [2:1] QuSoCModule_L59F52T76_Index;
+wire  [32:1] QuSoCModule_L63F15T40_Resize;
+wire  [8:1] QuSoCModule_L69F16T46_Source;
+wire  [32:1] QuSoCModule_L69F15T74_Resize;
+wire  [16:1] QuSoCModule_L71F20T52_Source;
+wire  [32:1] QuSoCModule_L71F19T80_Resize;
+wire  [32:1] QuSoCModule_L72F19T49_Source;
+wire  QuSoCModule_L79F15T34_Source;
+wire  [22:1] QuSoCModule_L81F35T54_Index;
+wire  [10:1] QuSoCModule_L82F40T57_Index;
+wire  [8:1] QuSoCModule_L85F9L116T10_QuSoCModule_L99F13L115T14_QuSoCModule_L100F25T41_Cast;
+wire  [8:1] QuSoCModule_L85F9L116T10_QuSoCModule_L99F13L115T14_QuSoCModule_L111F45T67_Index;
+wire  QuSoCModule_L38F30T46_Index;
 wire  [32:1] CPUBaseAddressCPU_BaseAddressHardLink;
 wire  [32:1] CPUMemReadDataCPU_MemReadDataHardLink;
 wire  CPUMemReadyCPU_MemReadyHardLink;
@@ -88,78 +95,74 @@ wire  [32:1] CPUMemAddressCPU_MemAddressHardLink;
 wire  CPUMemWriteCPU_MemWriteHardLink;
 wire  [32:1] CPUMemWriteDataCPU_MemWriteDataHardLink;
 wire  [3:1] CPUMemWriteModeCPU_MemWriteModeHardLink;
-reg  State_Blink = 1'b0;
-wire  State_BlinkDefault = 1'b1;
 reg  State_BlockRAMWE = 1'b0;
 wire  State_BlockRAMWEDefault = 1'b1;
 reg  [32:1] State_MemReadData = 32'b00000000000000000000000000000000;
-wire  [32:1] State_MemReadDataDefault = 32'b00000000000000000000000000000000;
 reg  State_MemReady = 1'b0;
 wire  State_MemReadyDefault = 1'b1;
-wire  [8:1] QuSoCModule_L61F36T82_Expr;
-wire  [8:1] QuSoCModule_L61F36T82_Expr_1;
-wire  [32:1] QuSoCModule_L63F44T76_Expr;
-wire  [32:1] QuSoCModule_L63F44T76_Expr_1;
-wire  [32:1] QuSoCModule_L68F16T61_Expr;
-wire  [32:1] QuSoCModule_L68F16T61_Expr_1;
-wire  [32:1] QuSoCModule_L70F20T67_Expr;
-wire  [32:1] QuSoCModule_L70F20T67_Expr_1;
-wire  [32:1] QuSoCModule_L74F13T68_Expr;
-wire  [32:1] QuSoCModule_L74F13T68_Expr_1;
-wire  [32:1] QuSoCModule_L74F13T68_Expr_2;
-wire  [32:1] QuSoCModule_L74F14T39_Expr;
-wire  [32:1] QuSoCModule_L74F14T39_Expr_1;
-wire  [32:1] QuSoCModule_L74F14T39_Expr_2;
-wire  [32:1] QuSoCModule_L74F34T39_Expr;
-wire  [32:1] QuSoCModule_L74F34T39_Expr_1;
-wire  [32:1] QuSoCModule_L74F44T67_Expr;
-wire  [32:1] QuSoCModule_L74F44T67_Expr_1;
-wire  [32:1] QuSoCModule_L74F44T67_Expr_2;
-wire  QuSoCModule_L76F48T75_Expr;
-wire  QuSoCModule_L76F48T75_Expr_1;
-wire  QuSoCModule_L76F48T75_Expr_2;
-wire  QuSoCModule_L81F9L101T10_QuSoCModule_L94F33T92_Expr;
-wire  QuSoCModule_L81F9L101T10_QuSoCModule_L94F33T92_Expr_1;
-wire  QuSoCModule_L81F9L101T10_QuSoCModule_L94F33T92_Expr_2;
-wire  QuSoCModule_L81F9L101T10_QuSoCModule_L94F33T66_Expr;
-wire  QuSoCModule_L81F9L101T10_QuSoCModule_L94F33T66_Expr_1;
-wire  QuSoCModule_L81F9L101T10_QuSoCModule_L94F33T66_Expr_2;
-wire  QuSoCModule_L81F9L101T10_QuSoCModule_L94F33T50_Expr;
-wire  QuSoCModule_L81F9L101T10_QuSoCModule_L94F33T50_Expr_1;
-wire  QuSoCModule_L67F13T34_Expr;
-wire signed  [4:1] QuSoCModule_L67F13T34_ExprLhs;
-wire signed  [4:1] QuSoCModule_L67F13T34_ExprRhs;
-wire  QuSoCModule_L69F15T36_Expr;
-wire signed  [4:1] QuSoCModule_L69F15T36_ExprLhs;
-wire signed  [4:1] QuSoCModule_L69F15T36_ExprRhs;
-wire  QuSoCModule_L81F9L101T10_QuSoCModule_L94F70T92_Expr;
-wire signed  [33:1] QuSoCModule_L81F9L101T10_QuSoCModule_L94F70T92_ExprLhs;
-wire signed  [33:1] QuSoCModule_L81F9L101T10_QuSoCModule_L94F70T92_ExprRhs;
-reg  [32:1] QuSoCModule_L69F15L71T49_Lookup = 32'b00000000000000000000000000000000;
-reg  [32:1] QuSoCModule_L67F13L71T49_Lookup = 32'b00000000000000000000000000000000;
-reg  [32:1] QuSoCModule_L76F47L78T34_Lookup = 32'b00000000000000000000000000000000;
-wire  QuSoCModule_L69F15L71T49_LookupMultiplexerAddress;
-wire  [32:1] QuSoCModule_L69F15L71T49_Lookup1;
-wire  [32:1] QuSoCModule_L69F15L71T49_Lookup2;
-wire  QuSoCModule_L67F13L71T49_LookupMultiplexerAddress;
-wire  [32:1] QuSoCModule_L67F13L71T49_Lookup1;
-wire  [32:1] QuSoCModule_L67F13L71T49_Lookup2;
-wire  QuSoCModule_L76F47L78T34_LookupMultiplexerAddress;
-wire  [32:1] QuSoCModule_L76F47L78T34_Lookup1;
-wire  [32:1] QuSoCModule_L76F47L78T34_Lookup2;
-integer State_BlockRAM_Iterator;
+reg  [8:1] State_Counter = 8'b00000000;
+wire  [8:1] State_CounterDefault = 8'b00000000;
+wire  [32:1] QuSoCModule_L58F36T59_Expr;
+wire  [32:1] QuSoCModule_L58F36T59_Expr_1;
+wire  [8:1] QuSoCModule_L59F36T82_Expr;
+wire  [8:1] QuSoCModule_L59F36T82_Expr_1;
+wire  [32:1] QuSoCModule_L64F15T47_Expr;
+wire  [32:1] QuSoCModule_L64F15T47_Expr_1;
+wire  [32:1] QuSoCModule_L69F16T61_Expr;
+wire  [32:1] QuSoCModule_L69F16T61_Expr_1;
+wire  [32:1] QuSoCModule_L71F20T67_Expr;
+wire  [32:1] QuSoCModule_L71F20T67_Expr_1;
+wire  [32:1] QuSoCModule_L75F13T68_Expr;
+wire  [32:1] QuSoCModule_L75F13T68_Expr_1;
+wire  [32:1] QuSoCModule_L75F13T68_Expr_2;
+wire  [32:1] QuSoCModule_L75F14T39_Expr;
+wire  [32:1] QuSoCModule_L75F14T39_Expr_1;
+wire  [32:1] QuSoCModule_L75F14T39_Expr_2;
+wire  [32:1] QuSoCModule_L75F34T39_Expr;
+wire  [32:1] QuSoCModule_L75F34T39_Expr_1;
+wire  [32:1] QuSoCModule_L75F44T67_Expr;
+wire  [32:1] QuSoCModule_L75F44T67_Expr_1;
+wire  [32:1] QuSoCModule_L75F44T67_Expr_2;
+wire  QuSoCModule_L77F48T75_Expr;
+wire  QuSoCModule_L77F48T75_Expr_1;
+wire  QuSoCModule_L77F48T75_Expr_2;
+wire  QuSoCModule_L85F9L116T10_QuSoCModule_L99F13L115T14_QuSoCModule_L103F29T46_Expr;
+wire  QuSoCModule_L85F9L116T10_QuSoCModule_L99F13L115T14_QuSoCModule_L103F29T46_Expr_1;
+wire  QuSoCModule_L62F13T28_Expr;
+wire signed  [23:1] QuSoCModule_L62F13T28_ExprLhs;
+wire signed  [23:1] QuSoCModule_L62F13T28_ExprRhs;
+wire  QuSoCModule_L68F13T34_Expr;
+wire signed  [4:1] QuSoCModule_L68F13T34_ExprLhs;
+wire signed  [4:1] QuSoCModule_L68F13T34_ExprRhs;
+wire  QuSoCModule_L70F15T36_Expr;
+wire signed  [4:1] QuSoCModule_L70F15T36_ExprLhs;
+wire signed  [4:1] QuSoCModule_L70F15T36_ExprRhs;
+wire  QuSoCModule_L85F9L116T10_QuSoCModule_L99F13L115T14_QuSoCModule_L102F21L109T31_Case;
+wire signed  [9:1] QuSoCModule_L85F9L116T10_QuSoCModule_L99F13L115T14_QuSoCModule_L102F21L109T31_CaseLhs;
+wire signed  [9:1] QuSoCModule_L85F9L116T10_QuSoCModule_L99F13L115T14_QuSoCModule_L102F21L109T31_CaseRhs;
+wire  QuSoCModule_L85F9L116T10_QuSoCModule_L99F13L115T14_QuSoCModule_L110F21L113T31_Case;
+wire signed  [9:1] QuSoCModule_L85F9L116T10_QuSoCModule_L99F13L115T14_QuSoCModule_L110F21L113T31_CaseLhs;
+wire signed  [9:1] QuSoCModule_L85F9L116T10_QuSoCModule_L99F13L115T14_QuSoCModule_L110F21L113T31_CaseRhs;
+reg  [32:1] QuSoCModule_L62F13L64T47_Lookup = 32'b00000000000000000000000000000000;
+reg  [32:1] QuSoCModule_L70F15L72T49_Lookup = 32'b00000000000000000000000000000000;
+reg  [32:1] QuSoCModule_L68F13L72T49_Lookup = 32'b00000000000000000000000000000000;
+reg  [32:1] QuSoCModule_L77F47L79T34_Lookup = 32'b00000000000000000000000000000000;
+wire  QuSoCModule_L62F13L64T47_LookupMultiplexerAddress;
+wire  [32:1] QuSoCModule_L62F13L64T47_Lookup1;
+wire  [32:1] QuSoCModule_L62F13L64T47_Lookup2;
+wire  QuSoCModule_L70F15L72T49_LookupMultiplexerAddress;
+wire  [32:1] QuSoCModule_L70F15L72T49_Lookup1;
+wire  [32:1] QuSoCModule_L70F15L72T49_Lookup2;
+wire  QuSoCModule_L68F13L72T49_LookupMultiplexerAddress;
+wire  [32:1] QuSoCModule_L68F13L72T49_Lookup1;
+wire  [32:1] QuSoCModule_L68F13L72T49_Lookup2;
+wire  QuSoCModule_L77F47L79T34_LookupMultiplexerAddress;
+wire  [32:1] QuSoCModule_L77F47L79T34_Lookup1;
+wire  [32:1] QuSoCModule_L77F47L79T34_Lookup2;
 reg [32:1] State_BlockRAM [0 : 1023];
 initial
 begin
-	for (State_BlockRAM_Iterator = 0; State_BlockRAM_Iterator < 1024; State_BlockRAM_Iterator = State_BlockRAM_Iterator + 1)
-		State_BlockRAM[State_BlockRAM_Iterator] = 0;
-end
-integer NextState_BlockRAM_Iterator;
-reg [32:1] NextState_BlockRAM [0 : 1023];
-initial
-begin
-	for (NextState_BlockRAM_Iterator = 0; NextState_BlockRAM_Iterator < 1024; NextState_BlockRAM_Iterator = NextState_BlockRAM_Iterator + 1)
-		NextState_BlockRAM[NextState_BlockRAM_Iterator] = 0;
+	$readmemh("QuSoCModule_TopLevel_State_BlockRAM.hex", State_BlockRAM);
 end
 wire  BoardSignals_Clock;
 wire  BoardSignals_Reset;
@@ -171,55 +174,71 @@ work_Quokka_BoardSignalsProc BoardSignalsConnection(BoardSignals_Clock,BoardSign
 always @(posedge Clock)
 begin
 if ( Reset == 1 ) begin
-State_Blink <= State_BlinkDefault;
 State_BlockRAMWE <= State_BlockRAMWEDefault;
-State_MemReadData <= State_MemReadDataDefault;
 State_MemReady <= State_MemReadyDefault;
+State_Counter <= State_CounterDefault;
 end
 else begin
-State_Blink <= NextState_Blink;
 State_BlockRAMWE <= NextState_BlockRAMWE;
-State_MemReadData <= NextState_MemReadData;
 State_MemReady <= NextState_MemReady;
+State_Counter <= NextState_Counter;
 end
 end
-always @(posedge Clock)
-begin
-if ( Reset == 1 ) begin
-for (State_BlockRAM_Iterator = 0; State_BlockRAM_Iterator < 1024; State_BlockRAM_Iterator = State_BlockRAM_Iterator + 1)
-begin
-State_BlockRAM[State_BlockRAM_Iterator] <= State_BlockRAMDefault;
-end
-end
-else begin
-for (State_BlockRAM_Iterator = 0; State_BlockRAM_Iterator < 1024; State_BlockRAM_Iterator = State_BlockRAM_Iterator + 1)
-begin
-State_BlockRAM[State_BlockRAM_Iterator] <= NextState_BlockRAM[State_BlockRAM_Iterator];
-end
-end
-end
-assign QuSoCModule_L67F13T34_Expr = QuSoCModule_L67F13T34_ExprLhs == QuSoCModule_L67F13T34_ExprRhs ? 1'b1 : 1'b0;
-assign QuSoCModule_L69F15T36_Expr = QuSoCModule_L69F15T36_ExprLhs == QuSoCModule_L69F15T36_ExprRhs ? 1'b1 : 1'b0;
-assign QuSoCModule_L81F9L101T10_QuSoCModule_L94F70T92_Expr = QuSoCModule_L81F9L101T10_QuSoCModule_L94F70T92_ExprLhs < QuSoCModule_L81F9L101T10_QuSoCModule_L94F70T92_ExprRhs ? 1'b1 : 1'b0;
-assign QuSoCModule_L61F36T82_Expr[1] = 0;
-assign QuSoCModule_L61F36T82_Expr[2] = 0;
-assign QuSoCModule_L61F36T82_Expr[3] = 0;
-assign QuSoCModule_L61F36T82_Expr[4] = QuSoCModule_L61F36T82_Expr_1[1];
-assign QuSoCModule_L61F36T82_Expr[5] = QuSoCModule_L61F36T82_Expr_1[2];
-assign QuSoCModule_L61F36T82_Expr[6] = 0;
-assign QuSoCModule_L61F36T82_Expr[7] = 0;
-assign QuSoCModule_L61F36T82_Expr[8] = 0;
-assign QuSoCModule_L63F44T76_Expr = QuSoCModule_L63F44T76_Expr_1 >> byteAddress;
-assign QuSoCModule_L68F16T61_Expr = QuSoCModule_L68F16T61_Expr_1 << byteAddress;
-assign QuSoCModule_L70F20T67_Expr = QuSoCModule_L70F20T67_Expr_1 << byteAddress;
-assign QuSoCModule_L74F13T68_Expr = QuSoCModule_L74F13T68_Expr_1 | QuSoCModule_L74F13T68_Expr_2;
-assign QuSoCModule_L74F14T39_Expr = QuSoCModule_L74F14T39_Expr_1 & QuSoCModule_L74F14T39_Expr_2;
-assign QuSoCModule_L74F34T39_Expr = ~QuSoCModule_L74F34T39_Expr_1;
-assign QuSoCModule_L74F44T67_Expr = QuSoCModule_L74F44T67_Expr_1 & QuSoCModule_L74F44T67_Expr_2;
-assign QuSoCModule_L76F48T75_Expr = QuSoCModule_L76F48T75_Expr_1 | QuSoCModule_L76F48T75_Expr_2;
-assign QuSoCModule_L81F9L101T10_QuSoCModule_L94F33T92_Expr = QuSoCModule_L81F9L101T10_QuSoCModule_L94F33T92_Expr_1 & QuSoCModule_L81F9L101T10_QuSoCModule_L94F33T92_Expr_2;
-assign QuSoCModule_L81F9L101T10_QuSoCModule_L94F33T66_Expr = QuSoCModule_L81F9L101T10_QuSoCModule_L94F33T66_Expr_1 & QuSoCModule_L81F9L101T10_QuSoCModule_L94F33T66_Expr_2;
-assign QuSoCModule_L81F9L101T10_QuSoCModule_L94F33T50_Expr = ~QuSoCModule_L81F9L101T10_QuSoCModule_L94F33T50_Expr_1;
+assign QuSoCModule_L62F13T28_Expr = QuSoCModule_L62F13T28_ExprLhs == QuSoCModule_L62F13T28_ExprRhs ? 1'b1 : 1'b0;
+assign QuSoCModule_L68F13T34_Expr = QuSoCModule_L68F13T34_ExprLhs == QuSoCModule_L68F13T34_ExprRhs ? 1'b1 : 1'b0;
+assign QuSoCModule_L70F15T36_Expr = QuSoCModule_L70F15T36_ExprLhs == QuSoCModule_L70F15T36_ExprRhs ? 1'b1 : 1'b0;
+assign QuSoCModule_L85F9L116T10_QuSoCModule_L99F13L115T14_QuSoCModule_L102F21L109T31_Case = QuSoCModule_L85F9L116T10_QuSoCModule_L99F13L115T14_QuSoCModule_L102F21L109T31_CaseLhs == QuSoCModule_L85F9L116T10_QuSoCModule_L99F13L115T14_QuSoCModule_L102F21L109T31_CaseRhs ? 1'b1 : 1'b0;
+assign QuSoCModule_L85F9L116T10_QuSoCModule_L99F13L115T14_QuSoCModule_L110F21L113T31_Case = QuSoCModule_L85F9L116T10_QuSoCModule_L99F13L115T14_QuSoCModule_L110F21L113T31_CaseLhs == QuSoCModule_L85F9L116T10_QuSoCModule_L99F13L115T14_QuSoCModule_L110F21L113T31_CaseRhs ? 1'b1 : 1'b0;
+// Output: QuSoCModule_L58F36T59_Expr, Width: 32, ShiftBy: 2, Sources: 1
+assign QuSoCModule_L58F36T59_Expr[1] = QuSoCModule_L58F36T59_Expr_1[3];
+assign QuSoCModule_L58F36T59_Expr[2] = QuSoCModule_L58F36T59_Expr_1[4];
+assign QuSoCModule_L58F36T59_Expr[3] = QuSoCModule_L58F36T59_Expr_1[5];
+assign QuSoCModule_L58F36T59_Expr[4] = QuSoCModule_L58F36T59_Expr_1[6];
+assign QuSoCModule_L58F36T59_Expr[5] = QuSoCModule_L58F36T59_Expr_1[7];
+assign QuSoCModule_L58F36T59_Expr[6] = QuSoCModule_L58F36T59_Expr_1[8];
+assign QuSoCModule_L58F36T59_Expr[7] = QuSoCModule_L58F36T59_Expr_1[9];
+assign QuSoCModule_L58F36T59_Expr[8] = QuSoCModule_L58F36T59_Expr_1[10];
+assign QuSoCModule_L58F36T59_Expr[9] = QuSoCModule_L58F36T59_Expr_1[11];
+assign QuSoCModule_L58F36T59_Expr[10] = QuSoCModule_L58F36T59_Expr_1[12];
+assign QuSoCModule_L58F36T59_Expr[11] = QuSoCModule_L58F36T59_Expr_1[13];
+assign QuSoCModule_L58F36T59_Expr[12] = QuSoCModule_L58F36T59_Expr_1[14];
+assign QuSoCModule_L58F36T59_Expr[13] = QuSoCModule_L58F36T59_Expr_1[15];
+assign QuSoCModule_L58F36T59_Expr[14] = QuSoCModule_L58F36T59_Expr_1[16];
+assign QuSoCModule_L58F36T59_Expr[15] = QuSoCModule_L58F36T59_Expr_1[17];
+assign QuSoCModule_L58F36T59_Expr[16] = QuSoCModule_L58F36T59_Expr_1[18];
+assign QuSoCModule_L58F36T59_Expr[17] = QuSoCModule_L58F36T59_Expr_1[19];
+assign QuSoCModule_L58F36T59_Expr[18] = QuSoCModule_L58F36T59_Expr_1[20];
+assign QuSoCModule_L58F36T59_Expr[19] = QuSoCModule_L58F36T59_Expr_1[21];
+assign QuSoCModule_L58F36T59_Expr[20] = QuSoCModule_L58F36T59_Expr_1[22];
+assign QuSoCModule_L58F36T59_Expr[21] = QuSoCModule_L58F36T59_Expr_1[23];
+assign QuSoCModule_L58F36T59_Expr[22] = QuSoCModule_L58F36T59_Expr_1[24];
+assign QuSoCModule_L58F36T59_Expr[23] = QuSoCModule_L58F36T59_Expr_1[25];
+assign QuSoCModule_L58F36T59_Expr[24] = QuSoCModule_L58F36T59_Expr_1[26];
+assign QuSoCModule_L58F36T59_Expr[25] = QuSoCModule_L58F36T59_Expr_1[27];
+assign QuSoCModule_L58F36T59_Expr[26] = QuSoCModule_L58F36T59_Expr_1[28];
+assign QuSoCModule_L58F36T59_Expr[27] = QuSoCModule_L58F36T59_Expr_1[29];
+assign QuSoCModule_L58F36T59_Expr[28] = QuSoCModule_L58F36T59_Expr_1[30];
+assign QuSoCModule_L58F36T59_Expr[29] = QuSoCModule_L58F36T59_Expr_1[31];
+assign QuSoCModule_L58F36T59_Expr[30] = QuSoCModule_L58F36T59_Expr_1[32];
+assign QuSoCModule_L58F36T59_Expr[31] = 0;
+assign QuSoCModule_L58F36T59_Expr[32] = 0;
+assign QuSoCModule_L59F36T82_Expr[1] = 0;
+assign QuSoCModule_L59F36T82_Expr[2] = 0;
+assign QuSoCModule_L59F36T82_Expr[3] = 0;
+assign QuSoCModule_L59F36T82_Expr[4] = QuSoCModule_L59F36T82_Expr_1[1];
+assign QuSoCModule_L59F36T82_Expr[5] = QuSoCModule_L59F36T82_Expr_1[2];
+assign QuSoCModule_L59F36T82_Expr[6] = 0;
+assign QuSoCModule_L59F36T82_Expr[7] = 0;
+assign QuSoCModule_L59F36T82_Expr[8] = 0;
+assign QuSoCModule_L64F15T47_Expr = QuSoCModule_L64F15T47_Expr_1 >> byteAddress;
+assign QuSoCModule_L69F16T61_Expr = QuSoCModule_L69F16T61_Expr_1 << byteAddress;
+assign QuSoCModule_L71F20T67_Expr = QuSoCModule_L71F20T67_Expr_1 << byteAddress;
+assign QuSoCModule_L75F13T68_Expr = QuSoCModule_L75F13T68_Expr_1 | QuSoCModule_L75F13T68_Expr_2;
+assign QuSoCModule_L75F14T39_Expr = QuSoCModule_L75F14T39_Expr_1 & QuSoCModule_L75F14T39_Expr_2;
+assign QuSoCModule_L75F34T39_Expr = ~QuSoCModule_L75F34T39_Expr_1;
+assign QuSoCModule_L75F44T67_Expr = QuSoCModule_L75F44T67_Expr_1 & QuSoCModule_L75F44T67_Expr_2;
+assign QuSoCModule_L77F48T75_Expr = QuSoCModule_L77F48T75_Expr_1 | QuSoCModule_L77F48T75_Expr_2;
+assign QuSoCModule_L85F9L116T10_QuSoCModule_L99F13L115T14_QuSoCModule_L103F29T46_Expr = ~QuSoCModule_L85F9L116T10_QuSoCModule_L99F13L115T14_QuSoCModule_L103F29T46_Expr_1;
 QuSoCModule_TopLevel_QuSoCModule_CPU QuSoCModule_TopLevel_QuSoCModule_CPU
 (
 // [BEGIN USER MAP FOR CPU]
@@ -241,113 +260,142 @@ QuSoCModule_TopLevel_QuSoCModule_CPU QuSoCModule_TopLevel_QuSoCModule_CPU
 );
 always @*
 begin
-case (QuSoCModule_L69F15L71T49_LookupMultiplexerAddress)
+case (QuSoCModule_L62F13L64T47_LookupMultiplexerAddress)
     'b0:
-QuSoCModule_L69F15L71T49_Lookup = QuSoCModule_L69F15L71T49_Lookup1;
+QuSoCModule_L62F13L64T47_Lookup = QuSoCModule_L62F13L64T47_Lookup1;
     'b1:
-QuSoCModule_L69F15L71T49_Lookup = QuSoCModule_L69F15L71T49_Lookup2;
+QuSoCModule_L62F13L64T47_Lookup = QuSoCModule_L62F13L64T47_Lookup2;
   default:
-QuSoCModule_L69F15L71T49_Lookup = 'b00000000000000000000000000000000;
+QuSoCModule_L62F13L64T47_Lookup = 'b00000000000000000000000000000000;
 endcase
 
 end
 always @*
 begin
-case (QuSoCModule_L67F13L71T49_LookupMultiplexerAddress)
+case (QuSoCModule_L70F15L72T49_LookupMultiplexerAddress)
     'b0:
-QuSoCModule_L67F13L71T49_Lookup = QuSoCModule_L67F13L71T49_Lookup1;
+QuSoCModule_L70F15L72T49_Lookup = QuSoCModule_L70F15L72T49_Lookup1;
     'b1:
-QuSoCModule_L67F13L71T49_Lookup = QuSoCModule_L67F13L71T49_Lookup2;
+QuSoCModule_L70F15L72T49_Lookup = QuSoCModule_L70F15L72T49_Lookup2;
   default:
-QuSoCModule_L67F13L71T49_Lookup = 'b00000000000000000000000000000000;
+QuSoCModule_L70F15L72T49_Lookup = 'b00000000000000000000000000000000;
 endcase
 
 end
 always @*
 begin
-case (QuSoCModule_L76F47L78T34_LookupMultiplexerAddress)
+case (QuSoCModule_L68F13L72T49_LookupMultiplexerAddress)
     'b0:
-QuSoCModule_L76F47L78T34_Lookup = QuSoCModule_L76F47L78T34_Lookup1;
+QuSoCModule_L68F13L72T49_Lookup = QuSoCModule_L68F13L72T49_Lookup1;
     'b1:
-QuSoCModule_L76F47L78T34_Lookup = QuSoCModule_L76F47L78T34_Lookup2;
+QuSoCModule_L68F13L72T49_Lookup = QuSoCModule_L68F13L72T49_Lookup2;
   default:
-QuSoCModule_L76F47L78T34_Lookup = 'b00000000000000000000000000000000;
+QuSoCModule_L68F13L72T49_Lookup = 'b00000000000000000000000000000000;
 endcase
 
 end
 always @*
 begin
-NextState_Blink = State_Blink;
+case (QuSoCModule_L77F47L79T34_LookupMultiplexerAddress)
+    'b0:
+QuSoCModule_L77F47L79T34_Lookup = QuSoCModule_L77F47L79T34_Lookup1;
+    'b1:
+QuSoCModule_L77F47L79T34_Lookup = QuSoCModule_L77F47L79T34_Lookup2;
+  default:
+QuSoCModule_L77F47L79T34_Lookup = 'b00000000000000000000000000000000;
+endcase
+
+end
+always @*
+begin
 NextState_BlockRAMWE = State_BlockRAMWE;
-NextState_MemReadData = State_MemReadData/*cast*/;
 NextState_MemReady = State_MemReady;
-for (NextState_BlockRAM_Iterator = 0; NextState_BlockRAM_Iterator < 1024; NextState_BlockRAM_Iterator = NextState_BlockRAM_Iterator + 1)
-begin
-NextState_BlockRAM[NextState_BlockRAM_Iterator] = State_BlockRAM[NextState_BlockRAM_Iterator]/*cast*/;
-end
+NextState_Counter = State_Counter/*cast*/;
 if ( State_BlockRAMWE == 1 ) begin
-NextState_BlockRAM[wordAddress] = blockRAMWriteData/*cast*/;
 end
-NextState_MemReadData = QuSoCModule_L81F9L101T10_QuSoCModule_L87F37T75_Index/*cast*/;
 NextState_MemReady = CPU_MemRead;
-NextState_BlockRAMWE = QuSoCModule_L81F9L101T10_QuSoCModule_L93F36T41_Expr;
-if ( QuSoCModule_L81F9L101T10_blockRAMWrite == 1 ) begin
-NextState_BlockRAMWE = QuSoCModule_L81F9L101T10_QuSoCModule_L96F13L100T14_QuSoCModule_L98F40T44_Expr;
-NextState_MemReady = QuSoCModule_L81F9L101T10_QuSoCModule_L96F13L100T14_QuSoCModule_L99F38T42_Expr;
+NextState_BlockRAMWE = QuSoCModule_L85F9L116T10_QuSoCModule_L97F36T41_Expr;
+if ( CPU_MemWrite == 1 ) begin
+if ( QuSoCModule_L85F9L116T10_QuSoCModule_L99F13L115T14_QuSoCModule_L102F21L109T31_Case == 1 ) begin
+if ( QuSoCModule_L85F9L116T10_QuSoCModule_L99F13L115T14_QuSoCModule_L103F29T46_Expr == 1 ) begin
+NextState_BlockRAMWE = QuSoCModule_L85F9L116T10_QuSoCModule_L99F13L115T14_QuSoCModule_L104F25L108T26_QuSoCModule_L106F52T56_Expr;
+NextState_MemReady = QuSoCModule_L85F9L116T10_QuSoCModule_L99F13L115T14_QuSoCModule_L104F25L108T26_QuSoCModule_L107F50T54_Expr;
+end
+end
+else if ( QuSoCModule_L85F9L116T10_QuSoCModule_L99F13L115T14_QuSoCModule_L110F21L113T31_Case == 1 ) begin
+NextState_Counter = QuSoCModule_L85F9L116T10_QuSoCModule_L99F13L115T14_QuSoCModule_L111F45T67_Index/*cast*/;
+NextState_MemReady = QuSoCModule_L85F9L116T10_QuSoCModule_L99F13L115T14_QuSoCModule_L112F46T50_Expr;
+end
 end
 
 end
-assign QuSoCModule_L69F15L71T49_LookupMultiplexerAddress = QuSoCModule_L69F15T36_Expr;
-assign QuSoCModule_L67F13L71T49_LookupMultiplexerAddress = QuSoCModule_L67F13T34_Expr;
-assign QuSoCModule_L76F47L78T34_LookupMultiplexerAddress = QuSoCModule_L76F48T75_Expr;
-assign QuSoCModule_L81F9L101T10_QuSoCModule_L87F37T75_Index = State_BlockRAM[internalMemReadAddress];
-assign QuSoCModule_L67F13T34_ExprLhs = { {1{1'b0}}, CPU_MemWriteMode }/*expand*/;
-assign QuSoCModule_L67F13T34_ExprRhs = { {3{1'b0}}, QuSoCModule_L67F33T34_Expr }/*expand*/;
-assign QuSoCModule_L69F15T36_ExprLhs = { {1{1'b0}}, CPU_MemWriteMode }/*expand*/;
-assign QuSoCModule_L69F15T36_ExprRhs = { {3{1'b0}}, QuSoCModule_L69F35T36_Expr }/*expand*/;
-assign QuSoCModule_L81F9L101T10_QuSoCModule_L94F70T92_ExprLhs = { {1{1'b0}}, CPU_MemAddress }/*expand*/;
-assign QuSoCModule_L81F9L101T10_QuSoCModule_L94F70T92_ExprRhs = { {17{1'b0}}, QuSoCModule_L81F9L101T10_QuSoCModule_L94F87T92_Expr }/*expand*/;
-assign QuSoCModule_L61F36T82_Expr_1 = { {6{1'b0}}, QuSoCModule_L61F36T77_Source }/*expand*/;
-assign QuSoCModule_L63F44T76_Expr_1 = State_MemReadData/*cast*/;
-assign QuSoCModule_L68F16T61_Expr_1 = { {24{1'b0}}, QuSoCModule_L68F16T46_Source }/*expand*/;
-assign QuSoCModule_L70F20T67_Expr_1 = { {16{1'b0}}, QuSoCModule_L70F20T52_Source }/*expand*/;
-assign QuSoCModule_L74F13T68_Expr_1 = QuSoCModule_L74F14T39_Expr/*cast*/;
-assign QuSoCModule_L74F13T68_Expr_2 = QuSoCModule_L74F44T67_Expr/*cast*/;
-assign QuSoCModule_L74F14T39_Expr_1 = State_MemReadData/*cast*/;
-assign QuSoCModule_L74F14T39_Expr_2 = QuSoCModule_L74F34T39_Expr/*cast*/;
-assign QuSoCModule_L74F34T39_Expr_1 = mask/*cast*/;
-assign QuSoCModule_L74F44T67_Expr_1 = CPU_MemWriteData/*cast*/;
-assign QuSoCModule_L74F44T67_Expr_2 = mask/*cast*/;
-assign QuSoCModule_L76F48T75_Expr_1 = CPU_MemRead;
-assign QuSoCModule_L76F48T75_Expr_2 = CPU_MemWrite;
-assign QuSoCModule_L81F9L101T10_QuSoCModule_L94F33T92_Expr_1 = QuSoCModule_L81F9L101T10_QuSoCModule_L94F33T66_Expr;
-assign QuSoCModule_L81F9L101T10_QuSoCModule_L94F33T92_Expr_2 = QuSoCModule_L81F9L101T10_QuSoCModule_L94F70T92_Expr;
-assign QuSoCModule_L81F9L101T10_QuSoCModule_L94F33T66_Expr_1 = QuSoCModule_L81F9L101T10_QuSoCModule_L94F33T50_Expr;
-assign QuSoCModule_L81F9L101T10_QuSoCModule_L94F33T66_Expr_2 = CPU_MemWrite;
-assign QuSoCModule_L81F9L101T10_QuSoCModule_L94F33T50_Expr_1 = State_BlockRAMWE;
-assign QuSoCModule_L59F43T74_Source = CPU_MemAddress/*cast*/;
-assign internalMemAddress = QuSoCModule_L59F43T74_Source/*cast*/;
-assign QuSoCModule_L60F36T61_Index = internalMemAddress[32:3]/*cast*/;
-assign wordAddress = QuSoCModule_L60F36T61_Index/*cast*/;
-assign QuSoCModule_L61F52T76_Index = internalMemAddress[2:1]/*cast*/;
-assign QuSoCModule_L61F36T77_Source = QuSoCModule_L61F52T76_Index/*cast*/;
-assign byteAddress = QuSoCModule_L61F36T82_Expr[5:1]/*truncate*/;
-assign internalMemReadData = QuSoCModule_L63F44T76_Expr/*cast*/;
+// inferred simple dual port RAM with read-first behaviour
+always @ (posedge Clock)
+begin
+	if (State_BlockRAMWE)
+		State_BlockRAM[blockRamAddress] <= blockRAMWriteData;
+
+	State_MemReadData <= State_BlockRAM[blockRamAddress];
+end
+
+assign QuSoCModule_L62F13L64T47_LookupMultiplexerAddress = QuSoCModule_L62F13T28_Expr;
+assign QuSoCModule_L70F15L72T49_LookupMultiplexerAddress = QuSoCModule_L70F15T36_Expr;
+assign QuSoCModule_L68F13L72T49_LookupMultiplexerAddress = QuSoCModule_L68F13T34_Expr;
+assign QuSoCModule_L77F47L79T34_LookupMultiplexerAddress = QuSoCModule_L77F48T75_Expr;
+assign QuSoCModule_L62F13T28_ExprLhs = { {1{1'b0}}, memSegment }/*expand*/;
+assign QuSoCModule_L62F13T28_ExprRhs = { {22{1'b0}}, QuSoCModule_L62F27T28_Expr }/*expand*/;
+assign QuSoCModule_L68F13T34_ExprLhs = { {1{1'b0}}, CPU_MemWriteMode }/*expand*/;
+assign QuSoCModule_L68F13T34_ExprRhs = { {3{1'b0}}, QuSoCModule_L68F33T34_Expr }/*expand*/;
+assign QuSoCModule_L70F15T36_ExprLhs = { {1{1'b0}}, CPU_MemWriteMode }/*expand*/;
+assign QuSoCModule_L70F15T36_ExprRhs = { {3{1'b0}}, QuSoCModule_L70F35T36_Expr }/*expand*/;
+assign QuSoCModule_L85F9L116T10_QuSoCModule_L99F13L115T14_QuSoCModule_L102F21L109T31_CaseLhs = { {1{1'b0}}, QuSoCModule_L85F9L116T10_QuSoCModule_L99F13L115T14_QuSoCModule_L100F25T41_Cast }/*expand*/;
+assign QuSoCModule_L85F9L116T10_QuSoCModule_L99F13L115T14_QuSoCModule_L102F21L109T31_CaseRhs = { {8{1'b0}}, QuSoCModule_L85F9L116T10_QuSoCModule_L99F13L115T14_QuSoCModule_L102F26T27_Expr }/*expand*/;
+assign QuSoCModule_L85F9L116T10_QuSoCModule_L99F13L115T14_QuSoCModule_L110F21L113T31_CaseLhs = { {1{1'b0}}, QuSoCModule_L85F9L116T10_QuSoCModule_L99F13L115T14_QuSoCModule_L100F25T41_Cast }/*expand*/;
+assign QuSoCModule_L85F9L116T10_QuSoCModule_L99F13L115T14_QuSoCModule_L110F21L113T31_CaseRhs = { {8{1'b0}}, QuSoCModule_L85F9L116T10_QuSoCModule_L99F13L115T14_QuSoCModule_L110F26T27_Expr }/*expand*/;
+assign QuSoCModule_L58F36T59_Expr_1 = internalMemAddress/*cast*/;
+assign QuSoCModule_L59F36T82_Expr_1 = { {6{1'b0}}, QuSoCModule_L59F36T77_Source }/*expand*/;
+assign QuSoCModule_L64F15T47_Expr_1 = State_MemReadData/*cast*/;
+assign QuSoCModule_L69F16T61_Expr_1 = { {24{1'b0}}, QuSoCModule_L69F16T46_Source }/*expand*/;
+assign QuSoCModule_L71F20T67_Expr_1 = { {16{1'b0}}, QuSoCModule_L71F20T52_Source }/*expand*/;
+assign QuSoCModule_L75F13T68_Expr_1 = QuSoCModule_L75F14T39_Expr/*cast*/;
+assign QuSoCModule_L75F13T68_Expr_2 = QuSoCModule_L75F44T67_Expr/*cast*/;
+assign QuSoCModule_L75F14T39_Expr_1 = State_MemReadData/*cast*/;
+assign QuSoCModule_L75F14T39_Expr_2 = QuSoCModule_L75F34T39_Expr/*cast*/;
+assign QuSoCModule_L75F34T39_Expr_1 = mask/*cast*/;
+assign QuSoCModule_L75F44T67_Expr_1 = CPU_MemWriteData/*cast*/;
+assign QuSoCModule_L75F44T67_Expr_2 = mask/*cast*/;
+assign QuSoCModule_L77F48T75_Expr_1 = CPU_MemRead;
+assign QuSoCModule_L77F48T75_Expr_2 = CPU_MemWrite;
+assign QuSoCModule_L85F9L116T10_QuSoCModule_L99F13L115T14_QuSoCModule_L103F29T46_Expr_1 = State_BlockRAMWE;
+assign QuSoCModule_L57F43T74_Source = CPU_MemAddress/*cast*/;
+assign internalMemAddress = QuSoCModule_L57F43T74_Source/*cast*/;
+assign wordAddress = QuSoCModule_L58F36T59_Expr/*cast*/;
+assign QuSoCModule_L59F52T76_Index = internalMemAddress[2:1]/*cast*/;
+assign QuSoCModule_L59F36T77_Source = QuSoCModule_L59F52T76_Index/*cast*/;
+assign byteAddress = QuSoCModule_L59F36T82_Expr[5:1]/*truncate*/;
+assign QuSoCModule_L63F15T40_Resize = { {24{1'b0}}, State_Counter }/*expand*/;
+assign internalMemReadData = QuSoCModule_L62F13L64T47_Lookup/*cast*/;
 assign internalMemReady = State_MemReady;
-assign QuSoCModule_L68F16T46_Source = QuSoCModule_L68F32T45_Expr/*cast*/;
-assign QuSoCModule_L68F15T74_Resize = QuSoCModule_L68F16T61_Expr/*cast*/;
-assign QuSoCModule_L70F20T52_Source = QuSoCModule_L70F36T51_Expr/*cast*/;
-assign QuSoCModule_L70F19T80_Resize = QuSoCModule_L70F20T67_Expr/*cast*/;
-assign QuSoCModule_L71F19T49_Source = QuSoCModule_L71F35T48_Expr/*cast*/;
-assign mask = QuSoCModule_L67F13L71T49_Lookup/*cast*/;
-assign blockRAMWriteData = QuSoCModule_L74F13T68_Expr/*cast*/;
-assign QuSoCModule_L78F15T34_Source = QuSoCModule_L78F31T33_Expr;
-assign internalMemReadAddress = QuSoCModule_L76F47L78T34_Lookup/*cast*/;
-assign CPU_BaseAddress = { {31{1'b0}}, QuSoCModule_L53F31T33_Expr }/*expand*/;
+assign QuSoCModule_L69F16T46_Source = QuSoCModule_L69F32T45_Expr/*cast*/;
+assign QuSoCModule_L69F15T74_Resize = QuSoCModule_L69F16T61_Expr/*cast*/;
+assign QuSoCModule_L71F20T52_Source = QuSoCModule_L71F36T51_Expr/*cast*/;
+assign QuSoCModule_L71F19T80_Resize = QuSoCModule_L71F20T67_Expr/*cast*/;
+assign QuSoCModule_L72F19T49_Source = QuSoCModule_L72F35T48_Expr/*cast*/;
+assign mask = QuSoCModule_L68F13L72T49_Lookup/*cast*/;
+assign blockRAMWriteData = QuSoCModule_L75F13T68_Expr/*cast*/;
+assign QuSoCModule_L79F15T34_Source = QuSoCModule_L79F31T33_Expr;
+assign internalMemReadAddress = QuSoCModule_L77F47L79T34_Lookup/*cast*/;
+assign QuSoCModule_L81F35T54_Index = wordAddress[32:11]/*cast*/;
+assign memSegment = QuSoCModule_L81F35T54_Index/*cast*/;
+assign QuSoCModule_L82F40T57_Index = wordAddress[10:1]/*cast*/;
+assign blockRamAddress = QuSoCModule_L82F40T57_Index/*cast*/;
+assign CPU_BaseAddress = { {31{1'b0}}, QuSoCModule_L51F31T33_Expr }/*expand*/;
 assign CPU_MemReadData = internalMemReadData/*cast*/;
 assign CPU_MemReady = internalMemReady;
-assign QuSoCModule_L81F9L101T10_blockRAMWrite = QuSoCModule_L81F9L101T10_QuSoCModule_L94F33T92_Expr;
-assign Blink = State_Blink;
+assign QuSoCModule_L85F9L116T10_QuSoCModule_L99F13L115T14_QuSoCModule_L100F25T41_Cast = memSegment[8:1]/*truncate*/;
+assign QuSoCModule_L85F9L116T10_QuSoCModule_L99F13L115T14_QuSoCModule_L111F45T67_Index = CPU_MemWriteData[8:1]/*cast*/;
+assign QuSoCModule_L38F30T46_Index = State_Counter[1];
+assign Blink = QuSoCModule_L38F30T46_Index;
 assign CPUBaseAddressCPU_BaseAddressHardLink = CPU_BaseAddress/*cast*/;
 assign CPUMemReadDataCPU_MemReadDataHardLink = CPU_MemReadData/*cast*/;
 assign CPUMemReadyCPU_MemReadyHardLink = CPU_MemReady;
@@ -356,12 +404,14 @@ assign CPU_MemAddress = CPUMemAddressCPU_MemAddressHardLink/*cast*/;
 assign CPU_MemWrite = CPUMemWriteCPU_MemWriteHardLink;
 assign CPU_MemWriteData = CPUMemWriteDataCPU_MemWriteDataHardLink/*cast*/;
 assign CPU_MemWriteMode = CPUMemWriteModeCPU_MemWriteModeHardLink/*cast*/;
-assign QuSoCModule_L69F15L71T49_Lookup1 = QuSoCModule_L71F19T49_Source/*cast*/;
-assign QuSoCModule_L69F15L71T49_Lookup2 = QuSoCModule_L70F19T80_Resize/*cast*/;
-assign QuSoCModule_L67F13L71T49_Lookup1 = QuSoCModule_L69F15L71T49_Lookup/*cast*/;
-assign QuSoCModule_L67F13L71T49_Lookup2 = QuSoCModule_L68F15T74_Resize/*cast*/;
-assign QuSoCModule_L76F47L78T34_Lookup1 = { {31{1'b0}}, QuSoCModule_L78F15T34_Source }/*expand*/;
-assign QuSoCModule_L76F47L78T34_Lookup2 = { {2{1'b0}}, wordAddress }/*expand*/;
+assign QuSoCModule_L62F13L64T47_Lookup1 = QuSoCModule_L64F15T47_Expr/*cast*/;
+assign QuSoCModule_L62F13L64T47_Lookup2 = QuSoCModule_L63F15T40_Resize/*cast*/;
+assign QuSoCModule_L70F15L72T49_Lookup1 = QuSoCModule_L72F19T49_Source/*cast*/;
+assign QuSoCModule_L70F15L72T49_Lookup2 = QuSoCModule_L71F19T80_Resize/*cast*/;
+assign QuSoCModule_L68F13L72T49_Lookup1 = QuSoCModule_L70F15L72T49_Lookup/*cast*/;
+assign QuSoCModule_L68F13L72T49_Lookup2 = QuSoCModule_L69F15T74_Resize/*cast*/;
+assign QuSoCModule_L77F47L79T34_Lookup1 = { {31{1'b0}}, QuSoCModule_L79F15T34_Source }/*expand*/;
+assign QuSoCModule_L77F47L79T34_Lookup2 = wordAddress/*cast*/;
 // [BEGIN USER ARCHITECTURE]
 // [END USER ARCHITECTURE]
 endmodule

@@ -14,8 +14,8 @@ namespace QRV32.CPU
 
         public RTLBitArray MemReadData = 0U;
         public bool MemReady;
-        
-        public bool Blink { get; set; }
+
+        public RTLBitArray Counter = new RTLBitArray(byte.MinValue);
     }
 
     /*
@@ -35,13 +35,11 @@ namespace QRV32.CPU
     public class QuSoCModule : RTLSynchronousModule<QuSoCModuleInputs, QuSoCModuleState>
     {
         internal RISCVModule CPU = new RISCVModule();
-        public bool Blink => State.Blink;
+        public bool Blink => State.Counter[0];
 
-        public void SetInstructions(uint[] instructions)
+        public QuSoCModule(uint[] instructions)
         {
             instructions.CopyTo(State.BlockRAM, 0);
-
-            Setup();
         }
 
         protected override void OnSchedule(Func<QuSoCModuleInputs> inputsFactory)
@@ -57,10 +55,13 @@ namespace QRV32.CPU
         }
 
         RTLBitArray internalMemAddress => new RTLBitArray(CPU.MemAddress);
-        RTLBitArray wordAddress => internalMemAddress[31, 2];
+        RTLBitArray wordAddress => internalMemAddress >> 2;
         RTLBitArray byteAddress => new RTLBitArray(internalMemAddress[1, 0]) << 3;
 
-        RTLBitArray internalMemReadData => State.MemReadData >> byteAddress;
+        RTLBitArray internalMemReadData =>
+            memSegment == 1
+            ? State.Counter.Resized(32)
+            : State.MemReadData >> byteAddress;
         bool internalMemReady => State.MemReady;
 
         RTLBitArray mask =>
@@ -77,26 +78,40 @@ namespace QRV32.CPU
             ? wordAddress
             : new RTLBitArray(0U);
 
+        RTLBitArray memSegment => wordAddress[31, 10];
+        RTLBitArray blockRamAddress => wordAddress[9, 0];
+
         protected override void OnStage()
         {
             if (State.BlockRAMWE)
             {
-                NextState.BlockRAM[wordAddress] = blockRAMWriteData;
+                NextState.BlockRAM[blockRamAddress] = blockRAMWriteData;
             }
 
-            NextState.MemReadData = State.BlockRAM[internalMemReadAddress];
+            NextState.MemReadData = State.BlockRAM[blockRamAddress];
             NextState.MemReady = CPU.MemRead;
 
             // TODO: 32768U
             // TODO: State.BlockRAM.Length
 
             NextState.BlockRAMWE = false;
-            var blockRAMWrite = !State.BlockRAMWE && CPU.MemWrite && CPU.MemAddress < 32768;
-            if (blockRAMWrite)
+            if (CPU.MemWrite)
             {
-                // write back to block ram on next cycle
-                NextState.BlockRAMWE = true;
-                NextState.MemReady = true;
+                switch ((byte)memSegment)
+                {
+                    case 0:
+                        if (!State.BlockRAMWE)
+                        {
+                            // write back to block ram on next cycle
+                            NextState.BlockRAMWE = true;
+                            NextState.MemReady = true;
+                        }
+                        break;
+                    case 1:
+                        NextState.Counter = CPU.MemWriteData[7, 0];
+                        NextState.MemReady = true;
+                        break;
+                }
             }
         }
     }
