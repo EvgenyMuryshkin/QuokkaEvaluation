@@ -17,6 +17,9 @@ namespace RTL.Modules
         public RTLBitArray Reversed => Bits[0, 7];
         public RTLBitArray ReversedHigh => Bits[4, 7];
         public RTLBitArray ReversedLow => Bits[0, 3];
-        public RTLBitArray Picks => new RTLBitArray(Bits[6,5], Bits[1,2]);
+        public RTLBitArray Picks => new RTLBitArray(Bits[6,5], Bits[0,1]);
+        public RTLBitArray FromBits1 => new RTLBitArray(true, true, false, true);
+        public RTLBitArray FromBits2 => new RTLBitArray(false, true, true, true);
+
     }
 }

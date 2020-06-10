@@ -29,7 +29,9 @@ module BitArrayModule_TopLevel (
 	output [7: 0] Reversed,
 	output [3: 0] ReversedHigh,
 	output [3: 0] ReversedLow,
-	output [3: 0] Picks
+	output [3: 0] Picks,
+	output [3: 0] FromBits1,
+	output [3: 0] FromBits2
     );
 
 // [BEGIN USER SIGNALS]
@@ -40,6 +42,14 @@ wire  Zero = 1'b0;
 wire  One = 1'b1;
 wire  true = 1'b1;
 wire  false = 1'b0;
+wire  BitArrayModule_L21F57T61_Expr = 1'b1;
+wire  BitArrayModule_L21F63T67_Expr = 1'b1;
+wire  BitArrayModule_L21F69T74_Expr = 1'b0;
+wire  BitArrayModule_L21F76T80_Expr = 1'b1;
+wire  BitArrayModule_L22F57T62_Expr = 1'b0;
+wire  BitArrayModule_L22F64T68_Expr = 1'b1;
+wire  BitArrayModule_L22F70T74_Expr = 1'b1;
+wire  BitArrayModule_L22F76T80_Expr = 1'b1;
 wire  [8:1] Inputs_Value;
 wire  [8:1] Bits;
 wire  [4:1] BitArrayModule_L15F36T46_Index;
@@ -50,6 +60,8 @@ wire  [4:1] BitArrayModule_L19F43T53_Index;
 wire  [4:1] BitArrayModule_L20F37T74_Source;
 wire  [2:1] BitArrayModule_L20F53T62_Index;
 wire  [2:1] BitArrayModule_L20F64T73_Index;
+wire  [4:1] BitArrayModule_L21F41T81_Source;
+wire  [4:1] BitArrayModule_L22F41T81_Source;
 assign Inputs_Value = Value/*cast*/;
 assign Bits = Inputs_Value/*cast*/;
 assign Direct = Bits/*cast*/;
@@ -77,13 +89,23 @@ assign BitArrayModule_L19F43T53_Index[3] = Bits[2];
 assign BitArrayModule_L19F43T53_Index[4] = Bits[1];
 assign ReversedLow = BitArrayModule_L19F43T53_Index/*cast*/;
 assign BitArrayModule_L20F53T62_Index = Bits[7:6]/*cast*/;
-assign BitArrayModule_L20F64T73_Index[1] = Bits[3];
-assign BitArrayModule_L20F64T73_Index[2] = Bits[2];
-assign BitArrayModule_L20F37T74_Source[1] = BitArrayModule_L20F53T62_Index[1];
-assign BitArrayModule_L20F37T74_Source[2] = BitArrayModule_L20F53T62_Index[2];
-assign BitArrayModule_L20F37T74_Source[3] = BitArrayModule_L20F64T73_Index[1];
-assign BitArrayModule_L20F37T74_Source[4] = BitArrayModule_L20F64T73_Index[2];
+assign BitArrayModule_L20F64T73_Index[1] = Bits[2];
+assign BitArrayModule_L20F64T73_Index[2] = Bits[1];
+assign BitArrayModule_L20F37T74_Source[1] = BitArrayModule_L20F64T73_Index[1];
+assign BitArrayModule_L20F37T74_Source[2] = BitArrayModule_L20F64T73_Index[2];
+assign BitArrayModule_L20F37T74_Source[3] = BitArrayModule_L20F53T62_Index[1];
+assign BitArrayModule_L20F37T74_Source[4] = BitArrayModule_L20F53T62_Index[2];
 assign Picks = BitArrayModule_L20F37T74_Source/*cast*/;
+assign BitArrayModule_L21F41T81_Source[1] = BitArrayModule_L21F76T80_Expr;
+assign BitArrayModule_L21F41T81_Source[2] = BitArrayModule_L21F69T74_Expr;
+assign BitArrayModule_L21F41T81_Source[3] = BitArrayModule_L21F63T67_Expr;
+assign BitArrayModule_L21F41T81_Source[4] = BitArrayModule_L21F57T61_Expr;
+assign FromBits1 = BitArrayModule_L21F41T81_Source/*cast*/;
+assign BitArrayModule_L22F41T81_Source[1] = BitArrayModule_L22F76T80_Expr;
+assign BitArrayModule_L22F41T81_Source[2] = BitArrayModule_L22F70T74_Expr;
+assign BitArrayModule_L22F41T81_Source[3] = BitArrayModule_L22F64T68_Expr;
+assign BitArrayModule_L22F41T81_Source[4] = BitArrayModule_L22F57T62_Expr;
+assign FromBits2 = BitArrayModule_L22F41T81_Source/*cast*/;
 // [BEGIN USER ARCHITECTURE]
 // [END USER ARCHITECTURE]
 endmodule

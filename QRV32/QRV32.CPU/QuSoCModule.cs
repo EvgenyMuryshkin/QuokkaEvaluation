@@ -36,6 +36,16 @@ namespace QRV32.CPU
     {
         internal RISCVModule CPU = new RISCVModule();
         public bool Blink => State.Counter[0];
+        public RTLBitArray CPUAddress => CPU.MemAddress;
+        public bool CPUMemRead => CPU.MemRead;
+        public bool CPUMemWrite => CPU.MemWrite;
+        public RTLBitArray CPUMemReadData => internalMemReadData;
+        public bool SOCMemReady => State.MemReady;
+        public bool CPUHalted => CPU.IsHalted;
+        public bool BlockRAMWE => State.BlockRAMWE;
+        public byte DbgState => CPU.DbgState;
+        public RTLBitArray DbgWBData => CPU.DbgWBData;
+        public bool DbgWDDataReady => CPU.DbgWDDataReady;
 
         public QuSoCModule(uint[] instructions)
         {
@@ -73,10 +83,6 @@ namespace QRV32.CPU
 
         RTLBitArray blockRAMWriteData =>
             (State.MemReadData & !mask) | (CPU.MemWriteData & mask);
-
-        RTLBitArray internalMemReadAddress => (CPU.MemRead || CPU.MemWrite)
-            ? wordAddress
-            : new RTLBitArray(0U);
 
         RTLBitArray memSegment => wordAddress[31, 10];
         RTLBitArray blockRamAddress => wordAddress[9, 0];

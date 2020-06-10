@@ -26,8 +26,9 @@ namespace QRV32.CPUModuleTests
             var tl = sim.TopLevel;
             var instructions = Inst.FromAsmFile("li");
             sim.RunAll(instructions);
-            Assert.AreEqual(0xFEFEFEFE, tl.Regs.State.x[1]);
-            Assert.AreEqual(0xF000FFFF, tl.Regs.State.x[2]);
+            Assert.AreEqual(0x1000U, tl.Regs.State.x[1]);
+            Assert.AreEqual(0xFEFEFEFE, tl.Regs.State.x[2]);
+            Assert.AreEqual(0xF000FFFF, tl.Regs.State.x[3]);
         }
     }
 }

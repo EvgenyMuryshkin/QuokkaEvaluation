@@ -27,8 +27,12 @@ module RISCVModule_TopLevel (
 	input  [31: 0] BaseAddress,
 	input  [31: 0] MemReadData,
 	input  MemReady,
+	output [7: 0] DbgState,
+	output signed [31: 0] DbgWBData,
+	output DbgWDDataReady,
 	output MemRead,
 	output [31: 0] MemAddress,
+	output IsHalted,
 	output MemWrite,
 	output [31: 0] MemWriteData,
 	output [2: 0] MemWriteMode
@@ -42,18 +46,18 @@ wire  Zero = 1'b0;
 wire  One = 1'b1;
 wire  true = 1'b1;
 wire  false = 1'b0;
-wire  [2:1] RISCVModule_L47F49T65_Expr = 2'b11;
-wire  [6:1] RISCVModule_L49F50T67_Expr = 6'b100011;
-wire  [3:1] RISCVModule_L66F58T59_Expr = 3'b100;
-wire  RISCVModule_L68F37T51_Expr = 1'b0;
-wire  [3:1] RISCVModule_L68F70T81_Expr = 3'b101;
-wire  RISCVModule_L69F48T62_Expr = 1'b0;
-wire  RISCVModule_L70F44T58_Expr = 1'b0;
-wire  [5:1] RISCVModule_L73F45T62_Expr = 5'b10011;
-wire  [5:1] RISCVModule_L75F47T64_Expr = 5'b10011;
-wire  [2:1] RISCVModule_L76F41T52_Expr = 2'b10;
-wire  [3:1] RISCVModule_L77F39T50_Expr = 3'b101;
-wire  [5:1] RISCVModule_L80F45T62_Expr = 5'b10011;
+wire  [2:1] RISCVModule_L51F52T68_Expr = 2'b11;
+wire  [6:1] RISCVModule_L53F53T70_Expr = 6'b100011;
+wire  [3:1] RISCVModule_L72F58T59_Expr = 3'b100;
+wire  RISCVModule_L74F37T51_Expr = 1'b0;
+wire  [3:1] RISCVModule_L74F70T81_Expr = 3'b101;
+wire  RISCVModule_L75F48T62_Expr = 1'b0;
+wire  RISCVModule_L76F44T58_Expr = 1'b0;
+wire  [5:1] RISCVModule_L79F48T65_Expr = 5'b10011;
+wire  [5:1] RISCVModule_L81F50T67_Expr = 5'b10011;
+wire  [2:1] RISCVModule_L82F41T52_Expr = 2'b10;
+wire  [3:1] RISCVModule_L83F39T50_Expr = 3'b101;
+wire  [5:1] RISCVModule_L86F48T65_Expr = 5'b10011;
 wire  RISCVModule_L401F9L426T10_RISCVModule_L404F22T36_Expr = 1'b0;
 wire  RISCVModule_L401F9L426T10_RISCVModule_L405F39T50_Expr = 1'b1;
 wire  RISCVModule_L401F9L426T10_RISCVModule_L407F22T33_Expr = 1'b1;
@@ -130,17 +134,18 @@ wire  [3:1] RISCVModule_L401F9L426T10_WriteBackStage_RISCVModule_L367F9L376T10_R
 wire  RISCVModule_L401F9L426T10_WriteBackStage_RISCVModule_L367F9L376T10_RISCVModule_L373F13L375T14_RISCVModule_L374F35T46_Expr = 1'b1;
 wire  [3:1] RISCVModule_L401F9L426T10_RISCVModule_L422F22T32_Expr = 3'b110;
 wire  [3:1] RISCVModule_L401F9L426T10_EStage_RISCVModule_L396F9L398T10_RISCVModule_L397F31T42_Expr = 3'b101;
-wire  RISCVModule_L52F47T58_Expr = 1'b1;
-wire  [3:1] RISCVModule_L52F78T90_Expr = 3'b100;
-wire  RISCVModule_L53F50T61_Expr = 1'b1;
-wire  RISCVModule_L59F39T52_Expr = 1'b0;
-wire  [3:1] RISCVModule_L61F48T60_Expr = 3'b100;
+wire  RISCVModule_L56F47T58_Expr = 1'b1;
+wire  [3:1] RISCVModule_L56F78T90_Expr = 3'b100;
+wire  RISCVModule_L57F50T61_Expr = 1'b1;
+wire  RISCVModule_L63F39T52_Expr = 1'b0;
+wire  [3:1] RISCVModule_L65F48T61_Expr = 3'b111;
+wire  [3:1] RISCVModule_L67F48T60_Expr = 3'b100;
 wire  [32:1] Inputs_BaseAddress;
 wire  [32:1] Inputs_MemReadData;
 wire  Inputs_MemReady;
 reg  [3:1] NextState_State = 3'b000;
 reg  [32:1] NextState_Instruction = 32'b00000000000000000000000000000000;
-reg  NextState_WBDataReady = 1'b1;
+reg  NextState_WBDataReady = 1'b0;
 reg  [32:1] NextState_WBData = 32'b00000000000000000000000000000000;
 reg  [32:1] NextState_PCOffset = 32'b00000000000000000000000000000000;
 wire  IsLoadOp;
@@ -159,11 +164,6 @@ wire  RegsRead;
 wire  RegsWE;
 wire  [32:1] CMPLhs;
 wire  [32:1] CMPRhs;
-wire  [7:1] OpTypeCode;
-wire  [3:1] OPIMMCode;
-wire  [3:1] OPCode;
-wire  [3:1] BranchTypeCode;
-wire  [3:1] LoadTypeCode;
 wire signed  [32:1] BranchOffset;
 wire  [32:1] LWData;
 wire signed  [32:1] LHData;
@@ -186,6 +186,11 @@ wire signed  [32:1] ID_JTypeImm;
 wire  [5:1] ID_SHAMT;
 wire  ID_SHARITH;
 wire  ID_SUB;
+wire  [7:1] ID_OpTypeCode;
+wire  [3:1] ID_OPIMMCode;
+wire  [3:1] ID_OPCode;
+wire  [3:1] ID_BranchTypeCode;
+wire  [3:1] ID_LoadTypeCode;
 wire  PC_WE;
 wire  PC_Overwrite;
 wire  [32:1] PC_Offset;
@@ -219,19 +224,9 @@ wire  CMP_GTU;
 wire  CMP_LTU;
 wire  CMP_GTS;
 wire  CMP_LTS;
-wire  [3:1] RISCVModule_L66F42T60_Source;
-wire  [3:1] RISCVModule_L66F42T71_SignChange;
-wire  [5:1] RISCVModule_L75F78T92_Index;
-wire  [8:1] RISCVModule_L82F48T63_Cast;
-wire  [7:1] RISCVModule_L82F35T63_Cast;
-wire  [8:1] RISCVModule_L83F45T60_Cast;
-wire  [3:1] RISCVModule_L83F33T60_Cast;
-wire  [8:1] RISCVModule_L84F36T51_Cast;
-wire  [3:1] RISCVModule_L84F27T51_Cast;
-wire  [8:1] RISCVModule_L85F60T75_Cast;
-wire  [3:1] RISCVModule_L85F43T75_Cast;
-wire  [8:1] RISCVModule_L86F54T69_Cast;
-wire  [3:1] RISCVModule_L86F39T69_Cast;
+wire  [3:1] RISCVModule_L72F42T60_Source;
+wire  [3:1] RISCVModule_L72F42T71_SignChange;
+wire  [5:1] RISCVModule_L81F81T95_Index;
 wire  [16:1] RISCVModule_L329F31T56_Index;
 wire signed  [16:1] RISCVModule_L329F31T65_SignChange;
 wire signed  [32:1] RISCVModule_L329F31T77_Resize;
@@ -247,7 +242,8 @@ wire  [32:1] RISCVModule_L332F32T79_Resize;
 wire  [32:1] RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source;
 wire  [33:1] RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T97_Source;
 wire  [31:1] RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index;
-wire  RISCVModule_L59F23T53_Source;
+wire  [8:1] RISCVModule_L47F33T50_Cast;
+wire  RISCVModule_L63F23T53_Source;
 wire  [32:1] IDInstructionID_InstructionHardLink;
 wire  [7:1] IDOpCodeID_OpCodeHardLink;
 wire  [5:1] IDRDID_RDHardLink;
@@ -264,6 +260,11 @@ wire  [32:1] IDJTypeImmID_JTypeImmHardLink;
 wire  [5:1] IDSHAMTID_SHAMTHardLink;
 wire  IDSHARITHID_SHARITHHardLink;
 wire  IDSUBID_SUBHardLink;
+wire  [7:1] IDOpTypeCodeID_OpTypeCodeHardLink;
+wire  [3:1] IDOPIMMCodeID_OPIMMCodeHardLink;
+wire  [3:1] IDOPCodeID_OPCodeHardLink;
+wire  [3:1] IDBranchTypeCodeID_BranchTypeCodeHardLink;
+wire  [3:1] IDLoadTypeCodeID_LoadTypeCodeHardLink;
 wire  PCWEPC_WEHardLink;
 wire  PCOverwritePC_OverwriteHardLink;
 wire  [32:1] PCOffsetPC_OffsetHardLink;
@@ -302,38 +303,38 @@ wire  [3:1] State_StateDefault = 3'b000;
 reg  [32:1] State_Instruction = 32'b00000000000000000000000000000000;
 wire  [32:1] State_InstructionDefault = 32'b00000000000000000000000000000000;
 reg  State_WBDataReady = 1'b0;
-wire  State_WBDataReadyDefault = 1'b1;
+wire  State_WBDataReadyDefault = 1'b0;
 reg  [32:1] State_WBData = 32'b00000000000000000000000000000000;
 wire  [32:1] State_WBDataDefault = 32'b00000000000000000000000000000000;
 reg  [32:1] State_PCOffset = 32'b00000000000000000000000000000000;
 wire  [32:1] State_PCOffsetDefault = 32'b00000000000000000000000000000000;
-wire  RISCVModule_L68F22T81_Expr;
-wire  RISCVModule_L68F22T81_Expr_1;
-wire  RISCVModule_L68F22T81_Expr_2;
-wire  RISCVModule_L77F24T71_Expr;
-wire  RISCVModule_L77F24T71_Expr_1;
-wire  RISCVModule_L77F24T71_Expr_2;
+wire  RISCVModule_L74F22T81_Expr;
+wire  RISCVModule_L74F22T81_Expr_1;
+wire  RISCVModule_L74F22T81_Expr_2;
+wire  RISCVModule_L83F24T71_Expr;
+wire  RISCVModule_L83F24T71_Expr_1;
+wire  RISCVModule_L83F24T71_Expr_2;
 wire  RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnBranch_RISCVModule_L239F9L276T10_RISCVModule_L257F25T42_Expr;
 wire  RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnBranch_RISCVModule_L239F9L276T10_RISCVModule_L257F25T42_Expr_1;
 wire  RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnBranch_RISCVModule_L239F9L276T10_RISCVModule_L257F25T42_Expr_2;
 wire  RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnBranch_RISCVModule_L239F9L276T10_RISCVModule_L261F25T42_Expr;
 wire  RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnBranch_RISCVModule_L239F9L276T10_RISCVModule_L261F25T42_Expr_1;
 wire  RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnBranch_RISCVModule_L239F9L276T10_RISCVModule_L261F25T42_Expr_2;
-wire  RISCVModule_L52F32T103_Expr;
-wire  RISCVModule_L52F32T103_Expr_1;
-wire  RISCVModule_L52F32T103_Expr_2;
-wire  RISCVModule_L52F63T102_Expr;
-wire  RISCVModule_L52F63T102_Expr_1;
-wire  RISCVModule_L52F63T102_Expr_2;
-wire  RISCVModule_L61F33T73_Expr;
-wire  RISCVModule_L61F33T73_Expr_1;
-wire  RISCVModule_L61F33T73_Expr_2;
-wire signed  [34:1] RISCVModule_L48F44T66_Expr;
-wire signed  [34:1] RISCVModule_L48F44T66_Expr_1;
-wire signed  [34:1] RISCVModule_L48F44T66_Expr_2;
-wire signed  [34:1] RISCVModule_L50F46T68_Expr;
-wire signed  [34:1] RISCVModule_L50F46T68_Expr_1;
-wire signed  [34:1] RISCVModule_L50F46T68_Expr_2;
+wire  RISCVModule_L56F32T103_Expr;
+wire  RISCVModule_L56F32T103_Expr_1;
+wire  RISCVModule_L56F32T103_Expr_2;
+wire  RISCVModule_L56F63T102_Expr;
+wire  RISCVModule_L56F63T102_Expr_1;
+wire  RISCVModule_L56F63T102_Expr_2;
+wire  RISCVModule_L67F33T73_Expr;
+wire  RISCVModule_L67F33T73_Expr_1;
+wire  RISCVModule_L67F33T73_Expr_2;
+wire signed  [34:1] RISCVModule_L52F44T66_Expr;
+wire signed  [34:1] RISCVModule_L52F44T66_Expr_1;
+wire signed  [34:1] RISCVModule_L52F44T66_Expr_2;
+wire signed  [34:1] RISCVModule_L54F46T68_Expr;
+wire signed  [34:1] RISCVModule_L54F46T68_Expr_1;
+wire signed  [34:1] RISCVModule_L54F46T68_Expr_2;
 wire signed  [34:1] RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L301F40T59_Expr;
 wire signed  [34:1] RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L301F40T59_Expr_1;
 wire signed  [34:1] RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L301F40T59_Expr_2;
@@ -346,39 +347,39 @@ wire signed  [34:1] RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L32
 wire signed  [34:1] RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F74T96_Expr;
 wire signed  [34:1] RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F74T96_Expr_1;
 wire signed  [34:1] RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F74T96_Expr_2;
-wire  RISCVModule_L47F35T65_Expr;
-wire signed  [8:1] RISCVModule_L47F35T65_ExprLhs;
-wire signed  [8:1] RISCVModule_L47F35T65_ExprRhs;
-wire  RISCVModule_L49F36T67_Expr;
-wire signed  [8:1] RISCVModule_L49F36T67_ExprLhs;
-wire signed  [8:1] RISCVModule_L49F36T67_ExprRhs;
-wire  RISCVModule_L68F22T51_Expr;
-wire signed  [4:1] RISCVModule_L68F22T51_ExprLhs;
-wire signed  [4:1] RISCVModule_L68F22T51_ExprRhs;
-wire  RISCVModule_L68F55T81_Expr;
-wire signed  [4:1] RISCVModule_L68F55T81_ExprLhs;
-wire signed  [4:1] RISCVModule_L68F55T81_ExprRhs;
-wire  RISCVModule_L69F33T62_Expr;
-wire signed  [4:1] RISCVModule_L69F33T62_ExprLhs;
-wire signed  [4:1] RISCVModule_L69F33T62_ExprRhs;
-wire  RISCVModule_L70F29T58_Expr;
-wire signed  [4:1] RISCVModule_L70F29T58_ExprLhs;
-wire signed  [4:1] RISCVModule_L70F29T58_ExprRhs;
-wire  RISCVModule_L73F31T62_Expr;
-wire signed  [8:1] RISCVModule_L73F31T62_ExprLhs;
-wire signed  [8:1] RISCVModule_L73F31T62_ExprRhs;
-wire  RISCVModule_L75F33T64_Expr;
-wire signed  [8:1] RISCVModule_L75F33T64_ExprLhs;
-wire signed  [8:1] RISCVModule_L75F33T64_ExprRhs;
-wire  RISCVModule_L76F26T52_Expr;
-wire signed  [4:1] RISCVModule_L76F26T52_ExprLhs;
-wire signed  [4:1] RISCVModule_L76F26T52_ExprRhs;
-wire  RISCVModule_L77F24T50_Expr;
-wire signed  [4:1] RISCVModule_L77F24T50_ExprLhs;
-wire signed  [4:1] RISCVModule_L77F24T50_ExprRhs;
-wire  RISCVModule_L80F31T62_Expr;
-wire signed  [8:1] RISCVModule_L80F31T62_ExprLhs;
-wire signed  [8:1] RISCVModule_L80F31T62_ExprRhs;
+wire  RISCVModule_L51F35T68_Expr;
+wire signed  [8:1] RISCVModule_L51F35T68_ExprLhs;
+wire signed  [8:1] RISCVModule_L51F35T68_ExprRhs;
+wire  RISCVModule_L53F36T70_Expr;
+wire signed  [8:1] RISCVModule_L53F36T70_ExprLhs;
+wire signed  [8:1] RISCVModule_L53F36T70_ExprRhs;
+wire  RISCVModule_L74F22T51_Expr;
+wire signed  [4:1] RISCVModule_L74F22T51_ExprLhs;
+wire signed  [4:1] RISCVModule_L74F22T51_ExprRhs;
+wire  RISCVModule_L74F55T81_Expr;
+wire signed  [4:1] RISCVModule_L74F55T81_ExprLhs;
+wire signed  [4:1] RISCVModule_L74F55T81_ExprRhs;
+wire  RISCVModule_L75F33T62_Expr;
+wire signed  [4:1] RISCVModule_L75F33T62_ExprLhs;
+wire signed  [4:1] RISCVModule_L75F33T62_ExprRhs;
+wire  RISCVModule_L76F29T58_Expr;
+wire signed  [4:1] RISCVModule_L76F29T58_ExprLhs;
+wire signed  [4:1] RISCVModule_L76F29T58_ExprRhs;
+wire  RISCVModule_L79F31T65_Expr;
+wire signed  [8:1] RISCVModule_L79F31T65_ExprLhs;
+wire signed  [8:1] RISCVModule_L79F31T65_ExprRhs;
+wire  RISCVModule_L81F33T67_Expr;
+wire signed  [8:1] RISCVModule_L81F33T67_ExprLhs;
+wire signed  [8:1] RISCVModule_L81F33T67_ExprRhs;
+wire  RISCVModule_L82F26T52_Expr;
+wire signed  [4:1] RISCVModule_L82F26T52_ExprLhs;
+wire signed  [4:1] RISCVModule_L82F26T52_ExprRhs;
+wire  RISCVModule_L83F24T50_Expr;
+wire signed  [4:1] RISCVModule_L83F24T50_ExprLhs;
+wire signed  [4:1] RISCVModule_L83F24T50_ExprRhs;
+wire  RISCVModule_L86F31T65_Expr;
+wire signed  [8:1] RISCVModule_L86F31T65_ExprLhs;
+wire signed  [8:1] RISCVModule_L86F31T65_ExprRhs;
 wire  RISCVModule_L401F9L426T10_RISCVModule_L404F17L406T27_Case;
 wire signed  [4:1] RISCVModule_L401F9L426T10_RISCVModule_L404F17L406T27_CaseLhs;
 wire signed  [4:1] RISCVModule_L401F9L426T10_RISCVModule_L404F17L406T27_CaseRhs;
@@ -511,41 +512,44 @@ wire signed  [4:1] RISCVModule_L401F9L426T10_RISCVModule_L419F17L421T27_CaseRhs;
 wire  RISCVModule_L401F9L426T10_RISCVModule_L422F17L424T27_Case;
 wire signed  [4:1] RISCVModule_L401F9L426T10_RISCVModule_L422F17L424T27_CaseLhs;
 wire signed  [4:1] RISCVModule_L401F9L426T10_RISCVModule_L422F17L424T27_CaseRhs;
-wire  RISCVModule_L52F32T58_Expr;
-wire signed  [4:1] RISCVModule_L52F32T58_ExprLhs;
-wire signed  [4:1] RISCVModule_L52F32T58_ExprRhs;
-wire  RISCVModule_L52F63T90_Expr;
-wire signed  [4:1] RISCVModule_L52F63T90_ExprLhs;
-wire signed  [4:1] RISCVModule_L52F63T90_ExprRhs;
-wire  RISCVModule_L53F35T61_Expr;
-wire signed  [4:1] RISCVModule_L53F35T61_ExprLhs;
-wire signed  [4:1] RISCVModule_L53F35T61_ExprRhs;
-wire  RISCVModule_L61F33T60_Expr;
-wire signed  [4:1] RISCVModule_L61F33T60_ExprLhs;
-wire signed  [4:1] RISCVModule_L61F33T60_ExprRhs;
-reg  [32:1] RISCVModule_L69F33T94_Lookup = 32'b00000000000000000000000000000000;
-reg  [32:1] RISCVModule_L73F31T87_Lookup = 32'b00000000000000000000000000000000;
-reg  [5:1] RISCVModule_L75F33T92_Lookup = 5'b00000;
-reg  [32:1] RISCVModule_L80F31T87_Lookup = 32'b00000000000000000000000000000000;
+wire  RISCVModule_L56F32T58_Expr;
+wire signed  [4:1] RISCVModule_L56F32T58_ExprLhs;
+wire signed  [4:1] RISCVModule_L56F32T58_ExprRhs;
+wire  RISCVModule_L56F63T90_Expr;
+wire signed  [4:1] RISCVModule_L56F63T90_ExprLhs;
+wire signed  [4:1] RISCVModule_L56F63T90_ExprRhs;
+wire  RISCVModule_L57F35T61_Expr;
+wire signed  [4:1] RISCVModule_L57F35T61_ExprLhs;
+wire signed  [4:1] RISCVModule_L57F35T61_ExprRhs;
+wire  RISCVModule_L65F33T61_Expr;
+wire signed  [4:1] RISCVModule_L65F33T61_ExprLhs;
+wire signed  [4:1] RISCVModule_L65F33T61_ExprRhs;
+wire  RISCVModule_L67F33T60_Expr;
+wire signed  [4:1] RISCVModule_L67F33T60_ExprLhs;
+wire signed  [4:1] RISCVModule_L67F33T60_ExprRhs;
+reg  [32:1] RISCVModule_L75F33T94_Lookup = 32'b00000000000000000000000000000000;
+reg  [32:1] RISCVModule_L79F31T90_Lookup = 32'b00000000000000000000000000000000;
+reg  [5:1] RISCVModule_L81F33T95_Lookup = 5'b00000;
+reg  [32:1] RISCVModule_L86F31T90_Lookup = 32'b00000000000000000000000000000000;
 reg  [32:1] RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOPIMM_RISCVModule_L147F9L186T10_RISCVModule_L155F40T57_Lookup = 32'b00000000000000000000000000000000;
 reg  [32:1] RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOPIMM_RISCVModule_L147F9L186T10_RISCVModule_L158F40T57_Lookup = 32'b00000000000000000000000000000000;
 reg  [32:1] RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOP_RISCVModule_L189F9L235T10_RISCVModule_L204F40T57_Lookup = 32'b00000000000000000000000000000000;
 reg  [32:1] RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOP_RISCVModule_L189F9L235T10_RISCVModule_L207F40T57_Lookup = 32'b00000000000000000000000000000000;
-reg  [32:1] RISCVModule_L57F19L59T53_Lookup = 32'b00000000000000000000000000000000;
-reg  [32:1] RISCVModule_L55F15L59T53_Lookup = 32'b00000000000000000000000000000000;
-reg  [32:1] RISCVModule_L53F35L59T53_Lookup = 32'b00000000000000000000000000000000;
-wire  RISCVModule_L69F33T94_LookupMultiplexerAddress;
-wire  [32:1] RISCVModule_L69F33T94_Lookup1;
-wire  [32:1] RISCVModule_L69F33T94_Lookup2;
-wire  RISCVModule_L73F31T87_LookupMultiplexerAddress;
-wire  [32:1] RISCVModule_L73F31T87_Lookup1;
-wire  [32:1] RISCVModule_L73F31T87_Lookup2;
-wire  RISCVModule_L75F33T92_LookupMultiplexerAddress;
-wire  [5:1] RISCVModule_L75F33T92_Lookup1;
-wire  [5:1] RISCVModule_L75F33T92_Lookup2;
-wire  RISCVModule_L80F31T87_LookupMultiplexerAddress;
-wire  [32:1] RISCVModule_L80F31T87_Lookup1;
-wire  [32:1] RISCVModule_L80F31T87_Lookup2;
+reg  [32:1] RISCVModule_L61F19L63T53_Lookup = 32'b00000000000000000000000000000000;
+reg  [32:1] RISCVModule_L59F15L63T53_Lookup = 32'b00000000000000000000000000000000;
+reg  [32:1] RISCVModule_L57F35L63T53_Lookup = 32'b00000000000000000000000000000000;
+wire  RISCVModule_L75F33T94_LookupMultiplexerAddress;
+wire  [32:1] RISCVModule_L75F33T94_Lookup1;
+wire  [32:1] RISCVModule_L75F33T94_Lookup2;
+wire  RISCVModule_L79F31T90_LookupMultiplexerAddress;
+wire  [32:1] RISCVModule_L79F31T90_Lookup1;
+wire  [32:1] RISCVModule_L79F31T90_Lookup2;
+wire  RISCVModule_L81F33T95_LookupMultiplexerAddress;
+wire  [5:1] RISCVModule_L81F33T95_Lookup1;
+wire  [5:1] RISCVModule_L81F33T95_Lookup2;
+wire  RISCVModule_L86F31T90_LookupMultiplexerAddress;
+wire  [32:1] RISCVModule_L86F31T90_Lookup1;
+wire  [32:1] RISCVModule_L86F31T90_Lookup2;
 wire  RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOPIMM_RISCVModule_L147F9L186T10_RISCVModule_L155F40T57_LookupMultiplexerAddress;
 wire  [32:1] RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOPIMM_RISCVModule_L147F9L186T10_RISCVModule_L155F40T57_Lookup1;
 wire  [32:1] RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOPIMM_RISCVModule_L147F9L186T10_RISCVModule_L155F40T57_Lookup2;
@@ -558,15 +562,15 @@ wire  [32:1] RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_On
 wire  RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOP_RISCVModule_L189F9L235T10_RISCVModule_L207F40T57_LookupMultiplexerAddress;
 wire  [32:1] RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOP_RISCVModule_L189F9L235T10_RISCVModule_L207F40T57_Lookup1;
 wire  [32:1] RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOP_RISCVModule_L189F9L235T10_RISCVModule_L207F40T57_Lookup2;
-wire  RISCVModule_L57F19L59T53_LookupMultiplexerAddress;
-wire  [32:1] RISCVModule_L57F19L59T53_Lookup1;
-wire  [32:1] RISCVModule_L57F19L59T53_Lookup2;
-wire  RISCVModule_L55F15L59T53_LookupMultiplexerAddress;
-wire  [32:1] RISCVModule_L55F15L59T53_Lookup1;
-wire  [32:1] RISCVModule_L55F15L59T53_Lookup2;
-wire  RISCVModule_L53F35L59T53_LookupMultiplexerAddress;
-wire  [32:1] RISCVModule_L53F35L59T53_Lookup1;
-wire  [32:1] RISCVModule_L53F35L59T53_Lookup2;
+wire  RISCVModule_L61F19L63T53_LookupMultiplexerAddress;
+wire  [32:1] RISCVModule_L61F19L63T53_Lookup1;
+wire  [32:1] RISCVModule_L61F19L63T53_Lookup2;
+wire  RISCVModule_L59F15L63T53_LookupMultiplexerAddress;
+wire  [32:1] RISCVModule_L59F15L63T53_Lookup1;
+wire  [32:1] RISCVModule_L59F15L63T53_Lookup2;
+wire  RISCVModule_L57F35L63T53_LookupMultiplexerAddress;
+wire  [32:1] RISCVModule_L57F35L63T53_Lookup1;
+wire  [32:1] RISCVModule_L57F35L63T53_Lookup2;
 wire  BoardSignals_Clock;
 wire  BoardSignals_Reset;
 wire  BoardSignals_Running;
@@ -591,17 +595,17 @@ State_WBData <= NextState_WBData;
 State_PCOffset <= NextState_PCOffset;
 end
 end
-assign RISCVModule_L47F35T65_Expr = RISCVModule_L47F35T65_ExprLhs == RISCVModule_L47F35T65_ExprRhs ? 1'b1 : 1'b0;
-assign RISCVModule_L49F36T67_Expr = RISCVModule_L49F36T67_ExprLhs == RISCVModule_L49F36T67_ExprRhs ? 1'b1 : 1'b0;
-assign RISCVModule_L68F22T51_Expr = RISCVModule_L68F22T51_ExprLhs == RISCVModule_L68F22T51_ExprRhs ? 1'b1 : 1'b0;
-assign RISCVModule_L68F55T81_Expr = RISCVModule_L68F55T81_ExprLhs == RISCVModule_L68F55T81_ExprRhs ? 1'b1 : 1'b0;
-assign RISCVModule_L69F33T62_Expr = RISCVModule_L69F33T62_ExprLhs == RISCVModule_L69F33T62_ExprRhs ? 1'b1 : 1'b0;
-assign RISCVModule_L70F29T58_Expr = RISCVModule_L70F29T58_ExprLhs == RISCVModule_L70F29T58_ExprRhs ? 1'b1 : 1'b0;
-assign RISCVModule_L73F31T62_Expr = RISCVModule_L73F31T62_ExprLhs == RISCVModule_L73F31T62_ExprRhs ? 1'b1 : 1'b0;
-assign RISCVModule_L75F33T64_Expr = RISCVModule_L75F33T64_ExprLhs == RISCVModule_L75F33T64_ExprRhs ? 1'b1 : 1'b0;
-assign RISCVModule_L76F26T52_Expr = RISCVModule_L76F26T52_ExprLhs == RISCVModule_L76F26T52_ExprRhs ? 1'b1 : 1'b0;
-assign RISCVModule_L77F24T50_Expr = RISCVModule_L77F24T50_ExprLhs == RISCVModule_L77F24T50_ExprRhs ? 1'b1 : 1'b0;
-assign RISCVModule_L80F31T62_Expr = RISCVModule_L80F31T62_ExprLhs == RISCVModule_L80F31T62_ExprRhs ? 1'b1 : 1'b0;
+assign RISCVModule_L51F35T68_Expr = RISCVModule_L51F35T68_ExprLhs == RISCVModule_L51F35T68_ExprRhs ? 1'b1 : 1'b0;
+assign RISCVModule_L53F36T70_Expr = RISCVModule_L53F36T70_ExprLhs == RISCVModule_L53F36T70_ExprRhs ? 1'b1 : 1'b0;
+assign RISCVModule_L74F22T51_Expr = RISCVModule_L74F22T51_ExprLhs == RISCVModule_L74F22T51_ExprRhs ? 1'b1 : 1'b0;
+assign RISCVModule_L74F55T81_Expr = RISCVModule_L74F55T81_ExprLhs == RISCVModule_L74F55T81_ExprRhs ? 1'b1 : 1'b0;
+assign RISCVModule_L75F33T62_Expr = RISCVModule_L75F33T62_ExprLhs == RISCVModule_L75F33T62_ExprRhs ? 1'b1 : 1'b0;
+assign RISCVModule_L76F29T58_Expr = RISCVModule_L76F29T58_ExprLhs == RISCVModule_L76F29T58_ExprRhs ? 1'b1 : 1'b0;
+assign RISCVModule_L79F31T65_Expr = RISCVModule_L79F31T65_ExprLhs == RISCVModule_L79F31T65_ExprRhs ? 1'b1 : 1'b0;
+assign RISCVModule_L81F33T67_Expr = RISCVModule_L81F33T67_ExprLhs == RISCVModule_L81F33T67_ExprRhs ? 1'b1 : 1'b0;
+assign RISCVModule_L82F26T52_Expr = RISCVModule_L82F26T52_ExprLhs == RISCVModule_L82F26T52_ExprRhs ? 1'b1 : 1'b0;
+assign RISCVModule_L83F24T50_Expr = RISCVModule_L83F24T50_ExprLhs == RISCVModule_L83F24T50_ExprRhs ? 1'b1 : 1'b0;
+assign RISCVModule_L86F31T65_Expr = RISCVModule_L86F31T65_ExprLhs == RISCVModule_L86F31T65_ExprRhs ? 1'b1 : 1'b0;
 assign RISCVModule_L401F9L426T10_RISCVModule_L404F17L406T27_Case = RISCVModule_L401F9L426T10_RISCVModule_L404F17L406T27_CaseLhs == RISCVModule_L401F9L426T10_RISCVModule_L404F17L406T27_CaseRhs ? 1'b1 : 1'b0;
 assign RISCVModule_L401F9L426T10_RISCVModule_L407F17L409T27_Case = RISCVModule_L401F9L426T10_RISCVModule_L407F17L409T27_CaseLhs == RISCVModule_L401F9L426T10_RISCVModule_L407F17L409T27_CaseRhs ? 1'b1 : 1'b0;
 assign RISCVModule_L401F9L426T10_RISCVModule_L410F17L412T27_Case = RISCVModule_L401F9L426T10_RISCVModule_L410F17L412T27_CaseLhs == RISCVModule_L401F9L426T10_RISCVModule_L410F17L412T27_CaseRhs ? 1'b1 : 1'b0;
@@ -646,19 +650,20 @@ assign RISCVModule_L401F9L426T10_MemStage_RISCVModule_L336F9L364T10_RISCVModule_
 assign RISCVModule_L401F9L426T10_MemStage_RISCVModule_L336F9L364T10_RISCVModule_L338F13L363T14_RISCVModule_L341F17L362T18_RISCVModule_L358F25L360T35_Case = RISCVModule_L401F9L426T10_MemStage_RISCVModule_L336F9L364T10_RISCVModule_L338F13L363T14_RISCVModule_L341F17L362T18_RISCVModule_L358F25L360T35_CaseLhs == RISCVModule_L401F9L426T10_MemStage_RISCVModule_L336F9L364T10_RISCVModule_L338F13L363T14_RISCVModule_L341F17L362T18_RISCVModule_L358F25L360T35_CaseRhs ? 1'b1 : 1'b0;
 assign RISCVModule_L401F9L426T10_RISCVModule_L419F17L421T27_Case = RISCVModule_L401F9L426T10_RISCVModule_L419F17L421T27_CaseLhs == RISCVModule_L401F9L426T10_RISCVModule_L419F17L421T27_CaseRhs ? 1'b1 : 1'b0;
 assign RISCVModule_L401F9L426T10_RISCVModule_L422F17L424T27_Case = RISCVModule_L401F9L426T10_RISCVModule_L422F17L424T27_CaseLhs == RISCVModule_L401F9L426T10_RISCVModule_L422F17L424T27_CaseRhs ? 1'b1 : 1'b0;
-assign RISCVModule_L52F32T58_Expr = RISCVModule_L52F32T58_ExprLhs == RISCVModule_L52F32T58_ExprRhs ? 1'b1 : 1'b0;
-assign RISCVModule_L52F63T90_Expr = RISCVModule_L52F63T90_ExprLhs == RISCVModule_L52F63T90_ExprRhs ? 1'b1 : 1'b0;
-assign RISCVModule_L53F35T61_Expr = RISCVModule_L53F35T61_ExprLhs == RISCVModule_L53F35T61_ExprRhs ? 1'b1 : 1'b0;
-assign RISCVModule_L61F33T60_Expr = RISCVModule_L61F33T60_ExprLhs == RISCVModule_L61F33T60_ExprRhs ? 1'b1 : 1'b0;
-assign RISCVModule_L68F22T81_Expr = RISCVModule_L68F22T81_Expr_1 | RISCVModule_L68F22T81_Expr_2;
-assign RISCVModule_L77F24T71_Expr = RISCVModule_L77F24T71_Expr_1 & RISCVModule_L77F24T71_Expr_2;
+assign RISCVModule_L56F32T58_Expr = RISCVModule_L56F32T58_ExprLhs == RISCVModule_L56F32T58_ExprRhs ? 1'b1 : 1'b0;
+assign RISCVModule_L56F63T90_Expr = RISCVModule_L56F63T90_ExprLhs == RISCVModule_L56F63T90_ExprRhs ? 1'b1 : 1'b0;
+assign RISCVModule_L57F35T61_Expr = RISCVModule_L57F35T61_ExprLhs == RISCVModule_L57F35T61_ExprRhs ? 1'b1 : 1'b0;
+assign RISCVModule_L65F33T61_Expr = RISCVModule_L65F33T61_ExprLhs == RISCVModule_L65F33T61_ExprRhs ? 1'b1 : 1'b0;
+assign RISCVModule_L67F33T60_Expr = RISCVModule_L67F33T60_ExprLhs == RISCVModule_L67F33T60_ExprRhs ? 1'b1 : 1'b0;
+assign RISCVModule_L74F22T81_Expr = RISCVModule_L74F22T81_Expr_1 | RISCVModule_L74F22T81_Expr_2;
+assign RISCVModule_L83F24T71_Expr = RISCVModule_L83F24T71_Expr_1 & RISCVModule_L83F24T71_Expr_2;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnBranch_RISCVModule_L239F9L276T10_RISCVModule_L257F25T42_Expr = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnBranch_RISCVModule_L239F9L276T10_RISCVModule_L257F25T42_Expr_1 | RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnBranch_RISCVModule_L239F9L276T10_RISCVModule_L257F25T42_Expr_2;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnBranch_RISCVModule_L239F9L276T10_RISCVModule_L261F25T42_Expr = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnBranch_RISCVModule_L239F9L276T10_RISCVModule_L261F25T42_Expr_1 | RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnBranch_RISCVModule_L239F9L276T10_RISCVModule_L261F25T42_Expr_2;
-assign RISCVModule_L52F32T103_Expr = RISCVModule_L52F32T103_Expr_1 | RISCVModule_L52F32T103_Expr_2;
-assign RISCVModule_L52F63T102_Expr = RISCVModule_L52F63T102_Expr_1 & RISCVModule_L52F63T102_Expr_2;
-assign RISCVModule_L61F33T73_Expr = RISCVModule_L61F33T73_Expr_1 & RISCVModule_L61F33T73_Expr_2;
-assign RISCVModule_L48F44T66_Expr = RISCVModule_L48F44T66_Expr_1 + RISCVModule_L48F44T66_Expr_2;
-assign RISCVModule_L50F46T68_Expr = RISCVModule_L50F46T68_Expr_1 + RISCVModule_L50F46T68_Expr_2;
+assign RISCVModule_L56F32T103_Expr = RISCVModule_L56F32T103_Expr_1 | RISCVModule_L56F32T103_Expr_2;
+assign RISCVModule_L56F63T102_Expr = RISCVModule_L56F63T102_Expr_1 & RISCVModule_L56F63T102_Expr_2;
+assign RISCVModule_L67F33T73_Expr = RISCVModule_L67F33T73_Expr_1 & RISCVModule_L67F33T73_Expr_2;
+assign RISCVModule_L52F44T66_Expr = RISCVModule_L52F44T66_Expr_1 + RISCVModule_L52F44T66_Expr_2;
+assign RISCVModule_L54F46T68_Expr = RISCVModule_L54F46T68_Expr_1 + RISCVModule_L54F46T68_Expr_2;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L301F40T59_Expr = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L301F40T59_Expr_1 + RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L301F40T59_Expr_2;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L305F40T65_Expr = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L305F40T65_Expr_1 + RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L305F40T65_Expr_2;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L310F40T65_Expr = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L310F40T65_Expr_1 + RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L310F40T65_Expr_2;
@@ -682,7 +687,12 @@ RISCVModule_TopLevel_RISCVModule_ID RISCVModule_TopLevel_RISCVModule_ID
 	.JTypeImm (IDJTypeImmID_JTypeImmHardLink),
 	.SHAMT (IDSHAMTID_SHAMTHardLink),
 	.SHARITH (IDSHARITHID_SHARITHHardLink),
-	.SUB (IDSUBID_SUBHardLink)
+	.SUB (IDSUBID_SUBHardLink),
+	.OpTypeCode (IDOpTypeCodeID_OpTypeCodeHardLink),
+	.OPIMMCode (IDOPIMMCodeID_OPIMMCodeHardLink),
+	.OPCode (IDOPCodeID_OPCodeHardLink),
+	.BranchTypeCode (IDBranchTypeCodeID_BranchTypeCodeHardLink),
+	.LoadTypeCode (IDLoadTypeCodeID_LoadTypeCodeHardLink)
 
 );
 RISCVModule_TopLevel_RISCVModule_PC RISCVModule_TopLevel_RISCVModule_PC
@@ -754,49 +764,49 @@ RISCVModule_TopLevel_RISCVModule_CMP RISCVModule_TopLevel_RISCVModule_CMP
 );
 always @*
 begin
-case (RISCVModule_L69F33T94_LookupMultiplexerAddress)
+case (RISCVModule_L75F33T94_LookupMultiplexerAddress)
     'b0:
-RISCVModule_L69F33T94_Lookup = RISCVModule_L69F33T94_Lookup1;
+RISCVModule_L75F33T94_Lookup = RISCVModule_L75F33T94_Lookup1;
     'b1:
-RISCVModule_L69F33T94_Lookup = RISCVModule_L69F33T94_Lookup2;
+RISCVModule_L75F33T94_Lookup = RISCVModule_L75F33T94_Lookup2;
   default:
-RISCVModule_L69F33T94_Lookup = 'b00000000000000000000000000000000;
+RISCVModule_L75F33T94_Lookup = 'b00000000000000000000000000000000;
 endcase
 
 end
 always @*
 begin
-case (RISCVModule_L73F31T87_LookupMultiplexerAddress)
+case (RISCVModule_L79F31T90_LookupMultiplexerAddress)
     'b0:
-RISCVModule_L73F31T87_Lookup = RISCVModule_L73F31T87_Lookup1;
+RISCVModule_L79F31T90_Lookup = RISCVModule_L79F31T90_Lookup1;
     'b1:
-RISCVModule_L73F31T87_Lookup = RISCVModule_L73F31T87_Lookup2;
+RISCVModule_L79F31T90_Lookup = RISCVModule_L79F31T90_Lookup2;
   default:
-RISCVModule_L73F31T87_Lookup = 'b00000000000000000000000000000000;
+RISCVModule_L79F31T90_Lookup = 'b00000000000000000000000000000000;
 endcase
 
 end
 always @*
 begin
-case (RISCVModule_L75F33T92_LookupMultiplexerAddress)
+case (RISCVModule_L81F33T95_LookupMultiplexerAddress)
     'b0:
-RISCVModule_L75F33T92_Lookup = RISCVModule_L75F33T92_Lookup1;
+RISCVModule_L81F33T95_Lookup = RISCVModule_L81F33T95_Lookup1;
     'b1:
-RISCVModule_L75F33T92_Lookup = RISCVModule_L75F33T92_Lookup2;
+RISCVModule_L81F33T95_Lookup = RISCVModule_L81F33T95_Lookup2;
   default:
-RISCVModule_L75F33T92_Lookup = 'b00000;
+RISCVModule_L81F33T95_Lookup = 'b00000;
 endcase
 
 end
 always @*
 begin
-case (RISCVModule_L80F31T87_LookupMultiplexerAddress)
+case (RISCVModule_L86F31T90_LookupMultiplexerAddress)
     'b0:
-RISCVModule_L80F31T87_Lookup = RISCVModule_L80F31T87_Lookup1;
+RISCVModule_L86F31T90_Lookup = RISCVModule_L86F31T90_Lookup1;
     'b1:
-RISCVModule_L80F31T87_Lookup = RISCVModule_L80F31T87_Lookup2;
+RISCVModule_L86F31T90_Lookup = RISCVModule_L86F31T90_Lookup2;
   default:
-RISCVModule_L80F31T87_Lookup = 'b00000000000000000000000000000000;
+RISCVModule_L86F31T90_Lookup = 'b00000000000000000000000000000000;
 endcase
 
 end
@@ -850,37 +860,37 @@ endcase
 end
 always @*
 begin
-case (RISCVModule_L57F19L59T53_LookupMultiplexerAddress)
+case (RISCVModule_L61F19L63T53_LookupMultiplexerAddress)
     'b0:
-RISCVModule_L57F19L59T53_Lookup = RISCVModule_L57F19L59T53_Lookup1;
+RISCVModule_L61F19L63T53_Lookup = RISCVModule_L61F19L63T53_Lookup1;
     'b1:
-RISCVModule_L57F19L59T53_Lookup = RISCVModule_L57F19L59T53_Lookup2;
+RISCVModule_L61F19L63T53_Lookup = RISCVModule_L61F19L63T53_Lookup2;
   default:
-RISCVModule_L57F19L59T53_Lookup = 'b00000000000000000000000000000000;
+RISCVModule_L61F19L63T53_Lookup = 'b00000000000000000000000000000000;
 endcase
 
 end
 always @*
 begin
-case (RISCVModule_L55F15L59T53_LookupMultiplexerAddress)
+case (RISCVModule_L59F15L63T53_LookupMultiplexerAddress)
     'b0:
-RISCVModule_L55F15L59T53_Lookup = RISCVModule_L55F15L59T53_Lookup1;
+RISCVModule_L59F15L63T53_Lookup = RISCVModule_L59F15L63T53_Lookup1;
     'b1:
-RISCVModule_L55F15L59T53_Lookup = RISCVModule_L55F15L59T53_Lookup2;
+RISCVModule_L59F15L63T53_Lookup = RISCVModule_L59F15L63T53_Lookup2;
   default:
-RISCVModule_L55F15L59T53_Lookup = 'b00000000000000000000000000000000;
+RISCVModule_L59F15L63T53_Lookup = 'b00000000000000000000000000000000;
 endcase
 
 end
 always @*
 begin
-case (RISCVModule_L53F35L59T53_LookupMultiplexerAddress)
+case (RISCVModule_L57F35L63T53_LookupMultiplexerAddress)
     'b0:
-RISCVModule_L53F35L59T53_Lookup = RISCVModule_L53F35L59T53_Lookup1;
+RISCVModule_L57F35L63T53_Lookup = RISCVModule_L57F35L63T53_Lookup1;
     'b1:
-RISCVModule_L53F35L59T53_Lookup = RISCVModule_L53F35L59T53_Lookup2;
+RISCVModule_L57F35L63T53_Lookup = RISCVModule_L57F35L63T53_Lookup2;
   default:
-RISCVModule_L53F35L59T53_Lookup = 'b00000000000000000000000000000000;
+RISCVModule_L57F35L63T53_Lookup = 'b00000000000000000000000000000000;
 endcase
 
 end
@@ -1086,39 +1096,39 @@ NextState_State = RISCVModule_L401F9L426T10_EStage_RISCVModule_L396F9L398T10_RIS
 end
 
 end
-assign RISCVModule_L69F33T94_LookupMultiplexerAddress = RISCVModule_L69F33T62_Expr;
-assign RISCVModule_L73F31T87_LookupMultiplexerAddress = RISCVModule_L73F31T62_Expr;
-assign RISCVModule_L75F33T92_LookupMultiplexerAddress = RISCVModule_L75F33T64_Expr;
-assign RISCVModule_L80F31T87_LookupMultiplexerAddress = RISCVModule_L80F31T62_Expr;
+assign RISCVModule_L75F33T94_LookupMultiplexerAddress = RISCVModule_L75F33T62_Expr;
+assign RISCVModule_L79F31T90_LookupMultiplexerAddress = RISCVModule_L79F31T65_Expr;
+assign RISCVModule_L81F33T95_LookupMultiplexerAddress = RISCVModule_L81F33T67_Expr;
+assign RISCVModule_L86F31T90_LookupMultiplexerAddress = RISCVModule_L86F31T65_Expr;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOPIMM_RISCVModule_L147F9L186T10_RISCVModule_L155F40T57_LookupMultiplexerAddress = CMP_LTS;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOPIMM_RISCVModule_L147F9L186T10_RISCVModule_L158F40T57_LookupMultiplexerAddress = CMP_LTU;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOP_RISCVModule_L189F9L235T10_RISCVModule_L204F40T57_LookupMultiplexerAddress = CMP_LTS;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOP_RISCVModule_L189F9L235T10_RISCVModule_L207F40T57_LookupMultiplexerAddress = CMP_LTU;
-assign RISCVModule_L57F19L59T53_LookupMultiplexerAddress = IsStoreOp;
-assign RISCVModule_L55F15L59T53_LookupMultiplexerAddress = IsLoadOp;
-assign RISCVModule_L53F35L59T53_LookupMultiplexerAddress = RISCVModule_L53F35T61_Expr;
-assign RISCVModule_L47F35T65_ExprLhs = { {1{1'b0}}, OpTypeCode }/*expand*/;
-assign RISCVModule_L47F35T65_ExprRhs = { {6{1'b0}}, RISCVModule_L47F49T65_Expr }/*expand*/;
-assign RISCVModule_L49F36T67_ExprLhs = { {1{1'b0}}, OpTypeCode }/*expand*/;
-assign RISCVModule_L49F36T67_ExprRhs = { {2{1'b0}}, RISCVModule_L49F50T67_Expr }/*expand*/;
-assign RISCVModule_L68F22T51_ExprLhs = { {1{1'b0}}, State_State }/*expand*/;
-assign RISCVModule_L68F22T51_ExprRhs = { {3{1'b0}}, RISCVModule_L68F37T51_Expr }/*expand*/;
-assign RISCVModule_L68F55T81_ExprLhs = { {1{1'b0}}, State_State }/*expand*/;
-assign RISCVModule_L68F55T81_ExprRhs = { {1{1'b0}}, RISCVModule_L68F70T81_Expr }/*expand*/;
-assign RISCVModule_L69F33T62_ExprLhs = { {1{1'b0}}, State_State }/*expand*/;
-assign RISCVModule_L69F33T62_ExprRhs = { {3{1'b0}}, RISCVModule_L69F48T62_Expr }/*expand*/;
-assign RISCVModule_L70F29T58_ExprLhs = { {1{1'b0}}, State_State }/*expand*/;
-assign RISCVModule_L70F29T58_ExprRhs = { {3{1'b0}}, RISCVModule_L70F44T58_Expr }/*expand*/;
-assign RISCVModule_L73F31T62_ExprLhs = { {1{1'b0}}, OpTypeCode }/*expand*/;
-assign RISCVModule_L73F31T62_ExprRhs = { {3{1'b0}}, RISCVModule_L73F45T62_Expr }/*expand*/;
-assign RISCVModule_L75F33T64_ExprLhs = { {1{1'b0}}, OpTypeCode }/*expand*/;
-assign RISCVModule_L75F33T64_ExprRhs = { {3{1'b0}}, RISCVModule_L75F47T64_Expr }/*expand*/;
-assign RISCVModule_L76F26T52_ExprLhs = { {1{1'b0}}, State_State }/*expand*/;
-assign RISCVModule_L76F26T52_ExprRhs = { {2{1'b0}}, RISCVModule_L76F41T52_Expr }/*expand*/;
-assign RISCVModule_L77F24T50_ExprLhs = { {1{1'b0}}, State_State }/*expand*/;
-assign RISCVModule_L77F24T50_ExprRhs = { {1{1'b0}}, RISCVModule_L77F39T50_Expr }/*expand*/;
-assign RISCVModule_L80F31T62_ExprLhs = { {1{1'b0}}, OpTypeCode }/*expand*/;
-assign RISCVModule_L80F31T62_ExprRhs = { {3{1'b0}}, RISCVModule_L80F45T62_Expr }/*expand*/;
+assign RISCVModule_L61F19L63T53_LookupMultiplexerAddress = IsStoreOp;
+assign RISCVModule_L59F15L63T53_LookupMultiplexerAddress = IsLoadOp;
+assign RISCVModule_L57F35L63T53_LookupMultiplexerAddress = RISCVModule_L57F35T61_Expr;
+assign RISCVModule_L51F35T68_ExprLhs = { {1{1'b0}}, ID_OpTypeCode }/*expand*/;
+assign RISCVModule_L51F35T68_ExprRhs = { {6{1'b0}}, RISCVModule_L51F52T68_Expr }/*expand*/;
+assign RISCVModule_L53F36T70_ExprLhs = { {1{1'b0}}, ID_OpTypeCode }/*expand*/;
+assign RISCVModule_L53F36T70_ExprRhs = { {2{1'b0}}, RISCVModule_L53F53T70_Expr }/*expand*/;
+assign RISCVModule_L74F22T51_ExprLhs = { {1{1'b0}}, State_State }/*expand*/;
+assign RISCVModule_L74F22T51_ExprRhs = { {3{1'b0}}, RISCVModule_L74F37T51_Expr }/*expand*/;
+assign RISCVModule_L74F55T81_ExprLhs = { {1{1'b0}}, State_State }/*expand*/;
+assign RISCVModule_L74F55T81_ExprRhs = { {1{1'b0}}, RISCVModule_L74F70T81_Expr }/*expand*/;
+assign RISCVModule_L75F33T62_ExprLhs = { {1{1'b0}}, State_State }/*expand*/;
+assign RISCVModule_L75F33T62_ExprRhs = { {3{1'b0}}, RISCVModule_L75F48T62_Expr }/*expand*/;
+assign RISCVModule_L76F29T58_ExprLhs = { {1{1'b0}}, State_State }/*expand*/;
+assign RISCVModule_L76F29T58_ExprRhs = { {3{1'b0}}, RISCVModule_L76F44T58_Expr }/*expand*/;
+assign RISCVModule_L79F31T65_ExprLhs = { {1{1'b0}}, ID_OpTypeCode }/*expand*/;
+assign RISCVModule_L79F31T65_ExprRhs = { {3{1'b0}}, RISCVModule_L79F48T65_Expr }/*expand*/;
+assign RISCVModule_L81F33T67_ExprLhs = { {1{1'b0}}, ID_OpTypeCode }/*expand*/;
+assign RISCVModule_L81F33T67_ExprRhs = { {3{1'b0}}, RISCVModule_L81F50T67_Expr }/*expand*/;
+assign RISCVModule_L82F26T52_ExprLhs = { {1{1'b0}}, State_State }/*expand*/;
+assign RISCVModule_L82F26T52_ExprRhs = { {2{1'b0}}, RISCVModule_L82F41T52_Expr }/*expand*/;
+assign RISCVModule_L83F24T50_ExprLhs = { {1{1'b0}}, State_State }/*expand*/;
+assign RISCVModule_L83F24T50_ExprRhs = { {1{1'b0}}, RISCVModule_L83F39T50_Expr }/*expand*/;
+assign RISCVModule_L86F31T65_ExprLhs = { {1{1'b0}}, ID_OpTypeCode }/*expand*/;
+assign RISCVModule_L86F31T65_ExprRhs = { {3{1'b0}}, RISCVModule_L86F48T65_Expr }/*expand*/;
 assign RISCVModule_L401F9L426T10_RISCVModule_L404F17L406T27_CaseLhs = { {1{1'b0}}, State_State }/*expand*/;
 assign RISCVModule_L401F9L426T10_RISCVModule_L404F17L406T27_CaseRhs = { {3{1'b0}}, RISCVModule_L401F9L426T10_RISCVModule_L404F22T36_Expr }/*expand*/;
 assign RISCVModule_L401F9L426T10_RISCVModule_L407F17L409T27_CaseLhs = { {1{1'b0}}, State_State }/*expand*/;
@@ -1127,112 +1137,114 @@ assign RISCVModule_L401F9L426T10_RISCVModule_L410F17L412T27_CaseLhs = { {1{1'b0}
 assign RISCVModule_L401F9L426T10_RISCVModule_L410F17L412T27_CaseRhs = { {2{1'b0}}, RISCVModule_L401F9L426T10_RISCVModule_L410F22T33_Expr }/*expand*/;
 assign RISCVModule_L401F9L426T10_RISCVModule_L413F17L415T27_CaseLhs = { {1{1'b0}}, State_State }/*expand*/;
 assign RISCVModule_L401F9L426T10_RISCVModule_L413F17L415T27_CaseRhs = { {2{1'b0}}, RISCVModule_L401F9L426T10_RISCVModule_L413F22T33_Expr }/*expand*/;
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L286F17L288T27_CaseLhs = { {1{1'b0}}, OpTypeCode }/*expand*/;
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L286F17L288T27_CaseLhs = { {1{1'b0}}, ID_OpTypeCode }/*expand*/;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L286F17L288T27_CaseRhs = { {3{1'b0}}, RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L286F22T39_Expr }/*expand*/;
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOPIMM_RISCVModule_L147F9L186T10_RISCVModule_L151F17L153T27_CaseLhs = { {1{1'b0}}, OPIMMCode }/*expand*/;
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOPIMM_RISCVModule_L147F9L186T10_RISCVModule_L151F17L153T27_CaseLhs = { {1{1'b0}}, ID_OPIMMCode }/*expand*/;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOPIMM_RISCVModule_L147F9L186T10_RISCVModule_L151F17L153T27_CaseRhs = { {3{1'b0}}, RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOPIMM_RISCVModule_L147F9L186T10_RISCVModule_L151F22T37_Expr }/*expand*/;
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOPIMM_RISCVModule_L147F9L186T10_RISCVModule_L154F17L156T27_CaseLhs = { {1{1'b0}}, OPIMMCode }/*expand*/;
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOPIMM_RISCVModule_L147F9L186T10_RISCVModule_L154F17L156T27_CaseLhs = { {1{1'b0}}, ID_OPIMMCode }/*expand*/;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOPIMM_RISCVModule_L147F9L186T10_RISCVModule_L154F17L156T27_CaseRhs = { {2{1'b0}}, RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOPIMM_RISCVModule_L147F9L186T10_RISCVModule_L154F22T37_Expr }/*expand*/;
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOPIMM_RISCVModule_L147F9L186T10_RISCVModule_L157F17L159T27_CaseLhs = { {1{1'b0}}, OPIMMCode }/*expand*/;
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOPIMM_RISCVModule_L147F9L186T10_RISCVModule_L157F17L159T27_CaseLhs = { {1{1'b0}}, ID_OPIMMCode }/*expand*/;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOPIMM_RISCVModule_L147F9L186T10_RISCVModule_L157F17L159T27_CaseRhs = { {2{1'b0}}, RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOPIMM_RISCVModule_L147F9L186T10_RISCVModule_L157F22T38_Expr }/*expand*/;
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOPIMM_RISCVModule_L147F9L186T10_RISCVModule_L160F17L162T27_CaseLhs = { {1{1'b0}}, OPIMMCode }/*expand*/;
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOPIMM_RISCVModule_L147F9L186T10_RISCVModule_L160F17L162T27_CaseLhs = { {1{1'b0}}, ID_OPIMMCode }/*expand*/;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOPIMM_RISCVModule_L147F9L186T10_RISCVModule_L160F17L162T27_CaseRhs = { {1{1'b0}}, RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOPIMM_RISCVModule_L147F9L186T10_RISCVModule_L160F22T37_Expr }/*expand*/;
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOPIMM_RISCVModule_L147F9L186T10_RISCVModule_L163F17L165T27_CaseLhs = { {1{1'b0}}, OPIMMCode }/*expand*/;
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOPIMM_RISCVModule_L147F9L186T10_RISCVModule_L163F17L165T27_CaseLhs = { {1{1'b0}}, ID_OPIMMCode }/*expand*/;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOPIMM_RISCVModule_L147F9L186T10_RISCVModule_L163F17L165T27_CaseRhs = { {1{1'b0}}, RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOPIMM_RISCVModule_L147F9L186T10_RISCVModule_L163F22T36_Expr }/*expand*/;
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOPIMM_RISCVModule_L147F9L186T10_RISCVModule_L166F17L168T27_CaseLhs = { {1{1'b0}}, OPIMMCode }/*expand*/;
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOPIMM_RISCVModule_L147F9L186T10_RISCVModule_L166F17L168T27_CaseLhs = { {1{1'b0}}, ID_OPIMMCode }/*expand*/;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOPIMM_RISCVModule_L147F9L186T10_RISCVModule_L166F17L168T27_CaseRhs = { {1{1'b0}}, RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOPIMM_RISCVModule_L147F9L186T10_RISCVModule_L166F22T37_Expr }/*expand*/;
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOPIMM_RISCVModule_L147F9L186T10_RISCVModule_L169F17L171T27_CaseLhs = { {1{1'b0}}, OPIMMCode }/*expand*/;
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOPIMM_RISCVModule_L147F9L186T10_RISCVModule_L169F17L171T27_CaseLhs = { {1{1'b0}}, ID_OPIMMCode }/*expand*/;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOPIMM_RISCVModule_L147F9L186T10_RISCVModule_L169F17L171T27_CaseRhs = { {3{1'b0}}, RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOPIMM_RISCVModule_L147F9L186T10_RISCVModule_L169F22T37_Expr }/*expand*/;
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOPIMM_RISCVModule_L147F9L186T10_RISCVModule_L172F17L181T27_CaseLhs = { {1{1'b0}}, OPIMMCode }/*expand*/;
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOPIMM_RISCVModule_L147F9L186T10_RISCVModule_L172F17L181T27_CaseLhs = { {1{1'b0}}, ID_OPIMMCode }/*expand*/;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOPIMM_RISCVModule_L147F9L186T10_RISCVModule_L172F17L181T27_CaseRhs = { {1{1'b0}}, RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOPIMM_RISCVModule_L147F9L186T10_RISCVModule_L172F22T42_Expr }/*expand*/;
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L289F17L291T27_CaseLhs = { {1{1'b0}}, OpTypeCode }/*expand*/;
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L289F17L291T27_CaseLhs = { {1{1'b0}}, ID_OpTypeCode }/*expand*/;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L289F17L291T27_CaseRhs = { {2{1'b0}}, RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L289F22T36_Expr }/*expand*/;
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOP_RISCVModule_L189F9L235T10_RISCVModule_L193F17L202T27_CaseLhs = { {1{1'b0}}, OPCode }/*expand*/;
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOP_RISCVModule_L189F9L235T10_RISCVModule_L193F17L202T27_CaseLhs = { {1{1'b0}}, ID_OPCode }/*expand*/;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOP_RISCVModule_L189F9L235T10_RISCVModule_L193F17L202T27_CaseRhs = { {3{1'b0}}, RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOP_RISCVModule_L189F9L235T10_RISCVModule_L193F22T37_Expr }/*expand*/;
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOP_RISCVModule_L189F9L235T10_RISCVModule_L203F17L205T27_CaseLhs = { {1{1'b0}}, OPCode }/*expand*/;
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOP_RISCVModule_L189F9L235T10_RISCVModule_L203F17L205T27_CaseLhs = { {1{1'b0}}, ID_OPCode }/*expand*/;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOP_RISCVModule_L189F9L235T10_RISCVModule_L203F17L205T27_CaseRhs = { {2{1'b0}}, RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOP_RISCVModule_L189F9L235T10_RISCVModule_L203F22T33_Expr }/*expand*/;
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOP_RISCVModule_L189F9L235T10_RISCVModule_L206F17L208T27_CaseLhs = { {1{1'b0}}, OPCode }/*expand*/;
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOP_RISCVModule_L189F9L235T10_RISCVModule_L206F17L208T27_CaseLhs = { {1{1'b0}}, ID_OPCode }/*expand*/;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOP_RISCVModule_L189F9L235T10_RISCVModule_L206F17L208T27_CaseRhs = { {2{1'b0}}, RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOP_RISCVModule_L189F9L235T10_RISCVModule_L206F22T34_Expr }/*expand*/;
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOP_RISCVModule_L189F9L235T10_RISCVModule_L209F17L211T27_CaseLhs = { {1{1'b0}}, OPCode }/*expand*/;
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOP_RISCVModule_L189F9L235T10_RISCVModule_L209F17L211T27_CaseLhs = { {1{1'b0}}, ID_OPCode }/*expand*/;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOP_RISCVModule_L189F9L235T10_RISCVModule_L209F17L211T27_CaseRhs = { {1{1'b0}}, RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOP_RISCVModule_L189F9L235T10_RISCVModule_L209F22T33_Expr }/*expand*/;
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOP_RISCVModule_L189F9L235T10_RISCVModule_L212F17L214T27_CaseLhs = { {1{1'b0}}, OPCode }/*expand*/;
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOP_RISCVModule_L189F9L235T10_RISCVModule_L212F17L214T27_CaseLhs = { {1{1'b0}}, ID_OPCode }/*expand*/;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOP_RISCVModule_L189F9L235T10_RISCVModule_L212F17L214T27_CaseRhs = { {1{1'b0}}, RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOP_RISCVModule_L189F9L235T10_RISCVModule_L212F22T32_Expr }/*expand*/;
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOP_RISCVModule_L189F9L235T10_RISCVModule_L215F17L217T27_CaseLhs = { {1{1'b0}}, OPCode }/*expand*/;
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOP_RISCVModule_L189F9L235T10_RISCVModule_L215F17L217T27_CaseLhs = { {1{1'b0}}, ID_OPCode }/*expand*/;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOP_RISCVModule_L189F9L235T10_RISCVModule_L215F17L217T27_CaseRhs = { {1{1'b0}}, RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOP_RISCVModule_L189F9L235T10_RISCVModule_L215F22T33_Expr }/*expand*/;
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOP_RISCVModule_L189F9L235T10_RISCVModule_L218F17L220T27_CaseLhs = { {1{1'b0}}, OPCode }/*expand*/;
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOP_RISCVModule_L189F9L235T10_RISCVModule_L218F17L220T27_CaseLhs = { {1{1'b0}}, ID_OPCode }/*expand*/;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOP_RISCVModule_L189F9L235T10_RISCVModule_L218F17L220T27_CaseRhs = { {3{1'b0}}, RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOP_RISCVModule_L189F9L235T10_RISCVModule_L218F22T33_Expr }/*expand*/;
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOP_RISCVModule_L189F9L235T10_RISCVModule_L221F17L230T27_CaseLhs = { {1{1'b0}}, OPCode }/*expand*/;
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOP_RISCVModule_L189F9L235T10_RISCVModule_L221F17L230T27_CaseLhs = { {1{1'b0}}, ID_OPCode }/*expand*/;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOP_RISCVModule_L189F9L235T10_RISCVModule_L221F17L230T27_CaseRhs = { {1{1'b0}}, RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOP_RISCVModule_L189F9L235T10_RISCVModule_L221F22T37_Expr }/*expand*/;
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L292F17L294T27_CaseLhs = { {1{1'b0}}, OpTypeCode }/*expand*/;
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L292F17L294T27_CaseLhs = { {1{1'b0}}, ID_OpTypeCode }/*expand*/;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L292F17L294T27_CaseRhs = { {1{1'b0}}, RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L292F22T35_Expr }/*expand*/;
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnBranch_RISCVModule_L239F9L276T10_RISCVModule_L248F17L251T27_CaseLhs = { {1{1'b0}}, BranchTypeCode }/*expand*/;
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnBranch_RISCVModule_L239F9L276T10_RISCVModule_L248F17L251T27_CaseLhs = { {1{1'b0}}, ID_BranchTypeCode }/*expand*/;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnBranch_RISCVModule_L239F9L276T10_RISCVModule_L248F17L251T27_CaseRhs = { {3{1'b0}}, RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnBranch_RISCVModule_L239F9L276T10_RISCVModule_L248F22T40_Expr }/*expand*/;
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnBranch_RISCVModule_L239F9L276T10_RISCVModule_L252F17L255T27_CaseLhs = { {1{1'b0}}, BranchTypeCode }/*expand*/;
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnBranch_RISCVModule_L239F9L276T10_RISCVModule_L252F17L255T27_CaseLhs = { {1{1'b0}}, ID_BranchTypeCode }/*expand*/;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnBranch_RISCVModule_L239F9L276T10_RISCVModule_L252F17L255T27_CaseRhs = { {3{1'b0}}, RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnBranch_RISCVModule_L239F9L276T10_RISCVModule_L252F22T40_Expr }/*expand*/;
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnBranch_RISCVModule_L239F9L276T10_RISCVModule_L256F17L259T27_CaseLhs = { {1{1'b0}}, BranchTypeCode }/*expand*/;
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnBranch_RISCVModule_L239F9L276T10_RISCVModule_L256F17L259T27_CaseLhs = { {1{1'b0}}, ID_BranchTypeCode }/*expand*/;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnBranch_RISCVModule_L239F9L276T10_RISCVModule_L256F17L259T27_CaseRhs = { {1{1'b0}}, RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnBranch_RISCVModule_L239F9L276T10_RISCVModule_L256F22T40_Expr }/*expand*/;
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnBranch_RISCVModule_L239F9L276T10_RISCVModule_L260F17L263T27_CaseLhs = { {1{1'b0}}, BranchTypeCode }/*expand*/;
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnBranch_RISCVModule_L239F9L276T10_RISCVModule_L260F17L263T27_CaseLhs = { {1{1'b0}}, ID_BranchTypeCode }/*expand*/;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnBranch_RISCVModule_L239F9L276T10_RISCVModule_L260F17L263T27_CaseRhs = { {1{1'b0}}, RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnBranch_RISCVModule_L239F9L276T10_RISCVModule_L260F22T41_Expr }/*expand*/;
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnBranch_RISCVModule_L239F9L276T10_RISCVModule_L264F17L267T27_CaseLhs = { {1{1'b0}}, BranchTypeCode }/*expand*/;
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnBranch_RISCVModule_L239F9L276T10_RISCVModule_L264F17L267T27_CaseLhs = { {1{1'b0}}, ID_BranchTypeCode }/*expand*/;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnBranch_RISCVModule_L239F9L276T10_RISCVModule_L264F17L267T27_CaseRhs = { {1{1'b0}}, RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnBranch_RISCVModule_L239F9L276T10_RISCVModule_L264F22T40_Expr }/*expand*/;
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnBranch_RISCVModule_L239F9L276T10_RISCVModule_L268F17L271T27_CaseLhs = { {1{1'b0}}, BranchTypeCode }/*expand*/;
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnBranch_RISCVModule_L239F9L276T10_RISCVModule_L268F17L271T27_CaseLhs = { {1{1'b0}}, ID_BranchTypeCode }/*expand*/;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnBranch_RISCVModule_L239F9L276T10_RISCVModule_L268F17L271T27_CaseRhs = { {1{1'b0}}, RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnBranch_RISCVModule_L239F9L276T10_RISCVModule_L268F22T41_Expr }/*expand*/;
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L295F17L298T27_CaseLhs = { {1{1'b0}}, OpTypeCode }/*expand*/;
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L295F17L298T27_CaseLhs = { {1{1'b0}}, ID_OpTypeCode }/*expand*/;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L295F17L298T27_CaseRhs = { {2{1'b0}}, RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L295F22T37_Expr }/*expand*/;
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L299F17L302T27_CaseLhs = { {1{1'b0}}, OpTypeCode }/*expand*/;
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L299F17L302T27_CaseLhs = { {1{1'b0}}, ID_OpTypeCode }/*expand*/;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L299F17L302T27_CaseRhs = { {3{1'b0}}, RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L299F22T39_Expr }/*expand*/;
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L303F17L307T27_CaseLhs = { {1{1'b0}}, OpTypeCode }/*expand*/;
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L303F17L307T27_CaseLhs = { {1{1'b0}}, ID_OpTypeCode }/*expand*/;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L303F17L307T27_CaseRhs = { {1{1'b0}}, RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L303F22T37_Expr }/*expand*/;
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L308F17L312T27_CaseLhs = { {1{1'b0}}, OpTypeCode }/*expand*/;
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L308F17L312T27_CaseLhs = { {1{1'b0}}, ID_OpTypeCode }/*expand*/;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L308F17L312T27_CaseRhs = { {1{1'b0}}, RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L308F22T38_Expr }/*expand*/;
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L313F17L315T27_CaseLhs = { {1{1'b0}}, OpTypeCode }/*expand*/;
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L313F17L315T27_CaseLhs = { {1{1'b0}}, ID_OpTypeCode }/*expand*/;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L313F17L315T27_CaseRhs = { {6{1'b0}}, RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L313F22T38_Expr }/*expand*/;
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L316F17L318T27_CaseLhs = { {1{1'b0}}, OpTypeCode }/*expand*/;
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L316F17L318T27_CaseLhs = { {1{1'b0}}, ID_OpTypeCode }/*expand*/;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L316F17L318T27_CaseRhs = { {2{1'b0}}, RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L316F22T39_Expr }/*expand*/;
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L319F17L321T27_CaseLhs = { {1{1'b0}}, OpTypeCode }/*expand*/;
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L319F17L321T27_CaseLhs = { {1{1'b0}}, ID_OpTypeCode }/*expand*/;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L319F17L321T27_CaseRhs = { {1{1'b0}}, RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L319F22T35_Expr }/*expand*/;
 assign RISCVModule_L401F9L426T10_RISCVModule_L416F17L418T27_CaseLhs = { {1{1'b0}}, State_State }/*expand*/;
 assign RISCVModule_L401F9L426T10_RISCVModule_L416F17L418T27_CaseRhs = { {1{1'b0}}, RISCVModule_L401F9L426T10_RISCVModule_L416F22T34_Expr }/*expand*/;
-assign RISCVModule_L401F9L426T10_MemStage_RISCVModule_L336F9L364T10_RISCVModule_L338F13L363T14_RISCVModule_L341F17L362T18_RISCVModule_L346F25L348T35_CaseLhs = { {1{1'b0}}, LoadTypeCode }/*expand*/;
+assign RISCVModule_L401F9L426T10_MemStage_RISCVModule_L336F9L364T10_RISCVModule_L338F13L363T14_RISCVModule_L341F17L362T18_RISCVModule_L346F25L348T35_CaseLhs = { {1{1'b0}}, ID_LoadTypeCode }/*expand*/;
 assign RISCVModule_L401F9L426T10_MemStage_RISCVModule_L336F9L364T10_RISCVModule_L338F13L363T14_RISCVModule_L341F17L362T18_RISCVModule_L346F25L348T35_CaseRhs = { {2{1'b0}}, RISCVModule_L401F9L426T10_MemStage_RISCVModule_L336F9L364T10_RISCVModule_L338F13L363T14_RISCVModule_L341F17L362T18_RISCVModule_L346F30T46_Expr }/*expand*/;
-assign RISCVModule_L401F9L426T10_MemStage_RISCVModule_L336F9L364T10_RISCVModule_L338F13L363T14_RISCVModule_L341F17L362T18_RISCVModule_L349F25L351T35_CaseLhs = { {1{1'b0}}, LoadTypeCode }/*expand*/;
+assign RISCVModule_L401F9L426T10_MemStage_RISCVModule_L336F9L364T10_RISCVModule_L338F13L363T14_RISCVModule_L341F17L362T18_RISCVModule_L349F25L351T35_CaseLhs = { {1{1'b0}}, ID_LoadTypeCode }/*expand*/;
 assign RISCVModule_L401F9L426T10_MemStage_RISCVModule_L336F9L364T10_RISCVModule_L338F13L363T14_RISCVModule_L341F17L362T18_RISCVModule_L349F25L351T35_CaseRhs = { {3{1'b0}}, RISCVModule_L401F9L426T10_MemStage_RISCVModule_L336F9L364T10_RISCVModule_L338F13L363T14_RISCVModule_L341F17L362T18_RISCVModule_L349F30T46_Expr }/*expand*/;
-assign RISCVModule_L401F9L426T10_MemStage_RISCVModule_L336F9L364T10_RISCVModule_L338F13L363T14_RISCVModule_L341F17L362T18_RISCVModule_L352F25L354T35_CaseLhs = { {1{1'b0}}, LoadTypeCode }/*expand*/;
+assign RISCVModule_L401F9L426T10_MemStage_RISCVModule_L336F9L364T10_RISCVModule_L338F13L363T14_RISCVModule_L341F17L362T18_RISCVModule_L352F25L354T35_CaseLhs = { {1{1'b0}}, ID_LoadTypeCode }/*expand*/;
 assign RISCVModule_L401F9L426T10_MemStage_RISCVModule_L336F9L364T10_RISCVModule_L338F13L363T14_RISCVModule_L341F17L362T18_RISCVModule_L352F25L354T35_CaseRhs = { {1{1'b0}}, RISCVModule_L401F9L426T10_MemStage_RISCVModule_L336F9L364T10_RISCVModule_L338F13L363T14_RISCVModule_L341F17L362T18_RISCVModule_L352F30T47_Expr }/*expand*/;
-assign RISCVModule_L401F9L426T10_MemStage_RISCVModule_L336F9L364T10_RISCVModule_L338F13L363T14_RISCVModule_L341F17L362T18_RISCVModule_L355F25L357T35_CaseLhs = { {1{1'b0}}, LoadTypeCode }/*expand*/;
+assign RISCVModule_L401F9L426T10_MemStage_RISCVModule_L336F9L364T10_RISCVModule_L338F13L363T14_RISCVModule_L341F17L362T18_RISCVModule_L355F25L357T35_CaseLhs = { {1{1'b0}}, ID_LoadTypeCode }/*expand*/;
 assign RISCVModule_L401F9L426T10_MemStage_RISCVModule_L336F9L364T10_RISCVModule_L338F13L363T14_RISCVModule_L341F17L362T18_RISCVModule_L355F25L357T35_CaseRhs = { {3{1'b0}}, RISCVModule_L401F9L426T10_MemStage_RISCVModule_L336F9L364T10_RISCVModule_L338F13L363T14_RISCVModule_L341F17L362T18_RISCVModule_L355F30T46_Expr }/*expand*/;
-assign RISCVModule_L401F9L426T10_MemStage_RISCVModule_L336F9L364T10_RISCVModule_L338F13L363T14_RISCVModule_L341F17L362T18_RISCVModule_L358F25L360T35_CaseLhs = { {1{1'b0}}, LoadTypeCode }/*expand*/;
+assign RISCVModule_L401F9L426T10_MemStage_RISCVModule_L336F9L364T10_RISCVModule_L338F13L363T14_RISCVModule_L341F17L362T18_RISCVModule_L358F25L360T35_CaseLhs = { {1{1'b0}}, ID_LoadTypeCode }/*expand*/;
 assign RISCVModule_L401F9L426T10_MemStage_RISCVModule_L336F9L364T10_RISCVModule_L338F13L363T14_RISCVModule_L341F17L362T18_RISCVModule_L358F25L360T35_CaseRhs = { {1{1'b0}}, RISCVModule_L401F9L426T10_MemStage_RISCVModule_L336F9L364T10_RISCVModule_L338F13L363T14_RISCVModule_L341F17L362T18_RISCVModule_L358F30T47_Expr }/*expand*/;
 assign RISCVModule_L401F9L426T10_RISCVModule_L419F17L421T27_CaseLhs = { {1{1'b0}}, State_State }/*expand*/;
 assign RISCVModule_L401F9L426T10_RISCVModule_L419F17L421T27_CaseRhs = { {1{1'b0}}, RISCVModule_L401F9L426T10_RISCVModule_L419F22T33_Expr }/*expand*/;
 assign RISCVModule_L401F9L426T10_RISCVModule_L422F17L424T27_CaseLhs = { {1{1'b0}}, State_State }/*expand*/;
 assign RISCVModule_L401F9L426T10_RISCVModule_L422F17L424T27_CaseRhs = { {1{1'b0}}, RISCVModule_L401F9L426T10_RISCVModule_L422F22T32_Expr }/*expand*/;
-assign RISCVModule_L52F32T58_ExprLhs = { {1{1'b0}}, State_State }/*expand*/;
-assign RISCVModule_L52F32T58_ExprRhs = { {3{1'b0}}, RISCVModule_L52F47T58_Expr }/*expand*/;
-assign RISCVModule_L52F63T90_ExprLhs = { {1{1'b0}}, State_State }/*expand*/;
-assign RISCVModule_L52F63T90_ExprRhs = { {1{1'b0}}, RISCVModule_L52F78T90_Expr }/*expand*/;
-assign RISCVModule_L53F35T61_ExprLhs = { {1{1'b0}}, State_State }/*expand*/;
-assign RISCVModule_L53F35T61_ExprRhs = { {3{1'b0}}, RISCVModule_L53F50T61_Expr }/*expand*/;
-assign RISCVModule_L61F33T60_ExprLhs = { {1{1'b0}}, State_State }/*expand*/;
-assign RISCVModule_L61F33T60_ExprRhs = { {1{1'b0}}, RISCVModule_L61F48T60_Expr }/*expand*/;
-assign RISCVModule_L68F22T81_Expr_1 = RISCVModule_L68F22T51_Expr;
-assign RISCVModule_L68F22T81_Expr_2 = RISCVModule_L68F55T81_Expr;
-assign RISCVModule_L77F24T71_Expr_1 = RISCVModule_L77F24T50_Expr;
-assign RISCVModule_L77F24T71_Expr_2 = State_WBDataReady;
+assign RISCVModule_L56F32T58_ExprLhs = { {1{1'b0}}, State_State }/*expand*/;
+assign RISCVModule_L56F32T58_ExprRhs = { {3{1'b0}}, RISCVModule_L56F47T58_Expr }/*expand*/;
+assign RISCVModule_L56F63T90_ExprLhs = { {1{1'b0}}, State_State }/*expand*/;
+assign RISCVModule_L56F63T90_ExprRhs = { {1{1'b0}}, RISCVModule_L56F78T90_Expr }/*expand*/;
+assign RISCVModule_L57F35T61_ExprLhs = { {1{1'b0}}, State_State }/*expand*/;
+assign RISCVModule_L57F35T61_ExprRhs = { {3{1'b0}}, RISCVModule_L57F50T61_Expr }/*expand*/;
+assign RISCVModule_L65F33T61_ExprLhs = { {1{1'b0}}, State_State }/*expand*/;
+assign RISCVModule_L65F33T61_ExprRhs = { {1{1'b0}}, RISCVModule_L65F48T61_Expr }/*expand*/;
+assign RISCVModule_L67F33T60_ExprLhs = { {1{1'b0}}, State_State }/*expand*/;
+assign RISCVModule_L67F33T60_ExprRhs = { {1{1'b0}}, RISCVModule_L67F48T60_Expr }/*expand*/;
+assign RISCVModule_L74F22T81_Expr_1 = RISCVModule_L74F22T51_Expr;
+assign RISCVModule_L74F22T81_Expr_2 = RISCVModule_L74F55T81_Expr;
+assign RISCVModule_L83F24T71_Expr_1 = RISCVModule_L83F24T50_Expr;
+assign RISCVModule_L83F24T71_Expr_2 = State_WBDataReady;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnBranch_RISCVModule_L239F9L276T10_RISCVModule_L257F25T42_Expr_1 = CMP_GTS;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnBranch_RISCVModule_L239F9L276T10_RISCVModule_L257F25T42_Expr_2 = CMP_EQ;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnBranch_RISCVModule_L239F9L276T10_RISCVModule_L261F25T42_Expr_1 = CMP_GTU;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnBranch_RISCVModule_L239F9L276T10_RISCVModule_L261F25T42_Expr_2 = CMP_EQ;
-assign RISCVModule_L52F32T103_Expr_1 = RISCVModule_L52F32T58_Expr;
-assign RISCVModule_L52F32T103_Expr_2 = RISCVModule_L52F63T102_Expr;
-assign RISCVModule_L52F63T102_Expr_1 = RISCVModule_L52F63T90_Expr;
-assign RISCVModule_L52F63T102_Expr_2 = IsLoadOp;
-assign RISCVModule_L61F33T73_Expr_1 = RISCVModule_L61F33T60_Expr;
-assign RISCVModule_L61F33T73_Expr_2 = IsStoreOp;
-assign RISCVModule_L48F44T66_Expr_1 = { {2{1'b0}}, Regs_RS1 }/*expand*/;
-assign RISCVModule_L48F44T66_Expr_2 = { {2{ID_ITypeImm[32]}}, ID_ITypeImm }/*expand*/;
-assign RISCVModule_L50F46T68_Expr_1 = { {2{1'b0}}, Regs_RS1 }/*expand*/;
-assign RISCVModule_L50F46T68_Expr_2 = { {2{ID_STypeImm[32]}}, ID_STypeImm }/*expand*/;
+assign RISCVModule_L56F32T103_Expr_1 = RISCVModule_L56F32T58_Expr;
+assign RISCVModule_L56F32T103_Expr_2 = RISCVModule_L56F63T102_Expr;
+assign RISCVModule_L56F63T102_Expr_1 = RISCVModule_L56F63T90_Expr;
+assign RISCVModule_L56F63T102_Expr_2 = IsLoadOp;
+assign RISCVModule_L67F33T73_Expr_1 = RISCVModule_L67F33T60_Expr;
+assign RISCVModule_L67F33T73_Expr_2 = IsStoreOp;
+assign RISCVModule_L52F44T66_Expr_1 = { {2{1'b0}}, Regs_RS1 }/*expand*/;
+assign RISCVModule_L52F44T66_Expr_2 = { {2{ID_ITypeImm[32]}}, ID_ITypeImm }/*expand*/;
+assign RISCVModule_L54F46T68_Expr_1 = { {2{1'b0}}, Regs_RS1 }/*expand*/;
+assign RISCVModule_L54F46T68_Expr_2 = { {2{ID_STypeImm[32]}}, ID_STypeImm }/*expand*/;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L301F40T59_Expr_1 = { {2{1'b0}}, PC_PC }/*expand*/;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L301F40T59_Expr_2 = { {2{ID_UTypeImm[32]}}, ID_UTypeImm }/*expand*/;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L305F40T65_Expr_1 = { {2{1'b0}}, PC_PC }/*expand*/;
@@ -1244,40 +1256,25 @@ assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVMod
 assign Inputs_BaseAddress = BaseAddress/*cast*/;
 assign Inputs_MemReadData = MemReadData/*cast*/;
 assign Inputs_MemReady = MemReady;
-assign IsLoadOp = RISCVModule_L47F35T65_Expr;
-assign LoadAdress = RISCVModule_L48F44T66_Expr/*cast*/;
-assign IsStoreOp = RISCVModule_L49F36T67_Expr;
-assign StoreAddress = RISCVModule_L50F46T68_Expr/*cast*/;
+assign IsLoadOp = RISCVModule_L51F35T68_Expr;
+assign LoadAdress = RISCVModule_L52F44T66_Expr/*cast*/;
+assign IsStoreOp = RISCVModule_L53F36T70_Expr;
+assign StoreAddress = RISCVModule_L54F46T68_Expr/*cast*/;
 assign ResetAddress = Inputs_BaseAddress/*cast*/;
-assign RISCVModule_L66F42T60_Source = RISCVModule_L66F58T59_Expr/*cast*/;
-assign RISCVModule_L66F42T71_SignChange = RISCVModule_L66F42T60_Source/*cast*/;
-assign InstructionOffset = { {29{1'b0}}, RISCVModule_L66F42T71_SignChange }/*expand*/;
-assign PCWE = RISCVModule_L68F22T81_Expr;
-assign PCOffset = RISCVModule_L69F33T94_Lookup/*cast*/;
-assign PCOverwrite = RISCVModule_L70F29T58_Expr;
+assign RISCVModule_L72F42T60_Source = RISCVModule_L72F58T59_Expr/*cast*/;
+assign RISCVModule_L72F42T71_SignChange = RISCVModule_L72F42T60_Source/*cast*/;
+assign InstructionOffset = { {29{1'b0}}, RISCVModule_L72F42T71_SignChange }/*expand*/;
+assign PCWE = RISCVModule_L74F22T81_Expr;
+assign PCOffset = RISCVModule_L75F33T94_Lookup/*cast*/;
+assign PCOverwrite = RISCVModule_L76F29T58_Expr;
 assign ALUOp1 = Regs_RS1/*cast*/;
-assign ALUOp2 = RISCVModule_L73F31T87_Lookup/*cast*/;
-assign RISCVModule_L75F78T92_Index = Regs_RS2[5:1]/*cast*/;
-assign ALUSHAMT = RISCVModule_L75F33T92_Lookup/*cast*/;
-assign RegsRead = RISCVModule_L76F26T52_Expr;
-assign RegsWE = RISCVModule_L77F24T71_Expr;
+assign ALUOp2 = RISCVModule_L79F31T90_Lookup/*cast*/;
+assign RISCVModule_L81F81T95_Index = Regs_RS2[5:1]/*cast*/;
+assign ALUSHAMT = RISCVModule_L81F33T95_Lookup/*cast*/;
+assign RegsRead = RISCVModule_L82F26T52_Expr;
+assign RegsWE = RISCVModule_L83F24T71_Expr;
 assign CMPLhs = Regs_RS1/*cast*/;
-assign CMPRhs = RISCVModule_L80F31T87_Lookup/*cast*/;
-assign RISCVModule_L82F48T63_Cast = { {1{1'b0}}, ID_OpCode }/*expand*/;
-assign RISCVModule_L82F35T63_Cast = RISCVModule_L82F48T63_Cast[7:1]/*truncate*/;
-assign OpTypeCode = RISCVModule_L82F35T63_Cast/*cast*/;
-assign RISCVModule_L83F45T60_Cast = { {5{1'b0}}, ID_Funct3 }/*expand*/;
-assign RISCVModule_L83F33T60_Cast = RISCVModule_L83F45T60_Cast[3:1]/*truncate*/;
-assign OPIMMCode = RISCVModule_L83F33T60_Cast/*cast*/;
-assign RISCVModule_L84F36T51_Cast = { {5{1'b0}}, ID_Funct3 }/*expand*/;
-assign RISCVModule_L84F27T51_Cast = RISCVModule_L84F36T51_Cast[3:1]/*truncate*/;
-assign OPCode = RISCVModule_L84F27T51_Cast/*cast*/;
-assign RISCVModule_L85F60T75_Cast = { {5{1'b0}}, ID_Funct3 }/*expand*/;
-assign RISCVModule_L85F43T75_Cast = RISCVModule_L85F60T75_Cast[3:1]/*truncate*/;
-assign BranchTypeCode = RISCVModule_L85F43T75_Cast/*cast*/;
-assign RISCVModule_L86F54T69_Cast = { {5{1'b0}}, ID_Funct3 }/*expand*/;
-assign RISCVModule_L86F39T69_Cast = RISCVModule_L86F54T69_Cast[3:1]/*truncate*/;
-assign LoadTypeCode = RISCVModule_L86F39T69_Cast/*cast*/;
+assign CMPRhs = RISCVModule_L86F31T90_Lookup/*cast*/;
 assign BranchOffset = ID_BTypeImm/*cast*/;
 assign LWData = Inputs_MemReadData/*cast*/;
 assign RISCVModule_L329F31T56_Index = Inputs_MemReadData[16:1]/*cast*/;
@@ -1313,42 +1310,47 @@ assign CMP_Lhs = CMPLhs/*cast*/;
 assign CMP_Rhs = CMPRhs/*cast*/;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T97_Source = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F74T96_Expr[33:1]/*truncate*/;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T97_Source[32:2]/*cast*/;
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[1] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[1];
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[2] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[2];
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[3] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[3];
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[4] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[4];
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[5] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[5];
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[6] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[6];
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[7] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[7];
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[8] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[8];
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[9] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[9];
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[10] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[10];
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[11] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[11];
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[12] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[12];
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[13] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[13];
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[14] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[14];
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[15] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[15];
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[16] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[16];
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[17] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[17];
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[18] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[18];
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[19] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[19];
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[20] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[20];
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[21] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[21];
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[22] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[22];
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[23] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[23];
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[24] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[24];
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[25] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[25];
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[26] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[26];
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[27] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[27];
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[28] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[28];
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[29] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[29];
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[30] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[30];
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[31] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[31];
-assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[32] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F106T111_Expr;
-assign MemRead = RISCVModule_L52F32T103_Expr;
-assign RISCVModule_L59F23T53_Source = RISCVModule_L59F39T52_Expr;
-assign MemAddress = RISCVModule_L53F35L59T53_Lookup/*cast*/;
-assign MemWrite = RISCVModule_L61F33T73_Expr;
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[1] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F106T111_Expr;
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[2] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[1];
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[3] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[2];
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[4] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[3];
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[5] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[4];
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[6] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[5];
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[7] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[6];
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[8] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[7];
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[9] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[8];
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[10] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[9];
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[11] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[10];
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[12] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[11];
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[13] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[12];
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[14] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[13];
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[15] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[14];
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[16] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[15];
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[17] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[16];
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[18] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[17];
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[19] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[18];
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[20] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[19];
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[21] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[20];
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[22] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[21];
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[23] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[22];
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[24] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[23];
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[25] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[24];
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[26] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[25];
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[27] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[26];
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[28] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[27];
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[29] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[28];
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[30] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[29];
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[31] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[30];
+assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F42T112_Source[32] = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F58T104_Index[31];
+assign RISCVModule_L47F33T50_Cast = { {5{1'b0}}, State_State }/*expand*/;
+assign DbgState = RISCVModule_L47F33T50_Cast/*cast*/;
+assign DbgWBData = ID_UTypeImm/*cast*/;
+assign DbgWDDataReady = RegsWE;
+assign MemRead = RISCVModule_L56F32T103_Expr;
+assign RISCVModule_L63F23T53_Source = RISCVModule_L63F39T52_Expr;
+assign MemAddress = RISCVModule_L57F35L63T53_Lookup/*cast*/;
+assign IsHalted = RISCVModule_L65F33T61_Expr;
+assign MemWrite = RISCVModule_L67F33T73_Expr;
 assign MemWriteData = Regs_RS2/*cast*/;
 assign MemWriteMode = ID_Funct3/*cast*/;
 assign IDInstructionID_InstructionHardLink = ID_Instruction/*cast*/;
@@ -1367,6 +1369,11 @@ assign ID_JTypeImm = IDJTypeImmID_JTypeImmHardLink/*cast*/;
 assign ID_SHAMT = IDSHAMTID_SHAMTHardLink/*cast*/;
 assign ID_SHARITH = IDSHARITHID_SHARITHHardLink;
 assign ID_SUB = IDSUBID_SUBHardLink;
+assign ID_OpTypeCode = IDOpTypeCodeID_OpTypeCodeHardLink/*cast*/;
+assign ID_OPIMMCode = IDOPIMMCodeID_OPIMMCodeHardLink/*cast*/;
+assign ID_OPCode = IDOPCodeID_OPCodeHardLink/*cast*/;
+assign ID_BranchTypeCode = IDBranchTypeCodeID_BranchTypeCodeHardLink/*cast*/;
+assign ID_LoadTypeCode = IDLoadTypeCodeID_LoadTypeCodeHardLink/*cast*/;
 assign PCWEPC_WEHardLink = PC_WE;
 assign PCOverwritePC_OverwriteHardLink = PC_Overwrite;
 assign PCOffsetPC_OffsetHardLink = PC_Offset/*cast*/;
@@ -1400,14 +1407,14 @@ assign CMP_GTU = CMPGTUCMP_GTUHardLink;
 assign CMP_LTU = CMPLTUCMP_LTUHardLink;
 assign CMP_GTS = CMPGTSCMP_GTSHardLink;
 assign CMP_LTS = CMPLTSCMP_LTSHardLink;
-assign RISCVModule_L69F33T94_Lookup1 = State_PCOffset/*cast*/;
-assign RISCVModule_L69F33T94_Lookup2 = ResetAddress/*cast*/;
-assign RISCVModule_L73F31T87_Lookup1 = Regs_RS2/*cast*/;
-assign RISCVModule_L73F31T87_Lookup2 = ID_ITypeImm/*cast*/;
-assign RISCVModule_L75F33T92_Lookup1 = RISCVModule_L75F78T92_Index/*cast*/;
-assign RISCVModule_L75F33T92_Lookup2 = ID_SHAMT/*cast*/;
-assign RISCVModule_L80F31T87_Lookup1 = Regs_RS2/*cast*/;
-assign RISCVModule_L80F31T87_Lookup2 = ID_ITypeImm/*cast*/;
+assign RISCVModule_L75F33T94_Lookup1 = State_PCOffset/*cast*/;
+assign RISCVModule_L75F33T94_Lookup2 = ResetAddress/*cast*/;
+assign RISCVModule_L79F31T90_Lookup1 = Regs_RS2/*cast*/;
+assign RISCVModule_L79F31T90_Lookup2 = ID_ITypeImm/*cast*/;
+assign RISCVModule_L81F33T95_Lookup1 = RISCVModule_L81F81T95_Index/*cast*/;
+assign RISCVModule_L81F33T95_Lookup2 = ID_SHAMT/*cast*/;
+assign RISCVModule_L86F31T90_Lookup1 = Regs_RS2/*cast*/;
+assign RISCVModule_L86F31T90_Lookup2 = ID_ITypeImm/*cast*/;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOPIMM_RISCVModule_L147F9L186T10_RISCVModule_L155F40T57_Lookup1 = { {31{1'b0}}, RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOPIMM_RISCVModule_L147F9L186T10_RISCVModule_L155F55T57_Expr }/*expand*/;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOPIMM_RISCVModule_L147F9L186T10_RISCVModule_L155F40T57_Lookup2 = { {31{1'b0}}, RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOPIMM_RISCVModule_L147F9L186T10_RISCVModule_L155F50T52_Expr }/*expand*/;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOPIMM_RISCVModule_L147F9L186T10_RISCVModule_L158F40T57_Lookup1 = { {31{1'b0}}, RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOPIMM_RISCVModule_L147F9L186T10_RISCVModule_L158F55T57_Expr }/*expand*/;
@@ -1416,12 +1423,12 @@ assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOP_RIS
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOP_RISCVModule_L189F9L235T10_RISCVModule_L204F40T57_Lookup2 = { {31{1'b0}}, RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOP_RISCVModule_L189F9L235T10_RISCVModule_L204F50T52_Expr }/*expand*/;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOP_RISCVModule_L189F9L235T10_RISCVModule_L207F40T57_Lookup1 = { {31{1'b0}}, RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOP_RISCVModule_L189F9L235T10_RISCVModule_L207F55T57_Expr }/*expand*/;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOP_RISCVModule_L189F9L235T10_RISCVModule_L207F40T57_Lookup2 = { {31{1'b0}}, RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_OnOP_RISCVModule_L189F9L235T10_RISCVModule_L207F50T52_Expr }/*expand*/;
-assign RISCVModule_L57F19L59T53_Lookup1 = { {31{1'b0}}, RISCVModule_L59F23T53_Source }/*expand*/;
-assign RISCVModule_L57F19L59T53_Lookup2 = StoreAddress[32:1]/*truncate*/;
-assign RISCVModule_L55F15L59T53_Lookup1 = RISCVModule_L57F19L59T53_Lookup/*cast*/;
-assign RISCVModule_L55F15L59T53_Lookup2 = LoadAdress[32:1]/*truncate*/;
-assign RISCVModule_L53F35L59T53_Lookup1 = RISCVModule_L55F15L59T53_Lookup/*cast*/;
-assign RISCVModule_L53F35L59T53_Lookup2 = PC_PC/*cast*/;
+assign RISCVModule_L61F19L63T53_Lookup1 = { {31{1'b0}}, RISCVModule_L63F23T53_Source }/*expand*/;
+assign RISCVModule_L61F19L63T53_Lookup2 = StoreAddress[32:1]/*truncate*/;
+assign RISCVModule_L59F15L63T53_Lookup1 = RISCVModule_L61F19L63T53_Lookup/*cast*/;
+assign RISCVModule_L59F15L63T53_Lookup2 = LoadAdress[32:1]/*truncate*/;
+assign RISCVModule_L57F35L63T53_Lookup1 = RISCVModule_L59F15L63T53_Lookup/*cast*/;
+assign RISCVModule_L57F35L63T53_Lookup2 = PC_PC/*cast*/;
 // [BEGIN USER ARCHITECTURE]
 // [END USER ARCHITECTURE]
 endmodule

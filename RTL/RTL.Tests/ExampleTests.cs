@@ -48,7 +48,9 @@ namespace RTL.Modules
             Assert.AreEqual(0x43, (byte)sim.TopLevel.Reversed);
             Assert.AreEqual(0x3,  (byte)sim.TopLevel.ReversedHigh);
             Assert.AreEqual(0x4,  (byte)sim.TopLevel.ReversedLow);
-            Assert.AreEqual(0xA,  (byte)sim.TopLevel.Picks);
+            Assert.AreEqual(0x9,  (byte)sim.TopLevel.Picks);
+            Assert.AreEqual(0xD, (byte)sim.TopLevel.FromBits1);
+            Assert.AreEqual(0x7, (byte)sim.TopLevel.FromBits2);
         }
 
         [TestMethod]

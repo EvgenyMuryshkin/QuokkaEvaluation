@@ -26,8 +26,8 @@ namespace QRV32.CPU
         {
             get
             {
-                var payload = File.ReadAllText(Path.Combine(SolutionLocation(), "QRV32", "images", "blinker_inf.json"));
-                var instructions = QuokkaJson.DeserializeArray<uint>(payload).ToArray();
+                var lines = File.ReadAllLines(Path.Combine(SolutionLocation(), "QRV32", "images", "blinker_inf.json"));
+                var instructions = lines.Select(l => l.Split(' ')[0]).Select(l => Convert.ToUInt32(l, 16)).ToArray();
                 var blinker = new QuSoCModule(instructions);
 
                 yield return new RTLModuleConfig() { Instance = blinker };

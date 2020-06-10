@@ -1,6 +1,7 @@
 ﻿using Experimental.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
+using QRV32.CPU;
 using QRV32.Tests;
 using System;
 using System.IO;
@@ -54,10 +55,18 @@ namespace QuSoC.Tests
         [TestMethod]
         public void BlinkerInfDump()
         {
+            var id = new InstructionDecoderModule();
+            id.Setup();
+
             var instructions = Inst.FromAsmFile("blinker_inf");
+            var lines = instructions.Select((i, idx) =>
+            {
+                id.Cycle(new InstructionDecoderInputs() { Instruction = i });
+                return $"{i.ToString("X8")} // {(idx << 2).ToString("X2")} {id.OpTypeCode}";
+            });
+
             var sln = Inst.SolutionLocation();
-            var payload = JsonConvert.SerializeObject(instructions);
-            File.WriteAllText(Path.Combine(sln, "QRV32", "images", "blinker_inf.json"), payload);
+            File.WriteAllLines(Path.Combine(sln, "QRV32", "images", "blinker_inf.json"), lines);
         }
 
         [TestMethod]

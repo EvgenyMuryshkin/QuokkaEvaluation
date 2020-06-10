@@ -44,9 +44,13 @@ namespace QRV32.CPU
         internal ALUModule ALU = new ALUModule();
         internal CompareModule CMP = new CompareModule();
 
-        internal bool IsLoadOp => OpTypeCode == OpTypeCodes.LOAD;
+        public byte DbgState => (byte)State.State;
+        public RTLBitArray DbgWBData => ID.UTypeImm;
+        public bool DbgWDDataReady => RegsWE;
+
+        internal bool IsLoadOp => ID.OpTypeCode == OpTypeCodes.LOAD;
         internal RTLBitArray LoadAdress => Regs.RS1 + ID.ITypeImm;
-        internal bool IsStoreOp => OpTypeCode == OpTypeCodes.STORE;
+        internal bool IsStoreOp => ID.OpTypeCode == OpTypeCodes.STORE;
         internal RTLBitArray StoreAddress => Regs.RS1 + ID.STypeImm;
 
         public bool MemRead => State.State == CPUState.IF || (State.State == CPUState.MEM && IsLoadOp);
@@ -57,6 +61,8 @@ namespace QRV32.CPU
                 : IsStoreOp
                     ? StoreAddress
                     : new RTLBitArray(uint.MinValue);
+
+        public bool IsHalted => State.State == CPUState.Halt;
 
         public bool MemWrite => State.State == CPUState.MEM && IsStoreOp;
         public RTLBitArray MemWriteData => Regs.RS2;
@@ -70,20 +76,14 @@ namespace QRV32.CPU
         bool PCOverwrite => State.State == CPUState.Reset;
 
         RTLBitArray ALUOp1 => Regs.RS1;
-        RTLBitArray ALUOp2 => OpTypeCode == OpTypeCodes.OPIMM ? ID.ITypeImm : Regs.RS2;
+        RTLBitArray ALUOp2 => ID.OpTypeCode == OpTypeCodes.OPIMM ? ID.ITypeImm : Regs.RS2;
 
-        RTLBitArray ALUSHAMT => OpTypeCode == OpTypeCodes.OPIMM ? ID.SHAMT : Regs.RS2[4, 0];
+        RTLBitArray ALUSHAMT => ID.OpTypeCode == OpTypeCodes.OPIMM ? ID.SHAMT : Regs.RS2[4, 0];
         bool RegsRead => State.State == CPUState.ID;
         bool RegsWE => State.State == CPUState.WB && State.WBDataReady;
 
         RTLBitArray CMPLhs => Regs.RS1;
-        RTLBitArray CMPRhs => OpTypeCode == OpTypeCodes.OPIMM ? ID.ITypeImm : Regs.RS2;
-
-        OpTypeCodes OpTypeCode => (OpTypeCodes)(byte)ID.OpCode;
-        OPIMMCodes OPIMMCode => (OPIMMCodes)(byte)ID.Funct3;
-        OPCodes OPCode => (OPCodes)(byte)ID.Funct3;
-        BranchTypeCodes BranchTypeCode => (BranchTypeCodes)(byte)ID.Funct3;
-        LoadTypeCodes LoadTypeCode => (LoadTypeCodes)(byte)ID.Funct3;
+        RTLBitArray CMPRhs => ID.OpTypeCode == OpTypeCodes.OPIMM ? ID.ITypeImm : Regs.RS2;
 
         public RISCVModule()
         {
@@ -146,7 +146,7 @@ namespace QRV32.CPU
         void OnOPIMM()
         {
             NextState.WBDataReady = true;
-            switch(OPIMMCode)
+            switch(ID.OPIMMCode)
             {
                 case OPIMMCodes.ADDI:
                     NextState.WBData = ALU.ADD;
@@ -188,7 +188,7 @@ namespace QRV32.CPU
         void OnOP()
         {
             NextState.WBDataReady = true;
-            switch (OPCode)
+            switch (ID.OPCode)
             {
                 case OPCodes.ADD_SUB:
                     if (ID.SUB)
@@ -243,7 +243,7 @@ namespace QRV32.CPU
             if (cmpRes[BranchTypeCode])
                 NextState.PCOffset = PC.PC + ID.BTypeImm;
             */
-            switch (BranchTypeCode)
+            switch (ID.BranchTypeCode)
             {
                 case BranchTypeCodes.EQ:
                     if (CMP.EQ)
@@ -281,7 +281,7 @@ namespace QRV32.CPU
             NextState.WBDataReady = false;
             NextState.PCOffset = InstructionOffset;
 
-            switch (OpTypeCode)
+            switch (ID.OpTypeCode)
             {
                 case OpTypeCodes.OPIMM:
                     OnOPIMM();
@@ -341,7 +341,7 @@ namespace QRV32.CPU
                 {
                     NextState.WBDataReady = true;
 
-                    switch (LoadTypeCode)
+                    switch (ID.LoadTypeCode)
                     {
                         case LoadTypeCodes.LW:
                             NextState.WBData = LWData;
@@ -433,7 +433,7 @@ namespace QRV32.CPU
             dump.AppendLine($"PC: 0x{PC.PC}");
             dump.AppendLine($"State: {State.State}");
             dump.AppendLine($"Instruction: 0x{State.Instruction}");
-            dump.AppendLine($"OpCode: {OpTypeCode}");
+            dump.AppendLine($"OpCode: {ID.OpTypeCode}");
             dump.AppendLine($"=== REGS ===");
             Regs
                 .State
