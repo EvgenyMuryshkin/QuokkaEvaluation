@@ -1,8 +1,5 @@
-﻿using Experimental.Tests;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using QRV32.CPU;
-using QRV32.Tests;
 using System;
 using System.IO;
 using System.Linq;
@@ -58,21 +55,25 @@ namespace QuSoC.Tests
             var id = new InstructionDecoderModule();
             id.Setup();
 
-            var instructions = Inst.FromAsmFile("blinker_inf");
-            var lines = instructions.Select((i, idx) =>
+            var files = new[] { "blinker_sim", "blinker_inf" };
+            foreach (var file in files)
             {
-                id.Cycle(new InstructionDecoderInputs() { Instruction = i });
-                return $"{i.ToString("X8")} // {(idx << 2).ToString("X2")} {id.OpTypeCode}";
-            });
+                var instructions = Inst.FromAsmFile("blinker_inf");
+                var lines = instructions.Select((i, idx) =>
+                {
+                    id.Cycle(new InstructionDecoderInputs() { Instruction = i });
+                    return $"{i.ToString("X8")} // {(idx << 2).ToString("X2")} {id.OpTypeCode}";
+                });
 
-            var sln = Inst.SolutionLocation();
-            File.WriteAllLines(Path.Combine(sln, "QRV32", "images", "blinker_inf.json"), lines);
+                var sln = Inst.SolutionLocation();
+                File.WriteAllLines(Path.Combine(sln, "QuSoC", "images", $"{file}.txt"), lines);
+            }
         }
 
         [TestMethod]
-        public void Blinker20Test()
+        public void BlinkerSimTest()
         {
-            var sim = PowerUp("blinker_20");
+            var sim = PowerUp("blinker_sim");
             
             // WIP, does not support arrays yet
             //sim.TraceToVCD(PathTools.VCDOutputPath());

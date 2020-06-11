@@ -1,7 +1,8 @@
-﻿using Quokka.RTL;
+﻿using QRV32.CPU;
+using Quokka.RTL;
 using System;
 
-namespace QRV32.CPU
+namespace QuSoC
 {
     public class QuSoCModuleInputs
     {

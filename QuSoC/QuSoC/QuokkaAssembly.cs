@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace QRV32.CPU
+namespace QuSoC
 {
     public class QuokkaAssembly : IQuokkaAssembly
     {
@@ -26,7 +26,7 @@ namespace QRV32.CPU
         {
             get
             {
-                var lines = File.ReadAllLines(Path.Combine(SolutionLocation(), "QRV32", "images", "blinker_inf.json"));
+                var lines = File.ReadAllLines(Path.Combine(SolutionLocation(), "QRV32", "images", "blinker_inf.txt"));
                 var instructions = lines.Select(l => l.Split(' ')[0]).Select(l => Convert.ToUInt32(l, 16)).ToArray();
                 var blinker = new QuSoCModule(instructions);
 

@@ -2,14 +2,9 @@
 
 namespace QRV32.Tests
 {
-    public class CPUInstuctionsProvider : InstructionsProvider
-    {
-        public override string AsmFilesLocation => Path.Combine(base.AsmFilesLocation, "riscv");
-    }
-
     public class CPUModuleBaseTest
     {
-        protected CPUInstuctionsProvider Inst = new CPUInstuctionsProvider();
+        protected InstructionsProvider Inst = new InstructionsProvider();
 
         protected CPUSimulator PowerUp()
         {

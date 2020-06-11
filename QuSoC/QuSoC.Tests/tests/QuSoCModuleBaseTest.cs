@@ -1,16 +1,10 @@
-﻿using QRV32.Tests;
-using System.IO;
+﻿using System.IO;
 
 namespace QuSoC.Tests
 {
-    public class QuSoCInstuctionsProvider : InstructionsProvider
-    {
-        public override string AsmFilesLocation => Path.Combine(base.AsmFilesLocation, "qusoc");
-    }
-
     public class QuSoCModuleBaseTest
     {
-        protected QuSoCInstuctionsProvider Inst = new QuSoCInstuctionsProvider();
+        protected InstructionsProvider Inst = new InstructionsProvider();
 
         protected QuSoCModuleSimulator PowerUp(string source)
         {

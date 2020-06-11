@@ -94,12 +94,17 @@ set_global_assignment -name INCREMENTAL_VECTOR_INPUT_SOURCE Waveforms/Blinker20.
 
 
 
-
-set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
 set_global_assignment -name VERILOG_FILE Verilog/generated/ALUModule/ALUModule_TopLevel.v
 set_global_assignment -name VERILOG_FILE Verilog/generated/CompareModule/CompareModule_TopLevel.v
 set_global_assignment -name VERILOG_FILE Verilog/generated/InstructionDecoderModule/InstructionDecoderModule_TopLevel.v
 set_global_assignment -name VERILOG_FILE Verilog/generated/PCModule/PCModule_TopLevel.v
+set_global_assignment -name VERILOG_FILE Verilog/generated/QuSoCModule/QuSoCModule_TopLevel.v
+set_global_assignment -name VERILOG_FILE Verilog/generated/QuSoCModule/QuSoCModule_TopLevel_QuSoCModule_CPU.v
+set_global_assignment -name VERILOG_FILE Verilog/generated/QuSoCModule/QuSoCModule_TopLevel_QuSoCModule_CPU_RISCVModule_ALU.v
+set_global_assignment -name VERILOG_FILE Verilog/generated/QuSoCModule/QuSoCModule_TopLevel_QuSoCModule_CPU_RISCVModule_CMP.v
+set_global_assignment -name VERILOG_FILE Verilog/generated/QuSoCModule/QuSoCModule_TopLevel_QuSoCModule_CPU_RISCVModule_ID.v
+set_global_assignment -name VERILOG_FILE Verilog/generated/QuSoCModule/QuSoCModule_TopLevel_QuSoCModule_CPU_RISCVModule_PC.v
+set_global_assignment -name VERILOG_FILE Verilog/generated/QuSoCModule/QuSoCModule_TopLevel_QuSoCModule_CPU_RISCVModule_Regs.v
 set_global_assignment -name VERILOG_FILE Verilog/generated/RegistersBlockModule/RegistersBlockModule_TopLevel.v
 set_global_assignment -name VERILOG_FILE Verilog/generated/RegistersRAMModule/RegistersRAMModule_TopLevel.v
 set_global_assignment -name VERILOG_FILE Verilog/generated/RISCVModule/RISCVModule_TopLevel.v
@@ -108,3 +113,5 @@ set_global_assignment -name VERILOG_FILE Verilog/generated/RISCVModule/RISCVModu
 set_global_assignment -name VERILOG_FILE Verilog/generated/RISCVModule/RISCVModule_TopLevel_RISCVModule_ID.v
 set_global_assignment -name VERILOG_FILE Verilog/generated/RISCVModule/RISCVModule_TopLevel_RISCVModule_PC.v
 set_global_assignment -name VERILOG_FILE Verilog/generated/RISCVModule/RISCVModule_TopLevel_RISCVModule_Regs.v
+
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
