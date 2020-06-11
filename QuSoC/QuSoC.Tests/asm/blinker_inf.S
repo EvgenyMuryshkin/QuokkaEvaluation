@@ -1,6 +1,6 @@
 ﻿li x1, 0x1000 # mem blink storage
 addi x3, x0, 0 # loop iterator
-li x20, 10 # timer iteration in blink toggle
+li x20, 2000000 # timer iteration in blink toggle
 
 blink:
 lw x31, 0(x1)

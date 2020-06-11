@@ -36,7 +36,7 @@ namespace QuSoC
     public class QuSoCModule : RTLSynchronousModule<QuSoCModuleInputs, QuSoCModuleState>
     {
         internal RISCVModule CPU = new RISCVModule();
-        public bool Blink => State.Counter[0];
+        public byte Counter => (byte)State.Counter;
         public RTLBitArray CPUAddress => CPU.MemAddress;
         public bool CPUMemRead => CPU.MemRead;
         public bool CPUMemWrite => CPU.MemWrite;

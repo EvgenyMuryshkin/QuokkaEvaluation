@@ -26,11 +26,19 @@ namespace QuSoC
         {
             get
             {
-                var lines = File.ReadAllLines(Path.Combine(SolutionLocation(), "QRV32", "images", "blinker_inf.txt"));
-                var instructions = lines.Select(l => l.Split(' ')[0]).Select(l => Convert.ToUInt32(l, 16)).ToArray();
-                var blinker = new QuSoCModule(instructions);
+                {
+                    var lines = File.ReadAllLines(Path.Combine(SolutionLocation(), "QuSoC", "images", "blinker_sim.txt"));
+                    var instructions = lines.Select(l => l.Split(' ')[0]).Select(l => Convert.ToUInt32(l, 16)).ToArray();
+                    var blinker = new QuSoCModule(instructions);
+                    yield return new RTLModuleConfig() { Instance = blinker, Name = "BlinkerSim" };
+                }
 
-                yield return new RTLModuleConfig() { Instance = blinker };
+                {
+                    var lines = File.ReadAllLines(Path.Combine(SolutionLocation(), "QuSoC", "images", "blinker_inf.txt"));
+                    var instructions = lines.Select(l => l.Split(' ')[0]).Select(l => Convert.ToUInt32(l, 16)).ToArray();
+                    var blinker = new QuSoCModule(instructions);
+                    yield return new RTLModuleConfig() { Instance = blinker, Name = "BlinkerInf" };
+                }
             }
         }
     }

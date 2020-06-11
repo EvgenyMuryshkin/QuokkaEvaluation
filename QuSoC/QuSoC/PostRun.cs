@@ -69,7 +69,34 @@ namespace QuSoC
                 _logStream.WriteLine(DirectoryLogging.Summary, $"Project not found");
             }
 
-            _logStream.WriteLine(DirectoryLogging.Summary, $"======================================");
+
+            var quokkaPath = Path.Combine(hdlLocation, "Quokka.qsf");
+            _logStream.WriteLine(DirectoryLogging.Summary, $"Updating quokka files: {quokkaPath}");
+
+            if (File.Exists(qsfPath))
+            {
+                var generatedFiles = _virtualFS
+                    .RecursiveFileNames
+                    .Where(f => Path.GetFileNameWithoutExtension(f) != "Quokka")
+                    .Where(f => f.Contains("BlinkerInf"))
+                    .Select(f => Path.Combine(generatedFilesLocation, f))
+                    .OrderBy(f => f)
+                    .ToList();
+
+                foreach (var fileName in generatedFiles)
+                {
+                    _logStream.WriteLine(DirectoryLogging.Summary, $"Generated file: {fileName}");
+                }
+
+                _quartusTools.RemoveGeneratedFiles(quokkaPath);
+                _quartusTools.AddFiles(quokkaPath, generatedFiles);
+            }
+            else
+            {
+                _logStream.WriteLine(DirectoryLogging.Summary, $"Project not found");
+            }
+
+            _logStream.WriteLine(DirectoryLogging.Summary, $"====================================== {DateTime.Now}");
         }
     }
 }
