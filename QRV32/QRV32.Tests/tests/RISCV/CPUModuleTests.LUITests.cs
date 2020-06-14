@@ -30,5 +30,15 @@ namespace QRV32.CPUModuleTests
             Assert.AreEqual(0xFEFEFEFE, tl.Regs.State.x[2]);
             Assert.AreEqual(0xF000FFFF, tl.Regs.State.x[3]);
         }
+
+        [TestMethod]
+        public void LA()
+        {
+            var sim = PowerUp();
+            var tl = sim.TopLevel;
+            var instructions = Inst.FromAsmFile("la");
+            sim.RunAll(instructions);
+            Assert.AreEqual(0x10U, tl.Regs.State.x[1]);
+        }
     }
 }

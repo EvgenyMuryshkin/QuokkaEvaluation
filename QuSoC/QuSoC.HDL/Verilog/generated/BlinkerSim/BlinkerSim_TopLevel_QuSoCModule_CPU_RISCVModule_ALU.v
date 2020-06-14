@@ -15,10 +15,10 @@
 //   Code comes AS-IS, it is your responsibility to make sure it is working as expected
 //   no responsibility will be taken for any loss or damage caused by use of Quokka toolkit.
 // 
-// System configuration name is QuSoCModule_TopLevel_QuSoCModule_CPU_RISCVModule_ALU, clock frequency is 1Hz, Embedded
+// System configuration name is BlinkerSim_TopLevel_QuSoCModule_CPU_RISCVModule_ALU, clock frequency is 1Hz, Embedded
 // FSM summary
 // -- Packages
-module QuSoCModule_TopLevel_QuSoCModule_CPU_RISCVModule_ALU (
+module BlinkerSim_TopLevel_QuSoCModule_CPU_RISCVModule_ALU (
 // [BEGIN USER PORTS]
 // [END USER PORTS]
 

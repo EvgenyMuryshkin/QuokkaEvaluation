@@ -39,7 +39,7 @@ namespace QuSoC.Tests
         public List<string> MemoryDump()
         {
             var memDump = TopLevel.State.BlockRAM
-                .Select((data, idx) => new { data, idx })
+                .Select((data, idx) => new { data, idx = idx * 4 })
                 .Where(d => d.data != 0)
                 .Select(d => $"[{d.idx:X6}]: {d.data:X8}")
                 .ToList();

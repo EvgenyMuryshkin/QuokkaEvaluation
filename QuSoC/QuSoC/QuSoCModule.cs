@@ -17,6 +17,8 @@ namespace QuSoC
         public bool MemReady;
 
         public RTLBitArray Counter = new RTLBitArray(byte.MinValue);
+        public byte[] UART = new byte[4];
+        public bool UART_TX;
     }
 
     /*
@@ -69,10 +71,16 @@ namespace QuSoC
         RTLBitArray wordAddress => internalMemAddress >> 2;
         RTLBitArray byteAddress => new RTLBitArray(internalMemAddress[1, 0]) << 3;
 
+        RTLBitArray uartReadData => new RTLBitArray(State.UART[uartAddress]).Resized(32);
+
         RTLBitArray internalMemReadData =>
+            memSegment == 2 
+            ? uartReadData
+            :
             memSegment == 1
             ? State.Counter.Resized(32)
             : State.MemReadData >> byteAddress;
+
         bool internalMemReady => State.MemReady;
 
         RTLBitArray mask =>
@@ -88,6 +96,10 @@ namespace QuSoC
         RTLBitArray memSegment => wordAddress[31, 10];
         RTLBitArray blockRamAddress => wordAddress[9, 0];
 
+        RTLBitArray uartAddress => internalMemAddress[1, 0];
+
+        public byte UARTWriteData => State.UART[0];
+
         protected override void OnStage()
         {
             if (State.BlockRAMWE)
@@ -102,6 +114,8 @@ namespace QuSoC
             // TODO: State.BlockRAM.Length
 
             NextState.BlockRAMWE = false;
+            NextState.UART_TX = false;
+
             if (CPU.MemWrite)
             {
                 switch ((byte)memSegment)
@@ -117,6 +131,16 @@ namespace QuSoC
                     case 1:
                         NextState.Counter = CPU.MemWriteData[7, 0];
                         NextState.MemReady = true;
+                        break;
+                    case 2:
+                        if (State.UART[2] != 0)
+                        {
+                            // TODO: implicit cast is not handled in rtl transform
+                            NextState.UART[0] = (byte)CPU.MemWriteData;
+                            NextState.UART[2] = 0;
+                            NextState.UART_TX = true;
+                            NextState.MemReady = true;
+                        }
                         break;
                 }
             }

@@ -15,10 +15,10 @@
 //   Code comes AS-IS, it is your responsibility to make sure it is working as expected
 //   no responsibility will be taken for any loss or damage caused by use of Quokka toolkit.
 // 
-// System configuration name is QuSoCModule_TopLevel_QuSoCModule_CPU, clock frequency is 1Hz, Embedded
+// System configuration name is BlinkerSim_TopLevel_QuSoCModule_CPU, clock frequency is 1Hz, Embedded
 // FSM summary
 // -- Packages
-module QuSoCModule_TopLevel_QuSoCModule_CPU (
+module BlinkerSim_TopLevel_QuSoCModule_CPU (
 // [BEGIN USER PORTS]
 // [END USER PORTS]
 
@@ -664,7 +664,7 @@ assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVMod
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L305F40T65_Expr = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L305F40T65_Expr_1 + RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L305F40T65_Expr_2;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L310F40T65_Expr = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L310F40T65_Expr_1 + RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L310F40T65_Expr_2;
 assign RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F74T96_Expr = RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F74T96_Expr_1 + RISCVModule_L401F9L426T10_ExecuteStage_RISCVModule_L279F9L326T10_RISCVModule_L311F74T96_Expr_2;
-QuSoCModule_TopLevel_QuSoCModule_CPU_RISCVModule_ID QuSoCModule_TopLevel_QuSoCModule_CPU_RISCVModule_ID
+BlinkerSim_TopLevel_QuSoCModule_CPU_RISCVModule_ID BlinkerSim_TopLevel_QuSoCModule_CPU_RISCVModule_ID
 (
 // [BEGIN USER MAP FOR ID]
 // [END USER MAP FOR ID]
@@ -691,7 +691,7 @@ QuSoCModule_TopLevel_QuSoCModule_CPU_RISCVModule_ID QuSoCModule_TopLevel_QuSoCMo
 	.LoadTypeCode (IDLoadTypeCodeID_LoadTypeCodeHardLink)
 
 );
-QuSoCModule_TopLevel_QuSoCModule_CPU_RISCVModule_PC QuSoCModule_TopLevel_QuSoCModule_CPU_RISCVModule_PC
+BlinkerSim_TopLevel_QuSoCModule_CPU_RISCVModule_PC BlinkerSim_TopLevel_QuSoCModule_CPU_RISCVModule_PC
 (
 // [BEGIN USER MAP FOR PC]
 // [END USER MAP FOR PC]
@@ -707,7 +707,7 @@ QuSoCModule_TopLevel_QuSoCModule_CPU_RISCVModule_PC QuSoCModule_TopLevel_QuSoCMo
 	.PC (PCPCPC_PCHardLink)
 
 );
-QuSoCModule_TopLevel_QuSoCModule_CPU_RISCVModule_Regs QuSoCModule_TopLevel_QuSoCModule_CPU_RISCVModule_Regs
+BlinkerSim_TopLevel_QuSoCModule_CPU_RISCVModule_Regs BlinkerSim_TopLevel_QuSoCModule_CPU_RISCVModule_Regs
 (
 // [BEGIN USER MAP FOR Regs]
 // [END USER MAP FOR Regs]
@@ -727,7 +727,7 @@ QuSoCModule_TopLevel_QuSoCModule_CPU_RISCVModule_Regs QuSoCModule_TopLevel_QuSoC
 	.Ready (RegsReadyRegs_ReadyHardLink)
 
 );
-QuSoCModule_TopLevel_QuSoCModule_CPU_RISCVModule_ALU QuSoCModule_TopLevel_QuSoCModule_CPU_RISCVModule_ALU
+BlinkerSim_TopLevel_QuSoCModule_CPU_RISCVModule_ALU BlinkerSim_TopLevel_QuSoCModule_CPU_RISCVModule_ALU
 (
 // [BEGIN USER MAP FOR ALU]
 // [END USER MAP FOR ALU]
@@ -744,7 +744,7 @@ QuSoCModule_TopLevel_QuSoCModule_CPU_RISCVModule_ALU QuSoCModule_TopLevel_QuSoCM
 	.SHRA (ALUSHRAALU_SHRAHardLink)
 
 );
-QuSoCModule_TopLevel_QuSoCModule_CPU_RISCVModule_CMP QuSoCModule_TopLevel_QuSoCModule_CPU_RISCVModule_CMP
+BlinkerSim_TopLevel_QuSoCModule_CPU_RISCVModule_CMP BlinkerSim_TopLevel_QuSoCModule_CPU_RISCVModule_CMP
 (
 // [BEGIN USER MAP FOR CMP]
 // [END USER MAP FOR CMP]

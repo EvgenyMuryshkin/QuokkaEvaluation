@@ -35,9 +35,15 @@ namespace QRV32.Tests
             RunAllInstructions();
         }
 
-        public void RunAllInstructions()
+        public void RunAllInstructions(uint maxInstructions = 1000)
         {
-            while (Step()) ;
+            while (--maxInstructions != 0)
+            {
+                if (!Step())
+                    return;
+            }
+
+            throw new Exception("CPU seems to hang");
         }
 
         public bool Step()
@@ -57,6 +63,14 @@ namespace QRV32.Tests
         RTLBitArray wordAddress => TopLevel.MemAddress >> 2;
         byte byteAddress => (byte)((TopLevel.MemAddress & 0x3) << 3);
 
+        protected virtual void TraceLine(string value)
+        {
+            if (Debugger.IsAttached)
+            {
+                Trace.WriteLine(value);
+            }
+        }
+
         bool FeedNextInstruction()
         {
             if (wordAddress >= MemoryBlock.Length)
@@ -64,12 +78,26 @@ namespace QRV32.Tests
 
             // end state condition
             if (wordAddress >= instructionsCount)
+            {
+                TraceLine($"Simulation finished, instruction read outside of program memory [{TopLevel.MemAddress.ToString("X6")}]");
                 return false;
+            }
 
             if (lastRequestedAddress == wordAddress)
+            {
+                TraceLine($"Simulation finished, detected infinite loop at address [{TopLevel.MemAddress.ToString("X6")}]");
                 return false;
+            }
 
             lastRequestedAddress = wordAddress;
+
+            var instruction = MemoryBlock[wordAddress];
+            var id = new InstructionDecoderModule();
+            id.Setup();
+            id.Cycle(new InstructionDecoderInputs() { Instruction = instruction });
+
+            TraceLine($"[{TopLevel.MemAddress.ToString("X6")}]: {id.OpTypeCode}");
+
             ClockCycle(new RISCVModuleInputs() { MemReady = true, MemReadData = MemoryBlock[wordAddress] });
 
             return true;

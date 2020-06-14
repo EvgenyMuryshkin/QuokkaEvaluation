@@ -1,8 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using QRV32.CPU;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace QuSoC.Tests
 {
@@ -86,6 +88,48 @@ namespace QuSoC.Tests
             var cpuDump = sim.TopLevel.CPU.ToString();
 
             Assert.AreEqual(20U, (uint)tl.State.Counter);
+        }
+
+
+        [TestMethod]
+        public void UARTSim()
+        {
+            var sim = PowerUp("uart_sim");
+
+            // WIP, does not support arrays yet
+            //sim.TraceToVCD(PathTools.VCDOutputPath());
+
+            var tl = sim.TopLevel;
+
+            List<byte> txBytes = new List<byte>();
+
+            var txCounter = 0;
+            sim.OnPostCommit += (m) =>
+            {
+                // simulate long uart transmission
+                if (tl.State.UART_TX)
+                {
+                    txCounter = 100;
+                    txBytes.Add(tl.State.UART[0]);
+                }
+
+                if (txCounter == 0)
+                {
+                    tl.State.UART[2] = 2;
+                }
+                else
+                {
+                    txCounter--;
+                }
+            };
+
+            sim.RunToCompletion();
+
+            var memDump = sim.MemoryDump();
+            var cpuDump = sim.TopLevel.CPU.ToString();
+
+            var str = Encoding.ASCII.GetString(txBytes.ToArray());
+            Assert.AreEqual("Hello World\n", str);
         }
     }
 }

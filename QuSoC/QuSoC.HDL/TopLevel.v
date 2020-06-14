@@ -18,7 +18,7 @@ assign LED2 = counter[1];
 assign LED3 = counter[2];
 assign LED4 = counter[3];
 
-QuSoCModule_TopLevel QuSoCModule_TopLevel
+BlinkerInf_TopLevel BlinkerInf_TopLevel
 (
 	.Clock (Clock),
 	.Reset (!Reset),

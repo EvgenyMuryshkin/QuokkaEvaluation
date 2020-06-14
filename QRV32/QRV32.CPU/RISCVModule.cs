@@ -73,7 +73,7 @@ namespace QRV32.CPU
 
         bool PCWE => State.State == CPUState.Reset || State.State == CPUState.WB;
         RTLBitArray PCOffset => State.State == CPUState.Reset ? ResetAddress : State.PCOffset;
-        bool PCOverwrite => State.State == CPUState.Reset;
+        bool PCOverwrite => State.State == CPUState.Reset || (State.State == CPUState.WB && ID.OpTypeCode == OpTypeCodes.JALR);
 
         RTLBitArray ALUOp1 => Regs.RS1;
         RTLBitArray ALUOp2 => ID.OpTypeCode == OpTypeCodes.OPIMM ? ID.ITypeImm : Regs.RS2;

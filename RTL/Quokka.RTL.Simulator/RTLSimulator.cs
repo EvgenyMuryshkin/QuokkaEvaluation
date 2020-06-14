@@ -23,6 +23,7 @@ namespace Quokka.RTL.Simulator
 
         public TModule TopLevel => _topLevel;
         public Action<TModule> OnPostStage { get; set; }
+        public Action<TModule> OnPostCommit { get; set; }
         public Func<RTLSimulatorCallback<TModule>, bool> IsRunning { get; set; }
 
         public RTLInstanceSimulator(TModule topLevel)
@@ -56,7 +57,7 @@ namespace Quokka.RTL.Simulator
             _vcdBuilder.Init(_topLevelSnapshot);
         }
 
-        protected virtual void Trace()
+        protected virtual void TraceSignals()
         {
             if (_vcdBuilder == null)
                 return;
@@ -77,7 +78,7 @@ namespace Quokka.RTL.Simulator
 
                 var modified = _topLevel.Stage(_simulatorContext.Iteration);
 
-                Trace();
+                TraceSignals();
 
                 // no modules were modified during stage iteration, all converged
                 if (!modified)
@@ -92,9 +93,11 @@ namespace Quokka.RTL.Simulator
 
             _simulatorContext.CurrentTime = _simulatorContext.Clock * 2 * _simulatorContext.MaxStageIterations + _simulatorContext.MaxStageIterations;
             _simulatorContext.ClockSignal?.SetValue(false);
-            Trace();
+            TraceSignals();
 
             _topLevel.Commit();
+            OnPostCommit?.Invoke(_topLevel);
+
             _simulatorContext.Clock++;
         }
 
