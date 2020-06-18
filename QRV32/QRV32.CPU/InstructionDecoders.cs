@@ -38,6 +38,8 @@ namespace QRV32.CPU
         public OPCodes OPCode => (OPCodes)(byte)internalFunct3;
         public BranchTypeCodes BranchTypeCode => (BranchTypeCodes)(byte)internalFunct3;
         public LoadTypeCodes LoadTypeCode => (LoadTypeCodes)(byte)internalFunct3;
-
+        public ECodes ECode => (ECodes)(byte)internalITypeImm;
+        public SystemCodes SystemCode => (SystemCodes)(byte)internalFunct3;
+        public CSRAddressCodes CSRAddress => (CSRAddressCodes)(ushort)internalBits[31, 20];
     }
 }

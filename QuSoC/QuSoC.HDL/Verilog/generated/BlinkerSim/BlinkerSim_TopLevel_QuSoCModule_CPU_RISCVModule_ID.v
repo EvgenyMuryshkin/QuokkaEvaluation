@@ -42,7 +42,9 @@ module BlinkerSim_TopLevel_QuSoCModule_CPU_RISCVModule_ID (
 	output [3: 1] OPIMMCode,
 	output [3: 1] OPCode,
 	output [3: 1] BranchTypeCode,
-	output [3: 1] LoadTypeCode
+	output [3: 1] LoadTypeCode,
+	output ECode,
+	output [3: 1] SystemCode
     );
 
 // [BEGIN USER SIGNALS]
@@ -117,6 +119,10 @@ wire  [8:1] InstructionDecoders_L39F67T87_Cast;
 wire  [3:1] InstructionDecoders_L39F50T87_Cast;
 wire  [8:1] InstructionDecoders_L40F61T81_Cast;
 wire  [3:1] InstructionDecoders_L40F46T81_Cast;
+wire  [8:1] InstructionDecoders_L41F40T62_Cast;
+wire  InstructionDecoders_L41F32T62_Cast;
+wire  [8:1] InstructionDecoders_L42F55T75_Cast;
+wire  [3:1] InstructionDecoders_L42F42T75_Cast;
 assign Inputs_Instruction = Instruction/*cast*/;
 assign internalBits = Inputs_Instruction/*cast*/;
 assign InstructionDecoders_L14F67T87_Index = internalBits[32:21]/*cast*/;
@@ -272,6 +278,12 @@ assign BranchTypeCode = InstructionDecoders_L39F50T87_Cast/*cast*/;
 assign InstructionDecoders_L40F61T81_Cast = { {5{1'b0}}, internalFunct3 }/*expand*/;
 assign InstructionDecoders_L40F46T81_Cast = InstructionDecoders_L40F61T81_Cast[3:1]/*truncate*/;
 assign LoadTypeCode = InstructionDecoders_L40F46T81_Cast/*cast*/;
+assign InstructionDecoders_L41F40T62_Cast = internalITypeImm[8:1]/*truncate*/;
+assign InstructionDecoders_L41F32T62_Cast = InstructionDecoders_L41F40T62_Cast[1];
+assign ECode = InstructionDecoders_L41F32T62_Cast;
+assign InstructionDecoders_L42F55T75_Cast = { {5{1'b0}}, internalFunct3 }/*expand*/;
+assign InstructionDecoders_L42F42T75_Cast = InstructionDecoders_L42F55T75_Cast[3:1]/*truncate*/;
+assign SystemCode = InstructionDecoders_L42F42T75_Cast/*cast*/;
 // [BEGIN USER ARCHITECTURE]
 // [END USER ARCHITECTURE]
 endmodule

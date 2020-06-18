@@ -114,16 +114,21 @@ namespace QRV32.Tests
                     case CPUState.Halt:
                         throw new Exception($"Halted");
                     case CPUState.E:
-                        if (TopLevel.ID.ITypeImm[0])
+                        switch (TopLevel.ID.ECode)
                         {
-                            // ebreak
-                            Debugger.Break();
-                            DebuggerCalls++;
-                        }
-                        else
-                        {
-                            // ecall, do something with ecall
-                            ECalls.Add(TopLevel.Regs.State.x[17]);
+                            case ECodes.CALL:
+                            {
+                                // ecall, do something with ecall
+                                ECalls.Add(TopLevel.Regs.State.x[17]);
+                            }
+                            break;
+                            case ECodes.BREAK:
+                            {
+                                // ebreak
+                                Debugger.Break();
+                                DebuggerCalls++;
+                            }
+                            break;
                         }
                         ClockCycle();
                         break;

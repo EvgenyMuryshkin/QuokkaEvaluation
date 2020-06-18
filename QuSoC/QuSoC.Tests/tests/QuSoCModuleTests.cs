@@ -19,6 +19,29 @@ namespace QuSoC.Tests
         }
 
         [TestMethod]
+        public void InterruptTest()
+        {
+            var sim = PowerUp("interrupt");
+            //Assert.ThrowsException<Exception>(() => sim.RunToCompletion(100));
+        }
+
+        [TestMethod]
+        public void PushPopTest()
+        {
+            var sim = PowerUp("push_pop");
+            sim.RunToCompletion();
+
+            var memDump = sim.MemoryDump();
+            var cpuDump = sim.TopLevel.CPU.ToString();
+
+            var regs = sim.TopLevel.CPU.Regs;
+
+            Assert.AreEqual(2U, regs.State.x[10]);
+            Assert.AreEqual(1U, regs.State.x[11]);
+            Assert.AreEqual(0x100U, regs.State.x[2]);
+        }
+
+        [TestMethod]
         public void LoadTest()
         {
             var sim = PowerUp("load");

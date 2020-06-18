@@ -100,6 +100,8 @@ namespace QuSoC
 
         public byte UARTWriteData => State.UART[0];
 
+        bool UARTReady => State.UART[2] != 0;
+
         protected override void OnStage()
         {
             if (State.BlockRAMWE)
@@ -133,7 +135,8 @@ namespace QuSoC
                         NextState.MemReady = true;
                         break;
                     case 2:
-                        if (State.UART[2] != 0)
+                        // TODO: inline element access
+                        if (UARTReady)
                         {
                             // TODO: implicit cast is not handled in rtl transform
                             NextState.UART[0] = (byte)CPU.MemWriteData;

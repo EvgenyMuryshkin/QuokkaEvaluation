@@ -42,7 +42,10 @@ module InstructionDecoderModule_TopLevel (
 	output [2: 0] OPIMMCode,
 	output [2: 0] OPCode,
 	output [2: 0] BranchTypeCode,
-	output [2: 0] LoadTypeCode
+	output [2: 0] LoadTypeCode,
+	output ECode,
+	output [2: 0] SystemCode,
+	output [11: 0] CSRAddress
     );
 
 // [BEGIN USER SIGNALS]
@@ -117,6 +120,13 @@ wire  [8:1] InstructionDecoders_L39F67T87_Cast;
 wire  [3:1] InstructionDecoders_L39F50T87_Cast;
 wire  [8:1] InstructionDecoders_L40F61T81_Cast;
 wire  [3:1] InstructionDecoders_L40F46T81_Cast;
+wire  [8:1] InstructionDecoders_L41F40T62_Cast;
+wire  InstructionDecoders_L41F32T62_Cast;
+wire  [8:1] InstructionDecoders_L42F55T75_Cast;
+wire  [3:1] InstructionDecoders_L42F42T75_Cast;
+wire  [12:1] InstructionDecoders_L43F71T91_Index;
+wire  [16:1] InstructionDecoders_L43F63T91_Cast;
+wire  [12:1] InstructionDecoders_L43F46T91_Cast;
 assign Inputs_Instruction = Instruction/*cast*/;
 assign internalBits = Inputs_Instruction/*cast*/;
 assign InstructionDecoders_L14F67T87_Index = internalBits[32:21]/*cast*/;
@@ -272,6 +282,16 @@ assign BranchTypeCode = InstructionDecoders_L39F50T87_Cast/*cast*/;
 assign InstructionDecoders_L40F61T81_Cast = { {5{1'b0}}, internalFunct3 }/*expand*/;
 assign InstructionDecoders_L40F46T81_Cast = InstructionDecoders_L40F61T81_Cast[3:1]/*truncate*/;
 assign LoadTypeCode = InstructionDecoders_L40F46T81_Cast/*cast*/;
+assign InstructionDecoders_L41F40T62_Cast = internalITypeImm[8:1]/*truncate*/;
+assign InstructionDecoders_L41F32T62_Cast = InstructionDecoders_L41F40T62_Cast[1];
+assign ECode = InstructionDecoders_L41F32T62_Cast;
+assign InstructionDecoders_L42F55T75_Cast = { {5{1'b0}}, internalFunct3 }/*expand*/;
+assign InstructionDecoders_L42F42T75_Cast = InstructionDecoders_L42F55T75_Cast[3:1]/*truncate*/;
+assign SystemCode = InstructionDecoders_L42F42T75_Cast/*cast*/;
+assign InstructionDecoders_L43F71T91_Index = internalBits[32:21]/*cast*/;
+assign InstructionDecoders_L43F63T91_Cast = { {4{1'b0}}, InstructionDecoders_L43F71T91_Index }/*expand*/;
+assign InstructionDecoders_L43F46T91_Cast = InstructionDecoders_L43F63T91_Cast[12:1]/*truncate*/;
+assign CSRAddress = InstructionDecoders_L43F46T91_Cast/*cast*/;
 // [BEGIN USER ARCHITECTURE]
 // [END USER ARCHITECTURE]
 endmodule

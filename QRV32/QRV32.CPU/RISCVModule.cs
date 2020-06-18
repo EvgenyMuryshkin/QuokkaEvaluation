@@ -85,6 +85,8 @@ namespace QRV32.CPU
         RTLBitArray CMPLhs => Regs.RS1;
         RTLBitArray CMPRhs => ID.OpTypeCode == OpTypeCodes.OPIMM ? ID.ITypeImm : Regs.RS2;
 
+        //RTLBitArray CSRAddess => CSRLoopup();
+
         public RISCVModule()
         {
             var ramRegs = true;
@@ -142,7 +144,16 @@ namespace QRV32.CPU
         {
             NextState.State = CPUState.Halt;
         }
-
+        /*
+        RTLBitArray CSRLoopup()
+        {
+            switch (ID.CSRAddress)
+            {
+                default:
+                    return byte.MaxValue;
+            }
+        }
+        */
         void OnOPIMM()
         {
             NextState.WBDataReady = true;
@@ -275,6 +286,19 @@ namespace QRV32.CPU
             }
         }
 
+        void OnSystem()
+        {
+            switch (ID.SystemCode)
+            {
+                case SystemCodes.E:
+                    NextState.State = CPUState.E;
+                    break;
+                default:
+                    Halt();
+                    break;
+            }
+        }
+
         void ExecuteStage()
         {
             NextState.State = CPUState.WB;
@@ -316,8 +340,8 @@ namespace QRV32.CPU
                 case OpTypeCodes.STORE:
                     NextState.State = CPUState.MEM;
                     break;
-                case OpTypeCodes.E:
-                    NextState.State = CPUState.E;
+                case OpTypeCodes.SYSTEM:
+                    OnSystem();
                     break;
                 default:
                     Halt();

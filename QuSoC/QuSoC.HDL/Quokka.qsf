@@ -72,6 +72,7 @@ set_global_assignment -name MISC_FILE "C:/code/QuokkaEvaluation/QuSoC/QuSoC.HDL/
 
 
 
+
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
 set_global_assignment -name LL_ROOT_REGION ON -section_id "Root Region"
