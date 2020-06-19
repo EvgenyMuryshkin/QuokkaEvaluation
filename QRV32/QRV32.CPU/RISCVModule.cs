@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml;
 
 namespace QRV32.CPU
 {
@@ -34,6 +35,30 @@ namespace QRV32.CPU
         public uint WBData;
 
         public RTLBitArray PCOffset = new RTLBitArray(uint.MinValue);
+
+        public uint[] CSR = CSRInit();
+
+        static uint[] CSRInit()
+        {
+            return new uint[]
+            {
+                // Machine Information Registers
+                0U,         // mvendorid:   0 - open-source
+                0xFA57DB9,  // marchid:     quokka signature code
+                0x01010101U,// mimpid:      1.1.1.1
+                0U,         // mhartid:     0, all code runs in default hart
+                // Machine Trap Setup
+                0U,         // mstatus:     0, TLDR, will sort out later
+                0x40000100U,// misa:        MXL: 32 bit, ISA: I
+                0U,         // mie          No interrupts enabled at startup
+                0U,         // mtvec
+                // Machine Trap Handling
+                0U,         // mscratch
+                0U,         // mepc
+                0U,         // mcause
+                0U,         // mip
+            };
+        }
     }
 
     public class RISCVModule : RTLSynchronousModule<RISCVModuleInputs, CPUModuleState>
@@ -49,22 +74,33 @@ namespace QRV32.CPU
         public bool DbgWDDataReady => RegsWE;
 
         internal bool IsLoadOp => ID.OpTypeCode == OpTypeCodes.LOAD;
-        internal RTLBitArray LoadAdress => Regs.RS1 + ID.ITypeImm;
         internal bool IsStoreOp => ID.OpTypeCode == OpTypeCodes.STORE;
-        internal RTLBitArray StoreAddress => Regs.RS1 + ID.STypeImm;
 
         public bool MemRead => State.State == CPUState.IF || (State.State == CPUState.MEM && IsLoadOp);
-        public uint MemAddress => State.State == CPUState.IF
-            ? PC.PC
-            : IsLoadOp
-                ? LoadAdress
-                : IsStoreOp
-                    ? StoreAddress
-                    : new RTLBitArray(uint.MinValue);
+        public bool MemWrite => State.State == CPUState.MEM && IsStoreOp;
+        public uint MemAddress => MemAddressLookup();
+
+        uint MemAddressLookup()
+        {
+            uint address = 0;
+            if (State.State == CPUState.IF)
+            {
+                address = PC.PC;
+            }
+            else if (IsLoadOp)
+            {
+                address = Regs.RS1 + ID.ITypeImm;
+            }
+            else if (IsStoreOp)
+            {
+                address = Regs.RS1 + ID.STypeImm;
+            }
+
+            return address;
+        }
 
         public bool IsHalted => State.State == CPUState.Halt;
 
-        public bool MemWrite => State.State == CPUState.MEM && IsStoreOp;
         public RTLBitArray MemWriteData => Regs.RS2;
         public RTLBitArray MemWriteMode => ID.Funct3;
 
@@ -85,7 +121,7 @@ namespace QRV32.CPU
         RTLBitArray CMPLhs => Regs.RS1;
         RTLBitArray CMPRhs => ID.OpTypeCode == OpTypeCodes.OPIMM ? ID.ITypeImm : Regs.RS2;
 
-        //RTLBitArray CSRAddess => CSRLoopup();
+        RTLBitArray CSRAddress => new RTLBitArray((byte)CSRLookup())[3, 0];
 
         public RISCVModule()
         {
@@ -144,16 +180,30 @@ namespace QRV32.CPU
         {
             NextState.State = CPUState.Halt;
         }
-        /*
-        RTLBitArray CSRLoopup()
+
+        CSRAddr CSRLookup()
         {
+            CSRAddr address = CSRAddr.mvendorid;
+
             switch (ID.CSRAddress)
             {
-                default:
-                    return byte.MaxValue;
+                case CSRCodes.mvendorid: address = CSRAddr.mvendorid;   break;
+                case CSRCodes.marchid:   address = CSRAddr.marchid;     break;
+                case CSRCodes.mimpid:    address = CSRAddr.mimpid;      break;
+                case CSRCodes.mhartid:   address = CSRAddr.mhartid;     break;
+                case CSRCodes.mstatus:   address = CSRAddr.mstatus;     break;
+                case CSRCodes.misa:      address = CSRAddr.misa;        break;
+                case CSRCodes.mie:       address = CSRAddr.mie;         break;
+                case CSRCodes.mtvec:     address = CSRAddr.mtvec;       break;
+                case CSRCodes.mscratch:  address = CSRAddr.mscratch;    break;
+                case CSRCodes.mepc:      address = CSRAddr.mepc;        break;
+                case CSRCodes.mcause:    address = CSRAddr.mcause;      break;
+                case CSRCodes.mip:       address = CSRAddr.mip;         break;
             }
+
+            return address;
         }
-        */
+        
         void OnOPIMM()
         {
             NextState.WBDataReady = true;
@@ -292,6 +342,16 @@ namespace QRV32.CPU
             {
                 case SystemCodes.E:
                     NextState.State = CPUState.E;
+                    break;
+                case SystemCodes.CSRRW:
+                    NextState.State = CPUState.WB;
+                    NextState.WBData = State.CSR[CSRAddress];
+                    NextState.WBDataReady = ID.RD != 0;
+
+                    if (ID.RS1 != 0 && CSRAddress != 0)
+                    {
+                        NextState.CSR[CSRAddress] = Regs.RS1;
+                    }
                     break;
                 default:
                     Halt();

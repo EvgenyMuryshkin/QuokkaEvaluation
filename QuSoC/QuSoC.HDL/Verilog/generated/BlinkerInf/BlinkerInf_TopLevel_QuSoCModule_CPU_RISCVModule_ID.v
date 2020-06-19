@@ -44,7 +44,8 @@ module BlinkerInf_TopLevel_QuSoCModule_CPU_RISCVModule_ID (
 	output [3: 1] BranchTypeCode,
 	output [3: 1] LoadTypeCode,
 	output ECode,
-	output [3: 1] SystemCode
+	output [3: 1] SystemCode,
+	output [12: 1] CSRAddress
     );
 
 // [BEGIN USER SIGNALS]
@@ -123,6 +124,9 @@ wire  [8:1] InstructionDecoders_L41F40T62_Cast;
 wire  InstructionDecoders_L41F32T62_Cast;
 wire  [8:1] InstructionDecoders_L42F55T75_Cast;
 wire  [3:1] InstructionDecoders_L42F42T75_Cast;
+wire  [12:1] InstructionDecoders_L43F57T77_Index;
+wire  [16:1] InstructionDecoders_L43F49T77_Cast;
+wire  [12:1] InstructionDecoders_L43F39T77_Cast;
 assign Inputs_Instruction = Instruction/*cast*/;
 assign internalBits = Inputs_Instruction/*cast*/;
 assign InstructionDecoders_L14F67T87_Index = internalBits[32:21]/*cast*/;
@@ -284,6 +288,10 @@ assign ECode = InstructionDecoders_L41F32T62_Cast;
 assign InstructionDecoders_L42F55T75_Cast = { {5{1'b0}}, internalFunct3 }/*expand*/;
 assign InstructionDecoders_L42F42T75_Cast = InstructionDecoders_L42F55T75_Cast[3:1]/*truncate*/;
 assign SystemCode = InstructionDecoders_L42F42T75_Cast/*cast*/;
+assign InstructionDecoders_L43F57T77_Index = internalBits[32:21]/*cast*/;
+assign InstructionDecoders_L43F49T77_Cast = { {4{1'b0}}, InstructionDecoders_L43F57T77_Index }/*expand*/;
+assign InstructionDecoders_L43F39T77_Cast = InstructionDecoders_L43F49T77_Cast[12:1]/*truncate*/;
+assign CSRAddress = InstructionDecoders_L43F39T77_Cast/*cast*/;
 // [BEGIN USER ARCHITECTURE]
 // [END USER ARCHITECTURE]
 endmodule

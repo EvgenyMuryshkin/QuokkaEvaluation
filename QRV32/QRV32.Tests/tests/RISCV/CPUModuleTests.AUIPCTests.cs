@@ -6,6 +6,7 @@ using System.Linq;
 
 namespace QRV32.CPUModuleTests
 {
+
     [TestClass]
     public class AUIPCTests : CPUModuleBaseTest
     {
