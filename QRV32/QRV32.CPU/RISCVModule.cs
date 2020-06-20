@@ -336,46 +336,53 @@ namespace QRV32.CPU
             }
         }
 
+        bool IsCSR => ID.SystemCode >= SystemCodes.CSRRW && ID.SystemCode <= SystemCodes.CSRRCI;
+        RTLBitArray CSRI => ID.RS1.Unsigned().Resized(32);
+        bool CSRWE => ID.RS1 != 0 && CSRAddress != 0;
+
         void OnSystem()
         {
-            switch (ID.SystemCode)
+            if (ID.SystemCode == SystemCodes.E)
             {
-                case SystemCodes.E:
-                    NextState.State = CPUState.E;
-                    break;
-                case SystemCodes.CSRRW:
-                    NextState.State = CPUState.WB;
-                    NextState.WBData = State.CSR[CSRAddress];
-                    NextState.WBDataReady = ID.RD != 0;
+                NextState.State = CPUState.E;
+            }
+            else if (IsCSR)
+            {
+                NextState.State = CPUState.WB;
+                NextState.WBData = State.CSR[CSRAddress];
+                NextState.WBDataReady = ID.RD != 0;
 
-                    if (ID.RS1 != 0 && CSRAddress != 0)
+                if (CSRWE)
+                {
+                    switch (ID.SystemCode)
                     {
-                        NextState.CSR[CSRAddress] = Regs.RS1;
+                        case SystemCodes.CSRRW:
+                            NextState.CSR[CSRAddress] = Regs.RS1;
+                            break;
+                        case SystemCodes.CSRRWI:
+                            NextState.CSR[CSRAddress] = CSRI;
+                            break;
+                        case SystemCodes.CSRRS:
+                            NextState.CSR[CSRAddress] = State.CSR[CSRAddress] | Regs.RS1;
+                            break;
+                        case SystemCodes.CSRRSI:
+                            NextState.CSR[CSRAddress] = State.CSR[CSRAddress] | CSRI;
+                            break;
+                        case SystemCodes.CSRRC:
+                            NextState.CSR[CSRAddress] = State.CSR[CSRAddress] & !Regs.RS1;
+                            break;
+                        case SystemCodes.CSRRCI:
+                            NextState.CSR[CSRAddress] = State.CSR[CSRAddress] & !CSRI;
+                            break;
+                        default:
+                            Halt();
+                            break;
                     }
-                    break;
-                case SystemCodes.CSRRS:
-                    NextState.State = CPUState.WB;
-                    NextState.WBData = State.CSR[CSRAddress];
-                    NextState.WBDataReady = ID.RD != 0;
-
-                    if (ID.RS1 != 0 && CSRAddress != 0)
-                    {
-                        NextState.CSR[CSRAddress] = State.CSR[CSRAddress] | Regs.RS1;
-                    }
-                    break;
-                case SystemCodes.CSRRC:
-                    NextState.State = CPUState.WB;
-                    NextState.WBData = State.CSR[CSRAddress];
-                    NextState.WBDataReady = ID.RD != 0;
-
-                    if (ID.RS1 != 0 && CSRAddress != 0)
-                    {
-                        NextState.CSR[CSRAddress] = State.CSR[CSRAddress] & !Regs.RS1;
-                    }
-                    break;
-                default:
-                    Halt();
-                    break;
+                }
+            }
+            else
+            {
+                Halt();
             }
         }
 

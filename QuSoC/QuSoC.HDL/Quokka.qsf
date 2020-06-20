@@ -79,7 +79,6 @@ set_global_assignment -name LL_ROOT_REGION ON -section_id "Root Region"
 set_global_assignment -name LL_MEMBER_STATE LOCKED -section_id "Root Region"
 
 
-set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
 set_global_assignment -name VERILOG_FILE Verilog/generated/BlinkerInf/BlinkerInf_TopLevel.v
 set_global_assignment -name VERILOG_FILE Verilog/generated/BlinkerInf/BlinkerInf_TopLevel_QuSoCModule_CPU.v
 set_global_assignment -name VERILOG_FILE Verilog/generated/BlinkerInf/BlinkerInf_TopLevel_QuSoCModule_CPU_RISCVModule_ALU.v
@@ -87,3 +86,5 @@ set_global_assignment -name VERILOG_FILE Verilog/generated/BlinkerInf/BlinkerInf
 set_global_assignment -name VERILOG_FILE Verilog/generated/BlinkerInf/BlinkerInf_TopLevel_QuSoCModule_CPU_RISCVModule_ID.v
 set_global_assignment -name VERILOG_FILE Verilog/generated/BlinkerInf/BlinkerInf_TopLevel_QuSoCModule_CPU_RISCVModule_PC.v
 set_global_assignment -name VERILOG_FILE Verilog/generated/BlinkerInf/BlinkerInf_TopLevel_QuSoCModule_CPU_RISCVModule_Regs.v
+
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
