@@ -78,25 +78,26 @@ namespace QRV32.CPU
 
         public bool MemRead => State.State == CPUState.IF || (State.State == CPUState.MEM && IsLoadOp);
         public bool MemWrite => State.State == CPUState.MEM && IsStoreOp;
-        public uint MemAddress => MemAddressLookup();
-
-        uint MemAddressLookup()
+        public uint MemAddress
         {
-            uint address = 0;
-            if (State.State == CPUState.IF)
+            get
             {
-                address = PC.PC;
-            }
-            else if (IsLoadOp)
-            {
-                address = Regs.RS1 + ID.ITypeImm;
-            }
-            else if (IsStoreOp)
-            {
-                address = Regs.RS1 + ID.STypeImm;
-            }
+                uint address = 0;
+                if (State.State == CPUState.IF)
+                {
+                    address = PC.PC;
+                }
+                else if (IsLoadOp)
+                {
+                    address = Regs.RS1 + ID.ITypeImm;
+                }
+                else if (IsStoreOp)
+                {
+                    address = Regs.RS1 + ID.STypeImm;
+                }
 
-            return address;
+                return address;
+            }
         }
 
         public bool IsHalted => State.State == CPUState.Halt;
@@ -195,7 +196,6 @@ namespace QRV32.CPU
                 case CSRCodes.misa:      address = CSRAddr.misa;        break;
                 case CSRCodes.mie:       address = CSRAddr.mie;         break;
                 case CSRCodes.mtvec:     address = CSRAddr.mtvec;       break;
-                case CSRCodes.mscratch:  address = CSRAddr.mscratch;    break;
                 case CSRCodes.mepc:      address = CSRAddr.mepc;        break;
                 case CSRCodes.mcause:    address = CSRAddr.mcause;      break;
                 case CSRCodes.mip:       address = CSRAddr.mip;         break;
@@ -351,6 +351,26 @@ namespace QRV32.CPU
                     if (ID.RS1 != 0 && CSRAddress != 0)
                     {
                         NextState.CSR[CSRAddress] = Regs.RS1;
+                    }
+                    break;
+                case SystemCodes.CSRRS:
+                    NextState.State = CPUState.WB;
+                    NextState.WBData = State.CSR[CSRAddress];
+                    NextState.WBDataReady = ID.RD != 0;
+
+                    if (ID.RS1 != 0 && CSRAddress != 0)
+                    {
+                        NextState.CSR[CSRAddress] = State.CSR[CSRAddress] | Regs.RS1;
+                    }
+                    break;
+                case SystemCodes.CSRRC:
+                    NextState.State = CPUState.WB;
+                    NextState.WBData = State.CSR[CSRAddress];
+                    NextState.WBDataReady = ID.RD != 0;
+
+                    if (ID.RS1 != 0 && CSRAddress != 0)
+                    {
+                        NextState.CSR[CSRAddress] = State.CSR[CSRAddress] & !Regs.RS1;
                     }
                     break;
                 default:

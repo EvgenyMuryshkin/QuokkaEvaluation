@@ -95,9 +95,9 @@ wire  [8:1] CPU_DbgState;
 wire signed  [32:1] CPU_DbgWBData;
 wire  CPU_DbgWDDataReady;
 wire  CPU_MemRead;
+wire  CPU_MemWrite;
 wire  [32:1] CPU_MemAddress;
 wire  CPU_IsHalted;
-wire  CPU_MemWrite;
 wire  [32:1] CPU_MemWriteData;
 wire  [3:1] CPU_MemWriteMode;
 wire  [32:1] QuSoCModule_L70F43T74_Source;
@@ -129,9 +129,9 @@ wire  [8:1] CPUDbgStateCPU_DbgStateHardLink;
 wire  [32:1] CPUDbgWBDataCPU_DbgWBDataHardLink;
 wire  CPUDbgWDDataReadyCPU_DbgWDDataReadyHardLink;
 wire  CPUMemReadCPU_MemReadHardLink;
+wire  CPUMemWriteCPU_MemWriteHardLink;
 wire  [32:1] CPUMemAddressCPU_MemAddressHardLink;
 wire  CPUIsHaltedCPU_IsHaltedHardLink;
-wire  CPUMemWriteCPU_MemWriteHardLink;
 wire  [32:1] CPUMemWriteDataCPU_MemWriteDataHardLink;
 wire  [3:1] CPUMemWriteModeCPU_MemWriteModeHardLink;
 reg  State_BlockRAMWE = 1'b0;
@@ -335,9 +335,9 @@ BlinkerSim_TopLevel_QuSoCModule_CPU BlinkerSim_TopLevel_QuSoCModule_CPU
 	.DbgWBData (CPUDbgWBDataCPU_DbgWBDataHardLink),
 	.DbgWDDataReady (CPUDbgWDDataReadyCPU_DbgWDDataReadyHardLink),
 	.MemRead (CPUMemReadCPU_MemReadHardLink),
+	.MemWrite (CPUMemWriteCPU_MemWriteHardLink),
 	.MemAddress (CPUMemAddressCPU_MemAddressHardLink),
 	.IsHalted (CPUIsHaltedCPU_IsHaltedHardLink),
-	.MemWrite (CPUMemWriteCPU_MemWriteHardLink),
 	.MemWriteData (CPUMemWriteDataCPU_MemWriteDataHardLink),
 	.MemWriteMode (CPUMemWriteModeCPU_MemWriteModeHardLink)
 
@@ -524,9 +524,9 @@ assign CPU_DbgState = CPUDbgStateCPU_DbgStateHardLink/*cast*/;
 assign CPU_DbgWBData = CPUDbgWBDataCPU_DbgWBDataHardLink/*cast*/;
 assign CPU_DbgWDDataReady = CPUDbgWDDataReadyCPU_DbgWDDataReadyHardLink;
 assign CPU_MemRead = CPUMemReadCPU_MemReadHardLink;
+assign CPU_MemWrite = CPUMemWriteCPU_MemWriteHardLink;
 assign CPU_MemAddress = CPUMemAddressCPU_MemAddressHardLink/*cast*/;
 assign CPU_IsHalted = CPUIsHaltedCPU_IsHaltedHardLink;
-assign CPU_MemWrite = CPUMemWriteCPU_MemWriteHardLink;
 assign CPU_MemWriteData = CPUMemWriteDataCPU_MemWriteDataHardLink/*cast*/;
 assign CPU_MemWriteMode = CPUMemWriteModeCPU_MemWriteModeHardLink/*cast*/;
 assign QuSoCModule_L80F13L82T47_Lookup1 = QuSoCModule_L82F15T47_Expr/*cast*/;

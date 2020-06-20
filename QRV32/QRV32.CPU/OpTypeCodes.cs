@@ -24,7 +24,7 @@
         E = 0,
         CSRRW = 1,
         CSRRS = 2,
-        CRRRC = 3,
+        CSRRC = 3,
         CSRRWI = 5,
         CSRRSI = 6,
         CSRRCI = 7
@@ -93,7 +93,6 @@
         mie         = 0x304, // Machine interrupt-enable register
         mtvec       = 0x305, // Machine trap-handler base address
         // Machine Trap Handling
-        mscratch    = 0x340, // Scratch register for machine trap handlers
         mepc        = 0x341, // Machine exception program counter
         mcause      = 0x342, // Machine trap cause
         mip         = 0x344, // Machine interrupt pending
@@ -112,7 +111,6 @@
         mie,
         mtvec,
         // Machine Trap Handling
-        mscratch,
         mepc,
         mcause,
         mip,
