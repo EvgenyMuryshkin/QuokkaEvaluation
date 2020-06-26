@@ -60,11 +60,11 @@ begin
 	State_ReadData <= State_Buff[Inputs_ReadAddress];
 end
 
-assign Inputs_ReadAddress = ReadAddress/*cast*/;
-assign Inputs_WriteAddress = WriteAddress/*cast*/;
-assign Inputs_WriteData = WriteData/*cast*/;
+assign Inputs_ReadAddress = ReadAddress;
+assign Inputs_WriteAddress = WriteAddress;
+assign Inputs_WriteData = WriteData;
 assign Inputs_WE = WE;
-assign Data = State_ReadData/*cast*/;
+assign Data = State_ReadData;
 // [BEGIN USER ARCHITECTURE]
 // [END USER ARCHITECTURE]
 endmodule

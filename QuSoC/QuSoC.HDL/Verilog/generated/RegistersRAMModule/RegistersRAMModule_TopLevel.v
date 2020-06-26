@@ -142,9 +142,9 @@ endcase
 end
 always @*
 begin
-NextState_Mode = State_Mode/*cast*/;
-NextState_RS1 = State_RS1/*cast*/;
-NextState_RS2 = State_RS2/*cast*/;
+NextState_Mode = State_Mode;
+NextState_RS1 = State_RS1;
+NextState_RS2 = State_RS2;
 NextState_Ready = State_Ready;
 if ( RegistersRAMModule_L27F9L54T10_we == 1 ) begin
 end
@@ -154,12 +154,12 @@ NextState_Mode = { {7{1'b0}}, RegistersRAMModule_L27F9L54T10_RegistersRAMModule_
 end
 if ( RegistersRAMModule_L27F9L54T10_RegistersRAMModule_L42F17T32_Expr == 1 ) begin
 NextState_Mode = { {6{1'b0}}, RegistersRAMModule_L27F9L54T10_RegistersRAMModule_L43F13L46T14_RegistersRAMModule_L44F34T35_Expr }/*expand*/;
-NextState_RS1 = State_ReadData/*cast*/;
+NextState_RS1 = State_ReadData;
 end
 if ( RegistersRAMModule_L27F9L54T10_RegistersRAMModule_L48F17T32_Expr == 1 ) begin
 NextState_Ready = RegistersRAMModule_L27F9L54T10_RegistersRAMModule_L49F13L53T14_RegistersRAMModule_L50F35T39_Expr;
 NextState_Mode = { {7{1'b0}}, RegistersRAMModule_L27F9L54T10_RegistersRAMModule_L49F13L53T14_RegistersRAMModule_L51F34T35_Expr }/*expand*/;
-NextState_RS2 = State_ReadData/*cast*/;
+NextState_RS2 = State_ReadData;
 end
 
 end
@@ -172,7 +172,6 @@ begin
 	State_ReadData <= State_x[ReadAddress];
 end
 
-assign RegistersRAMModule_L24F36T85_LookupMultiplexerAddress = RegistersRAMModule_L24F36T51_Expr;
 assign RegistersRAMModule_L24F36T51_ExprLhs = { {1{1'b0}}, State_Mode }/*expand*/;
 assign RegistersRAMModule_L24F36T51_ExprRhs = { {8{1'b0}}, RegistersRAMModule_L24F50T51_Expr }/*expand*/;
 assign RegistersRAMModule_L27F9L54T10_RegistersRAMModule_L28F35T49_ExprLhs = { {1{1'b0}}, Inputs_RD }/*expand*/;
@@ -188,18 +187,19 @@ assign RegistersRAMModule_L27F9L54T10_RegistersRAMModule_L28F22T49_Expr_2 = Regi
 assign RegistersRAMModule_L27F9L54T10_RegistersRAMModule_L37F17T47_Expr_1 = Inputs_Read;
 assign RegistersRAMModule_L27F9L54T10_RegistersRAMModule_L37F17T47_Expr_2 = RegistersRAMModule_L27F9L54T10_RegistersRAMModule_L37F32T47_Expr;
 assign Inputs_Read = Read;
-assign Inputs_RS1Addr = RS1Addr/*cast*/;
-assign Inputs_RS2Addr = RS2Addr/*cast*/;
-assign Inputs_RD = RD/*cast*/;
+assign Inputs_RS1Addr = RS1Addr;
+assign Inputs_RS2Addr = RS2Addr;
+assign Inputs_RD = RD;
 assign Inputs_WE = WE;
-assign Inputs_WriteData = WriteData/*cast*/;
-assign ReadAddress = RegistersRAMModule_L24F36T85_Lookup/*cast*/;
+assign Inputs_WriteData = WriteData;
+assign ReadAddress = RegistersRAMModule_L24F36T85_Lookup;
 assign RegistersRAMModule_L27F9L54T10_we = RegistersRAMModule_L27F9L54T10_RegistersRAMModule_L28F22T49_Expr;
-assign RS1 = State_RS1/*cast*/;
-assign RS2 = State_RS2/*cast*/;
+assign RS1 = State_RS1;
+assign RS2 = State_RS2;
 assign Ready = State_Ready;
-assign RegistersRAMModule_L24F36T85_Lookup1 = Inputs_RS2Addr/*cast*/;
-assign RegistersRAMModule_L24F36T85_Lookup2 = Inputs_RS1Addr/*cast*/;
+assign RegistersRAMModule_L24F36T85_Lookup1 = Inputs_RS2Addr;
+assign RegistersRAMModule_L24F36T85_Lookup2 = Inputs_RS1Addr;
+assign RegistersRAMModule_L24F36T85_LookupMultiplexerAddress = RegistersRAMModule_L24F36T51_Expr;
 // [BEGIN USER ARCHITECTURE]
 // [END USER ARCHITECTURE]
 endmodule

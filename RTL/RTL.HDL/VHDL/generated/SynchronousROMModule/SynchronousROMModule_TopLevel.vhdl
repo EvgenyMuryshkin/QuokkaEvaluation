@@ -315,18 +315,18 @@ begin
 process (Clock, State_Buff)
 begin
 if rising_edge(Clock) then
-State_Data1 <= unsigned(State_Buff(TO_INTEGER(Inputs_Addr1)));
+State_Data1 <= State_Buff(TO_INTEGER(UNSIGNED(Inputs_Addr1)));
 end if;
 if rising_edge(Clock) then
-State_Data2 <= unsigned(State_Buff(TO_INTEGER(Inputs_Addr2)));
+State_Data2 <= State_Buff(TO_INTEGER(UNSIGNED(Inputs_Addr2)));
 end if;
 end process;
 process(Addr1, Addr2, State_Data1, State_Data2)
 begin
-Inputs_Addr1 <= unsigned(Addr1);
-Inputs_Addr2 <= unsigned(Addr2);
-Data1 <= unsigned(State_Data1);
-Data2 <= unsigned(State_Data2);
+Inputs_Addr1 <= Addr1;
+Inputs_Addr2 <= Addr2;
+Data1 <= State_Data1;
+Data2 <= State_Data2;
 end process;
 -- [BEGIN USER ARCHITECTURE]
 -- [END USER ARCHITECTURE]

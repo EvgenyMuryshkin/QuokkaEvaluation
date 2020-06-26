@@ -50,16 +50,16 @@ wire signed  [8:1] ShifterModule_L15F36T75_Expr_1;
 assign ShifterModule_L13F36T66_Expr = ShifterModule_L13F36T66_Expr_1 << Inputs_ShiftBy;
 assign ShifterModule_L14F36T77_Expr = ShifterModule_L14F36T77_Expr_1 >> Inputs_ShiftBy;
 assign ShifterModule_L15F36T75_Expr = ShifterModule_L15F36T75_Expr_1 >>> Inputs_ShiftBy;
-assign ShifterModule_L13F36T66_Expr_1 = Inputs_Value/*cast*/;
-assign ShifterModule_L14F36T77_Expr_1 = ShifterModule_L14F36T59_SignChange/*cast*/;
-assign ShifterModule_L15F36T75_Expr_1 = ShifterModule_L15F36T57_SignChange/*cast*/;
-assign Inputs_Value = Value/*cast*/;
-assign Inputs_ShiftBy = ShiftBy/*cast*/;
-assign SHLL = ShifterModule_L13F36T66_Expr/*cast*/;
-assign ShifterModule_L14F36T59_SignChange = Inputs_Value/*cast*/;
-assign SHRL = ShifterModule_L14F36T77_Expr/*cast*/;
+assign ShifterModule_L13F36T66_Expr_1 = Inputs_Value;
+assign ShifterModule_L14F36T77_Expr_1 = ShifterModule_L14F36T59_SignChange;
+assign ShifterModule_L15F36T75_Expr_1 = ShifterModule_L15F36T57_SignChange;
+assign Inputs_Value = Value;
+assign Inputs_ShiftBy = ShiftBy;
+assign SHLL = ShifterModule_L13F36T66_Expr;
+assign ShifterModule_L14F36T59_SignChange = Inputs_Value;
+assign SHRL = ShifterModule_L14F36T77_Expr;
 assign ShifterModule_L15F36T57_SignChange = Inputs_Value/*cast*/;
-assign SHRA = ShifterModule_L15F36T75_Expr/*cast*/;
+assign SHRA = ShifterModule_L15F36T75_Expr;
 // [BEGIN USER ARCHITECTURE]
 // [END USER ARCHITECTURE]
 endmodule

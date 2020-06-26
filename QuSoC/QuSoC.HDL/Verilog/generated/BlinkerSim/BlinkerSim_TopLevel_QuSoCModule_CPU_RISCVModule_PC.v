@@ -87,27 +87,27 @@ endcase
 end
 always @*
 begin
-NextState_PC = State_PC/*cast*/;
+NextState_PC = State_PC;
 if ( Inputs_WE == 1 ) begin
 NextState_PC = internalNextPC[32:1]/*truncate*/;
 end
 
 end
-assign PCModule_L22F39T98_LookupMultiplexerAddress = Inputs_Overwrite;
 assign PCModule_L23F37T79_ExprLhs = { {1{1'b0}}, PCModule_L23F37T74_Source }/*expand*/;
 assign PCModule_L23F37T79_ExprRhs = { {2{1'b0}}, PCModule_L23F78T79_Expr }/*expand*/;
 assign PCModule_L22F74T98_Expr_1 = { {2{1'b0}}, State_PC }/*expand*/;
 assign PCModule_L22F74T98_Expr_2 = { {2{1'b0}}, Inputs_Offset }/*expand*/;
 assign Inputs_WE = WE;
 assign Inputs_Overwrite = Overwrite;
-assign Inputs_Offset = Offset/*cast*/;
-assign internalNextPC = PCModule_L22F39T98_Lookup/*cast*/;
-assign PCModule_L23F53T73_Index = internalNextPC[2:1]/*cast*/;
-assign PCModule_L23F37T74_Source = PCModule_L23F53T73_Index/*cast*/;
+assign Inputs_Offset = Offset;
+assign internalNextPC = PCModule_L22F39T98_Lookup;
+assign PCModule_L23F53T73_Index = internalNextPC[2:1];
+assign PCModule_L23F37T74_Source = PCModule_L23F53T73_Index;
 assign PCMisaligned = PCModule_L23F37T79_Expr;
-assign PC = State_PC/*cast*/;
+assign PC = State_PC;
 assign PCModule_L22F39T98_Lookup1 = PCModule_L22F74T98_Expr[33:1]/*truncate*/;
 assign PCModule_L22F39T98_Lookup2 = { {1{1'b0}}, Inputs_Offset }/*expand*/;
+assign PCModule_L22F39T98_LookupMultiplexerAddress = Inputs_Overwrite;
 // [BEGIN USER ARCHITECTURE]
 // [END USER ARCHITECTURE]
 endmodule

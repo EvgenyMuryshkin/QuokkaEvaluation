@@ -45,12 +45,12 @@ initial
 begin
 	$readmemh("CombinationalROMModule_TopLevel_buff.hex", buff);
 end
+assign Inputs_ReadAddress1 = ReadAddress1;
+assign Inputs_ReadAddress2 = ReadAddress2;
+assign Value1 = CombinationalROMModule_L22F31T56_Index;
+assign Value2 = CombinationalROMModule_L23F31T56_Index;
 assign CombinationalROMModule_L22F31T56_Index = buff[Inputs_ReadAddress1];
 assign CombinationalROMModule_L23F31T56_Index = buff[Inputs_ReadAddress2];
-assign Inputs_ReadAddress1 = ReadAddress1/*cast*/;
-assign Inputs_ReadAddress2 = ReadAddress2/*cast*/;
-assign Value1 = CombinationalROMModule_L22F31T56_Index/*cast*/;
-assign Value2 = CombinationalROMModule_L23F31T56_Index/*cast*/;
 // [BEGIN USER ARCHITECTURE]
 // [END USER ARCHITECTURE]
 endmodule

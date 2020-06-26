@@ -363,16 +363,16 @@ namespace QRV32.CPU
                             NextState.CSR[CSRAddress] = CSRI;
                             break;
                         case SystemCodes.CSRRS:
-                            NextState.CSR[CSRAddress] = State.CSR[CSRAddress] | Regs.RS1;
+                            NextState.CSR[CSRAddress] = 0;//State.CSR[CSRAddress] | Regs.RS1;
                             break;
                         case SystemCodes.CSRRSI:
-                            NextState.CSR[CSRAddress] = State.CSR[CSRAddress] | CSRI;
+                            NextState.CSR[CSRAddress] = 0;//State.CSR[CSRAddress] | CSRI;
                             break;
                         case SystemCodes.CSRRC:
-                            NextState.CSR[CSRAddress] = State.CSR[CSRAddress] & !Regs.RS1;
+                            NextState.CSR[CSRAddress] = 0;//State.CSR[CSRAddress] & !Regs.RS1;
                             break;
                         case SystemCodes.CSRRCI:
-                            NextState.CSR[CSRAddress] = State.CSR[CSRAddress] & !CSRI;
+                            NextState.CSR[CSRAddress] = 0;//State.CSR[CSRAddress] & !CSRI;
                             break;
                         default:
                             Halt();

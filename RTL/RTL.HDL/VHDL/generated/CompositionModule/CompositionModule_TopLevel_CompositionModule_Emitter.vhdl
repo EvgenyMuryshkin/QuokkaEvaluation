@@ -84,9 +84,9 @@ begin
 end process;
 process(EmitterModule_L22F9L25T10_EmitterModule_L23F17T47_Expr, EmitterModule_L22F9L25T10_EmitterModule_L24F34T56_Cast, State_Data)
 begin
-NextState_Data <= unsigned(State_Data);
+NextState_Data <= State_Data;
 if ( EmitterModule_L22F9L25T10_EmitterModule_L23F17T47_Expr = '1' ) then
-NextState_Data <= unsigned(EmitterModule_L22F9L25T10_EmitterModule_L24F34T56_Cast);
+NextState_Data <= EmitterModule_L22F9L25T10_EmitterModule_L24F34T56_Cast;
 end if;
 end process;
 process(Ack, EmitterModule_L22F9L25T10_EmitterModule_L24F41T55_Expr, Inputs_Ack, Inputs_IsEnabled, IsEnabled, State_Data)
@@ -98,7 +98,7 @@ EmitterModule_L22F9L25T10_EmitterModule_L24F41T55_Expr_2 <= (1 => EmitterModule_
 Inputs_IsEnabled <= IsEnabled;
 Inputs_Ack <= Ack;
 EmitterModule_L22F9L25T10_EmitterModule_L24F34T56_Cast <= unsigned(EmitterModule_L22F9L25T10_EmitterModule_L24F41T55_Expr(8 downto 1));
-Data <= unsigned(State_Data);
+Data <= State_Data;
 HasData <= Inputs_IsEnabled;
 end process;
 -- [BEGIN USER ARCHITECTURE]

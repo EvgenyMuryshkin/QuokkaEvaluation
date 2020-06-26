@@ -123,19 +123,15 @@ assign LogicRAMModule_L25F36T81_Expr = LogicRAMModule_L25F36T81_Expr_1 + LogicRA
 assign LogicRAMModule_L25F36T65_Expr = LogicRAMModule_L25F36T65_Expr_1 + LogicRAMModule_L25F36T65_Expr_2;
 always @*
 begin
-NextState_Index = State_Index/*cast*/;
+NextState_Index = State_Index;
 for (NextState_Buff_Iterator = 0; NextState_Buff_Iterator < 4; NextState_Buff_Iterator = NextState_Buff_Iterator + 1)
 begin
-NextState_Buff[NextState_Buff_Iterator] = State_Buff[NextState_Buff_Iterator]/*cast*/;
+NextState_Buff[NextState_Buff_Iterator] = State_Buff[NextState_Buff_Iterator];
 end
-NextState_Buff[State_Index] = Inputs_Value/*cast*/;
-NextState_Index = LogicRAMModule_L28F9L31T10_LogicRAMModule_L30F31T54_Index/*cast*/;
+NextState_Buff[State_Index] = Inputs_Value;
+NextState_Index = LogicRAMModule_L28F9L31T10_LogicRAMModule_L30F31T54_Index;
 
 end
-assign LogicRAMModule_L25F36T49_Index = State_Buff[LogicRAMModule_L25F47T48_Expr];
-assign LogicRAMModule_L25F52T65_Index = State_Buff[LogicRAMModule_L25F63T64_Expr];
-assign LogicRAMModule_L25F68T81_Index = State_Buff[LogicRAMModule_L25F79T80_Expr];
-assign LogicRAMModule_L25F84T97_Index = State_Buff[LogicRAMModule_L25F95T96_Expr];
 assign LogicRAMModule_L25F35T103_Expr_1 = LogicRAMModule_L25F36T97_Expr[11:1]/*truncate*/;
 assign LogicRAMModule_L28F9L31T10_LogicRAMModule_L30F32T47_Expr_1 = { {2{1'b0}}, State_Index }/*expand*/;
 assign LogicRAMModule_L28F9L31T10_LogicRAMModule_L30F32T47_Expr_2 = { {3{1'b0}}, LogicRAMModule_L28F9L31T10_LogicRAMModule_L30F46T47_Expr }/*expand*/;
@@ -145,10 +141,14 @@ assign LogicRAMModule_L25F36T81_Expr_1 = { {2{1'b0}}, LogicRAMModule_L25F36T65_E
 assign LogicRAMModule_L25F36T81_Expr_2 = { {4{1'b0}}, LogicRAMModule_L25F68T81_Index }/*expand*/;
 assign LogicRAMModule_L25F36T65_Expr_1 = { {2{1'b0}}, LogicRAMModule_L25F36T49_Index }/*expand*/;
 assign LogicRAMModule_L25F36T65_Expr_2 = { {2{1'b0}}, LogicRAMModule_L25F52T65_Index }/*expand*/;
-assign Inputs_Value = Value/*cast*/;
-assign LogicRAMModule_L28F9L31T10_LogicRAMModule_L30F31T54_Index = LogicRAMModule_L28F9L31T10_LogicRAMModule_L30F32T47_Expr[2:1]/*cast*/;
+assign Inputs_Value = Value;
+assign LogicRAMModule_L28F9L31T10_LogicRAMModule_L30F31T54_Index = LogicRAMModule_L28F9L31T10_LogicRAMModule_L30F32T47_Expr[2:1];
 assign LogicRAMModule_L25F28T104_Cast = LogicRAMModule_L25F35T103_Expr[8:1]/*truncate*/;
-assign Avg = LogicRAMModule_L25F28T104_Cast/*cast*/;
+assign Avg = LogicRAMModule_L25F28T104_Cast;
+assign LogicRAMModule_L25F36T49_Index = State_Buff[LogicRAMModule_L25F47T48_Expr];
+assign LogicRAMModule_L25F52T65_Index = State_Buff[LogicRAMModule_L25F63T64_Expr];
+assign LogicRAMModule_L25F68T81_Index = State_Buff[LogicRAMModule_L25F79T80_Expr];
+assign LogicRAMModule_L25F84T97_Index = State_Buff[LogicRAMModule_L25F95T96_Expr];
 // [BEGIN USER ARCHITECTURE]
 // [END USER ARCHITECTURE]
 endmodule

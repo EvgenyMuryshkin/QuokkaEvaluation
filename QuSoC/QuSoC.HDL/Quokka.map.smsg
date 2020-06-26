@@ -1,3 +1,3 @@
-Info (10281): Verilog HDL Declaration information at BlinkerInf_TopLevel_QuSoCModule_CPU.v(219): object "ID_OpCode" differs only in case from object "ID_OPCode" in the same scope
-Info (10281): Verilog HDL Declaration information at BlinkerInf_TopLevel_QuSoCModule_CPU.v(303): object "IDOpCodeID_OpCodeHardLink" differs only in case from object "IDOPCodeID_OPCodeHardLink" in the same scope
+Info (10281): Verilog HDL Declaration information at BlinkerInf_TopLevel_QuSoCModule_CPU.v(223): object "ID_OpCode" differs only in case from object "ID_OPCode" in the same scope
+Info (10281): Verilog HDL Declaration information at BlinkerInf_TopLevel_QuSoCModule_CPU.v(307): object "IDOpCodeID_OpCodeHardLink" differs only in case from object "IDOPCodeID_OPCodeHardLink" in the same scope
 Info (10281): Verilog HDL Declaration information at BlinkerInf_TopLevel_QuSoCModule_CPU_RISCVModule_ID.v(26): object "OpCode" differs only in case from object "OPCode" in the same scope

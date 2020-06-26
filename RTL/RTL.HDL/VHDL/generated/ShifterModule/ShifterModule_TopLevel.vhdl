@@ -71,16 +71,16 @@ ShifterModule_L15F36T75_Expr <= shift_right(signed(ShifterModule_L15F36T75_Expr_
 end process;
 process(Inputs_Value, ShiftBy, ShifterModule_L13F36T66_Expr, ShifterModule_L14F36T59_SignChange, ShifterModule_L14F36T77_Expr, ShifterModule_L15F36T57_SignChange, ShifterModule_L15F36T75_Expr, Value)
 begin
-ShifterModule_L13F36T66_Expr_1 <= unsigned(Inputs_Value);
-ShifterModule_L14F36T77_Expr_1 <= unsigned(ShifterModule_L14F36T59_SignChange);
-ShifterModule_L15F36T75_Expr_1 <= signed(ShifterModule_L15F36T57_SignChange);
-Inputs_Value <= unsigned(Value);
-Inputs_ShiftBy <= unsigned(ShiftBy);
-SHLL <= unsigned(ShifterModule_L13F36T66_Expr);
-ShifterModule_L14F36T59_SignChange <= unsigned(Inputs_Value);
-SHRL <= unsigned(ShifterModule_L14F36T77_Expr);
+ShifterModule_L13F36T66_Expr_1 <= Inputs_Value;
+ShifterModule_L14F36T77_Expr_1 <= ShifterModule_L14F36T59_SignChange;
+ShifterModule_L15F36T75_Expr_1 <= ShifterModule_L15F36T57_SignChange;
+Inputs_Value <= Value;
+Inputs_ShiftBy <= ShiftBy;
+SHLL <= ShifterModule_L13F36T66_Expr;
+ShifterModule_L14F36T59_SignChange <= Inputs_Value;
+SHRL <= ShifterModule_L14F36T77_Expr;
 ShifterModule_L15F36T57_SignChange <= signed(Inputs_Value);
-SHRA <= signed(ShifterModule_L15F36T75_Expr);
+SHRA <= ShifterModule_L15F36T75_Expr;
 end process;
 -- [BEGIN USER ARCHITECTURE]
 -- [END USER ARCHITECTURE]

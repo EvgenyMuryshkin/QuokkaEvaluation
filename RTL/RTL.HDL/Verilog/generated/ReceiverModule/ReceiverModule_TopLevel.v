@@ -122,20 +122,20 @@ endcase
 end
 always @*
 begin
-NextState_FSM = State_FSM/*cast*/;
-NextState_Data = State_Data/*cast*/;
+NextState_FSM = State_FSM;
+NextState_Data = State_Data;
 if ( ReceiverModule_L13F9L41T10_ReceiverModule_L16F17L22T27_Case == 1 ) begin
 if ( Inputs_IsValid == 1 ) begin
-NextState_Data = PartialData/*cast*/;
+NextState_Data = PartialData;
 NextState_FSM = { {1{1'b0}}, ReceiverModule_L13F9L41T10_ReceiverModule_L18F21L21T22_ReceiverModule_L20F41T62_Expr }/*expand*/;
 end
 end
 else if ( ReceiverModule_L13F9L41T10_ReceiverModule_L23F17L32T27_Case == 1 ) begin
 if ( Inputs_IsValid == 1 ) begin
-NextState_Data = ReceiverModule_L13F9L41T10_ReceiverModule_L25F21L27T22_ReceiverModule_L26F42T81_Cast/*cast*/;
+NextState_Data = ReceiverModule_L13F9L41T10_ReceiverModule_L25F21L27T22_ReceiverModule_L26F42T81_Cast;
 end
 else begin
-NextState_FSM = ReceiverModule_L13F9L41T10_ReceiverModule_L29F21L31T22_ReceiverModule_L30F41T66_Expr/*cast*/;
+NextState_FSM = ReceiverModule_L13F9L41T10_ReceiverModule_L29F21L31T22_ReceiverModule_L30F41T66_Expr;
 end
 end
 else if ( ReceiverModule_L13F9L41T10_ReceiverModule_L33F17L39T27_Case == 1 ) begin
@@ -146,7 +146,6 @@ end
 end
 
 end
-assign ReceiverModule_L10F36T57_LookupMultiplexerAddress = Inputs_Bit;
 assign ReceiverModule_L13F9L41T10_ReceiverModule_L16F17L22T27_CaseLhs = { {1{1'b0}}, State_FSM }/*expand*/;
 assign ReceiverModule_L13F9L41T10_ReceiverModule_L16F17L22T27_CaseRhs = { {2{1'b0}}, ReceiverModule_L13F9L41T10_ReceiverModule_L16F22T38_Expr }/*expand*/;
 assign ReceiverModule_L13F9L41T10_ReceiverModule_L23F17L32T27_CaseLhs = { {1{1'b0}}, State_FSM }/*expand*/;
@@ -155,19 +154,20 @@ assign ReceiverModule_L13F9L41T10_ReceiverModule_L33F17L39T27_CaseLhs = { {1{1'b
 assign ReceiverModule_L13F9L41T10_ReceiverModule_L33F17L39T27_CaseRhs = { {1{1'b0}}, ReceiverModule_L13F9L41T10_ReceiverModule_L33F22T47_Expr }/*expand*/;
 assign ReceiverModule_L8F32T71_ExprLhs = { {1{1'b0}}, State_FSM }/*expand*/;
 assign ReceiverModule_L8F32T71_ExprRhs = { {1{1'b0}}, ReceiverModule_L8F46T71_Expr }/*expand*/;
-assign ReceiverModule_L13F9L41T10_ReceiverModule_L25F21L27T22_ReceiverModule_L26F49T80_Expr_1 = ReceiverModule_L13F9L41T10_ReceiverModule_L25F21L27T22_ReceiverModule_L26F50T65_Expr/*cast*/;
-assign ReceiverModule_L13F9L41T10_ReceiverModule_L25F21L27T22_ReceiverModule_L26F49T80_Expr_2 = PartialData/*cast*/;
-assign ReceiverModule_L13F9L41T10_ReceiverModule_L25F21L27T22_ReceiverModule_L26F50T65_Expr_1 = State_Data/*cast*/;
+assign ReceiverModule_L13F9L41T10_ReceiverModule_L25F21L27T22_ReceiverModule_L26F49T80_Expr_1 = ReceiverModule_L13F9L41T10_ReceiverModule_L25F21L27T22_ReceiverModule_L26F50T65_Expr;
+assign ReceiverModule_L13F9L41T10_ReceiverModule_L25F21L27T22_ReceiverModule_L26F49T80_Expr_2 = PartialData;
+assign ReceiverModule_L13F9L41T10_ReceiverModule_L25F21L27T22_ReceiverModule_L26F50T65_Expr_1 = State_Data;
 assign Inputs_IsValid = IsValid;
 assign Inputs_Ack = Ack;
 assign Inputs_Bit = Bit;
-assign ReceiverModule_L10F29T58_Cast = ReceiverModule_L10F36T57_Lookup/*cast*/;
-assign PartialData = ReceiverModule_L10F29T58_Cast/*cast*/;
-assign ReceiverModule_L13F9L41T10_ReceiverModule_L25F21L27T22_ReceiverModule_L26F42T81_Cast = ReceiverModule_L13F9L41T10_ReceiverModule_L25F21L27T22_ReceiverModule_L26F49T80_Expr/*cast*/;
+assign ReceiverModule_L10F29T58_Cast = ReceiverModule_L10F36T57_Lookup;
+assign PartialData = ReceiverModule_L10F29T58_Cast;
+assign ReceiverModule_L13F9L41T10_ReceiverModule_L25F21L27T22_ReceiverModule_L26F42T81_Cast = ReceiverModule_L13F9L41T10_ReceiverModule_L25F21L27T22_ReceiverModule_L26F49T80_Expr;
 assign HasData = ReceiverModule_L8F32T71_Expr;
-assign Data = State_Data/*cast*/;
+assign Data = State_Data;
 assign ReceiverModule_L10F36T57_Lookup1 = { {7{1'b0}}, ReceiverModule_L10F56T57_Expr }/*expand*/;
-assign ReceiverModule_L10F36T57_Lookup2 = ReceiverModule_L10F49T53_Expr/*cast*/;
+assign ReceiverModule_L10F36T57_Lookup2 = ReceiverModule_L10F49T53_Expr;
+assign ReceiverModule_L10F36T57_LookupMultiplexerAddress = Inputs_Bit;
 // [BEGIN USER ARCHITECTURE]
 // [END USER ARCHITECTURE]
 endmodule

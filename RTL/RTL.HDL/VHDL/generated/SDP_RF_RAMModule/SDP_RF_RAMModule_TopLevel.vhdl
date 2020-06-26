@@ -69,11 +69,11 @@ end process;
 
 process(ReadAddress, State_ReadData, WE, WriteAddress, WriteData)
 begin
-Inputs_ReadAddress <= unsigned(ReadAddress);
-Inputs_WriteAddress <= unsigned(WriteAddress);
-Inputs_WriteData <= unsigned(WriteData);
+Inputs_ReadAddress <= ReadAddress;
+Inputs_WriteAddress <= WriteAddress;
+Inputs_WriteData <= WriteData;
 Inputs_WE <= WE;
-Data <= unsigned(State_ReadData);
+Data <= State_ReadData;
 end process;
 -- [BEGIN USER ARCHITECTURE]
 -- [END USER ARCHITECTURE]

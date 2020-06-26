@@ -49,16 +49,16 @@ begin
 end
 always @(posedge Clock)
 begin
-State_Data1 <= State_Buff[Inputs_Addr1]/*cast*/;
+State_Data1 <= State_Buff[Inputs_Addr1];
 end
 always @(posedge Clock)
 begin
-State_Data2 <= State_Buff[Inputs_Addr2]/*cast*/;
+State_Data2 <= State_Buff[Inputs_Addr2];
 end
-assign Inputs_Addr1 = Addr1/*cast*/;
-assign Inputs_Addr2 = Addr2/*cast*/;
-assign Data1 = State_Data1/*cast*/;
-assign Data2 = State_Data2/*cast*/;
+assign Inputs_Addr1 = Addr1;
+assign Inputs_Addr2 = Addr2;
+assign Data1 = State_Data1;
+assign Data2 = State_Data2;
 // [BEGIN USER ARCHITECTURE]
 // [END USER ARCHITECTURE]
 endmodule

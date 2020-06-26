@@ -131,20 +131,20 @@ assign Inputs_IsEnabled = IsEnabled;
 assign Emitter_IsEnabled = Inputs_IsEnabled;
 assign Emitter_Ack = Transmitter_IsReady;
 assign Transmitter_Trigger = Emitter_HasData;
-assign Transmitter_Data = Emitter_Data/*cast*/;
+assign Transmitter_Data = Emitter_Data;
 assign Transmitter_Ack = Receiver_HasData;
 assign Receiver_IsValid = Transmitter_IsTransmitting;
 assign Receiver_Bit = Transmitter_Bit;
 assign Receiver_Ack = CompositionModule_L41F27T31_Expr;
 assign HasData = Receiver_HasData;
-assign Data = Receiver_Data/*cast*/;
+assign Data = Receiver_Data;
 assign EmitterIsEnabledEmitter_IsEnabledHardLink = Emitter_IsEnabled;
 assign EmitterAckEmitter_AckHardLink = Emitter_Ack;
-assign Emitter_Data = EmitterDataEmitter_DataHardLink/*cast*/;
+assign Emitter_Data = EmitterDataEmitter_DataHardLink;
 assign Emitter_HasData = EmitterHasDataEmitter_HasDataHardLink;
 assign TransmitterTriggerTransmitter_TriggerHardLink = Transmitter_Trigger;
 assign TransmitterAckTransmitter_AckHardLink = Transmitter_Ack;
-assign TransmitterDataTransmitter_DataHardLink = Transmitter_Data/*cast*/;
+assign TransmitterDataTransmitter_DataHardLink = Transmitter_Data;
 assign Transmitter_Bit = TransmitterBitTransmitter_BitHardLink;
 assign Transmitter_IsReady = TransmitterIsReadyTransmitter_IsReadyHardLink;
 assign Transmitter_IsTransmitting = TransmitterIsTransmittingTransmitter_IsTransmittingHardLink;
@@ -153,7 +153,7 @@ assign ReceiverIsValidReceiver_IsValidHardLink = Receiver_IsValid;
 assign ReceiverAckReceiver_AckHardLink = Receiver_Ack;
 assign ReceiverBitReceiver_BitHardLink = Receiver_Bit;
 assign Receiver_HasData = ReceiverHasDataReceiver_HasDataHardLink;
-assign Receiver_Data = ReceiverDataReceiver_DataHardLink/*cast*/;
+assign Receiver_Data = ReceiverDataReceiver_DataHardLink;
 // [BEGIN USER ARCHITECTURE]
 // [END USER ARCHITECTURE]
 endmodule

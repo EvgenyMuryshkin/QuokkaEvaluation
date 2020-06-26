@@ -67,9 +67,9 @@ assign EmitterModule_L22F9L25T10_EmitterModule_L23F17T47_Expr = EmitterModule_L2
 assign EmitterModule_L22F9L25T10_EmitterModule_L24F41T55_Expr = EmitterModule_L22F9L25T10_EmitterModule_L24F41T55_Expr_1 + EmitterModule_L22F9L25T10_EmitterModule_L24F41T55_Expr_2;
 always @*
 begin
-NextState_Data = State_Data/*cast*/;
+NextState_Data = State_Data;
 if ( EmitterModule_L22F9L25T10_EmitterModule_L23F17T47_Expr == 1 ) begin
-NextState_Data = EmitterModule_L22F9L25T10_EmitterModule_L24F34T56_Cast/*cast*/;
+NextState_Data = EmitterModule_L22F9L25T10_EmitterModule_L24F34T56_Cast;
 end
 
 end
@@ -80,7 +80,7 @@ assign EmitterModule_L22F9L25T10_EmitterModule_L24F41T55_Expr_2 = { {9{1'b0}}, E
 assign Inputs_IsEnabled = IsEnabled;
 assign Inputs_Ack = Ack;
 assign EmitterModule_L22F9L25T10_EmitterModule_L24F34T56_Cast = EmitterModule_L22F9L25T10_EmitterModule_L24F41T55_Expr[8:1]/*truncate*/;
-assign Data = State_Data/*cast*/;
+assign Data = State_Data;
 assign HasData = Inputs_IsEnabled;
 // [BEGIN USER ARCHITECTURE]
 // [END USER ARCHITECTURE]

@@ -90,20 +90,20 @@ end case;
 end process;
 process(NextValue, State_Value)
 begin
-NextState_Value <= unsigned(State_Value);
-NextState_Value <= unsigned(NextValue);
+NextState_Value <= State_Value;
+NextState_Value <= NextValue;
 end process;
 process(CounterModule_L19F27T81_Cast, CounterModule_L19F34T80_Lookup, CounterModule_L19F51T66_Expr, Enabled, Inputs_Enabled, State_Value)
 begin
-CounterModule_L19F34T80_LookupMultiplexerAddress <= Inputs_Enabled;
 CounterModule_L19F51T66_Expr_1 <= signed(resize(State_Value, CounterModule_L19F51T66_Expr_1'length));
 CounterModule_L19F51T66_Expr_2 <= (1 => CounterModule_L19F65T66_Expr, others => '0');
 Inputs_Enabled <= Enabled;
-CounterModule_L19F27T81_Cast <= unsigned(CounterModule_L19F34T80_Lookup);
-NextValue <= unsigned(CounterModule_L19F27T81_Cast);
-Value <= unsigned(State_Value);
-CounterModule_L19F34T80_Lookup1 <= unsigned(State_Value);
+CounterModule_L19F27T81_Cast <= CounterModule_L19F34T80_Lookup;
+NextValue <= CounterModule_L19F27T81_Cast;
+Value <= State_Value;
+CounterModule_L19F34T80_Lookup1 <= State_Value;
 CounterModule_L19F34T80_Lookup2 <= unsigned(CounterModule_L19F51T66_Expr(8 downto 1));
+CounterModule_L19F34T80_LookupMultiplexerAddress <= Inputs_Enabled;
 end process;
 -- [BEGIN USER ARCHITECTURE]
 -- [END USER ARCHITECTURE]
