@@ -14,7 +14,8 @@ namespace QRV32.Tests
 
         public uint[] MemoryBlock = new uint[32768];
         int instructionsCount = 0;
-        uint lastRequestedAddress = uint.MaxValue;
+
+        public Action<RISCVModuleInputs, RTLSimulatorCallback<RISCVModule>> inputsModifier = null;
 
         public CPUSimulator()
         {
@@ -83,20 +84,18 @@ namespace QRV32.Tests
                 return false;
             }
 
-            if (lastRequestedAddress == wordAddress)
-            {
-                TraceLine($"Simulation finished, detected infinite loop at address [{TopLevel.MemAddress.ToString("X6")}]");
-                return false;
-            }
-
-            lastRequestedAddress = wordAddress;
-
             var instruction = MemoryBlock[wordAddress];
             var id = new InstructionDecoderModule();
             id.Setup();
             id.Cycle(new InstructionDecoderInputs() { Instruction = instruction });
 
             TraceLine($"[{TopLevel.MemAddress.ToString("X6")}]: {id.OpTypeCode}");
+
+            if (instruction == 111)
+            {
+                TraceLine($"Simulation finished, detected infinite loop at address [{TopLevel.MemAddress.ToString("X6")}]");
+                return false;
+            }
 
             ClockCycle(new RISCVModuleInputs() { MemReady = true, MemReadData = MemoryBlock[wordAddress] });
 
@@ -114,15 +113,15 @@ namespace QRV32.Tests
                     case CPUState.Halt:
                         throw new Exception($"Halted");
                     case CPUState.E:
-                        switch (TopLevel.ID.ECode)
+                        switch (TopLevel.ID.SysTypeCode)
                         {
-                            case ECodes.CALL:
+                            case SysTypeCodes.CALL:
                             {
                                 // ecall, do something with ecall
                                 ECalls.Add(TopLevel.Regs.State.x[17]);
                             }
                             break;
-                            case ECodes.BREAK:
+                            case SysTypeCodes.BREAK:
                             {
                                 // ebreak
                                 Debugger.Break();
@@ -185,6 +184,12 @@ namespace QRV32.Tests
             }
 
             throw new Exception("CPU seems to hang");
+        }
+
+        public override void ClockCycle(RISCVModuleInputs inputs)
+        {
+            inputsModifier?.Invoke(inputs, CallbackData);
+            base.ClockCycle(inputs);
         }
     }
 }

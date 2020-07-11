@@ -14,11 +14,26 @@
         SYSTEM = 0x73
     }
 
-    public enum ECodes : byte
+    public enum SysTypeCodes : byte
     {
-        CALL,
-        BREAK
+        CALL = 0,
+        BREAK = 1,
+        TRAP = 2,
+        IRQ = 5
     }
+
+    public enum RetTypeCodes : byte
+    {
+        U = 0,
+        S = 0x8,
+        M = 0x18
+    }
+
+    public enum IRQTypeCodes : byte
+    {
+        WFI = 0x8
+    }
+
     public enum SystemCodes : byte
     {
         E = 0,

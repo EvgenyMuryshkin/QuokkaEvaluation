@@ -1,4 +1,5 @@
-﻿using Quokka.RTL;
+﻿using Autofac.Core.Lifetime;
+using Quokka.RTL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,7 @@ namespace QRV32.CPU
         public RTLBitArray BaseAddress = new RTLBitArray(uint.MinValue);
         public RTLBitArray MemReadData = new RTLBitArray(uint.MinValue);
         public bool MemReady;
+        public bool IRQ;
     }
 
     public class CPUModuleState
@@ -33,6 +35,8 @@ namespace QRV32.CPU
 
         public bool WBDataReady;
         public uint WBData;
+
+        public RTLBitArray PC = new RTLBitArray(uint.MinValue);
 
         public RTLBitArray PCOffset = new RTLBitArray(uint.MinValue);
 
@@ -64,7 +68,6 @@ namespace QRV32.CPU
     public class RISCVModule : RTLSynchronousModule<RISCVModuleInputs, CPUModuleState>
     {
         internal InstructionDecoderModule ID = new InstructionDecoderModule();
-        internal PCModule PC = new PCModule();
         internal IRegistersModule Regs = null;
         internal ALUModule ALU = new ALUModule();
         internal CompareModule CMP = new CompareModule();
@@ -85,7 +88,7 @@ namespace QRV32.CPU
                 uint address = 0;
                 if (State.State == CPUState.IF)
                 {
-                    address = PC.PC;
+                    address = State.PC;
                 }
                 else if (IsLoadOp)
                 {
@@ -104,13 +107,6 @@ namespace QRV32.CPU
 
         public RTLBitArray MemWriteData => Regs.RS2;
         public RTLBitArray MemWriteMode => ID.Funct3;
-
-        RTLBitArray ResetAddress => Inputs.BaseAddress;
-        RTLBitArray InstructionOffset => new RTLBitArray(4).Unsigned();
-
-        bool PCWE => State.State == CPUState.Reset || State.State == CPUState.WB;
-        RTLBitArray PCOffset => State.State == CPUState.Reset ? ResetAddress : State.PCOffset;
-        bool PCOverwrite => State.State == CPUState.Reset || (State.State == CPUState.WB && ID.OpTypeCode == OpTypeCodes.JALR);
 
         RTLBitArray ALUOp1 => Regs.RS1;
         RTLBitArray ALUOp2 => ID.OpTypeCode == OpTypeCodes.OPIMM ? ID.ITypeImm : Regs.RS2;
@@ -144,13 +140,6 @@ namespace QRV32.CPU
             ID.Schedule(() => new InstructionDecoderInputs() 
             { 
                 Instruction = State.Instruction 
-            });
-
-            PC.Schedule(() => new PCModuleInputs() 
-            { 
-                WE = PCWE, 
-                Offset = PCOffset, 
-                Overwrite = PCOverwrite 
             });
 
             Regs.Schedule(() => new RegistersModuleInput()
@@ -344,7 +333,39 @@ namespace QRV32.CPU
         {
             if (ID.SystemCode == SystemCodes.E)
             {
-                NextState.State = CPUState.E;
+                switch(ID.SysTypeCode)
+                {
+                    case SysTypeCodes.CALL:
+                        NextState.State = CPUState.E;
+                        break;
+                    case SysTypeCodes.BREAK:
+                        NextState.State = CPUState.E;
+                        break;
+                    case SysTypeCodes.TRAP:
+                        switch(ID.RetTypeCode)
+                        {
+                            case RetTypeCodes.M:
+                                break;
+                            default:
+                                Halt();
+                                break;
+                        }
+                        break;
+                    case SysTypeCodes.IRQ:
+                        switch (ID.IRQTypeCode)
+                        {
+                            case IRQTypeCodes.WFI:
+                                NextState.State = CPUState.WB;
+                                break;
+                            default:
+                                Halt();
+                                break;
+                        }
+                        break;
+                    default:
+                        Halt();
+                        break;
+                }
             }
             else if (IsCSR)
             {
@@ -363,16 +384,16 @@ namespace QRV32.CPU
                             NextState.CSR[CSRAddress] = CSRI;
                             break;
                         case SystemCodes.CSRRS:
-                            NextState.CSR[CSRAddress] = 0;//State.CSR[CSRAddress] | Regs.RS1;
+                            NextState.CSR[CSRAddress] = State.CSR[CSRAddress] | Regs.RS1;
                             break;
                         case SystemCodes.CSRRSI:
-                            NextState.CSR[CSRAddress] = 0;//State.CSR[CSRAddress] | CSRI;
+                            NextState.CSR[CSRAddress] = State.CSR[CSRAddress] | CSRI;
                             break;
                         case SystemCodes.CSRRC:
-                            NextState.CSR[CSRAddress] = 0;//State.CSR[CSRAddress] & !Regs.RS1;
+                            NextState.CSR[CSRAddress] = State.CSR[CSRAddress] & !Regs.RS1;
                             break;
                         case SystemCodes.CSRRCI:
-                            NextState.CSR[CSRAddress] = 0;//State.CSR[CSRAddress] & !CSRI;
+                            NextState.CSR[CSRAddress] = State.CSR[CSRAddress] & !CSRI;
                             break;
                         default:
                             Halt();
@@ -409,16 +430,16 @@ namespace QRV32.CPU
                     break;
                 case OpTypeCodes.AUIPC:
                     NextState.WBDataReady = true;
-                    NextState.WBData = PC.PC + ID.UTypeImm;
+                    NextState.WBData = State.PC + ID.UTypeImm;
                     break;
                 case OpTypeCodes.JAL:
                     NextState.WBDataReady = true;
-                    NextState.WBData = PC.PC + InstructionOffset;
+                    NextState.WBData = NextSequentialPC;
                     NextState.PCOffset = ID.JTypeImm;
                     break;
                 case OpTypeCodes.JALR:
                     NextState.WBDataReady = true;
-                    NextState.WBData = PC.PC + InstructionOffset;
+                    NextState.WBData = NextSequentialPC;
                     NextState.PCOffset = new RTLBitArray(new RTLBitArray(Regs.RS1 + ID.ITypeImm)[31, 1], false);
                     break;
                 case OpTypeCodes.LOAD:
@@ -474,15 +495,44 @@ namespace QRV32.CPU
             }
         }
 
+        RTLBitArray InstructionOffset => new RTLBitArray(4).Unsigned();
+        RTLBitArray NextSequentialPC => State.PC + InstructionOffset;
+        RTLBitArray internalNextPC => ID.OpTypeCode == OpTypeCodes.JALR ? State.PCOffset : State.PC + State.PCOffset;
+        public bool PCMisaligned => new RTLBitArray(internalNextPC[1, 0]) != 0;
+
+        RTLBitArray MSTATUS => State.CSR[(byte)CSRAddr.mstatus];
+        bool MIE => MSTATUS[3];
+
+        void DisableInterrupts()
+        {
+            NextState.CSR[(byte)CSRAddr.mstatus] = State.CSR[(byte)CSRAddr.mstatus] & 0xFFFFFFF7;
+        }
+
+        void EnableInterrupts()
+        {
+            NextState.CSR[(byte)CSRAddr.mstatus] = State.CSR[(byte)CSRAddr.mstatus] | 0x8;
+        }
+
         void WriteBackStage()
         {
-            if (PC.PCMisaligned)
+            if (PCMisaligned)
             {
                 Halt();
             }
             else
             {
                 NextState.State = CPUState.IF;
+
+                if (MIE && Inputs.IRQ)
+                {
+                    NextState.CSR[(byte)CSRAddr.mepc] = internalNextPC;
+                    DisableInterrupts();
+                    NextState.PC = State.CSR[(byte)CSRAddr.mtvec];
+                }
+                else
+                {
+                    NextState.PC = internalNextPC;
+                }
             }
         }
 
@@ -514,6 +564,7 @@ namespace QRV32.CPU
             {
                 case CPUState.Reset:
                     NextState.State = CPUState.IF;
+                    NextState.PC = Inputs.BaseAddress;
                     break;
                 case CPUState.IF:
                     InstructionFetchStage();
@@ -541,7 +592,7 @@ namespace QRV32.CPU
             var dump = new StringBuilder();
 
             dump.AppendLine($"RISC-V Dump:");
-            dump.AppendLine($"PC: 0x{PC.PC}");
+            dump.AppendLine($"PC: 0x{State.PC}");
             dump.AppendLine($"State: {State.State}");
             dump.AppendLine($"Instruction: 0x{State.Instruction}");
             dump.AppendLine($"OpCode: {ID.OpTypeCode}");

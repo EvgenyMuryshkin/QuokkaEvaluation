@@ -104,11 +104,11 @@ assign RegistersBlockModule_L20F9L23T10_RegistersBlockModule_L21F30T44_Expr = Re
 assign RegistersBlockModule_L20F9L23T10_RegistersBlockModule_L21F17T44_Expr = RegistersBlockModule_L20F9L23T10_RegistersBlockModule_L21F17T44_Expr_1 & RegistersBlockModule_L20F9L23T10_RegistersBlockModule_L21F17T44_Expr_2;
 always @*
 begin
-NextState_ReadData = State_ReadData;
 for (NextState_x_Iterator = 0; NextState_x_Iterator < 32; NextState_x_Iterator = NextState_x_Iterator + 1)
 begin
 NextState_x[NextState_x_Iterator] = State_x[NextState_x_Iterator];
 end
+NextState_ReadData = State_ReadData;
 if ( RegistersBlockModule_L20F9L23T10_RegistersBlockModule_L21F17T44_Expr == 1 ) begin
 NextState_x[Inputs_RD] = Inputs_WriteData;
 end

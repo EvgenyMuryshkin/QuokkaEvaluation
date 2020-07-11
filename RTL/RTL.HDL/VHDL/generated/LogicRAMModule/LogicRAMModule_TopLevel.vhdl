@@ -148,27 +148,27 @@ begin
 end process;
 process(Inputs_Value, LogicRAMModule_L28F9L31T10_LogicRAMModule_L30F31T54_Index, State_Buff, State_Index)
 begin
-NextState_Index <= State_Index;
 for NextState_Buff_Iterator in 0 to 3 loop
 NextState_Buff(NextState_Buff_Iterator) <= State_Buff(NextState_Buff_Iterator);
 end loop;
+NextState_Index <= State_Index;
 NextState_Buff(TO_INTEGER(UNSIGNED(State_Index))) <= Inputs_Value;
 NextState_Index <= LogicRAMModule_L28F9L31T10_LogicRAMModule_L30F31T54_Index;
 end process;
 process(LogicRAMModule_L25F28T104_Cast, LogicRAMModule_L25F35T103_Expr, LogicRAMModule_L25F36T49_Index, LogicRAMModule_L25F36T65_Expr, LogicRAMModule_L25F36T81_Expr, LogicRAMModule_L25F36T97_Expr, LogicRAMModule_L25F52T65_Index, LogicRAMModule_L25F68T81_Index, LogicRAMModule_L25F84T97_Index, LogicRAMModule_L28F9L31T10_LogicRAMModule_L30F32T47_Expr, State_Buff, State_Index, Value)
 begin
-LogicRAMModule_L25F35T103_Expr_1 <= unsigned(LogicRAMModule_L25F36T97_Expr(11 downto 1));
-LogicRAMModule_L28F9L31T10_LogicRAMModule_L30F32T47_Expr_1 <= signed(resize(State_Index, LogicRAMModule_L28F9L31T10_LogicRAMModule_L30F32T47_Expr_1'length));
+LogicRAMModule_L25F35T103_Expr_1 <= LogicRAMModule_L25F36T97_Expr(11 downto 1);
+LogicRAMModule_L28F9L31T10_LogicRAMModule_L30F32T47_Expr_1 <= signed(resize(unsigned(State_Index), LogicRAMModule_L28F9L31T10_LogicRAMModule_L30F32T47_Expr_1'length));
 LogicRAMModule_L28F9L31T10_LogicRAMModule_L30F32T47_Expr_2 <= (1 => LogicRAMModule_L28F9L31T10_LogicRAMModule_L30F46T47_Expr, others => '0');
-LogicRAMModule_L25F36T97_Expr_1 <= signed(resize(LogicRAMModule_L25F36T81_Expr, LogicRAMModule_L25F36T97_Expr_1'length));
-LogicRAMModule_L25F36T97_Expr_2 <= signed(resize(LogicRAMModule_L25F84T97_Index, LogicRAMModule_L25F36T97_Expr_2'length));
-LogicRAMModule_L25F36T81_Expr_1 <= signed(resize(LogicRAMModule_L25F36T65_Expr, LogicRAMModule_L25F36T81_Expr_1'length));
-LogicRAMModule_L25F36T81_Expr_2 <= signed(resize(LogicRAMModule_L25F68T81_Index, LogicRAMModule_L25F36T81_Expr_2'length));
-LogicRAMModule_L25F36T65_Expr_1 <= signed(resize(LogicRAMModule_L25F36T49_Index, LogicRAMModule_L25F36T65_Expr_1'length));
-LogicRAMModule_L25F36T65_Expr_2 <= signed(resize(LogicRAMModule_L25F52T65_Index, LogicRAMModule_L25F36T65_Expr_2'length));
+LogicRAMModule_L25F36T97_Expr_1 <= signed(resize(unsigned(LogicRAMModule_L25F36T81_Expr), LogicRAMModule_L25F36T97_Expr_1'length));
+LogicRAMModule_L25F36T97_Expr_2 <= signed(resize(unsigned(LogicRAMModule_L25F84T97_Index), LogicRAMModule_L25F36T97_Expr_2'length));
+LogicRAMModule_L25F36T81_Expr_1 <= signed(resize(unsigned(LogicRAMModule_L25F36T65_Expr), LogicRAMModule_L25F36T81_Expr_1'length));
+LogicRAMModule_L25F36T81_Expr_2 <= signed(resize(unsigned(LogicRAMModule_L25F68T81_Index), LogicRAMModule_L25F36T81_Expr_2'length));
+LogicRAMModule_L25F36T65_Expr_1 <= signed(resize(unsigned(LogicRAMModule_L25F36T49_Index), LogicRAMModule_L25F36T65_Expr_1'length));
+LogicRAMModule_L25F36T65_Expr_2 <= signed(resize(unsigned(LogicRAMModule_L25F52T65_Index), LogicRAMModule_L25F36T65_Expr_2'length));
 Inputs_Value <= Value;
 LogicRAMModule_L28F9L31T10_LogicRAMModule_L30F31T54_Index <= LogicRAMModule_L28F9L31T10_LogicRAMModule_L30F32T47_Expr(2 downto 1);
-LogicRAMModule_L25F28T104_Cast <= unsigned(LogicRAMModule_L25F35T103_Expr(8 downto 1));
+LogicRAMModule_L25F28T104_Cast <= LogicRAMModule_L25F35T103_Expr(8 downto 1);
 Avg <= LogicRAMModule_L25F28T104_Cast;
 LogicRAMModule_L25F36T49_Index <= State_Buff(bit_to_integer(LogicRAMModule_L25F47T48_Expr));
 LogicRAMModule_L25F52T65_Index <= State_Buff(bit_to_integer(LogicRAMModule_L25F63T64_Expr));

@@ -93,11 +93,11 @@ process(Ack, EmitterModule_L22F9L25T10_EmitterModule_L24F41T55_Expr, Inputs_Ack,
 begin
 EmitterModule_L22F9L25T10_EmitterModule_L23F17T47_Expr_1 <= Inputs_IsEnabled;
 EmitterModule_L22F9L25T10_EmitterModule_L23F17T47_Expr_2 <= Inputs_Ack;
-EmitterModule_L22F9L25T10_EmitterModule_L24F41T55_Expr_1 <= signed(resize(State_Data, EmitterModule_L22F9L25T10_EmitterModule_L24F41T55_Expr_1'length));
+EmitterModule_L22F9L25T10_EmitterModule_L24F41T55_Expr_1 <= signed(resize(unsigned(State_Data), EmitterModule_L22F9L25T10_EmitterModule_L24F41T55_Expr_1'length));
 EmitterModule_L22F9L25T10_EmitterModule_L24F41T55_Expr_2 <= (1 => EmitterModule_L22F9L25T10_EmitterModule_L24F54T55_Expr, others => '0');
 Inputs_IsEnabled <= IsEnabled;
 Inputs_Ack <= Ack;
-EmitterModule_L22F9L25T10_EmitterModule_L24F34T56_Cast <= unsigned(EmitterModule_L22F9L25T10_EmitterModule_L24F41T55_Expr(8 downto 1));
+EmitterModule_L22F9L25T10_EmitterModule_L24F34T56_Cast <= EmitterModule_L22F9L25T10_EmitterModule_L24F41T55_Expr(8 downto 1);
 Data <= State_Data;
 HasData <= Inputs_IsEnabled;
 end process;

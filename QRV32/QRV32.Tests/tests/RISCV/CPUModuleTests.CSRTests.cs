@@ -60,6 +60,18 @@ namespace QRV32.CPUModuleTests
         }
 
         [TestMethod]
+        public void CSR_RSI_RCI_mstatus()
+        {
+            var sim = PowerUp();
+            var tl = sim.TopLevel;
+            var instructions = Inst.FromAsmFile("csr_rsi_rci_mstatus");
+            sim.RunAll(instructions);
+            Assert.AreEqual(0U, tl.Regs.State.x[2]);
+            Assert.AreEqual(0x8U, tl.Regs.State.x[3]);
+            Assert.AreEqual(0U, tl.State.CSR[(byte)CSRAddr.mstatus]);
+        }
+
+        [TestMethod]
         public void CSRRW_mie()
         {
             var sim = PowerUp();

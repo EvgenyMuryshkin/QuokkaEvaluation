@@ -122,7 +122,7 @@ namespace Quokka.RTL.Simulator
 
         }
 
-        public void ClockCycle(TInputs inputs)
+        public virtual void ClockCycle(TInputs inputs)
         {
             _topLevel.Schedule(() => inputs);
             ClockCycle();
