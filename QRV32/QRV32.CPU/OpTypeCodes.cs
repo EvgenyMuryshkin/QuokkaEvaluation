@@ -24,9 +24,9 @@
 
     public enum RetTypeCodes : byte
     {
-        U = 0,
-        S = 0x8,
-        M = 0x18
+        URET = 0,
+        SRET = 0x8,
+        MRET = 0x18
     }
 
     public enum IRQTypeCodes : byte

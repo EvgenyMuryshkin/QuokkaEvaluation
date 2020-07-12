@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Quokka.FPGA" Version="0.1.0.54" />
+    <PackageReference Include="Quokka.FPGA" Version="0.1.0.55" />
   </ItemGroup>
 
 </Project>

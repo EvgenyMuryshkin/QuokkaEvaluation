@@ -2,6 +2,7 @@
 using Quokka.RTL;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Xml;
@@ -168,7 +169,12 @@ namespace QRV32.CPU
 
         void Halt()
         {
+            // TODO: add halt reasong as parameter and support in translator
             NextState.State = CPUState.Halt;
+
+            // calls to Debugger and Trace are not translated into HDL.
+            Trace.WriteLine($"CPU halted");
+            Debugger.Break();
         }
 
         CSRAddr CSRLookup()
@@ -344,7 +350,8 @@ namespace QRV32.CPU
                     case SysTypeCodes.TRAP:
                         switch(ID.RetTypeCode)
                         {
-                            case RetTypeCodes.M:
+                            case RetTypeCodes.MRET:
+                                // handled in WB
                                 break;
                             default:
                                 Halt();
@@ -503,6 +510,8 @@ namespace QRV32.CPU
         RTLBitArray MSTATUS => State.CSR[(byte)CSRAddr.mstatus];
         bool MIE => MSTATUS[3];
 
+        bool MRET => ID.SystemCode == SystemCodes.E && ID.SysTypeCode == SysTypeCodes.TRAP && ID.RetTypeCode == RetTypeCodes.MRET;
+
         void DisableInterrupts()
         {
             NextState.CSR[(byte)CSRAddr.mstatus] = State.CSR[(byte)CSRAddr.mstatus] & 0xFFFFFFF7;
@@ -528,6 +537,11 @@ namespace QRV32.CPU
                     NextState.CSR[(byte)CSRAddr.mepc] = internalNextPC;
                     DisableInterrupts();
                     NextState.PC = State.CSR[(byte)CSRAddr.mtvec];
+                }
+                else if (MRET)
+                {
+                    NextState.PC = State.CSR[(byte)CSRAddr.mepc];
+                    EnableInterrupts();
                 }
                 else
                 {
