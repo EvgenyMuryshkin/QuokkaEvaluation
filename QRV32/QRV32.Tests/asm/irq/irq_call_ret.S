@@ -1,4 +1,6 @@
-﻿		la x10, irq
+﻿		# not implemented yet, WIP
+
+		la x10, irq
 		la x11, end
 		csrrw zero, mtvec, x10
 		# enable interrupts
