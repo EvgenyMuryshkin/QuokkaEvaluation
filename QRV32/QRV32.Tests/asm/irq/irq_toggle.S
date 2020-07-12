@@ -4,7 +4,7 @@
 
 		li x20, 50 # iteration counter, expecting 0
 		li x21, 0	# non-interrupted counter, expecting 50
-		li x22, 0	# interruts counter, expecting 49 (two interrupt counter per each non-interrupted)
+		li x22, 0	# interruts counter, expecting 49
 		
 loop:	addi x20, x20, -1	# decrement iteration
 		addi x21, x21, 1	# inctement non-interrupted counter
