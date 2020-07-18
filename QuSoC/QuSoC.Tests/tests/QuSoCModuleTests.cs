@@ -83,7 +83,7 @@ namespace QuSoC.Tests
             var files = new[] { "blinker_sim", "blinker_inf" };
             foreach (var file in files)
             {
-                var instructions = Inst.FromAsmFile("blinker_inf");
+                var instructions = Inst.FromAsmFile(file);
                 var lines = instructions.Select((i, idx) =>
                 {
                     id.Cycle(new InstructionDecoderInputs() { Instruction = i });

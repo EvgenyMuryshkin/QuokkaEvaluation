@@ -21,6 +21,7 @@ namespace QuSoC
         public bool UART_TX;
     }
 
+    // TODO: inheritance not supportted yet
     /*
     public class QuSoCBlinkerModule : QuSoCModule
     {
@@ -38,7 +39,7 @@ namespace QuSoC
     public class QuSoCModule : RTLSynchronousModule<QuSoCModuleInputs, QuSoCModuleState>
     {
         internal RISCVModule CPU = new RISCVModule();
-        public byte Counter => (byte)State.Counter;
+        public byte Counter => State.Counter;
         public RTLBitArray CPUAddress => CPU.MemAddress;
         public bool CPUMemRead => CPU.MemRead;
         public bool CPUMemWrite => CPU.MemWrite;

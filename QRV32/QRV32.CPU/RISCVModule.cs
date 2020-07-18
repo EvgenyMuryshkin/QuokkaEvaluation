@@ -26,7 +26,7 @@ namespace QRV32.CPU
         public RTLBitArray BaseAddress = new RTLBitArray(uint.MinValue);
         public RTLBitArray MemReadData = new RTLBitArray(uint.MinValue);
         public bool MemReady;
-        public bool IRQ;
+        public bool ExtIRQ;
     }
 
     public class CPUModuleState
@@ -532,7 +532,7 @@ namespace QRV32.CPU
             {
                 NextState.State = CPUState.IF;
 
-                if (MIE && Inputs.IRQ)
+                if (MIE && Inputs.ExtIRQ)
                 {
                     NextState.CSR[(byte)CSRAddr.mepc] = internalNextPC;
                     DisableInterrupts();

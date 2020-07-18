@@ -19,7 +19,7 @@ namespace QRV32.CPUModuleTests
                 // let it run for 100 cycles, then raise IRQ
                 if (context.Clock >= 100)
                 {
-                    inputs.IRQ = true;
+                    inputs.ExtIRQ = true;
                 }
             };
 
@@ -42,7 +42,7 @@ namespace QRV32.CPUModuleTests
             sim.inputsModifier = (inputs, context) =>
             {
                 // keep IRQ permanentry on
-                inputs.IRQ = true;
+                inputs.ExtIRQ = true;
             };
 
             sim.RunAll(instructions);
@@ -64,7 +64,7 @@ namespace QRV32.CPUModuleTests
             sim.inputsModifier = (inputs, context) =>
             {
                 // keep IRQ permanentry on
-                inputs.IRQ = true;
+                inputs.ExtIRQ = true;
             };
 
             sim.RunAll(instructions);
