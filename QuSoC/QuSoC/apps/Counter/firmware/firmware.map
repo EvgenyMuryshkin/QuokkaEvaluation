@@ -1,0 +1,81 @@
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+RAM              0x0000000000000000 0x0000000000008000 xrw
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+
+.text           0x0000000000000000       0xc8
+                0x0000000000000000                . = ALIGN (0x4)
+ *(.text)
+ .text          0x0000000000000000        0xc /tmp/cclpTgLH.o
+ .text          0x000000000000000c       0x28 /tmp/ccOWA4Ds.o
+                0x000000000000000c                main
+ .text          0x0000000000000034       0x28 /tmp/ccs1c7Bd.o
+                0x0000000000000034                SOCCounter::Firmware::EntryPoint()
+ *(.text*)
+ *(.rodata)
+ *(.rodata*)
+ *(.srodata)
+ *(.srodata*)
+ *(.eh_frame)
+ .eh_frame      0x000000000000005c       0x38 /tmp/ccOWA4Ds.o
+ .eh_frame      0x0000000000000094       0x34 /tmp/ccs1c7Bd.o
+ *(.eh_frame*)
+                0x00000000000000c8                . = ALIGN (0x4)
+                0x00000000000000c8                _etext = .
+                0x00000000000000c8                _sidata = _etext
+
+.data           0x00000000000000c8        0x0
+                0x00000000000000c8                . = ALIGN (0x4)
+                0x00000000000000c8                _sdata = .
+                0x00000000000000c8                _ram_start = .
+ *(.data)
+ .data          0x00000000000000c8        0x0 /tmp/cclpTgLH.o
+ .data          0x00000000000000c8        0x0 /tmp/ccOWA4Ds.o
+ .data          0x00000000000000c8        0x0 /tmp/ccs1c7Bd.o
+ *(.data*)
+ *(.sdata)
+ *(.sdata*)
+ *(.init_array)
+ *(.init_array*)
+                0x00000000000000c8                . = ALIGN (0x4)
+                0x00000000000000c8                _edata = .
+
+.bss            0x00000000000000c8        0x0
+                0x00000000000000c8                . = ALIGN (0x4)
+                0x00000000000000c8                _sbss = .
+ *(.bss)
+ .bss           0x00000000000000c8        0x0 /tmp/cclpTgLH.o
+ .bss           0x00000000000000c8        0x0 /tmp/ccOWA4Ds.o
+ .bss           0x00000000000000c8        0x0 /tmp/ccs1c7Bd.o
+ *(.bss*)
+ *(.sbss)
+ *(.sbss*)
+ *(COMMON)
+                0x00000000000000c8                . = ALIGN (0x4)
+                0x00000000000000c8                _ebss = .
+
+.heap           0x00000000000000c8        0x0
+                0x00000000000000c8                . = ALIGN (0x4)
+                0x00000000000000c8                _heap_start = .
+LOAD /tmp/cclpTgLH.o
+LOAD /tmp/ccOWA4Ds.o
+LOAD /tmp/ccs1c7Bd.o
+OUTPUT(firmware.elf elf32-littleriscv)
+
+.comment        0x0000000000000000       0x11
+ .comment       0x0000000000000000       0x11 /tmp/ccOWA4Ds.o
+                                         0x12 (size before relaxing)
+ .comment       0x0000000000000011       0x12 /tmp/ccs1c7Bd.o
+
+Cross Reference Table
+
+Symbol                                            File
+SOCCounter::Firmware::EntryPoint()                /tmp/ccs1c7Bd.o
+                                                  /tmp/ccOWA4Ds.o
+main                                              /tmp/ccOWA4Ds.o
+                                                  /tmp/cclpTgLH.o

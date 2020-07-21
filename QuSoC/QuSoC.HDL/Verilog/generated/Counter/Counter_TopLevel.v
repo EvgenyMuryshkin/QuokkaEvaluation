@@ -15,10 +15,10 @@
 //   Code comes AS-IS, it is your responsibility to make sure it is working as expected
 //   no responsibility will be taken for any loss or damage caused by use of Quokka toolkit.
 // 
-// System configuration name is BlinkerInf_TopLevel, clock frequency is 1Hz, Top-level
+// System configuration name is Counter_TopLevel, clock frequency is 1Hz, Top-level
 // FSM summary
 // -- Packages
-module BlinkerInf_TopLevel (
+module Counter_TopLevel (
 // [BEGIN USER PORTS]
 // [END USER PORTS]
 
@@ -221,7 +221,7 @@ wire  [32:1] QuSoCModule_L91F13L95T49_Lookup2;
 reg [32:1] State_BlockRAM [0 : 1023];
 initial
 begin
-	$readmemh("BlinkerInf_TopLevel_State_BlockRAM.hex", State_BlockRAM);
+	$readmemh("Counter_TopLevel_State_BlockRAM.hex", State_BlockRAM);
 end
 integer State_UART_Iterator;
 reg [8:1] State_UART [0 : 3];
@@ -334,7 +334,7 @@ assign QuSoCModule_L98F14T39_Expr = QuSoCModule_L98F14T39_Expr_1 & QuSoCModule_L
 assign QuSoCModule_L98F34T39_Expr = ~QuSoCModule_L98F34T39_Expr_1;
 assign QuSoCModule_L98F44T67_Expr = QuSoCModule_L98F44T67_Expr_1 & QuSoCModule_L98F44T67_Expr_2;
 assign QuSoCModule_L110F9L162T10_QuSoCModule_L126F13L161T14_QuSoCModule_L127F17L160T18_QuSoCModule_L130F29T46_Expr = ~QuSoCModule_L110F9L162T10_QuSoCModule_L126F13L161T14_QuSoCModule_L127F17L160T18_QuSoCModule_L130F29T46_Expr_1;
-BlinkerInf_TopLevel_QuSoCModule_CPU BlinkerInf_TopLevel_QuSoCModule_CPU
+Counter_TopLevel_QuSoCModule_CPU Counter_TopLevel_QuSoCModule_CPU
 (
 // [BEGIN USER MAP FOR CPU]
 // [END USER MAP FOR CPU]

@@ -1,6 +1,7 @@
 ﻿using QRV32.CPU;
 using Quokka.RTL;
 using System;
+using System.Diagnostics;
 
 namespace QuSoC
 {
@@ -19,6 +20,8 @@ namespace QuSoC
         public RTLBitArray Counter = new RTLBitArray(byte.MinValue);
         public byte[] UART = new byte[4];
         public bool UART_TX;
+
+        public uint CSCounter;
     }
 
     // TODO: inheritance not supportted yet
@@ -121,7 +124,7 @@ namespace QuSoC
 
             if (CPU.MemWrite)
             {
-                switch ((byte)memSegment)
+                switch ((uint)memSegment)
                 {
                     case 0:
                         if (!State.BlockRAMWE)
@@ -145,6 +148,14 @@ namespace QuSoC
                             NextState.UART_TX = true;
                             NextState.MemReady = true;
                         }
+                        break;
+                    case 0x80000:
+                        NextState.CSCounter = CPU.MemWriteData;
+                        NextState.MemReady = true;
+                        break;
+                    default:
+                        Debugger.Break();
+                        NextState.MemReady = true;
                         break;
                 }
             }

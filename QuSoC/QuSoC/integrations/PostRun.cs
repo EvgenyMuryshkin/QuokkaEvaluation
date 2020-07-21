@@ -75,10 +75,16 @@ namespace QuSoC
 
             if (File.Exists(qsfPath))
             {
+                var quokkaProjects = new[]
+                {
+                    "BlinkerInf",
+                    "Counter"
+                };
+
                 var generatedFiles = _virtualFS
                     .RecursiveFileNames
                     .Where(f => Path.GetFileNameWithoutExtension(f) != "Quokka")
-                    .Where(f => f.Contains("BlinkerInf"))
+                    .Where(f => quokkaProjects.Any(p => f.Contains(p)))
                     .Select(f => Path.Combine(generatedFilesLocation, f))
                     .OrderBy(f => f)
                     .ToList();

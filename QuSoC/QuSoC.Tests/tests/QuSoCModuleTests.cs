@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using QRV32.CPU;
+using Quokka.RISCV.Integration.Client;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -74,26 +75,6 @@ namespace QuSoC.Tests
             Assert.AreEqual(0xC0DEC0DE, tl.State.BlockRAM[0x42]);
         }
 
-        [TestMethod]
-        public void BlinkerInfDump()
-        {
-            var id = new InstructionDecoderModule();
-            id.Setup();
-
-            var files = new[] { "blinker_sim", "blinker_inf" };
-            foreach (var file in files)
-            {
-                var instructions = Inst.FromAsmFile(file);
-                var lines = instructions.Select((i, idx) =>
-                {
-                    id.Cycle(new InstructionDecoderInputs() { Instruction = i });
-                    return $"{i.ToString("X8")} // {(idx << 2).ToString("X2")} {id.OpTypeCode}";
-                });
-
-                var sln = Inst.SolutionLocation();
-                File.WriteAllLines(Path.Combine(sln, "QuSoC", "images", $"{file}.txt"), lines);
-            }
-        }
 
         [TestMethod]
         public void BlinkerSimTest()
@@ -153,6 +134,15 @@ namespace QuSoC.Tests
 
             var str = Encoding.ASCII.GetString(txBytes.ToArray());
             Assert.AreEqual("Hello World\n", str);
+        }
+
+        [TestMethod]
+        public void CSCounterTest()
+        {
+            var scCounterFirmware = Path.Combine(Inst.SolutionLocation(), "QuSoC", "QuSoC", "apps", "Counter", "firmware", "firmware.bin");
+            var instructions = RISCVIntegrationClient.ToInstructions(File.ReadAllBytes(scCounterFirmware)).ToArray();
+            var sim = PowerUp(instructions);
+            sim.RunToCompletion();
         }
     }
 }

@@ -9,7 +9,11 @@ namespace QuSoC.Tests
         protected QuSoCModuleSimulator PowerUp(string source)
         {
             var instructions = Inst.FromAsmFile(source);
+            return PowerUp(instructions);
+        }
 
+        protected QuSoCModuleSimulator PowerUp(uint[] instructions)
+        {
             var sim = new QuSoCModuleSimulator(instructions);
 
             // first cycle handles CPU reset state
