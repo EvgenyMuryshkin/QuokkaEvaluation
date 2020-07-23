@@ -23,9 +23,19 @@ namespace QuSoC.Tests
 
         public void RunToCompletion(uint maxClockCycles = 10000)
         {
+            RunToCompletion(null, maxClockCycles);
+        }
+
+        public void RunToCompletion(Func<bool> keepRunningCheck, uint maxClockCycles = 10000)
+        {
             uint clockCycles = 0;
             while (!InfiniteLoopAddresses.Contains(TopLevel.CPU.MemAddress))
             {
+                if (keepRunningCheck != null && !keepRunningCheck())
+                {
+                    break;
+                }
+
                 if (clockCycles++ == maxClockCycles)
                     throw new Exception($"Exceeded max allowed clock cycles: {maxClockCycles}");
 

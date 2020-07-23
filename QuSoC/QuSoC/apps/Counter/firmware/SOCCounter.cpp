@@ -6,6 +6,11 @@ namespace SOCCounter
 {
 	void Firmware::EntryPoint()
 	{
-		SOCCounter_SOC_Counter = 100;
+		unsigned int counter = 0;
+		while(true)
+		{
+			(counter++);
+			SOCCounter_SOC_Counter = counter;
+		}
 	}
 }

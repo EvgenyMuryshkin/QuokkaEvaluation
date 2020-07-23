@@ -142,7 +142,10 @@ namespace QuSoC.Tests
             var scCounterFirmware = Path.Combine(Inst.SolutionLocation(), "QuSoC", "QuSoC", "apps", "Counter", "firmware", "firmware.bin");
             var instructions = RISCVIntegrationClient.ToInstructions(File.ReadAllBytes(scCounterFirmware)).ToArray();
             var sim = PowerUp(instructions);
-            sim.RunToCompletion();
+            var tl = sim.TopLevel;
+
+            sim.RunToCompletion(() => tl.State.CSCounter < 10);
+            Assert.AreEqual(10U, tl.State.CSCounter);
         }
     }
 }

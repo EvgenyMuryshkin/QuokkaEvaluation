@@ -43,6 +43,7 @@ namespace QuSoC
     {
         internal RISCVModule CPU = new RISCVModule();
         public byte Counter => State.Counter;
+        public RTLBitArray CSCounter => State.CSCounter;
         public RTLBitArray CPUAddress => CPU.MemAddress;
         public bool CPUMemRead => CPU.MemRead;
         public bool CPUMemWrite => CPU.MemWrite;
@@ -76,15 +77,33 @@ namespace QuSoC
         RTLBitArray byteAddress => new RTLBitArray(internalMemAddress[1, 0]) << 3;
 
         RTLBitArray uartReadData => new RTLBitArray(State.UART[uartAddress]).Resized(32);
+        
+        // TODO: RTLBitArray variable declaration, support for bit array methods e.g. Resize
+        uint internalMemReadData
+        {
+            get
+            {
+                uint result = 0;
+                switch ((uint)memSegment)
+                {
+                    case 0:
+                        result = State.MemReadData >> byteAddress;
+                        break;
+                    case 1:
+                        result = State.Counter;
+                        break;
+                    case 2:
+                        result = uartReadData;
+                        break;
+                    case 0x80000:
+                        result = State.CSCounter;
+                        break;
+                }
 
-        RTLBitArray internalMemReadData =>
-            memSegment == 2 
-            ? uartReadData
-            :
-            memSegment == 1
-            ? State.Counter.Resized(32)
-            : State.MemReadData >> byteAddress;
-
+                return result;
+            }
+        }
+        
         bool internalMemReady => State.MemReady;
 
         RTLBitArray mask =>

@@ -15,16 +15,12 @@ namespace SOCCounter
     {
         public static void EntryPoint()
         {
-            SOC.Instance.Counter = 100;
-
-            /*
             uint counter = 0;
-            while (counter < 10)
+            while (true)
             {
                 counter++;
                 SOC.Instance.Counter = counter;
             }
-            */
         }
     }
 }
