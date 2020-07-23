@@ -1,7 +1,8 @@
 ﻿using Experimental.Tests;
+using Microsoft.CodeAnalysis.Operations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Quokka.RTL;
-using Quokka.RTL.Simulatot;
+using Quokka.RTL.Simulator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,18 +29,81 @@ namespace RTL.Modules
     [TestClass]
     public class ExampleTests
     {
+        T Module<T>()
+            where T : IRTLCombinationalModule, new()
+        {
+            var module = new T();
+            module.Setup();
+
+            return module;
+        }
+
+        [TestMethod]
+        public void SignedCastModuleTest()
+        {
+            var sim = new CombinationalRTLSimulator<SignedCastModule>();
+            var values = new short[] {
+                short.MinValue,
+                -257, -256, -255,
+                -1, 0, 1,
+                127, 128, 129,
+                254, 255, 256,
+                short.MaxValue,
+                -32641,
+                -128, -127, -126,
+            };
+
+            foreach (var value in values.Reverse())
+            {
+                sim.TopLevel.Cycle(new SignedCastModuleInputs() { ShortValue = value });
+                Assert.AreEqual((byte)value, sim.TopLevel.ByteValue);
+                Assert.AreEqual((sbyte)value, sim.TopLevel.SByteValue);
+                Assert.AreEqual((ushort)value, sim.TopLevel.UShortValue);
+                Assert.AreEqual((int)value, sim.TopLevel.IntValue);
+                Assert.AreEqual((uint)value, sim.TopLevel.UIntValue);
+            }
+        }
+
+        [TestMethod]
+        public void UnsignedCastModuleTest()
+        {
+            var sim = new CombinationalRTLSimulator<UnsignedCastModule>();
+            var values = new ushort[] {
+                0,
+                127, 128, 129,
+                254, 255, 256,
+                0x7FFE,
+                0x7FFF,
+                0x8000,
+                0x8001,
+                ushort.MaxValue
+            };
+
+            foreach (var value in values)
+            {
+                sim.TopLevel.Cycle(new UnsignedCastModuleInputs() { UShortValue = value });
+                Assert.AreEqual((byte)value, sim.TopLevel.ByteValue);
+                Assert.AreEqual((sbyte)value, sim.TopLevel.SByteValue);
+                Assert.AreEqual((short)value, sim.TopLevel.ShortValue);
+                Assert.AreEqual((int)value, sim.TopLevel.IntValue);
+                Assert.AreEqual((uint)value, sim.TopLevel.UIntValue);
+            }
+        }
+
         [TestMethod]
         public void BitArrayModuleTest()
         {
             var sim = new CombinationalRTLSimulator<BitArrayModule>();
             sim.TopLevel.Cycle(new BitArrayInputs() { Value = 0xC2 });
             Assert.AreEqual(0xC2, (byte)sim.TopLevel.Direct);
-            Assert.AreEqual(0xC,  (byte)sim.TopLevel.High);
-            Assert.AreEqual(0x2,  (byte)sim.TopLevel.Low);
+            Assert.AreEqual(0xC, (byte)sim.TopLevel.High);
+            Assert.AreEqual(0x2, (byte)sim.TopLevel.Low);
             Assert.AreEqual(0x43, (byte)sim.TopLevel.Reversed);
-            Assert.AreEqual(0x3,  (byte)sim.TopLevel.ReversedHigh);
-            Assert.AreEqual(0x4,  (byte)sim.TopLevel.ReversedLow);
-            Assert.AreEqual(0xA,  (byte)sim.TopLevel.Picks);
+            Assert.AreEqual(0x3, (byte)sim.TopLevel.ReversedHigh);
+            Assert.AreEqual(0x4, (byte)sim.TopLevel.ReversedLow);
+            Assert.AreEqual(0x9, (byte)sim.TopLevel.Picks);
+            Assert.AreEqual(0xD, (byte)sim.TopLevel.FromBits1);
+            Assert.AreEqual(0x7, (byte)sim.TopLevel.FromBits2);
         }
 
         [TestMethod]
@@ -48,10 +112,10 @@ namespace RTL.Modules
             var sim = new CombinationalRTLSimulator<CombinationalROMModule>();
 
             var buff = CombinationalROMModule.GetBuffer();
-            
+
             for (var idx = 0; idx < buff.Length; idx++)
             {
-                sim.TopLevel.Schedule(() => new CombinationalROMModuleInputs() 
+                sim.TopLevel.Cycle(new CombinationalROMModuleInputs()
                 {
                     ReadAddress1 = (byte)idx,
                     ReadAddress2 = (byte)(255 - idx)
@@ -142,6 +206,36 @@ namespace RTL.Modules
         }
 
         [TestMethod]
+        public void LogicRAMIndexingModuleTest()
+        {
+            var sim = new RTLSimulator<LogicRAMIndexingModule>();
+            var tl = sim.TopLevel;
+            tl.Cycle(new LogicRAMIndexingModuleInputs() { WE = true, WriteAddr = 0, WriteData = 0x66 });
+            tl.Cycle(new LogicRAMIndexingModuleInputs() { WE = true, WriteAddr = 1, WriteData = 0xAA });
+            tl.Cycle(new LogicRAMIndexingModuleInputs() { WE = true, WriteAddr = 2, WriteData = 0x55 });
+            tl.Cycle(new LogicRAMIndexingModuleInputs() { WE = true, WriteAddr = 3, WriteData = 0xFF });
+
+            sim.TopLevel.Cycle(new LogicRAMIndexingModuleInputs() { ReadAddr = 2, OpData = 0xF0 });
+            Assert.AreEqual(false, tl.CmpMemLhs);
+            Assert.AreEqual(true, tl.CmpMemRhs);
+            Assert.AreEqual(0xF5, tl.LogicMemLhs);
+            Assert.AreEqual(0x50, tl.LogicMemRhs);
+            Assert.AreEqual(0x65, tl.MathMemLhs);
+            Assert.AreEqual(0x45, tl.MathMemRhs);
+            Assert.AreEqual(0xFF, tl.MemLhsRhs);
+
+            sim.TopLevel.Cycle(new LogicRAMIndexingModuleInputs() { ReadAddr = 0, OpData = 0x50 });
+            Assert.AreEqual(true, tl.CmpMemLhs);
+            Assert.AreEqual(false, tl.CmpMemRhs);
+            Assert.AreEqual(0x76, tl.LogicMemLhs);
+            Assert.AreEqual(0x40, tl.LogicMemRhs);
+            Assert.AreEqual(0x16, tl.MathMemLhs);
+            Assert.AreEqual(0xB6, tl.MathMemRhs);
+            Assert.AreEqual(0x10, tl.MemLhsRhs);
+        }
+
+
+        [TestMethod]
         public void CompositionModuleTest()
         {
             var bytesToProcess = 256;
@@ -176,7 +270,7 @@ namespace RTL.Modules
         [TestMethod]
         public void EmitterModuleTest()
         {
-            var module = new EmitterModule();
+            var module = Module<EmitterModule>();
 
             var expected = Enumerable.Range(0, 256).Select(idx => (byte)idx).ToList();
             List<byte> actual = new List<byte>();
@@ -268,12 +362,10 @@ namespace RTL.Modules
             sim.IsRunning = (cb) => cb.Clock == 0;
             Assert.AreEqual(false, sim.TopLevel.O);
 
-            sim.TopLevel.Schedule(() => new GateInputs() { I1 = true, I2 = false });
-            sim.Run();
+            sim.TopLevel.Cycle(new GateInputs() { I1 = true, I2 = false });
             Assert.AreEqual(false, sim.TopLevel.O);
 
-            sim.TopLevel.Schedule(() => new GateInputs() { I1 = true, I2 = true });
-            sim.Run();
+            sim.TopLevel.Cycle(new GateInputs() { I1 = true, I2 = true });
             Assert.AreEqual(true, sim.TopLevel.O);
         }
 
@@ -284,12 +376,10 @@ namespace RTL.Modules
             sim.IsRunning = (cb) => cb.Clock == 0;
             Assert.AreEqual(false, sim.TopLevel.O);
 
-            sim.TopLevel.Schedule(() => new GateInputs() { I1 = false, I2 = false });
-            sim.Run();
+            sim.TopLevel.Cycle(new GateInputs() { I1 = false, I2 = false });
             Assert.AreEqual(false, sim.TopLevel.O);
 
-            sim.TopLevel.Schedule(() => new GateInputs() { I1 = true, I2 = false });
-            sim.Run();
+            sim.TopLevel.Cycle(new GateInputs() { I1 = true, I2 = false });
             Assert.AreEqual(true, sim.TopLevel.O);
         }
 
@@ -300,23 +390,20 @@ namespace RTL.Modules
             sim.IsRunning = (cb) => cb.Clock == 0;
             Assert.AreEqual(false, sim.TopLevel.O);
 
-            sim.TopLevel.Schedule(() => new GateInputs() { I1 = false, I2 = false });
-            sim.Run();
+            sim.TopLevel.Cycle(new GateInputs() { I1 = false, I2 = false });
             Assert.AreEqual(false, sim.TopLevel.O);
 
-            sim.TopLevel.Schedule(() => new GateInputs() { I1 = true, I2 = false });
-            sim.Run();
+            sim.TopLevel.Cycle(new GateInputs() { I1 = true, I2 = false });
             Assert.AreEqual(true, sim.TopLevel.O);
 
-            sim.TopLevel.Schedule(() => new GateInputs() { I1 = true, I2 = true });
-            sim.Run();
+            sim.TopLevel.Cycle(new GateInputs() { I1 = true, I2 = true });
             Assert.AreEqual(false, sim.TopLevel.O);
         }
 
         [TestMethod]
         public void ReceiverModuleTest()
         {
-            var module = new ReceiverModule();
+            var module = Module<ReceiverModule>();
 
             Assert.AreEqual(ReceiverFSM.Idle, module.State.FSM);
 
@@ -338,7 +425,7 @@ namespace RTL.Modules
         [TestMethod]
         public void TransmitterModule_IdleTest()
         {
-            var module = new TransmitterModule();
+            var module = Module<TransmitterModule>();
             module.Cycle(new TransmitterInputs());
             Assert.AreEqual(TransmitterFSM.Idle, module.State.FSM);
         }
@@ -346,7 +433,7 @@ namespace RTL.Modules
         [TestMethod]
         public void TransmitterModuleTest()
         {
-            var module = new TransmitterModule();
+            var module = Module<TransmitterModule>();
             RTLBitArray sourceData = (byte)0xAA;
 
             Assert.IsTrue(module.IsReady);
@@ -380,6 +467,28 @@ namespace RTL.Modules
             Assert.IsTrue(module.IsReady);
 
             Assert.AreEqual((byte)sourceData, (byte)result);
+        }
+
+        [TestMethod]
+        public void ShifterTests()
+        {
+            var shlData = new RTLBitArray((byte)0x81);
+            var shaData = shlData.Signed();
+
+            var shifter = Module<ShifterModule>();
+            foreach (var shiftBy in Enumerable.Range(0, 8))
+            {
+                var sb = new RTLBitArray(shiftBy).Unsigned().Resized(3);
+                shifter.Cycle(new ShifterInputs() 
+                { 
+                    Value = shlData, 
+                    ShiftBy = sb
+                });
+
+                Assert.AreEqual(shlData >> shiftBy, shifter.SHRL);
+                Assert.AreEqual(shaData >> shiftBy, shifter.SHRA);
+                Assert.AreEqual(shlData << shiftBy, shifter.SHLL);
+            }
         }
     }
 }

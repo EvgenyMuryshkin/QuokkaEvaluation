@@ -1,4 +1,4 @@
-﻿namespace Quokka.RTL.Simulatot
+﻿namespace Quokka.RTL.Simulator
 {
     public class CombinationalRTLSimulator<TModule> : RTLSimulator<TModule>
         where TModule : IRTLCombinationalModule, new()

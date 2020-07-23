@@ -1,0 +1,2 @@
+﻿addi x1, x0, 0xC
+jalr x2, x1, 0x100

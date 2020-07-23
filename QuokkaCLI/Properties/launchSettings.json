@@ -2,8 +2,7 @@
   "profiles": {
     "Quokka.LocalCLI": {
       "commandName": "Project",
-      "commandLineArgs": "-s \"../../../QuokkaEvaluation/SunTracker/SunTrackerDevice\" -w -c vhdl.json",
-      "workingDirectory": "..\\SensorsBoard\\Device"
+      "commandLineArgs": "\"../../../QuokkaEvaluation/QRV32/QRV.32CPU/rtl.verilog.json\" -w"
     }
   }
 }

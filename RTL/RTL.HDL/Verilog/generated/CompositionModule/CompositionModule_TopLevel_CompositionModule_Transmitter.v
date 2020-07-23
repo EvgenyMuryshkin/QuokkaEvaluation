@@ -64,7 +64,7 @@ wire  [8:1] Inputs_Data;
 reg  [2:1] NextState_FSM = 2'b00;
 reg  [8:1] NextState_Data = 8'b00000000;
 reg  [8:1] NextState_Counter = 8'b00000000;
-wire  [8:1] TransmitterModule_L13F9L40T10_TransmitterModule_L30F21L32T22_TransmitterModule_L31F45T70_Expr;
+wire  [8:1] TransmitterModule_L13F9L40T10_TransmitterModule_L30F21L32T22_TransmitterModule_L31F45T70_Cast;
 wire  TransmitterModule_L8F28T41_Index;
 reg  [2:1] State_FSM = 2'b00;
 wire  [2:1] State_FSMDefault = 2'b00;
@@ -138,24 +138,24 @@ assign TransmitterModule_L11F46T126_Expr = TransmitterModule_L11F46T126_Expr_1 &
 assign TransmitterModule_L13F9L40T10_TransmitterModule_L30F21L32T22_TransmitterModule_L31F52T69_Expr = TransmitterModule_L13F9L40T10_TransmitterModule_L30F21L32T22_TransmitterModule_L31F52T69_Expr_1 + TransmitterModule_L13F9L40T10_TransmitterModule_L30F21L32T22_TransmitterModule_L31F52T69_Expr_2;
 always @*
 begin
-NextState_FSM = State_FSM/*cast*/;
-NextState_Data = State_Data/*cast*/;
-NextState_Counter = State_Counter/*cast*/;
+NextState_FSM = State_FSM;
+NextState_Data = State_Data;
+NextState_Counter = State_Counter;
 if ( TransmitterModule_L13F9L40T10_TransmitterModule_L16F17L23T27_Case == 1 ) begin
 if ( Inputs_Trigger == 1 ) begin
 NextState_Counter = { {7{1'b0}}, TransmitterModule_L13F9L40T10_TransmitterModule_L18F21L22T22_TransmitterModule_L19F45T46_Expr }/*expand*/;
-NextState_Data = Inputs_Data/*cast*/;
+NextState_Data = Inputs_Data;
 NextState_FSM = { {1{1'b0}}, TransmitterModule_L13F9L40T10_TransmitterModule_L18F21L22T22_TransmitterModule_L21F41T68_Expr }/*expand*/;
 end
 end
 else if ( TransmitterModule_L13F9L40T10_TransmitterModule_L24F17L34T27_Case == 1 ) begin
 if ( TransmitterModule_L13F9L40T10_TransmitterModule_L25F25T43_Expr == 1 ) begin
-NextState_FSM = TransmitterModule_L13F9L40T10_TransmitterModule_L26F21L28T22_TransmitterModule_L27F41T69_Expr/*cast*/;
+NextState_FSM = TransmitterModule_L13F9L40T10_TransmitterModule_L26F21L28T22_TransmitterModule_L27F41T69_Expr;
 end
 else begin
-NextState_Counter = TransmitterModule_L13F9L40T10_TransmitterModule_L30F21L32T22_TransmitterModule_L31F45T70_Expr/*cast*/;
+NextState_Counter = TransmitterModule_L13F9L40T10_TransmitterModule_L30F21L32T22_TransmitterModule_L31F45T70_Cast;
 end
-NextState_Data = TransmitterModule_L13F9L40T10_TransmitterModule_L33F38T53_Expr/*cast*/;
+NextState_Data = TransmitterModule_L13F9L40T10_TransmitterModule_L33F38T53_Expr;
 end
 else if ( TransmitterModule_L13F9L40T10_TransmitterModule_L35F17L38T27_Case == 1 ) begin
 if ( Inputs_Ack == 1 ) begin
@@ -180,15 +180,15 @@ assign TransmitterModule_L11F46T78_ExprLhs = { {1{1'b0}}, State_FSM }/*expand*/;
 assign TransmitterModule_L11F46T78_ExprRhs = { {2{1'b0}}, TransmitterModule_L11F59T78_Expr }/*expand*/;
 assign TransmitterModule_L11F82T126_ExprLhs = { {1{1'b0}}, NextState_FSM }/*expand*/;
 assign TransmitterModule_L11F82T126_ExprRhs = { {2{1'b0}}, TransmitterModule_L11F99T126_Expr }/*expand*/;
-assign TransmitterModule_L13F9L40T10_TransmitterModule_L33F38T53_Expr_1 = State_Data/*cast*/;
+assign TransmitterModule_L13F9L40T10_TransmitterModule_L33F38T53_Expr_1 = State_Data;
 assign TransmitterModule_L11F46T126_Expr_1 = TransmitterModule_L11F46T78_Expr;
 assign TransmitterModule_L11F46T126_Expr_2 = TransmitterModule_L11F82T126_Expr;
 assign TransmitterModule_L13F9L40T10_TransmitterModule_L30F21L32T22_TransmitterModule_L31F52T69_Expr_1 = { {2{1'b0}}, State_Counter }/*expand*/;
 assign TransmitterModule_L13F9L40T10_TransmitterModule_L30F21L32T22_TransmitterModule_L31F52T69_Expr_2 = { {9{1'b0}}, TransmitterModule_L13F9L40T10_TransmitterModule_L30F21L32T22_TransmitterModule_L31F68T69_Expr }/*expand*/;
 assign Inputs_Trigger = Trigger;
 assign Inputs_Ack = Ack;
-assign Inputs_Data = Data/*cast*/;
-assign TransmitterModule_L13F9L40T10_TransmitterModule_L30F21L32T22_TransmitterModule_L31F45T70_Expr = TransmitterModule_L13F9L40T10_TransmitterModule_L30F21L32T22_TransmitterModule_L31F52T69_Expr[8:1]/*truncate*/;
+assign Inputs_Data = Data;
+assign TransmitterModule_L13F9L40T10_TransmitterModule_L30F21L32T22_TransmitterModule_L31F45T70_Cast = TransmitterModule_L13F9L40T10_TransmitterModule_L30F21L32T22_TransmitterModule_L31F52T69_Expr[8:1]/*truncate*/;
 assign TransmitterModule_L8F28T41_Index = State_Data[1];
 assign Bit = TransmitterModule_L8F28T41_Index;
 assign IsReady = TransmitterModule_L9F32T65_Expr;

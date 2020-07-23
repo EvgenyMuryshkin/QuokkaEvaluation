@@ -2,12 +2,12 @@
 using System;
 using System.IO;
 
-namespace Quokka.RTL.Simulatot
+namespace Quokka.RTL.Simulator
 {
-    public class RTLSimulator<TModule>
-        where TModule : IRTLCombinationalModule, new()
+    public class RTLInstanceSimulator<TModule>
+        where TModule : IRTLCombinationalModule
     {
-        TModule _topLevel;
+        protected TModule _topLevel;
 
         VCDBuilder _vcdBuilder;
         VCDSignalsSnapshot _topLevelSnapshot;
@@ -23,12 +23,14 @@ namespace Quokka.RTL.Simulatot
 
         public TModule TopLevel => _topLevel;
         public Action<TModule> OnPostStage { get; set; }
+        public Action<TModule> OnPostCommit { get; set; }
         public Func<RTLSimulatorCallback<TModule>, bool> IsRunning { get; set; }
 
-        public RTLSimulator()
+        public RTLInstanceSimulator(TModule topLevel)
         {
-            _topLevel = new TModule();
+            _topLevel = topLevel;
             _topLevel.Setup();
+            _simulatorContext = new RTLSimulatorContext();
         }
 
         internal void RecursiveCreateTargetDirectory(string directory)
@@ -48,18 +50,14 @@ namespace Quokka.RTL.Simulatot
 
             _vcdBuilder = new VCDBuilder(outputFileName);
             _topLevelSnapshot = new VCDSignalsSnapshot("TOP");
-        }
-
-        void VCDInit()
-        {
-            if (_vcdBuilder == null)
-                return;
+            _simulatorContext.ControlScope = _topLevelSnapshot.Scope("Control");
+            _simulatorContext.ClockSignal = _simulatorContext.ControlScope.Add(new VCDVariable("Clock", true, 1));
 
             _topLevel.PopulateSnapshot(_topLevelSnapshot);
             _vcdBuilder.Init(_topLevelSnapshot);
         }
 
-        protected virtual void Trace()
+        protected virtual void TraceSignals()
         {
             if (_vcdBuilder == null)
                 return;
@@ -68,51 +66,85 @@ namespace Quokka.RTL.Simulatot
             _vcdBuilder.Snapshot(_simulatorContext.CurrentTime, _topLevelSnapshot);
         }
 
+        public void ClockCycle()
+        {
+            _simulatorContext.CurrentTime = _simulatorContext.Clock * 2 * _simulatorContext.MaxStageIterations;
+            _simulatorContext.ClockSignal?.SetValue(true);
+
+            _simulatorContext.Iteration = 0;
+            do
+            {
+                _simulatorContext.CurrentTime++;
+
+                var modified = _topLevel.Stage(_simulatorContext.Iteration);
+
+                TraceSignals();
+
+                // no modules were modified during stage iteration, all converged
+                if (!modified)
+                    break;
+            }
+            while (++_simulatorContext.Iteration < _simulatorContext.MaxStageIterations);
+
+            if (_simulatorContext.Iteration >= _simulatorContext.MaxStageIterations)
+                throw new MaxStageIterationReachedException();
+
+            OnPostStage?.Invoke(_topLevel);
+
+            _simulatorContext.CurrentTime = _simulatorContext.Clock * 2 * _simulatorContext.MaxStageIterations + _simulatorContext.MaxStageIterations;
+            _simulatorContext.ClockSignal?.SetValue(false);
+            TraceSignals();
+
+            _topLevel.Commit();
+            OnPostCommit?.Invoke(_topLevel);
+
+            _simulatorContext.Clock++;
+        }
+
         public void Run()
         {
-            _simulatorContext = new RTLSimulatorContext();
-
-            var controlScope = _topLevelSnapshot?.Scope("Control");
-            var clockSignal = controlScope?.Add(new VCDVariable("Clock", true, 1));
-
-            VCDInit();
-
             while (_simulatorContext.Clock < _simulatorContext.MaxClockCycles)
             {
                 if (!(IsRunning?.Invoke(CallbackData) ?? true))
                     break;
 
-                _simulatorContext.CurrentTime = _simulatorContext.Clock * 2 * _simulatorContext.MaxStageIterations;
-                clockSignal?.SetValue(true);
-
-                _simulatorContext.Iteration = 0;
-                do
-                {
-                    _simulatorContext.CurrentTime++;
-
-                    var modified = _topLevel.Stage(_simulatorContext.Iteration);
-
-                    Trace();
-
-                    // no modules were modified during stage iteration, all converged
-                    if (!modified)
-                        break;
-                }
-                while (++_simulatorContext.Iteration < _simulatorContext.MaxStageIterations);
-
-                if (_simulatorContext.Iteration >= _simulatorContext.MaxStageIterations)
-                    throw new MaxStageIterationReachedException();
-
-                OnPostStage?.Invoke(_topLevel);
-
-                _simulatorContext.CurrentTime = _simulatorContext.Clock * 2 * _simulatorContext.MaxStageIterations + _simulatorContext.MaxStageIterations;
-
-                clockSignal?.SetValue(false);
-                Trace();
-
-                _topLevel.Commit();
-                _simulatorContext.Clock++;
+                ClockCycle();
             }
+        }
+    }
+
+    public class RTLInstanceSimulator<TModule, TInputs> : RTLInstanceSimulator<TModule>
+        where TModule : IRTLCombinationalModule<TInputs>
+        where TInputs : new()
+    {
+        public RTLInstanceSimulator(TModule topLevel) : base(topLevel)
+        {
+
+        }
+
+        public virtual void ClockCycle(TInputs inputs)
+        {
+            _topLevel.Schedule(() => inputs);
+            ClockCycle();
+        }
+    }
+
+    public class RTLSimulator<TModule> : RTLInstanceSimulator<TModule>
+        where TModule : IRTLCombinationalModule, new()
+    {
+        public RTLSimulator() : base(new TModule())
+        {
+
+        }
+    }
+     
+    public class RTLSimulator<TModule, TInputs> : RTLInstanceSimulator<TModule, TInputs>
+        where TModule : IRTLCombinationalModule<TInputs>, new()
+        where TInputs : new()
+    {
+        public RTLSimulator() : base(new TModule())
+        {
+
         }
     }
 }

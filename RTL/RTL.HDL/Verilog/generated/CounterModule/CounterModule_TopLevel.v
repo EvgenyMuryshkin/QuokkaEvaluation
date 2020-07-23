@@ -39,8 +39,8 @@ wire  false = 1'b0;
 wire  CounterModule_L19F65T66_Expr = 1'b1;
 wire  Inputs_Enabled;
 reg  [8:1] NextState_Value = 8'b00000000;
-wire  [8:1] CounterModule_L19F27T81_Expr;
 wire  [8:1] NextValue;
+wire  [8:1] CounterModule_L19F27T81_Cast;
 reg  [8:1] State_Value = 8'b00000000;
 wire  [8:1] State_ValueDefault = 8'b00000000;
 wire  [10:1] CounterModule_L19F51T66_Expr;
@@ -74,19 +74,19 @@ endcase
 end
 always @*
 begin
-NextState_Value = State_Value/*cast*/;
-NextState_Value = NextValue/*cast*/;
+NextState_Value = State_Value;
+NextState_Value = NextValue;
 
 end
-assign CounterModule_L19F34T80_LookupMultiplexerAddress = Inputs_Enabled;
 assign CounterModule_L19F51T66_Expr_1 = { {2{1'b0}}, State_Value }/*expand*/;
 assign CounterModule_L19F51T66_Expr_2 = { {9{1'b0}}, CounterModule_L19F65T66_Expr }/*expand*/;
 assign Inputs_Enabled = Enabled;
-assign CounterModule_L19F27T81_Expr = CounterModule_L19F34T80_Lookup/*cast*/;
-assign NextValue = CounterModule_L19F27T81_Expr/*cast*/;
-assign Value = State_Value/*cast*/;
-assign CounterModule_L19F34T80_Lookup1 = State_Value/*cast*/;
+assign CounterModule_L19F27T81_Cast = CounterModule_L19F34T80_Lookup;
+assign NextValue = CounterModule_L19F27T81_Cast;
+assign Value = State_Value;
+assign CounterModule_L19F34T80_Lookup1 = State_Value;
 assign CounterModule_L19F34T80_Lookup2 = CounterModule_L19F51T66_Expr[8:1]/*truncate*/;
+assign CounterModule_L19F34T80_LookupMultiplexerAddress = Inputs_Enabled;
 // [BEGIN USER ARCHITECTURE]
 // [END USER ARCHITECTURE]
 endmodule
