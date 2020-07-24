@@ -32,7 +32,9 @@
 		addi x30, zero, 0
 		addi x31, zero, 0
 */
-		addi x2, zero, 1024
+		# example QuSoC has 1K 32 bits words of memory
+		# set stack pointer to the the end of available memory
+		li x2, 4096
 
 		call main
 loop:
