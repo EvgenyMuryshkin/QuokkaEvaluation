@@ -51,9 +51,6 @@ namespace QuSoC
         public bool SOCMemReady => State.MemReady;
         public bool CPUHalted => CPU.IsHalted;
         public bool BlockRAMWE => State.BlockRAMWE;
-        public byte DbgState => CPU.DbgState;
-        public RTLBitArray DbgWBData => CPU.DbgWBData;
-        public bool DbgWDDataReady => CPU.DbgWDDataReady;
 
         public QuSoCModule(uint[] instructions)
         {
@@ -135,7 +132,7 @@ namespace QuSoC
             NextState.MemReadData = State.BlockRAM[blockRamAddress];
             NextState.MemReady = CPU.MemRead;
 
-            // TODO: 32768U
+            // TODO: constants e.g. 32768U
             // TODO: State.BlockRAM.Length
 
             NextState.BlockRAMWE = false;
