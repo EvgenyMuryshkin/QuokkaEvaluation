@@ -490,6 +490,24 @@ namespace RTL.Modules
                 Assert.AreEqual(shlData << shiftBy, shifter.SHLL);
             }
         }
+
+        [TestMethod]
+        public void SignalsMuxTest()
+        {
+            var mux = Module<SignalsMuxModule>();
+            foreach (var idx in Enumerable.Range(0,4))
+            {
+                mux.Cycle(new SignalsMuxModuleInputs()
+                {
+                    Addr = idx,
+                    Sig0 = 10,
+                    Sig1 = 20,
+                    Sig2 = 30,
+                    Sig3 = 40
+                });
+                Assert.AreEqual(10 * (idx + 1), mux.Value);
+            }
+        }
     }
 }
 

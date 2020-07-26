@@ -20,8 +20,6 @@ namespace QuSoC
         public RTLBitArray Counter = new RTLBitArray(byte.MinValue);
         public byte[] UART = new byte[4];
         public bool UART_TX;
-
-        public uint CSCounter;
     }
 
     // TODO: inheritance not supportted yet
@@ -42,8 +40,11 @@ namespace QuSoC
     public class QuSoCModule : RTLSynchronousModule<QuSoCModuleInputs, QuSoCModuleState>
     {
         internal RISCVModule CPU = new RISCVModule();
+        internal SoCRegisterModule CSCounterModule = new SoCRegisterModule();
+
+
         public byte Counter => State.Counter;
-        public RTLBitArray CSCounter => State.CSCounter;
+        public RTLBitArray CSCounter => CSCounterModule.Value;
         public RTLBitArray CPUAddress => CPU.MemAddress;
         public bool CPUMemRead => CPU.MemRead;
         public bool CPUMemWrite => CPU.MemWrite;
@@ -67,6 +68,12 @@ namespace QuSoC
                 MemReadData = internalMemReadData,
                 MemReady = internalMemReady
             });
+
+            CSCounterModule.Schedule(() => new SoCRegisterModuleInputs()
+            {
+                WriteValue = CPU.MemWriteData,
+                WE = CPU.MemWrite && IsCSCounterSegment
+            });
         }
 
         RTLBitArray internalMemAddress => new RTLBitArray(CPU.MemAddress);
@@ -74,13 +81,21 @@ namespace QuSoC
         RTLBitArray byteAddress => new RTLBitArray(internalMemAddress[1, 0]) << 3;
 
         RTLBitArray uartReadData => new RTLBitArray(State.UART[uartAddress]).Resized(32);
-        
+
+        bool IsCSCounterSegment => memSegment == 0x80000;
+
         // TODO: RTLBitArray variable declaration, support for bit array methods e.g. Resize
         uint internalMemReadData
         {
             get
             {
                 uint result = 0;
+
+                if (IsCSCounterSegment)
+                {
+                    result = CSCounterModule.Value;
+                }
+
                 switch ((uint)memSegment)
                 {
                     case 0:
@@ -91,9 +106,6 @@ namespace QuSoC
                         break;
                     case 2:
                         result = uartReadData;
-                        break;
-                    case 0x80000:
-                        result = State.CSCounter;
                         break;
                 }
 
@@ -140,39 +152,42 @@ namespace QuSoC
 
             if (CPU.MemWrite)
             {
-                switch ((uint)memSegment)
+                if (IsCSCounterSegment)
                 {
-                    case 0:
-                        if (!State.BlockRAMWE)
-                        {
-                            // write back to block ram on next cycle
-                            NextState.BlockRAMWE = true;
+                    NextState.MemReady = true;
+                }
+                else
+                {
+                    switch ((uint)memSegment)
+                    {
+                        case 0:
+                            if (!State.BlockRAMWE)
+                            {
+                                // write back to block ram on next cycle
+                                NextState.BlockRAMWE = true;
+                                NextState.MemReady = true;
+                            }
+                            break;
+                        case 1:
+                            NextState.Counter = CPU.MemWriteData[7, 0];
                             NextState.MemReady = true;
-                        }
-                        break;
-                    case 1:
-                        NextState.Counter = CPU.MemWriteData[7, 0];
-                        NextState.MemReady = true;
-                        break;
-                    case 2:
-                        // TODO: inline element access
-                        if (UARTReady)
-                        {
-                            // TODO: implicit cast is not handled in rtl transform
-                            NextState.UART[0] = (byte)CPU.MemWriteData;
-                            NextState.UART[2] = 0;
-                            NextState.UART_TX = true;
+                            break;
+                        case 2:
+                            // TODO: inline element access
+                            if (UARTReady)
+                            {
+                                // TODO: implicit cast is not handled in rtl transform
+                                NextState.UART[0] = (byte)CPU.MemWriteData;
+                                NextState.UART[2] = 0;
+                                NextState.UART_TX = true;
+                                NextState.MemReady = true;
+                            }
+                            break;
+                        default:
+                            Debugger.Break();
                             NextState.MemReady = true;
-                        }
-                        break;
-                    case 0x80000:
-                        NextState.CSCounter = CPU.MemWriteData;
-                        NextState.MemReady = true;
-                        break;
-                    default:
-                        Debugger.Break();
-                        NextState.MemReady = true;
-                        break;
+                            break;
+                    }
                 }
             }
         }
