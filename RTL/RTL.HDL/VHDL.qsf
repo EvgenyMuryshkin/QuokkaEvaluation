@@ -1,4 +1,4 @@
-set_global_assignment -name TOP_LEVEL_ENTITY LogicRAMModule_TopLevel
+set_global_assignment -name TOP_LEVEL_ENTITY XorGateModule_TopLevel
 # -------------------------------------------------------------------------- #
 #
 # Copyright (C) 1991-2010 Altera Corporation
@@ -48,7 +48,12 @@ set_global_assignment -name STRATIX_DEVICE_IO_STANDARD "2.5 V"
 set_global_assignment -name LL_ROOT_REGION ON -entity VHDL -section_id "Root Region"
 set_global_assignment -name LL_MEMBER_STATE LOCKED -entity VHDL -section_id "Root Region"
 
-set_global_assignment -name INCREMENTAL_VECTOR_INPUT_SOURCE Waveforms/LogicRAMModule.vwf
+set_global_assignment -name INCREMENTAL_VECTOR_INPUT_SOURCE Waveforms/XorGateModule.vwf
+set_global_assignment -name VECTOR_WAVEFORM_FILE Waveforms/ModuleSignalsMuxModule.vwf
+set_global_assignment -name VHDL_FILE VHDL/generated/ModuleSignalsMuxModule/ModuleSignalsMuxModule_TopLevel.vhdl
+set_global_assignment -name VHDL_FILE VHDL/generated/ModuleSignalsMuxModule/ModuleSignalsMuxModule_TopLevel_ModuleSignalsMuxModule_AndGate.vhdl
+set_global_assignment -name VHDL_FILE VHDL/generated/ModuleSignalsMuxModule/ModuleSignalsMuxModule_TopLevel_ModuleSignalsMuxModule_OrGate.vhdl
+set_global_assignment -name VHDL_FILE VHDL/generated/ModuleSignalsMuxModule/ModuleSignalsMuxModule_TopLevel_ModuleSignalsMuxModule_XorGate.vhdl
 set_global_assignment -name VECTOR_WAVEFORM_FILE Waveforms/SignalsMuxModule.vwf
 set_global_assignment -name VHDL_FILE VHDL/generated/SignalsMuxModule/SignalsMuxModule_TopLevel.vhdl
 set_global_assignment -name VHDL_FILE VHDL/generated/LogicRAMIndexingModule/LogicRAMIndexingModule_TopLevel.vhdl
