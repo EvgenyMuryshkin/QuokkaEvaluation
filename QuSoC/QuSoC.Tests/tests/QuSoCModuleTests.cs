@@ -144,8 +144,8 @@ namespace QuSoC.Tests
             var sim = PowerUp(instructions);
             var tl = sim.TopLevel;
 
-            sim.RunToCompletion(() => tl.State.CSCounter < 10);
-            Assert.AreEqual(10U, tl.State.CSCounter);
+            sim.RunToCompletion(() => tl.CSCounter < 10);
+            Assert.AreEqual(10U, tl.CSCounter);
         }
     }
 }

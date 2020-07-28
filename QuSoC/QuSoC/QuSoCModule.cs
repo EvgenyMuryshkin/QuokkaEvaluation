@@ -44,7 +44,7 @@ namespace QuSoC
 
 
         public byte Counter => State.Counter;
-        public RTLBitArray CSCounter => CSCounterModule.Value;
+        public uint CSCounter => CSCounterModule.Value;
         public RTLBitArray CPUAddress => CPU.MemAddress;
         public bool CPUMemRead => CPU.MemRead;
         public bool CPUMemWrite => CPU.MemWrite;
