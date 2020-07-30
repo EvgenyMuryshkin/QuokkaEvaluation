@@ -1,0 +1,14 @@
+#ifndef Recursion_H
+#define Recursion_H
+#include <stdint.h>
+#include <stdbool.h>
+#include "soc.h"
+namespace Recursion
+{
+	class Firmware
+	{
+		private: static void RecursiveCounter(unsigned int counter);
+		public: static void EntryPoint();
+	};
+}
+#endif

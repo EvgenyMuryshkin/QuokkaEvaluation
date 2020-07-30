@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Quokka.FPGA" Version="0.1.0.58" />
-    <PackageReference Include="Quokka.RISCV.CS2CPP" Version="1.0.0.4" />
+    <PackageReference Include="Quokka.RISCV.CS2CPP" Version="1.0.0.5" />
     <PackageReference Include="Quokka.RTL" Version="0.1.0.55" />
     <PackageReference Include="Quokka.RISCV.Integration" Version="1.0.0.12" />
   </ItemGroup>

@@ -11,10 +11,10 @@ Linker script and memory map
 .text           0x0000000000000000       0xc8
                 0x0000000000000000                . = ALIGN (0x4)
  *(.text)
- .text          0x0000000000000000        0xc /tmp/ccrJPMd6.o
- .text          0x000000000000000c       0x28 /tmp/ccVlOPh9.o
+ .text          0x0000000000000000        0xc /tmp/ccD8Jgnb.o
+ .text          0x000000000000000c       0x28 /tmp/ccXgvHha.o
                 0x000000000000000c                main
- .text          0x0000000000000034       0x2c /tmp/ccWlGDI5.o
+ .text          0x0000000000000034       0x2c /tmp/ccxng0aa.o
                 0x0000000000000034                SOCCounter::Firmware::EntryPoint()
  *(.text*)
  *(.rodata)
@@ -22,8 +22,8 @@ Linker script and memory map
  *(.srodata)
  *(.srodata*)
  *(.eh_frame)
- .eh_frame      0x0000000000000060       0x38 /tmp/ccVlOPh9.o
- .eh_frame      0x0000000000000098       0x30 /tmp/ccWlGDI5.o
+ .eh_frame      0x0000000000000060       0x38 /tmp/ccXgvHha.o
+ .eh_frame      0x0000000000000098       0x30 /tmp/ccxng0aa.o
  *(.eh_frame*)
                 0x00000000000000c8                . = ALIGN (0x4)
                 0x00000000000000c8                _etext = .
@@ -34,9 +34,9 @@ Linker script and memory map
                 0x00000000000000c8                _sdata = .
                 0x00000000000000c8                _ram_start = .
  *(.data)
- .data          0x00000000000000c8        0x0 /tmp/ccrJPMd6.o
- .data          0x00000000000000c8        0x0 /tmp/ccVlOPh9.o
- .data          0x00000000000000c8        0x0 /tmp/ccWlGDI5.o
+ .data          0x00000000000000c8        0x0 /tmp/ccD8Jgnb.o
+ .data          0x00000000000000c8        0x0 /tmp/ccXgvHha.o
+ .data          0x00000000000000c8        0x0 /tmp/ccxng0aa.o
  *(.data*)
  *(.sdata)
  *(.sdata*)
@@ -49,9 +49,9 @@ Linker script and memory map
                 0x00000000000000c8                . = ALIGN (0x4)
                 0x00000000000000c8                _sbss = .
  *(.bss)
- .bss           0x00000000000000c8        0x0 /tmp/ccrJPMd6.o
- .bss           0x00000000000000c8        0x0 /tmp/ccVlOPh9.o
- .bss           0x00000000000000c8        0x0 /tmp/ccWlGDI5.o
+ .bss           0x00000000000000c8        0x0 /tmp/ccD8Jgnb.o
+ .bss           0x00000000000000c8        0x0 /tmp/ccXgvHha.o
+ .bss           0x00000000000000c8        0x0 /tmp/ccxng0aa.o
  *(.bss*)
  *(.sbss)
  *(.sbss*)
@@ -62,20 +62,20 @@ Linker script and memory map
 .heap           0x00000000000000c8        0x0
                 0x00000000000000c8                . = ALIGN (0x4)
                 0x00000000000000c8                _heap_start = .
-LOAD /tmp/ccrJPMd6.o
-LOAD /tmp/ccVlOPh9.o
-LOAD /tmp/ccWlGDI5.o
+LOAD /tmp/ccD8Jgnb.o
+LOAD /tmp/ccXgvHha.o
+LOAD /tmp/ccxng0aa.o
 OUTPUT(firmware.elf elf32-littleriscv)
 
 .comment        0x0000000000000000       0x11
- .comment       0x0000000000000000       0x11 /tmp/ccVlOPh9.o
+ .comment       0x0000000000000000       0x11 /tmp/ccXgvHha.o
                                          0x12 (size before relaxing)
- .comment       0x0000000000000011       0x12 /tmp/ccWlGDI5.o
+ .comment       0x0000000000000011       0x12 /tmp/ccxng0aa.o
 
 Cross Reference Table
 
 Symbol                                            File
-SOCCounter::Firmware::EntryPoint()                /tmp/ccWlGDI5.o
-                                                  /tmp/ccVlOPh9.o
-main                                              /tmp/ccVlOPh9.o
-                                                  /tmp/ccrJPMd6.o
+SOCCounter::Firmware::EntryPoint()                /tmp/ccxng0aa.o
+                                                  /tmp/ccXgvHha.o
+main                                              /tmp/ccXgvHha.o
+                                                  /tmp/ccD8Jgnb.o

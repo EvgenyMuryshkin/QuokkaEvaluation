@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using QRV32.CPU;
 using Quokka.RISCV.Integration.Client;
 using System;
 using System.Collections.Generic;
@@ -12,6 +11,35 @@ namespace QuSoC.Tests
     [TestClass]
     public class QuSoCModuleTests : QuSoCModuleBaseTest
     {
+        string AppPath(string app) 
+            => Path.Combine(
+                Inst.SolutionLocation(), 
+                "QuSoC", 
+                "QuSoC", 
+                "apps", app);
+
+        public QuSoCModuleSimulator FromApp(string appName)
+        {
+            var firmwareTools = new FirmwareTools(AppPath(appName));
+            Assert.IsTrue(firmwareTools.FirmwareFromAppFolder());
+
+            var instructions = RISCVIntegrationClient
+                .ToInstructions(File.ReadAllBytes(firmwareTools.FirmwareFile))
+                .ToArray();
+            var sim = PowerUp(instructions);
+            return sim;
+        }
+
+        [TestMethod]
+        public void RecursionTest()
+        {
+            var sim = FromApp("Recursion");
+            sim.RunToCompletion();
+
+            Recursion.Firmware.EntryPoint();
+            Assert.AreEqual(Recursion.SOC.Instance.Counter, sim.TopLevel.CSCounter);
+        }
+
         [TestMethod]
         public void HangTest()
         {
@@ -139,13 +167,10 @@ namespace QuSoC.Tests
         [TestMethod]
         public void CSCounterTest()
         {
-            var scCounterFirmware = Path.Combine(Inst.SolutionLocation(), "QuSoC", "QuSoC", "apps", "Counter", "firmware", "firmware.bin");
-            var instructions = RISCVIntegrationClient.ToInstructions(File.ReadAllBytes(scCounterFirmware)).ToArray();
-            var sim = PowerUp(instructions);
-            var tl = sim.TopLevel;
+            var sim = FromApp("Counter");
+            sim.RunToCompletion(() => sim.TopLevel.CSCounter < 10);
 
-            sim.RunToCompletion(() => tl.CSCounter < 10);
-            Assert.AreEqual(10U, tl.CSCounter);
+            Assert.AreEqual(10U, sim.TopLevel.CSCounter);
         }
     }
 }

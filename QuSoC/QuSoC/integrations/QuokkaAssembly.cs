@@ -65,60 +65,15 @@ namespace QuSoC
                 foreach (var appPath in apps)
                 {
                     var appName = Path.GetFileName(appPath);
-                    var sourceFolder = Path.Combine(appPath, "source");
-                    var firmwareFolder = Path.Combine(appPath, "firmware");
+                    var firmwareTools = new FirmwareTools(appPath);
 
-                    if (Directory.Exists(sourceFolder))
+                    if (firmwareTools.FirmwareFromAppFolder())
                     {
-                        var csFiles = Directory.EnumerateFiles(sourceFolder);
-                        var csFilesContent = csFiles
-                            .Select(path => new FSTextFile() { Name = path, Content = File.ReadAllText(path) })
-                            .ToList();
+                        var firmwareData = File.ReadAllBytes(firmwareTools.FirmwareFile);
+                        var firmwareinstructions = RISCVIntegrationClient.ToInstructions(firmwareData).ToArray();
 
-                        if (csFilesContent.Any())
-                        {
-                            foreach (var cs in csFilesContent)
-                            {
-                                Console.WriteLine($"Found CS source: {cs.Name}");
-                            }
-
-                            // translate source files
-                            var tx = new CSharp2CPPTranslator();
-                            var source = new FSSnapshot();
-                            source.Files.AddRange(csFilesContent);
-                            tx.Run(source);
-                            var firmwareSource = tx.Result;
-
-                            // create soc resource records
-                            var socGenerator = new SOCGenerator();
-                            var socRecordsBuilder = new SOCRecordsBuilder();
-                            var socRecords = socRecordsBuilder.ToSOCRecords(0x800, tx.SOCResources);
-                            firmwareSource.Add(socGenerator.SOCImport(socRecords));
-
-                            FileTools.CreateDirectoryRecursive(firmwareFolder);
-                            var m = new FSManager(firmwareFolder);
-                            m.SaveSnapshot(firmwareSource);
-                        }
-
-                        var makefile = Path.Combine(firmwareFolder, "makefile");
-                        if (File.Exists(makefile))
-                        {
-                            var context = RISCVIntegration
-                                .DefaultContext(firmwareFolder)
-                                .WithMakeTarget("bin");
-
-                            RISCVIntegrationClient.Make(context).Wait();
-                        }
-
-                        var firmwareFile = Path.Combine(firmwareFolder, "firmware.bin");
-                        if (File.Exists(firmwareFile))
-                        {
-                            var firmwareData = File.ReadAllBytes(firmwareFile);
-                            var firmwareinstructions = RISCVIntegrationClient.ToInstructions(firmwareData).ToArray();
-
-                            var app = new QuSoCModule(firmwareinstructions);
-                            yield return new RTLModuleConfig() { Instance = app, Name = appName };
-                        }
+                        var app = new QuSoCModule(firmwareinstructions);
+                        yield return new RTLModuleConfig() { Instance = app, Name = appName };
                     }
                     else
                     {
