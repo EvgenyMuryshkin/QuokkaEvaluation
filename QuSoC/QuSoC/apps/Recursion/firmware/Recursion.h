@@ -7,7 +7,7 @@ namespace Recursion
 {
 	class Firmware
 	{
-		private: static void RecursiveCounter(unsigned int counter);
+		private: static void RecursiveCounter(uint32_t counter);
 		public: static void EntryPoint();
 	};
 }

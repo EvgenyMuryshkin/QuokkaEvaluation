@@ -4,7 +4,7 @@
 #include "soc.h"
 namespace Recursion
 {
-	void Firmware::RecursiveCounter(unsigned int counter)
+	void Firmware::RecursiveCounter(uint32_t counter)
 	{
 		Recursion_SOC_Counter += counter;
 		if ((counter < 10))

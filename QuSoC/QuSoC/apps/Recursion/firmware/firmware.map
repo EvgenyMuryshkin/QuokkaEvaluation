@@ -11,11 +11,11 @@ Linker script and memory map
 .text           0x0000000000000000      0x154
                 0x0000000000000000                . = ALIGN (0x4)
  *(.text)
- .text          0x0000000000000000        0xc /tmp/cceRFMCK.o
- .text          0x000000000000000c       0x28 /tmp/ccTSRKaI.o
+ .text          0x0000000000000000        0xc /tmp/ccqfDnrS.o
+ .text          0x000000000000000c       0x28 /tmp/ccbsiJ2S.o
                 0x000000000000000c                main
- .text          0x0000000000000034       0x88 /tmp/ccwRHCTG.o
-                0x0000000000000034                Recursion::Firmware::RecursiveCounter(unsigned int)
+ .text          0x0000000000000034       0x88 /tmp/ccYaHrHU.o
+                0x0000000000000034                Recursion::Firmware::RecursiveCounter(unsigned long)
                 0x0000000000000090                Recursion::Firmware::EntryPoint()
  *(.text*)
  *(.rodata)
@@ -23,8 +23,8 @@ Linker script and memory map
  *(.srodata)
  *(.srodata*)
  *(.eh_frame)
- .eh_frame      0x00000000000000bc       0x38 /tmp/ccTSRKaI.o
- .eh_frame      0x00000000000000f4       0x60 /tmp/ccwRHCTG.o
+ .eh_frame      0x00000000000000bc       0x38 /tmp/ccbsiJ2S.o
+ .eh_frame      0x00000000000000f4       0x60 /tmp/ccYaHrHU.o
  *(.eh_frame*)
                 0x0000000000000154                . = ALIGN (0x4)
                 0x0000000000000154                _etext = .
@@ -35,9 +35,9 @@ Linker script and memory map
                 0x0000000000000154                _sdata = .
                 0x0000000000000154                _ram_start = .
  *(.data)
- .data          0x0000000000000154        0x0 /tmp/cceRFMCK.o
- .data          0x0000000000000154        0x0 /tmp/ccTSRKaI.o
- .data          0x0000000000000154        0x0 /tmp/ccwRHCTG.o
+ .data          0x0000000000000154        0x0 /tmp/ccqfDnrS.o
+ .data          0x0000000000000154        0x0 /tmp/ccbsiJ2S.o
+ .data          0x0000000000000154        0x0 /tmp/ccYaHrHU.o
  *(.data*)
  *(.sdata)
  *(.sdata*)
@@ -50,9 +50,9 @@ Linker script and memory map
                 0x0000000000000154                . = ALIGN (0x4)
                 0x0000000000000154                _sbss = .
  *(.bss)
- .bss           0x0000000000000154        0x0 /tmp/cceRFMCK.o
- .bss           0x0000000000000154        0x0 /tmp/ccTSRKaI.o
- .bss           0x0000000000000154        0x0 /tmp/ccwRHCTG.o
+ .bss           0x0000000000000154        0x0 /tmp/ccqfDnrS.o
+ .bss           0x0000000000000154        0x0 /tmp/ccbsiJ2S.o
+ .bss           0x0000000000000154        0x0 /tmp/ccYaHrHU.o
  *(.bss*)
  *(.sbss)
  *(.sbss*)
@@ -63,21 +63,21 @@ Linker script and memory map
 .heap           0x0000000000000154        0x0
                 0x0000000000000154                . = ALIGN (0x4)
                 0x0000000000000154                _heap_start = .
-LOAD /tmp/cceRFMCK.o
-LOAD /tmp/ccTSRKaI.o
-LOAD /tmp/ccwRHCTG.o
+LOAD /tmp/ccqfDnrS.o
+LOAD /tmp/ccbsiJ2S.o
+LOAD /tmp/ccYaHrHU.o
 OUTPUT(firmware.elf elf32-littleriscv)
 
 .comment        0x0000000000000000       0x11
- .comment       0x0000000000000000       0x11 /tmp/ccTSRKaI.o
+ .comment       0x0000000000000000       0x11 /tmp/ccbsiJ2S.o
                                          0x12 (size before relaxing)
- .comment       0x0000000000000011       0x12 /tmp/ccwRHCTG.o
+ .comment       0x0000000000000011       0x12 /tmp/ccYaHrHU.o
 
 Cross Reference Table
 
 Symbol                                            File
-Recursion::Firmware::EntryPoint()                 /tmp/ccwRHCTG.o
-                                                  /tmp/ccTSRKaI.o
-Recursion::Firmware::RecursiveCounter(unsigned int) /tmp/ccwRHCTG.o
-main                                              /tmp/ccTSRKaI.o
-                                                  /tmp/cceRFMCK.o
+Recursion::Firmware::EntryPoint()                 /tmp/ccYaHrHU.o
+                                                  /tmp/ccbsiJ2S.o
+Recursion::Firmware::RecursiveCounter(unsigned long) /tmp/ccYaHrHU.o
+main                                              /tmp/ccbsiJ2S.o
+                                                  /tmp/ccqfDnrS.o

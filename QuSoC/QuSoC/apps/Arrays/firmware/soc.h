@@ -1,1 +1,1 @@
-#define Arrays_SOC_Counter (*(volatile unsigned int*)0x80000000)
+#define Arrays_SOC_Counter (*(volatile uint32_t*)0x80000000)
