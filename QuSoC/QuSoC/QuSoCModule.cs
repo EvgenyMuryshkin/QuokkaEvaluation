@@ -123,7 +123,7 @@ namespace QuSoC
                 : new RTLBitArray(uint.MaxValue);
 
         RTLBitArray blockRAMWriteData =>
-            (State.MemReadData & !mask) | (CPU.MemWriteData & mask);
+            (State.MemReadData & !mask) | ((CPU.MemWriteData << byteAddress) & mask);
 
         RTLBitArray memSegment => wordAddress[31, 10];
         RTLBitArray blockRamAddress => wordAddress[9, 0];

@@ -29,8 +29,13 @@ namespace QuSoC.Tests
         public void RunToCompletion(Func<bool> keepRunningCheck, uint maxClockCycles = 10000)
         {
             uint clockCycles = 0;
-            while (!InfiniteLoopAddresses.Contains(TopLevel.CPU.MemAddress))
+            while (true)
             {
+                if ( TopLevel.CPU.State.State == CPUState.IF && InfiniteLoopAddresses.Contains(TopLevel.CPU.MemAddress))
+                {
+                    break;
+                }
+
                 if (keepRunningCheck != null && !keepRunningCheck())
                 {
                     break;

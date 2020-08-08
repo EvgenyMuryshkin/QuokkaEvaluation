@@ -41,6 +41,25 @@ namespace QuSoC.Tests
         }
 
         [TestMethod]
+        public void ArraysTest()
+        {
+            var sim = FromApp("Arrays");
+            sim.RunToCompletion();
+
+            Arrays.Firmware.EntryPoint();
+            Assert.AreEqual(Arrays.SOC.Instance.Counter, sim.TopLevel.CSCounter);
+        }
+        [TestMethod]
+        public void ArraysDisasm()
+        {
+            var firmwareTools = new FirmwareTools(AppPath("Arrays"));
+            var disassembler = new Disassembler();
+            var t = disassembler.Disassemble(new[] { 0xFEF40783 });
+
+            File.WriteAllText(firmwareTools.FirmwareAsmFile, disassembler.Disassemble(firmwareTools.Instructions()));
+        }
+
+        [TestMethod]
         public void HangTest()
         {
             var sim = PowerUp("hang");

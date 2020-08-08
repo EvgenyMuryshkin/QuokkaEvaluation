@@ -145,6 +145,7 @@ namespace QRV32.Tests
                         {
                             var word = new RTLBitArray(MemoryBlock[wordAddress]);
                             var mask = new RTLBitArray(uint.MinValue);
+                            var value = (TopLevel.MemWriteData << byteAddress).Resized(32);
 
                             switch ((byte)TopLevel.MemWriteMode)
                             {
@@ -162,7 +163,7 @@ namespace QRV32.Tests
                             }
 
                             word &= !mask;
-                            var part = TopLevel.MemWriteData & mask;
+                            var part = value & mask;
                             word |= part;
 
                             // write data back to mem

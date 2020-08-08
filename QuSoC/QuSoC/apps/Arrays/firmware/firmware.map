@@ -1,0 +1,91 @@
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+RAM              0x0000000000000000 0x0000000000008000 xrw
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+
+.text           0x0000000000000000      0x294
+                0x0000000000000000                . = ALIGN (0x4)
+ *(.text)
+ .text          0x0000000000000000        0xc /tmp/ccsjEoQY.o
+ .text          0x000000000000000c      0x1a8 /tmp/ccslBl2Y.o
+                0x000000000000000c                Arrays::Firmware::Fill(unsigned long)
+                0x00000000000000c0                Arrays::Firmware::Sum(unsigned long)
+                0x0000000000000178                Arrays::Firmware::EntryPoint()
+ .text          0x00000000000001b4       0x28 /tmp/ccRAjfMY.o
+                0x00000000000001b4                main
+ *(.text*)
+ *(.rodata)
+ *(.rodata*)
+ *(.srodata)
+ *(.srodata*)
+ *(.eh_frame)
+ .eh_frame      0x00000000000001dc       0x80 /tmp/ccslBl2Y.o
+ .eh_frame      0x000000000000025c       0x38 /tmp/ccRAjfMY.o
+ *(.eh_frame*)
+                0x0000000000000294                . = ALIGN (0x4)
+                0x0000000000000294                _etext = .
+                0x0000000000000294                _sidata = _etext
+
+.data           0x0000000000000294        0x0
+                0x0000000000000294                . = ALIGN (0x4)
+                0x0000000000000294                _sdata = .
+                0x0000000000000294                _ram_start = .
+ *(.data)
+ .data          0x0000000000000294        0x0 /tmp/ccsjEoQY.o
+ .data          0x0000000000000294        0x0 /tmp/ccslBl2Y.o
+ .data          0x0000000000000294        0x0 /tmp/ccRAjfMY.o
+ *(.data*)
+ *(.sdata)
+ *(.sdata*)
+ *(.init_array)
+ *(.init_array*)
+                0x0000000000000294                . = ALIGN (0x4)
+                0x0000000000000294                _edata = .
+
+.bss            0x0000000000000294       0x70
+                0x0000000000000294                . = ALIGN (0x4)
+                0x0000000000000294                _sbss = .
+ *(.bss)
+ .bss           0x0000000000000294        0x0 /tmp/ccsjEoQY.o
+ .bss           0x0000000000000294       0x70 /tmp/ccslBl2Y.o
+                0x0000000000000294                Arrays::Firmware::S8Buff
+                0x00000000000002a4                Arrays::Firmware::S16Buff
+                0x00000000000002c4                Arrays::Firmware::U32Buff
+ .bss           0x0000000000000304        0x0 /tmp/ccRAjfMY.o
+ *(.bss*)
+ *(.sbss)
+ *(.sbss*)
+ *(COMMON)
+                0x0000000000000304                . = ALIGN (0x4)
+                0x0000000000000304                _ebss = .
+
+.heap           0x0000000000000304        0x0
+                0x0000000000000304                . = ALIGN (0x4)
+                0x0000000000000304                _heap_start = .
+LOAD /tmp/ccsjEoQY.o
+LOAD /tmp/ccslBl2Y.o
+LOAD /tmp/ccRAjfMY.o
+OUTPUT(firmware.elf elf32-littleriscv)
+
+.comment        0x0000000000000000       0x11
+ .comment       0x0000000000000000       0x11 /tmp/ccslBl2Y.o
+                                         0x12 (size before relaxing)
+ .comment       0x0000000000000011       0x12 /tmp/ccRAjfMY.o
+
+Cross Reference Table
+
+Symbol                                            File
+Arrays::Firmware::EntryPoint()                    /tmp/ccslBl2Y.o
+                                                  /tmp/ccRAjfMY.o
+Arrays::Firmware::Fill(unsigned long)             /tmp/ccslBl2Y.o
+Arrays::Firmware::S16Buff                         /tmp/ccslBl2Y.o
+Arrays::Firmware::S8Buff                          /tmp/ccslBl2Y.o
+Arrays::Firmware::Sum(unsigned long)              /tmp/ccslBl2Y.o
+Arrays::Firmware::U32Buff                         /tmp/ccslBl2Y.o
+main                                              /tmp/ccRAjfMY.o
+                                                  /tmp/ccsjEoQY.o

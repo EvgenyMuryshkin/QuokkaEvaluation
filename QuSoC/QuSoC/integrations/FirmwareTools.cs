@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace QuSoC
 {
@@ -24,6 +23,7 @@ namespace QuSoC
         public string SourceFolder => Path.Combine(appPath, "source");
         public string FirmwareFolder => Path.Combine(appPath, "firmware");
         public string FirmwareFile => Path.Combine(FirmwareFolder, "firmware.bin");
+        public string FirmwareAsmFile => Path.Combine(FirmwareFolder, "firmware.asm");
         public string MakefileFile => Path.Combine(FirmwareFolder, "makefile");
         public bool SourceExists => Directory.Exists(SourceFolder);
 
@@ -81,7 +81,26 @@ namespace QuSoC
                 RISCVIntegrationClient.Make(context).Wait();
             }
 
+            if (File.Exists(FirmwareFile))
+            {
+                var disassembler = new Disassembler();
+                File.WriteAllText(FirmwareAsmFile, disassembler.Disassemble(Instructions()));
+            }
+
             return File.Exists(FirmwareFile);
+        }
+
+        public uint[] Instructions()
+        {
+            if (!File.Exists(FirmwareFile))
+                return new uint[0];
+
+            var instructions = RISCVIntegrationClient
+                .ToInstructions(File.ReadAllBytes(FirmwareFile))
+                .ToArray();
+
+            return instructions;
+
         }
 
         void ModifyMakefile()
