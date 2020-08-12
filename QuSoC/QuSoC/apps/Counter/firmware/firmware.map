@@ -8,13 +8,13 @@ RAM              0x0000000000000000 0x0000000000008000 xrw
 Linker script and memory map
 
 
-.text           0x0000000000000000       0xc8
+.text           0x0000000000000000       0xcc
                 0x0000000000000000                . = ALIGN (0x4)
  *(.text)
- .text          0x0000000000000000        0xc /tmp/cc5de17W.o
- .text          0x000000000000000c       0x28 /tmp/ccshRirX.o
+ .text          0x0000000000000000        0xc /tmp/ccHbz13M.o
+ .text          0x000000000000000c       0x28 /tmp/ccNWpnT4.o
                 0x000000000000000c                main
- .text          0x0000000000000034       0x2c /tmp/cc4r5GdZ.o
+ .text          0x0000000000000034       0x2c /tmp/cc0vjJNm.o
                 0x0000000000000034                SOCCounter::Firmware::EntryPoint()
  *(.text*)
  *(.rodata)
@@ -22,60 +22,69 @@ Linker script and memory map
  *(.srodata)
  *(.srodata*)
  *(.eh_frame)
- .eh_frame      0x0000000000000060       0x38 /tmp/ccshRirX.o
- .eh_frame      0x0000000000000098       0x30 /tmp/cc4r5GdZ.o
+ .eh_frame      0x0000000000000060       0x3c /tmp/ccNWpnT4.o
+ .eh_frame      0x000000000000009c       0x30 /tmp/cc0vjJNm.o
  *(.eh_frame*)
-                0x00000000000000c8                . = ALIGN (0x4)
-                0x00000000000000c8                _etext = .
-                0x00000000000000c8                _sidata = _etext
+                0x00000000000000cc                . = ALIGN (0x4)
+                0x00000000000000cc                _etext = .
+                0x00000000000000cc                _sidata = _etext
 
-.data           0x00000000000000c8        0x0
-                0x00000000000000c8                . = ALIGN (0x4)
-                0x00000000000000c8                _sdata = .
-                0x00000000000000c8                _ram_start = .
+.data           0x00000000000000cc        0x0
+                0x00000000000000cc                . = ALIGN (0x4)
+                0x00000000000000cc                _sdata = .
+                0x00000000000000cc                _ram_start = .
  *(.data)
- .data          0x00000000000000c8        0x0 /tmp/cc5de17W.o
- .data          0x00000000000000c8        0x0 /tmp/ccshRirX.o
- .data          0x00000000000000c8        0x0 /tmp/cc4r5GdZ.o
+ .data          0x00000000000000cc        0x0 /tmp/ccHbz13M.o
+ .data          0x00000000000000cc        0x0 /tmp/ccNWpnT4.o
+ .data          0x00000000000000cc        0x0 /tmp/cc0vjJNm.o
  *(.data*)
  *(.sdata)
  *(.sdata*)
  *(.init_array)
  *(.init_array*)
-                0x00000000000000c8                . = ALIGN (0x4)
-                0x00000000000000c8                _edata = .
+                0x00000000000000cc                . = ALIGN (0x4)
+                0x00000000000000cc                _edata = .
 
-.bss            0x00000000000000c8        0x0
-                0x00000000000000c8                . = ALIGN (0x4)
-                0x00000000000000c8                _sbss = .
+.bss            0x00000000000000cc        0x0
+                0x00000000000000cc                . = ALIGN (0x4)
+                0x00000000000000cc                _sbss = .
  *(.bss)
- .bss           0x00000000000000c8        0x0 /tmp/cc5de17W.o
- .bss           0x00000000000000c8        0x0 /tmp/ccshRirX.o
- .bss           0x00000000000000c8        0x0 /tmp/cc4r5GdZ.o
+ .bss           0x00000000000000cc        0x0 /tmp/ccHbz13M.o
+ .bss           0x00000000000000cc        0x0 /tmp/ccNWpnT4.o
+ .bss           0x00000000000000cc        0x0 /tmp/cc0vjJNm.o
  *(.bss*)
  *(.sbss)
  *(.sbss*)
  *(COMMON)
-                0x00000000000000c8                . = ALIGN (0x4)
-                0x00000000000000c8                _ebss = .
+                0x00000000000000cc                . = ALIGN (0x4)
+                0x00000000000000cc                _ebss = .
 
-.heap           0x00000000000000c8        0x0
-                0x00000000000000c8                . = ALIGN (0x4)
-                0x00000000000000c8                _heap_start = .
-LOAD /tmp/cc5de17W.o
-LOAD /tmp/ccshRirX.o
-LOAD /tmp/cc4r5GdZ.o
+.heap           0x00000000000000cc        0x0
+                0x00000000000000cc                . = ALIGN (0x4)
+                0x00000000000000cc                _heap_start = .
+LOAD /tmp/ccHbz13M.o
+LOAD /tmp/ccNWpnT4.o
+LOAD /tmp/cc0vjJNm.o
 OUTPUT(firmware.elf elf32-littleriscv)
 
-.comment        0x0000000000000000       0x11
- .comment       0x0000000000000000       0x11 /tmp/ccshRirX.o
-                                         0x12 (size before relaxing)
- .comment       0x0000000000000011       0x12 /tmp/cc4r5GdZ.o
+.riscv.attributes
+                0x0000000000000000       0x1c
+ .riscv.attributes
+                0x0000000000000000       0x1a /tmp/ccHbz13M.o
+ .riscv.attributes
+                0x000000000000001a       0x1c /tmp/ccNWpnT4.o
+ .riscv.attributes
+                0x0000000000000036       0x1c /tmp/cc0vjJNm.o
+
+.comment        0x0000000000000000       0x12
+ .comment       0x0000000000000000       0x12 /tmp/ccNWpnT4.o
+                                         0x13 (size before relaxing)
+ .comment       0x0000000000000012       0x13 /tmp/cc0vjJNm.o
 
 Cross Reference Table
 
 Symbol                                            File
-SOCCounter::Firmware::EntryPoint()                /tmp/cc4r5GdZ.o
-                                                  /tmp/ccshRirX.o
-main                                              /tmp/ccshRirX.o
-                                                  /tmp/cc5de17W.o
+SOCCounter::Firmware::EntryPoint()                /tmp/cc0vjJNm.o
+                                                  /tmp/ccNWpnT4.o
+main                                              /tmp/ccNWpnT4.o
+                                                  /tmp/ccHbz13M.o

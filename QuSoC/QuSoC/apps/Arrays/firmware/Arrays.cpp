@@ -18,7 +18,7 @@ namespace Arrays
 			U32Buff[i] = value;
 		}
 	}
-	void Firmware::Sum(uint32_t size)
+	uint32_t Firmware::Sum(uint32_t size)
 	{
 		uint32_t result = 42;
 		for(uint32_t i = 0; (i < size); (i++))
@@ -27,12 +27,13 @@ namespace Arrays
 			result += (uint32_t)S16Buff[i];
 			result += U32Buff[i];
 		}
-		Arrays_SOC_Counter = result;
+		return result;
 	}
 	void Firmware::EntryPoint()
 	{
 		uint32_t size = 6;
 		Fill(size);
-		Sum(size);
+		uint32_t result = Sum(size);
+		Arrays_SOC_Counter = result;
 	}
 }

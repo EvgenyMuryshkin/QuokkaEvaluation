@@ -8,13 +8,13 @@ RAM              0x0000000000000000 0x0000000000008000 xrw
 Linker script and memory map
 
 
-.text           0x0000000000000000      0x154
+.text           0x0000000000000000      0x15c
                 0x0000000000000000                . = ALIGN (0x4)
  *(.text)
- .text          0x0000000000000000        0xc /tmp/ccqfDnrS.o
- .text          0x000000000000000c       0x28 /tmp/ccbsiJ2S.o
+ .text          0x0000000000000000        0xc /tmp/ccgQqW8w.o
+ .text          0x000000000000000c       0x28 /tmp/ccyRCKGU.o
                 0x000000000000000c                main
- .text          0x0000000000000034       0x88 /tmp/ccYaHrHU.o
+ .text          0x0000000000000034       0x88 /tmp/ccWwJEji.o
                 0x0000000000000034                Recursion::Firmware::RecursiveCounter(unsigned long)
                 0x0000000000000090                Recursion::Firmware::EntryPoint()
  *(.text*)
@@ -23,61 +23,70 @@ Linker script and memory map
  *(.srodata)
  *(.srodata*)
  *(.eh_frame)
- .eh_frame      0x00000000000000bc       0x38 /tmp/ccbsiJ2S.o
- .eh_frame      0x00000000000000f4       0x60 /tmp/ccYaHrHU.o
+ .eh_frame      0x00000000000000bc       0x3c /tmp/ccyRCKGU.o
+ .eh_frame      0x00000000000000f8       0x64 /tmp/ccWwJEji.o
  *(.eh_frame*)
-                0x0000000000000154                . = ALIGN (0x4)
-                0x0000000000000154                _etext = .
-                0x0000000000000154                _sidata = _etext
+                0x000000000000015c                . = ALIGN (0x4)
+                0x000000000000015c                _etext = .
+                0x000000000000015c                _sidata = _etext
 
-.data           0x0000000000000154        0x0
-                0x0000000000000154                . = ALIGN (0x4)
-                0x0000000000000154                _sdata = .
-                0x0000000000000154                _ram_start = .
+.data           0x000000000000015c        0x0
+                0x000000000000015c                . = ALIGN (0x4)
+                0x000000000000015c                _sdata = .
+                0x000000000000015c                _ram_start = .
  *(.data)
- .data          0x0000000000000154        0x0 /tmp/ccqfDnrS.o
- .data          0x0000000000000154        0x0 /tmp/ccbsiJ2S.o
- .data          0x0000000000000154        0x0 /tmp/ccYaHrHU.o
+ .data          0x000000000000015c        0x0 /tmp/ccgQqW8w.o
+ .data          0x000000000000015c        0x0 /tmp/ccyRCKGU.o
+ .data          0x000000000000015c        0x0 /tmp/ccWwJEji.o
  *(.data*)
  *(.sdata)
  *(.sdata*)
  *(.init_array)
  *(.init_array*)
-                0x0000000000000154                . = ALIGN (0x4)
-                0x0000000000000154                _edata = .
+                0x000000000000015c                . = ALIGN (0x4)
+                0x000000000000015c                _edata = .
 
-.bss            0x0000000000000154        0x0
-                0x0000000000000154                . = ALIGN (0x4)
-                0x0000000000000154                _sbss = .
+.bss            0x000000000000015c        0x0
+                0x000000000000015c                . = ALIGN (0x4)
+                0x000000000000015c                _sbss = .
  *(.bss)
- .bss           0x0000000000000154        0x0 /tmp/ccqfDnrS.o
- .bss           0x0000000000000154        0x0 /tmp/ccbsiJ2S.o
- .bss           0x0000000000000154        0x0 /tmp/ccYaHrHU.o
+ .bss           0x000000000000015c        0x0 /tmp/ccgQqW8w.o
+ .bss           0x000000000000015c        0x0 /tmp/ccyRCKGU.o
+ .bss           0x000000000000015c        0x0 /tmp/ccWwJEji.o
  *(.bss*)
  *(.sbss)
  *(.sbss*)
  *(COMMON)
-                0x0000000000000154                . = ALIGN (0x4)
-                0x0000000000000154                _ebss = .
+                0x000000000000015c                . = ALIGN (0x4)
+                0x000000000000015c                _ebss = .
 
-.heap           0x0000000000000154        0x0
-                0x0000000000000154                . = ALIGN (0x4)
-                0x0000000000000154                _heap_start = .
-LOAD /tmp/ccqfDnrS.o
-LOAD /tmp/ccbsiJ2S.o
-LOAD /tmp/ccYaHrHU.o
+.heap           0x000000000000015c        0x0
+                0x000000000000015c                . = ALIGN (0x4)
+                0x000000000000015c                _heap_start = .
+LOAD /tmp/ccgQqW8w.o
+LOAD /tmp/ccyRCKGU.o
+LOAD /tmp/ccWwJEji.o
 OUTPUT(firmware.elf elf32-littleriscv)
 
-.comment        0x0000000000000000       0x11
- .comment       0x0000000000000000       0x11 /tmp/ccbsiJ2S.o
-                                         0x12 (size before relaxing)
- .comment       0x0000000000000011       0x12 /tmp/ccYaHrHU.o
+.riscv.attributes
+                0x0000000000000000       0x1c
+ .riscv.attributes
+                0x0000000000000000       0x1a /tmp/ccgQqW8w.o
+ .riscv.attributes
+                0x000000000000001a       0x1c /tmp/ccyRCKGU.o
+ .riscv.attributes
+                0x0000000000000036       0x1c /tmp/ccWwJEji.o
+
+.comment        0x0000000000000000       0x12
+ .comment       0x0000000000000000       0x12 /tmp/ccyRCKGU.o
+                                         0x13 (size before relaxing)
+ .comment       0x0000000000000012       0x13 /tmp/ccWwJEji.o
 
 Cross Reference Table
 
 Symbol                                            File
-Recursion::Firmware::EntryPoint()                 /tmp/ccYaHrHU.o
-                                                  /tmp/ccbsiJ2S.o
-Recursion::Firmware::RecursiveCounter(unsigned long) /tmp/ccYaHrHU.o
-main                                              /tmp/ccbsiJ2S.o
-                                                  /tmp/ccqfDnrS.o
+Recursion::Firmware::EntryPoint()                 /tmp/ccWwJEji.o
+                                                  /tmp/ccyRCKGU.o
+Recursion::Firmware::RecursiveCounter(unsigned long) /tmp/ccWwJEji.o
+main                                              /tmp/ccyRCKGU.o
+                                                  /tmp/ccgQqW8w.o

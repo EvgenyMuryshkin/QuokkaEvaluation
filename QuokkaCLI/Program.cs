@@ -12,7 +12,13 @@ namespace QuokkaCLI
             Console.WriteLine($"Running from {Directory.GetCurrentDirectory()}");
             Console.WriteLine($"Quokka.FPGA version: {typeof(QuokkaRunner).Assembly.GetName().Version}");
             Console.WriteLine($"Quokka.RTL version: {typeof(RTLBitArray).Assembly.GetName().Version}");
-      
+
+            Console.WriteLine("Cleaning up ...");
+
+            var tempFolder = Path.Combine(Path.GetTempPath(), "quokka");
+            if (Directory.Exists(tempFolder))
+                Directory.Delete(tempFolder, true);
+
             QuokkaRunner.Default(args);
         }
     }

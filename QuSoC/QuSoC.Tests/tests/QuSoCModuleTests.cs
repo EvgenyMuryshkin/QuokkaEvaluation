@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using QRV32.CPU;
 using Quokka.RISCV.Integration.Client;
 using System;
 using System.Collections.Generic;
@@ -54,7 +55,6 @@ namespace QuSoC.Tests
         {
             var firmwareTools = new FirmwareTools(AppPath("Arrays"));
             var disassembler = new Disassembler();
-            var t = disassembler.Disassemble(new[] { 0xFEF40783 });
 
             File.WriteAllText(firmwareTools.FirmwareAsmFile, disassembler.Disassemble(firmwareTools.Instructions()));
         }

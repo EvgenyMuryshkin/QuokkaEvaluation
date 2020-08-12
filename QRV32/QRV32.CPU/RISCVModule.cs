@@ -41,6 +41,8 @@ namespace QRV32.CPU
 
         public RTLBitArray PCOffset = new RTLBitArray(uint.MinValue);
 
+        public bool InstIRQ;
+
         public uint[] CSR = CSRInit();
 
         static uint[] CSRInit()
@@ -335,6 +337,8 @@ namespace QRV32.CPU
         RTLBitArray CSRI => ID.RS1.Unsigned().Resized(32);
         bool CSRWE => ID.RS1 != 0 && CSRAddress != 0;
 
+        bool HasMTVEC => State.CSR[(byte)CSRAddr.mtvec] != 0;
+
         void OnSystem()
         {
             if (ID.SystemCode == SystemCodes.E)
@@ -345,7 +349,16 @@ namespace QRV32.CPU
                         NextState.State = CPUState.E;
                         break;
                     case SysTypeCodes.BREAK:
-                        NextState.State = CPUState.E;
+                        if (HasMTVEC)
+                        {
+                            // go into trap handler
+                            NextState.InstIRQ = true;
+                            NextState.State = CPUState.WB;
+                        }
+                        else
+                        {
+                            NextState.State = CPUState.E;
+                        }
                         break;
                     case SysTypeCodes.TRAP:
                         switch(ID.RetTypeCode)
@@ -532,10 +545,29 @@ namespace QRV32.CPU
             {
                 NextState.State = CPUState.IF;
 
-                if (MIE && Inputs.ExtIRQ)
+                if (State.InstIRQ)
                 {
-                    NextState.CSR[(byte)CSRAddr.mepc] = internalNextPC;
+                    if (MIE && HasMTVEC)
+                    {
+                        // in instruction caused trap, store current address
+                        DisableInterrupts();
+                        NextState.InstIRQ = false;
+                        NextState.CSR[(byte)CSRAddr.mepc] = State.PC;
+                        NextState.CSR[(byte)CSRAddr.mcause] = (uint)MCAUSE.Breakpoint;
+                        NextState.PC = State.CSR[(byte)CSRAddr.mtvec];
+                    }
+                    else
+                    {
+                        // no trap handler, halt execution
+                        Halt();
+                    }
+                }
+                else if (MIE && Inputs.ExtIRQ)
+                {
+                    // if external cause trap, store next instruction, as current once completed successfully
                     DisableInterrupts();
+                    NextState.CSR[(byte)CSRAddr.mepc] = internalNextPC;
+                    NextState.CSR[(byte)CSRAddr.mcause] = (uint)MCAUSE.MExternalIRQ;
                     NextState.PC = State.CSR[(byte)CSRAddr.mtvec];
                 }
                 else if (MRET)
@@ -603,18 +635,21 @@ namespace QRV32.CPU
 
         public override string ToString()
         {
+            // this is non-synthesizable method, anything can be done here
             var dump = new StringBuilder();
+            var disasm = new Disassembler();
 
             dump.AppendLine($"RISC-V Dump:");
             dump.AppendLine($"PC: 0x{State.PC}");
             dump.AppendLine($"State: {State.State}");
-            dump.AppendLine($"Instruction: 0x{State.Instruction}");
+            dump.AppendLine($"Instruction: 0x{State.Instruction:X8}");
+            dump.AppendLine($"Disassembled: {disasm.Single(State.PC, State.Instruction)}");
             dump.AppendLine($"OpCode: {ID.OpTypeCode}");
             dump.AppendLine($"=== REGS ===");
             Regs
                 .State
                 .x
-                .Select((r, idx) => $"X[{idx.ToString("D2")}]: 0x{(r.ToString("X8"))}")
+                .Select((r, idx) => $"x{idx}".PadRight(3) + $": 0x{r:X8}")
                 .ForEach(l => dump.AppendLine(l));
 
             return dump.ToString();

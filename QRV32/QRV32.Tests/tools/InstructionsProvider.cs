@@ -9,29 +9,8 @@ namespace QRV32.Tests
 {
     public class InstructionsProvider
     {
-        public virtual string ProjectLocation(string current = null)
-        {
-            if (current == "")
-                return "";
-
-            current = current ?? Directory.GetCurrentDirectory();
-            if (Directory.EnumerateFiles(current, "*.csproj").Any())
-                return current;
-
-            return ProjectLocation(Path.GetDirectoryName(current));
-        }
-
-        public virtual string SolutionLocation(string current = null)
-        {
-            if (current == "")
-                return "";
-
-            current = current ?? Directory.GetCurrentDirectory();
-            if (Directory.EnumerateFiles(current, "*.sln").Any())
-                return current;
-
-            return SolutionLocation(Path.GetDirectoryName(current));
-        }
+        public virtual string ProjectLocation(string current = null) => PathTools.ProjectLocation(current);
+        public virtual string SolutionLocation(string current = null) => PathTools.SolutionLocation(current);
 
         public virtual string AsmFilesLocation => Path.Combine(ProjectLocation(), "asm");
         public virtual uint[] FromAsmFile(string fileName)

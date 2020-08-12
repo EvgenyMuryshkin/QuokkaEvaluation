@@ -3,7 +3,6 @@
     public class SOC
     {
         public static SOC Instance { get; set; } = new SOC();
-
         public virtual uint Counter { get; set; }
     }
 
@@ -25,7 +24,7 @@
             }
         }
 
-        static void Sum(uint size)
+        static uint Sum(uint size)
         {
             uint result = 42;
             for (uint i = 0; i < size; i++)
@@ -35,14 +34,17 @@
                 result += U32Buff[i];
             }
 
-            SOC.Instance.Counter = result;
+            return result;
         }
 
         public static void EntryPoint()
         {
             uint size = 6;
             Fill(size);
-            Sum(size);
+
+            var result = Sum(size);
+            SOC.Instance.Counter = result;
         }
     }
 }
+

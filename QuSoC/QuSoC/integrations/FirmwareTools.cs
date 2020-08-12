@@ -1,4 +1,5 @@
-﻿using Quokka.Public.Tools;
+﻿using QRV32.CPU;
+using Quokka.Public.Tools;
 using Quokka.RISCV.CS2CPP.Tools;
 using Quokka.RISCV.CS2CPP.Translator;
 using Quokka.RISCV.Integration.Client;

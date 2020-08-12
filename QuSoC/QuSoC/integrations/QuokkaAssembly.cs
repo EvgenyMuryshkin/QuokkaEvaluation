@@ -65,6 +65,10 @@ namespace QuSoC
                 foreach (var appPath in apps)
                 {
                     var appName = Path.GetFileName(appPath);
+                    
+                    if (appName == "template")
+                        continue;
+
                     var firmwareTools = new FirmwareTools(appPath);
 
                     if (firmwareTools.FirmwareFromAppFolder())

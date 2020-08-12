@@ -130,4 +130,10 @@
         mcause,
         mip,
     }
+
+    public enum MCAUSE : uint
+    {
+        MExternalIRQ = 0x8000000B,
+        Breakpoint = 0x3U,
+    }
 }

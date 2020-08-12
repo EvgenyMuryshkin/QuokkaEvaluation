@@ -85,11 +85,9 @@ namespace QRV32.Tests
             }
 
             var instruction = MemoryBlock[wordAddress];
-            var id = new InstructionDecoderModule();
-            id.Setup();
-            id.Cycle(new InstructionDecoderInputs() { Instruction = instruction });
-
-            TraceLine($"[{TopLevel.MemAddress.ToString("X6")}]: {id.OpTypeCode}");
+            var disasm = new Disassembler();
+            var code = disasm.Single(TopLevel.State.PC, instruction);
+            TraceLine(code);
 
             if (instruction == 111)
             {
@@ -102,6 +100,12 @@ namespace QRV32.Tests
             return true;
         }
 
+        protected virtual void ECall()
+        {
+            // ecall, do something with ecall
+            ECalls.Add(TopLevel.Regs.State.x[17]);
+        }
+
         public bool RunTillInstructionFetch()
         {
             int counter = 0;
@@ -111,14 +115,13 @@ namespace QRV32.Tests
                 switch (TopLevel.State.State)
                 {
                     case CPUState.Halt:
-                        throw new Exception($"Halted");
+                        throw new Exception($"CPU Halted{Environment.NewLine}{TopLevel}");
                     case CPUState.E:
                         switch (TopLevel.ID.SysTypeCode)
                         {
                             case SysTypeCodes.CALL:
                             {
-                                // ecall, do something with ecall
-                                ECalls.Add(TopLevel.Regs.State.x[17]);
+                                ECall();
                             }
                             break;
                             case SysTypeCodes.BREAK:

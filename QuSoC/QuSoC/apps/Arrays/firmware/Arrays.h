@@ -11,7 +11,7 @@ namespace Arrays
 		private: static int16_t S16Buff[];
 		private: static uint32_t U32Buff[];
 		private: static void Fill(uint32_t size);
-		private: static void Sum(uint32_t size);
+		private: static uint32_t Sum(uint32_t size);
 		public: static void EntryPoint();
 	};
 }
