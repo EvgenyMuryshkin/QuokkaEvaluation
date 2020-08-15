@@ -9,73 +9,8 @@ using System.Xml;
 
 namespace QRV32.CPU
 {
-    public enum CPUState : byte
+    public partial class RISCVModule : RTLSynchronousModule<RISCVModuleInputs, CPUModuleState>
     {
-        Reset,
-        IF,
-        ID,
-        EX,
-        MEM,
-        WB,
-        E,
-        Halt
-    }
-
-    public class RISCVModuleInputs
-    {
-        public RTLBitArray BaseAddress = new RTLBitArray(uint.MinValue);
-        public RTLBitArray MemReadData = new RTLBitArray(uint.MinValue);
-        public bool MemReady;
-        public bool ExtIRQ;
-    }
-
-    public class CPUModuleState
-    {
-        public CPUState State;
-        public uint Instruction;
-
-        public bool WBDataReady;
-        public uint WBData;
-
-        public RTLBitArray PC = new RTLBitArray(uint.MinValue);
-
-        public RTLBitArray PCOffset = new RTLBitArray(uint.MinValue);
-
-        public MCAUSE pendingMCause;
-
-        public uint[] CSR = CSRInit();
-
-        static uint[] CSRInit()
-        {
-            return new uint[]
-            {
-                // Machine Information Registers
-                0U,         // mvendorid:   0 - open-source
-                0xFA57DB9,  // marchid:     quokka signature code
-                0x01010101U,// mimpid:      1.1.1.1
-                0U,         // mhartid:     0, all code runs in default hart
-                // Machine Trap Setup
-                0U,         // mstatus:     0, TLDR, will sort out later
-                0x40000100U,// misa:        MXL: 32 bit, ISA: I
-                0U,         // mie          No interrupts enabled at startup
-                0U,         // mtvec
-                0U,         // mtval
-                // Machine Trap Handling
-                0U,         // mscratch
-                0U,         // mepc
-                0U,         // mcause
-                0U,         // mip
-            };
-        }
-    }
-
-    public class RISCVModule : RTLSynchronousModule<RISCVModuleInputs, CPUModuleState>
-    {
-        internal InstructionDecoderModule ID = new InstructionDecoderModule();
-        internal IRegistersModule Regs = null;
-        internal ALUModule ALU = new ALUModule();
-        internal CompareModule CMP = new CompareModule();
-
         public byte DbgState => (byte)State.State;
         public RTLBitArray DbgWBData => ID.UTypeImm;
         public bool DbgWDDataReady => RegsWE;
@@ -124,52 +59,6 @@ namespace QRV32.CPU
         RTLBitArray CMPRhs => ID.OpTypeCode == OpTypeCodes.OPIMM ? ID.ITypeImm : Regs.RS2;
 
         RTLBitArray CSRAddress => new RTLBitArray((byte)CSRLookup())[3, 0];
-
-        public RISCVModule()
-        {
-            var ramRegs = true;
-            if (ramRegs)
-            {
-                Regs = new RegistersRAMModule();
-            }
-            else
-            {
-                Regs = new RegistersBlockModule();
-            }
-        }
-
-        protected override void OnSchedule(Func<RISCVModuleInputs> inputsFactory)
-        {
-            base.OnSchedule(inputsFactory);
-
-            ID.Schedule(() => new InstructionDecoderInputs() 
-            { 
-                Instruction = State.Instruction 
-            });
-
-            Regs.Schedule(() => new RegistersModuleInput()
-            {
-                RS1Addr = ID.RS1,
-                RS2Addr = ID.RS2,
-                RD = ID.RD,
-                Read = RegsRead,
-                WriteData = State.WBData,
-                WE = RegsWE
-            });
-
-            ALU.Schedule(() => new ALUModuleInputs() 
-            { 
-                Op1 = ALUOp1, 
-                Op2 = ALUOp2,
-                SHAMT = ALUSHAMT
-            });
-
-            CMP.Schedule(() => new CompareModuleInputs() 
-            { 
-                Lhs = CMPLhs, 
-                Rhs = CMPRhs 
-            });
-        }
 
         void Halt()
         {
@@ -487,96 +376,6 @@ namespace QRV32.CPU
             }
         }
 
-        void ExecuteStage()
-        {
-            NextState.State = CPUState.WB;
-            NextState.WBDataReady = false;
-            NextState.PCOffset = InstructionOffset;
-
-            switch (ID.OpTypeCode)
-            {
-                case OpTypeCodes.OPIMM:
-                    OnOPIMM();
-                    break;
-                case OpTypeCodes.OP:
-                    OnOP();
-                    break;
-                case OpTypeCodes.B:
-                    OnBranch();
-                    break;
-                case OpTypeCodes.LUI:
-                    NextState.WBDataReady = true;
-                    NextState.WBData = ID.UTypeImm;
-                    break;
-                case OpTypeCodes.AUIPC:
-                    NextState.WBDataReady = true;
-                    NextState.WBData = State.PC + ID.UTypeImm;
-                    break;
-                case OpTypeCodes.JAL:
-                    NextState.WBDataReady = true;
-                    NextState.WBData = NextSequentialPC;
-                    NextState.PCOffset = ID.JTypeImm;
-                    break;
-                case OpTypeCodes.JALR:
-                    NextState.WBDataReady = true;
-                    NextState.WBData = NextSequentialPC;
-                    NextState.PCOffset = new RTLBitArray(new RTLBitArray(Regs.RS1 + ID.ITypeImm)[31, 1], false);
-                    break;
-                case OpTypeCodes.LOAD:
-                    NextState.State = CPUState.MEM;
-                    CheckMemAddressMisalign();
-                    break;
-                case OpTypeCodes.STORE:
-                    NextState.State = CPUState.MEM;
-                    CheckMemAddressMisalign();
-                    break;
-                case OpTypeCodes.SYSTEM:
-                    OnSystem();
-                    break;
-                default:
-                    Halt();
-                    break;
-            }
-        }
-
-        RTLBitArray LWData => Inputs.MemReadData;
-        RTLBitArray LHData => Inputs.MemReadData[15, 0].Signed().Resized(32);
-        RTLBitArray LHUData => Inputs.MemReadData[15, 0].Unsigned().Resized(32);
-        RTLBitArray LBData => Inputs.MemReadData[7, 0].Signed().Resized(32);
-        RTLBitArray LBUData => Inputs.MemReadData[7, 0].Unsigned().Resized(32);
-
-        // TODO: inlined RTLBitArray operations
-        void MemStage()
-        {
-            if (Inputs.MemReady)
-            {
-                NextState.State = CPUState.WB;
-                if (IsLoadOp)
-                {
-                    NextState.WBDataReady = true;
-
-                    switch (ID.LoadTypeCode)
-                    {
-                        case LoadTypeCodes.LW:
-                            NextState.WBData = LWData;
-                            break;
-                        case LoadTypeCodes.LH:
-                            NextState.WBData = LHData;
-                            break;
-                        case LoadTypeCodes.LHU:
-                            NextState.WBData = LHUData;
-                            break;
-                        case LoadTypeCodes.LB:
-                            NextState.WBData = LBData;
-                            break;
-                        case LoadTypeCodes.LBU:
-                            NextState.WBData = LBUData;
-                            break;
-                    }
-                }
-            }
-        }
-
         RTLBitArray InstructionOffset => new RTLBitArray(4).Unsigned();
         RTLBitArray NextSequentialPC => State.PC + InstructionOffset;
         RTLBitArray internalNextPC => ID.OpTypeCode == OpTypeCodes.JALR ? State.PCOffset : State.PC + State.PCOffset;
@@ -587,106 +386,12 @@ namespace QRV32.CPU
 
         bool MRET => ID.SystemCode == SystemCodes.E && ID.SysTypeCode == SysTypeCodes.TRAP && ID.RetTypeCode == RetTypeCodes.MRET;
 
-        void DisableInterrupts()
-        {
-            NextState.CSR[(byte)CSRAddr.mstatus] = State.CSR[(byte)CSRAddr.mstatus] & 0xFFFFFFF7;
-        }
-
-        void EnableInterrupts()
-        {
-            NextState.CSR[(byte)CSRAddr.mstatus] = State.CSR[(byte)CSRAddr.mstatus] | 0x8;
-        }
-
-        void WriteBackStage()
-        {
-            if (PCMisaligned)
-            {
-                if (MIE && HasMTVEC)
-                {
-                    NextState.State = CPUState.IF;
-
-                    // address misalign caused trap, store current address
-                    DisableInterrupts();
-                    NextState.CSR[(byte)CSRAddr.mepc] = State.PC;
-                    NextState.CSR[(byte)CSRAddr.mtval] = internalNextPC;
-                    NextState.CSR[(byte)CSRAddr.mcause] = (uint)MCAUSE.InstAddrMisalign;
-                    NextState.PC = State.CSR[(byte)CSRAddr.mtvec];
-                }
-                else
-                {
-                    Halt();
-                }
-            }
-            else
-            {
-                NextState.State = CPUState.IF;
-
-                if (State.pendingMCause != 0)
-                {
-                    if (MIE && HasMTVEC)
-                    {
-                        // in instruction caused trap, store current address
-                        DisableInterrupts();
-                        NextState.CSR[(byte)CSRAddr.mepc] = State.PC;
-                        NextState.CSR[(byte)CSRAddr.mcause] = (uint)NextState.pendingMCause;
-                        NextState.PC = State.CSR[(byte)CSRAddr.mtvec];
-                        NextState.pendingMCause = 0;
-                    }
-                    else
-                    {
-                        // no trap handler, halt execution
-                        Halt();
-                    }
-                }
-                else if (MIE && Inputs.ExtIRQ)
-                {
-                    // if external cause trap, store next instruction, as current once completed successfully
-                    DisableInterrupts();
-                    NextState.CSR[(byte)CSRAddr.mepc] = internalNextPC;
-                    NextState.CSR[(byte)CSRAddr.mcause] = (uint)MCAUSE.MExternalIRQ;
-                    NextState.PC = State.CSR[(byte)CSRAddr.mtvec];
-                }
-                else if (MRET)
-                {
-                    NextState.PC = State.CSR[(byte)CSRAddr.mepc];
-                    EnableInterrupts();
-                }
-                else
-                {
-                    NextState.PC = internalNextPC;
-                }
-            }
-        }
-
-        void InstructionFetchStage()
-        {
-            if (Inputs.MemReady)
-            {
-                NextState.State = CPUState.ID;
-                NextState.Instruction = Inputs.MemReadData;
-            }
-        }
-
-        void InstructionDecodeStage()
-        {
-            if (Regs.Ready)
-            {
-                NextState.State = CPUState.EX;
-            }
-        }
-
-        void EStage()
-        {
-            NextState.State = CPUState.WB;
-        }
-
         protected override void OnStage()
         {
             switch (State.State)
             {
                 case CPUState.Reset:
-                    NextState.State = CPUState.IF;
-                    NextState.PC = Inputs.BaseAddress;
+                    ResetStage();
                     break;
                 case CPUState.IF:
                     InstructionFetchStage();
@@ -707,28 +412,6 @@ namespace QRV32.CPU
                     EStage();
                     break;
             }
-        }
-
-        public override string ToString()
-        {
-            // this is non-synthesizable method, anything can be done here
-            var dump = new StringBuilder();
-            var disasm = new Disassembler();
-
-            dump.AppendLine($"RISC-V Dump:");
-            dump.AppendLine($"PC: 0x{State.PC}");
-            dump.AppendLine($"State: {State.State}");
-            dump.AppendLine($"Instruction: 0x{State.Instruction:X8}");
-            dump.AppendLine($"Disassembled: {disasm.Single(State.PC, State.Instruction)}");
-            dump.AppendLine($"OpCode: {ID.OpTypeCode}");
-            dump.AppendLine($"=== REGS ===");
-            Regs
-                .State
-                .x
-                .Select((r, idx) => $"x{idx}".PadRight(3) + $": 0x{r:X8}")
-                .ForEach(l => dump.AppendLine(l));
-
-            return dump.ToString();
         }
     }
 }
