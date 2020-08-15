@@ -2,7 +2,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using QRV32.CPU;
 using Quokka.RTL.Simulator;
 
-namespace QRV32.Tests
+namespace QRV32.Modules.Tests
 {
     [TestClass]
     public class InstructionDecoderModuleTests

@@ -2,7 +2,7 @@
 using QRV32.CPU;
 using QRV32.Tests;
 
-namespace QRV32.CPUModuleTests
+namespace QRV32.Instructions.Tests
 {
     [TestClass]
     public class CSRTests : CPUModuleBaseTest

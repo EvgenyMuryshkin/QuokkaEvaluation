@@ -4,7 +4,7 @@ using QRV32.Tests;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
-namespace QRV32.CPUModuleTests
+namespace QRV32.Instructions.Tests
 {
 
     [TestClass]

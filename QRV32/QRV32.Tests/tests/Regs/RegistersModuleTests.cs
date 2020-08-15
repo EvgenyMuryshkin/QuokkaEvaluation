@@ -5,7 +5,7 @@ using Quokka.RTL.Simulator;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace QRV32.Tests
+namespace QRV32.Modules.Tests
 {
     public class RegistersModuleTests<TModule>
         where TModule: IRegistersModule, new()
@@ -60,15 +60,5 @@ namespace QRV32.Tests
                 }
             }
         }
-    }
-
-    [TestClass]
-    public class RegistersBlockModuleTests : RegistersModuleTests<RegistersBlockModule>
-    {
-    }
-
-    [TestClass]
-    public class RegistersRAMModuleTests : RegistersModuleTests<RegistersRAMModule>
-    {
     }
 }

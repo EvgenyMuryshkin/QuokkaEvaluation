@@ -11,10 +11,10 @@ Linker script and memory map
 .text           0x0000000000000000      0x15c
                 0x0000000000000000                . = ALIGN (0x4)
  *(.text)
- .text          0x0000000000000000        0xc /tmp/ccgQqW8w.o
- .text          0x000000000000000c       0x28 /tmp/ccyRCKGU.o
+ .text          0x0000000000000000        0xc /tmp/ccdJNIZU.o
+ .text          0x000000000000000c       0x28 /tmp/ccaf7JDW.o
                 0x000000000000000c                main
- .text          0x0000000000000034       0x88 /tmp/ccWwJEji.o
+ .text          0x0000000000000034       0x88 /tmp/ccHqlGmY.o
                 0x0000000000000034                Recursion::Firmware::RecursiveCounter(unsigned long)
                 0x0000000000000090                Recursion::Firmware::EntryPoint()
  *(.text*)
@@ -23,8 +23,8 @@ Linker script and memory map
  *(.srodata)
  *(.srodata*)
  *(.eh_frame)
- .eh_frame      0x00000000000000bc       0x3c /tmp/ccyRCKGU.o
- .eh_frame      0x00000000000000f8       0x64 /tmp/ccWwJEji.o
+ .eh_frame      0x00000000000000bc       0x3c /tmp/ccaf7JDW.o
+ .eh_frame      0x00000000000000f8       0x64 /tmp/ccHqlGmY.o
  *(.eh_frame*)
                 0x000000000000015c                . = ALIGN (0x4)
                 0x000000000000015c                _etext = .
@@ -35,9 +35,9 @@ Linker script and memory map
                 0x000000000000015c                _sdata = .
                 0x000000000000015c                _ram_start = .
  *(.data)
- .data          0x000000000000015c        0x0 /tmp/ccgQqW8w.o
- .data          0x000000000000015c        0x0 /tmp/ccyRCKGU.o
- .data          0x000000000000015c        0x0 /tmp/ccWwJEji.o
+ .data          0x000000000000015c        0x0 /tmp/ccdJNIZU.o
+ .data          0x000000000000015c        0x0 /tmp/ccaf7JDW.o
+ .data          0x000000000000015c        0x0 /tmp/ccHqlGmY.o
  *(.data*)
  *(.sdata)
  *(.sdata*)
@@ -50,9 +50,9 @@ Linker script and memory map
                 0x000000000000015c                . = ALIGN (0x4)
                 0x000000000000015c                _sbss = .
  *(.bss)
- .bss           0x000000000000015c        0x0 /tmp/ccgQqW8w.o
- .bss           0x000000000000015c        0x0 /tmp/ccyRCKGU.o
- .bss           0x000000000000015c        0x0 /tmp/ccWwJEji.o
+ .bss           0x000000000000015c        0x0 /tmp/ccdJNIZU.o
+ .bss           0x000000000000015c        0x0 /tmp/ccaf7JDW.o
+ .bss           0x000000000000015c        0x0 /tmp/ccHqlGmY.o
  *(.bss*)
  *(.sbss)
  *(.sbss*)
@@ -63,30 +63,30 @@ Linker script and memory map
 .heap           0x000000000000015c        0x0
                 0x000000000000015c                . = ALIGN (0x4)
                 0x000000000000015c                _heap_start = .
-LOAD /tmp/ccgQqW8w.o
-LOAD /tmp/ccyRCKGU.o
-LOAD /tmp/ccWwJEji.o
+LOAD /tmp/ccdJNIZU.o
+LOAD /tmp/ccaf7JDW.o
+LOAD /tmp/ccHqlGmY.o
 OUTPUT(firmware.elf elf32-littleriscv)
 
 .riscv.attributes
                 0x0000000000000000       0x1c
  .riscv.attributes
-                0x0000000000000000       0x1a /tmp/ccgQqW8w.o
+                0x0000000000000000       0x1a /tmp/ccdJNIZU.o
  .riscv.attributes
-                0x000000000000001a       0x1c /tmp/ccyRCKGU.o
+                0x000000000000001a       0x1c /tmp/ccaf7JDW.o
  .riscv.attributes
-                0x0000000000000036       0x1c /tmp/ccWwJEji.o
+                0x0000000000000036       0x1c /tmp/ccHqlGmY.o
 
 .comment        0x0000000000000000       0x12
- .comment       0x0000000000000000       0x12 /tmp/ccyRCKGU.o
+ .comment       0x0000000000000000       0x12 /tmp/ccaf7JDW.o
                                          0x13 (size before relaxing)
- .comment       0x0000000000000012       0x13 /tmp/ccWwJEji.o
+ .comment       0x0000000000000012       0x13 /tmp/ccHqlGmY.o
 
 Cross Reference Table
 
 Symbol                                            File
-Recursion::Firmware::EntryPoint()                 /tmp/ccWwJEji.o
-                                                  /tmp/ccyRCKGU.o
-Recursion::Firmware::RecursiveCounter(unsigned long) /tmp/ccWwJEji.o
-main                                              /tmp/ccyRCKGU.o
-                                                  /tmp/ccgQqW8w.o
+Recursion::Firmware::EntryPoint()                 /tmp/ccHqlGmY.o
+                                                  /tmp/ccaf7JDW.o
+Recursion::Firmware::RecursiveCounter(unsigned long) /tmp/ccHqlGmY.o
+main                                              /tmp/ccaf7JDW.o
+                                                  /tmp/ccdJNIZU.o

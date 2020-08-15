@@ -3,7 +3,7 @@ using QRV32.CPU;
 using QRV32.Tests;
 using System.Linq;
 
-namespace QRV32.CPUModuleTests
+namespace QRV32.Instructions.Tests
 {
     [TestClass]
     public class CallTests : CPUModuleBaseTest

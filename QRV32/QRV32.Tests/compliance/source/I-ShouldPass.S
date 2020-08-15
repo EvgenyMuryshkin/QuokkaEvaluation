@@ -11,6 +11,7 @@ RV_COMPLIANCE_CODE_BEGIN
     # address for test results
 	la	x5, test_1_res
 
+	TEST_RR_OP(add, x0, x31, x16, 0x0, -0x1, 0x0, x5, 0, x6)   # Testcase 0
 	TEST_RR_OP(add, x1, x30, x15, 0xfffff802, 0x1, -0x7ff, x5, 4, x6)   # Testcase 1
 
 	RV_COMPLIANCE_HALT

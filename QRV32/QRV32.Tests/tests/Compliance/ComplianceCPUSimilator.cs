@@ -1,12 +1,16 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using QRV32.Tests;
+using System.Collections.Generic;
 
-namespace QRV32.Tests.Compliance
+namespace QRV32.Compliance
 {
     public class ComplianceCPUSimilator : CPUSimulator
     {
         int _dataMarkerAddress = 0;
         public int Asserts = 0;
         public bool HasNonZeroValues = false;
+
+        public List<uint> AssertedValues = new List<uint>();
 
         public ComplianceCPUSimilator(int dataMarkerAddress)
         {
@@ -25,6 +29,7 @@ namespace QRV32.Tests.Compliance
 
             Asserts++;
             HasNonZeroValues |= (expected != 0);
+            AssertedValues.Add(actual);
         }
     }
 }

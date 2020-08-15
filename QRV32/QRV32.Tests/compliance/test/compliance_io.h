@@ -28,7 +28,7 @@
 
 #define RVTEST_IO_INIT				\
 		/*enable interrupts handling*/	\
-		csrrs zero, mstatus, 0x8;	\
+		csrrsi zero, mstatus, 0x8;	\
 
 #define RVTEST_IO_WRITE_STR(_TMP, _STR)
 #define RVTEST_IO_CHECK()

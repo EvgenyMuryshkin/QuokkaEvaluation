@@ -16,6 +16,9 @@ namespace QRV32.CPU
 
             switch (id.OpTypeCode)
             {
+                case OpTypeCodes.B:
+                    decoded = $"B{id.BranchTypeCode} x{(uint)id.RS1}, x{(uint)id.RS2}, {(uint)id.BTypeImm} (0x{(address + id.BTypeImm):X})";
+                    break;
                 case OpTypeCodes.JALR:
                     decoded += $" x{(uint)id.RD}, x{(uint)id.RS1}, {(uint)id.ITypeImm} (0x{id.ITypeImm})";
                     break;
@@ -127,7 +130,17 @@ namespace QRV32.CPU
                         default:
                             if (id.SystemCode >= SystemCodes.CSRRW && id.SystemCode <= SystemCodes.CSRRCI)
                             {
-                                decoded = $"{id.SystemCode} x{(uint)id.RD}, {id.CSRAddress}, x{(uint)id.RS1}";
+                                switch (id.SystemCode)
+                                {
+                                    case SystemCodes.CSRRCI:
+                                    case SystemCodes.CSRRSI:
+                                    case SystemCodes.CSRRWI:
+                                        decoded = $"{id.SystemCode} x{(uint)id.RD}, {id.CSRAddress}, 0x{(uint)id.RS1:X8}";
+                                        break;
+                                    default:
+                                        decoded = $"{id.SystemCode} x{(uint)id.RD}, {id.CSRAddress}, x{(uint)id.RS1}";
+                                        break;
+                                }
                             }
                             else
                             {

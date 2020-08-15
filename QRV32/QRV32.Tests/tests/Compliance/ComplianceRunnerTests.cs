@@ -1,17 +1,18 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using QRV32.Compliance.RV32I;
 
-namespace QRV32.Tests.Compliance
+namespace QRV32.Compliance.Runner.Tests
 {
     [TestClass]
     public class ComplianceRunnerTests : ComplianceTestsBase
     {
         [TestMethod]
-        public void _01_ShouldPass() => RunTest("I-ShouldPass");
+        public void I_ShouldPass() => RunAndAssert("I-ShouldPass");
 
         [TestMethod]
-        public void _02_ShouldFail()
+        public void I_ShouldFail()
         {
-            Assert.ThrowsException<AssertFailedException>(() => RunTest("I-ShouldFail"));
+            Assert.ThrowsException<AssertFailedException>(() => RunAndAssert("I-ShouldFail"));
         }
     }
 }

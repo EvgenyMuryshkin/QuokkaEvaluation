@@ -110,6 +110,7 @@
         // Machine Trap Handling
         mepc        = 0x341, // Machine exception program counter
         mcause      = 0x342, // Machine trap cause
+        mtval       = 0x343, // Machine bad address or instruction
         mip         = 0x344, // Machine interrupt pending
     }
 
@@ -125,6 +126,7 @@
         misa,
         mie,
         mtvec,
+        mtval,
         // Machine Trap Handling
         mepc,
         mcause,
@@ -133,7 +135,23 @@
 
     public enum MCAUSE : uint
     {
-        MExternalIRQ = 0x8000000B,
+        // Traps
+        InstAddrMisalign = 0U,
         Breakpoint = 0x3U,
+        LoadAddrMisalign = 0x4U,
+        StoreAddrMisalign = 0x6U,
+        MECall = 0xBU,
+        // Software interrupts
+        USoftIRQ = 0x80000000,
+        SSoftIRQ = 0x80000001,
+        MSoftIRQ = 0x80000003,
+        // Timer interrupts
+        UTimerIRQ = 0x80000004,
+        STimerIRQ = 0x80000005,
+        MTimerIRQ = 0x80000007,
+        // External interrupts
+        UExternalIRQ = 0x80000008,
+        SExternalIRQ = 0x80000009,
+        MExternalIRQ = 0x8000000B,
     }
 }

@@ -41,7 +41,7 @@ namespace QRV32.CPU
 
         public RTLBitArray PCOffset = new RTLBitArray(uint.MinValue);
 
-        public bool InstIRQ;
+        public MCAUSE pendingMCause;
 
         public uint[] CSR = CSRInit();
 
@@ -59,6 +59,7 @@ namespace QRV32.CPU
                 0x40000100U,// misa:        MXL: 32 bit, ISA: I
                 0U,         // mie          No interrupts enabled at startup
                 0U,         // mtvec
+                0U,         // mtval
                 // Machine Trap Handling
                 0U,         // mscratch
                 0U,         // mepc
@@ -84,7 +85,7 @@ namespace QRV32.CPU
 
         public bool MemRead => State.State == CPUState.IF || (State.State == CPUState.MEM && IsLoadOp);
         public bool MemWrite => State.State == CPUState.MEM && IsStoreOp;
-        public uint MemAddress
+        uint internalMemAddress
         {
             get
             {
@@ -105,6 +106,7 @@ namespace QRV32.CPU
                 return address;
             }
         }
+        public uint MemAddress => internalMemAddress;
 
         public bool IsHalted => State.State == CPUState.Halt;
 
@@ -195,6 +197,7 @@ namespace QRV32.CPU
                 case CSRCodes.mtvec:     address = CSRAddr.mtvec;       break;
                 case CSRCodes.mepc:      address = CSRAddr.mepc;        break;
                 case CSRCodes.mcause:    address = CSRAddr.mcause;      break;
+                case CSRCodes.mtval:     address = CSRAddr.mtval;       break;
                 case CSRCodes.mip:       address = CSRAddr.mip;         break;
             }
 
@@ -346,13 +349,22 @@ namespace QRV32.CPU
                 switch(ID.SysTypeCode)
                 {
                     case SysTypeCodes.CALL:
-                        NextState.State = CPUState.E;
+                        if (HasMTVEC)
+                        {
+                            // go into trap handler
+                            NextState.pendingMCause = MCAUSE.MECall;
+                            NextState.State = CPUState.WB;
+                        }
+                        else
+                        {
+                            NextState.State = CPUState.E;
+                        }
                         break;
                     case SysTypeCodes.BREAK:
                         if (HasMTVEC)
                         {
                             // go into trap handler
-                            NextState.InstIRQ = true;
+                            NextState.pendingMCause = MCAUSE.Breakpoint;
                             NextState.State = CPUState.WB;
                         }
                         else
@@ -426,6 +438,54 @@ namespace QRV32.CPU
                 Halt();
             }
         }
+        bool halfMisaliged => (new RTLBitArray(internalMemAddress))[0] != false;
+        bool wordMisaliged => (new RTLBitArray(internalMemAddress))[1, 0] != 0;
+
+        bool MemAddressMisaligned
+        {
+            get
+            {
+                bool result = false;
+                switch (ID.LoadTypeCode)
+                {
+                    case LoadTypeCodes.LW:
+                        result = wordMisaliged;
+                        break;
+                    case LoadTypeCodes.LH:
+                        result = halfMisaliged;
+                        break;
+                    case LoadTypeCodes.LHU:
+                        result = halfMisaliged;
+                        break;
+                }
+
+                return result;
+            }
+        }
+
+        void CheckMemAddressMisalign()
+        {
+            if (MemAddressMisaligned)
+            {
+                NextState.State = CPUState.IF;
+
+                // address misalign caused trap, store current address
+                DisableInterrupts();
+                NextState.CSR[(byte)CSRAddr.mepc] = State.PC;
+                NextState.CSR[(byte)CSRAddr.mtval] = internalMemAddress;
+                NextState.PC = State.CSR[(byte)CSRAddr.mtvec];
+
+                switch (ID.OpTypeCode)
+                {
+                    case OpTypeCodes.LOAD:
+                        NextState.CSR[(byte)CSRAddr.mcause] = (uint)MCAUSE.LoadAddrMisalign;
+                        break;
+                    case OpTypeCodes.STORE:
+                        NextState.CSR[(byte)CSRAddr.mcause] = (uint)MCAUSE.StoreAddrMisalign;
+                        break;
+                }
+            }
+        }
 
         void ExecuteStage()
         {
@@ -464,9 +524,11 @@ namespace QRV32.CPU
                     break;
                 case OpTypeCodes.LOAD:
                     NextState.State = CPUState.MEM;
+                    CheckMemAddressMisalign();
                     break;
                 case OpTypeCodes.STORE:
                     NextState.State = CPUState.MEM;
+                    CheckMemAddressMisalign();
                     break;
                 case OpTypeCodes.SYSTEM:
                     OnSystem();
@@ -539,22 +601,36 @@ namespace QRV32.CPU
         {
             if (PCMisaligned)
             {
-                Halt();
+                if (MIE && HasMTVEC)
+                {
+                    NextState.State = CPUState.IF;
+
+                    // address misalign caused trap, store current address
+                    DisableInterrupts();
+                    NextState.CSR[(byte)CSRAddr.mepc] = State.PC;
+                    NextState.CSR[(byte)CSRAddr.mtval] = internalNextPC;
+                    NextState.CSR[(byte)CSRAddr.mcause] = (uint)MCAUSE.InstAddrMisalign;
+                    NextState.PC = State.CSR[(byte)CSRAddr.mtvec];
+                }
+                else
+                {
+                    Halt();
+                }
             }
             else
             {
                 NextState.State = CPUState.IF;
 
-                if (State.InstIRQ)
+                if (State.pendingMCause != 0)
                 {
                     if (MIE && HasMTVEC)
                     {
                         // in instruction caused trap, store current address
                         DisableInterrupts();
-                        NextState.InstIRQ = false;
                         NextState.CSR[(byte)CSRAddr.mepc] = State.PC;
-                        NextState.CSR[(byte)CSRAddr.mcause] = (uint)MCAUSE.Breakpoint;
+                        NextState.CSR[(byte)CSRAddr.mcause] = (uint)NextState.pendingMCause;
                         NextState.PC = State.CSR[(byte)CSRAddr.mtvec];
+                        NextState.pendingMCause = 0;
                     }
                     else
                     {
