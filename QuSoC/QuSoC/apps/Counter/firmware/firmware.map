@@ -11,10 +11,10 @@ Linker script and memory map
 .text           0x0000000000000000       0xcc
                 0x0000000000000000                . = ALIGN (0x4)
  *(.text)
- .text          0x0000000000000000        0xc /tmp/cctZ76Cc.o
- .text          0x000000000000000c       0x28 /tmp/ccYFFTB8.o
+ .text          0x0000000000000000        0xc /tmp/ccfhdh35.o
+ .text          0x000000000000000c       0x28 /tmp/ccPOkOo2.o
                 0x000000000000000c                main
- .text          0x0000000000000034       0x2c /tmp/ccBGckF4.o
+ .text          0x0000000000000034       0x2c /tmp/ccVuiYPY.o
                 0x0000000000000034                SOCCounter::Firmware::EntryPoint()
  *(.text*)
  *(.rodata)
@@ -22,8 +22,8 @@ Linker script and memory map
  *(.srodata)
  *(.srodata*)
  *(.eh_frame)
- .eh_frame      0x0000000000000060       0x3c /tmp/ccYFFTB8.o
- .eh_frame      0x000000000000009c       0x30 /tmp/ccBGckF4.o
+ .eh_frame      0x0000000000000060       0x3c /tmp/ccPOkOo2.o
+ .eh_frame      0x000000000000009c       0x30 /tmp/ccVuiYPY.o
  *(.eh_frame*)
                 0x00000000000000cc                . = ALIGN (0x4)
                 0x00000000000000cc                _etext = .
@@ -34,9 +34,9 @@ Linker script and memory map
                 0x00000000000000cc                _sdata = .
                 0x00000000000000cc                _ram_start = .
  *(.data)
- .data          0x00000000000000cc        0x0 /tmp/cctZ76Cc.o
- .data          0x00000000000000cc        0x0 /tmp/ccYFFTB8.o
- .data          0x00000000000000cc        0x0 /tmp/ccBGckF4.o
+ .data          0x00000000000000cc        0x0 /tmp/ccfhdh35.o
+ .data          0x00000000000000cc        0x0 /tmp/ccPOkOo2.o
+ .data          0x00000000000000cc        0x0 /tmp/ccVuiYPY.o
  *(.data*)
  *(.sdata)
  *(.sdata*)
@@ -49,9 +49,9 @@ Linker script and memory map
                 0x00000000000000cc                . = ALIGN (0x4)
                 0x00000000000000cc                _sbss = .
  *(.bss)
- .bss           0x00000000000000cc        0x0 /tmp/cctZ76Cc.o
- .bss           0x00000000000000cc        0x0 /tmp/ccYFFTB8.o
- .bss           0x00000000000000cc        0x0 /tmp/ccBGckF4.o
+ .bss           0x00000000000000cc        0x0 /tmp/ccfhdh35.o
+ .bss           0x00000000000000cc        0x0 /tmp/ccPOkOo2.o
+ .bss           0x00000000000000cc        0x0 /tmp/ccVuiYPY.o
  *(.bss*)
  *(.sbss)
  *(.sbss*)
@@ -62,29 +62,29 @@ Linker script and memory map
 .heap           0x00000000000000cc        0x0
                 0x00000000000000cc                . = ALIGN (0x4)
                 0x00000000000000cc                _heap_start = .
-LOAD /tmp/cctZ76Cc.o
-LOAD /tmp/ccYFFTB8.o
-LOAD /tmp/ccBGckF4.o
+LOAD /tmp/ccfhdh35.o
+LOAD /tmp/ccPOkOo2.o
+LOAD /tmp/ccVuiYPY.o
 OUTPUT(firmware.elf elf32-littleriscv)
 
 .riscv.attributes
                 0x0000000000000000       0x1c
  .riscv.attributes
-                0x0000000000000000       0x1a /tmp/cctZ76Cc.o
+                0x0000000000000000       0x1a /tmp/ccfhdh35.o
  .riscv.attributes
-                0x000000000000001a       0x1c /tmp/ccYFFTB8.o
+                0x000000000000001a       0x1c /tmp/ccPOkOo2.o
  .riscv.attributes
-                0x0000000000000036       0x1c /tmp/ccBGckF4.o
+                0x0000000000000036       0x1c /tmp/ccVuiYPY.o
 
 .comment        0x0000000000000000       0x12
- .comment       0x0000000000000000       0x12 /tmp/ccYFFTB8.o
+ .comment       0x0000000000000000       0x12 /tmp/ccPOkOo2.o
                                          0x13 (size before relaxing)
- .comment       0x0000000000000012       0x13 /tmp/ccBGckF4.o
+ .comment       0x0000000000000012       0x13 /tmp/ccVuiYPY.o
 
 Cross Reference Table
 
 Symbol                                            File
-SOCCounter::Firmware::EntryPoint()                /tmp/ccBGckF4.o
-                                                  /tmp/ccYFFTB8.o
-main                                              /tmp/ccYFFTB8.o
-                                                  /tmp/cctZ76Cc.o
+SOCCounter::Firmware::EntryPoint()                /tmp/ccVuiYPY.o
+                                                  /tmp/ccPOkOo2.o
+main                                              /tmp/ccPOkOo2.o
+                                                  /tmp/ccfhdh35.o

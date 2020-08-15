@@ -92,16 +92,6 @@ namespace QRV32.Compliance.RV32I
             var dataSectionAddress = DataSectionAddress() >> 2;
             var referenceOutput = ReferenceOutput(testName);
             AssertMemory(sim, dataSectionAddress, referenceOutput);
-            /*
-            Assert.IsTrue(sim.Asserts > 0, "No asserts were performed during simulation");
-            Assert.IsTrue(sim.HasNonZeroValues, "No non-zero values were asserted");
-
-            Console.WriteLine($"Asserted {sim.AssertedValues.Count} values");
-            foreach (var val in sim.AssertedValues)
-            {
-                Console.WriteLine($"{val:X8}");
-            }
-            */
         }
 
         public ComplianceCPUSimilator Run(string testName)
