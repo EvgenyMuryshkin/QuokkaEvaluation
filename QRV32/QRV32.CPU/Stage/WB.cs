@@ -7,6 +7,10 @@ namespace QRV32.CPU
 {
     public partial class RISCVModule
     {
+        bool HasMTVEC => State.CSR[(byte)CSRAddr.mtvec] != 0;
+
+        RTLBitArray InstructionOffset => new RTLBitArray(4).Unsigned();
+
         RTLBitArray internalNextPC => ID.OpTypeCode == OpTypeCodes.JALR ? State.PCOffset : State.PC + State.PCOffset;
         public bool PCMisaligned => new RTLBitArray(internalNextPC[1, 0]) != 0;
 

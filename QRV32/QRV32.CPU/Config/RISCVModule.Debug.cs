@@ -8,6 +8,8 @@ namespace QRV32.CPU
 {
     public partial class RISCVModule
     {
+        public bool IsHalted => State.State == CPUState.Halt;
+
         public override string ToString()
         {
             // this is non-synthesizable method, anything can be done here
