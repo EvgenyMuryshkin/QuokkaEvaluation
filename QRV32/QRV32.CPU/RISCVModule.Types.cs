@@ -2,18 +2,6 @@
 
 namespace QRV32.CPU
 {
-    public enum CPUState : byte
-    {
-        Reset,
-        IF,
-        ID,
-        EX,
-        MEM,
-        WB,
-        E,
-        Halt
-    }
-
     public class RISCVModuleInputs
     {
         public RTLBitArray BaseAddress = new RTLBitArray(uint.MinValue);

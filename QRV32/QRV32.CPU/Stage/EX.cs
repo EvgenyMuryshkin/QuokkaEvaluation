@@ -25,30 +25,22 @@ namespace QRV32.CPU
                     OnBranch();
                     break;
                 case OpTypeCodes.LUI:
-                    NextState.WBDataReady = true;
-                    NextState.WBData = ID.UTypeImm;
+                    OnLUI();
                     break;
                 case OpTypeCodes.AUIPC:
-                    NextState.WBDataReady = true;
-                    NextState.WBData = State.PC + ID.UTypeImm;
+                    OnAUIPC();
                     break;
                 case OpTypeCodes.JAL:
-                    NextState.WBDataReady = true;
-                    NextState.WBData = NextSequentialPC;
-                    NextState.PCOffset = ID.JTypeImm;
+                    OnJAL();
                     break;
                 case OpTypeCodes.JALR:
-                    NextState.WBDataReady = true;
-                    NextState.WBData = NextSequentialPC;
-                    NextState.PCOffset = new RTLBitArray(new RTLBitArray(Regs.RS1 + ID.ITypeImm)[31, 1], false);
+                    OnJALR();
                     break;
                 case OpTypeCodes.LOAD:
-                    NextState.State = CPUState.MEM;
-                    CheckMemAddressMisalign();
+                    OnLoadStore();
                     break;
                 case OpTypeCodes.STORE:
-                    NextState.State = CPUState.MEM;
-                    CheckMemAddressMisalign();
+                    OnLoadStore();
                     break;
                 case OpTypeCodes.SYSTEM:
                     OnSystem();

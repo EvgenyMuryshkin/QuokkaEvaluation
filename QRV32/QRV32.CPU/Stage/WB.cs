@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Quokka.RTL;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,6 +7,14 @@ namespace QRV32.CPU
 {
     public partial class RISCVModule
     {
+        RTLBitArray internalNextPC => ID.OpTypeCode == OpTypeCodes.JALR ? State.PCOffset : State.PC + State.PCOffset;
+        public bool PCMisaligned => new RTLBitArray(internalNextPC[1, 0]) != 0;
+
+        RTLBitArray MSTATUS => State.CSR[(byte)CSRAddr.mstatus];
+        bool MIE => MSTATUS[3];
+        bool MRET => ID.SystemCode == SystemCodes.E && ID.SysTypeCode == SysTypeCodes.TRAP && ID.RetTypeCode == RetTypeCodes.MRET;
+
+
         void DisableInterrupts()
         {
             NextState.CSR[(byte)CSRAddr.mstatus] = State.CSR[(byte)CSRAddr.mstatus] & 0xFFFFFFF7;

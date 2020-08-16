@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Quokka.RTL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,16 @@ namespace QRV32.CPU
         internal IRegistersModule Regs = null;
         internal ALUModule ALU = new ALUModule();
         internal CompareModule CMP = new CompareModule();
+
+        RTLBitArray ALUOp1 => Regs.RS1;
+        RTLBitArray ALUOp2 => ID.OpTypeCode == OpTypeCodes.OPIMM ? ID.ITypeImm : Regs.RS2;
+
+        RTLBitArray ALUSHAMT => ID.OpTypeCode == OpTypeCodes.OPIMM ? ID.SHAMT : Regs.RS2[4, 0];
+        bool RegsRead => State.State == CPUState.ID;
+        bool RegsWE => State.State == CPUState.WB && State.WBDataReady;
+
+        RTLBitArray CMPLhs => Regs.RS1;
+        RTLBitArray CMPRhs => ID.OpTypeCode == OpTypeCodes.OPIMM ? ID.ITypeImm : Regs.RS2;
 
         public RISCVModule()
         {
@@ -56,28 +67,6 @@ namespace QRV32.CPU
                 Lhs = CMPLhs,
                 Rhs = CMPRhs
             });
-        }
-
-        public override string ToString()
-        {
-            // this is non-synthesizable method, anything can be done here
-            var dump = new StringBuilder();
-            var disasm = new Disassembler();
-
-            dump.AppendLine($"RISC-V Dump:");
-            dump.AppendLine($"PC: 0x{State.PC}");
-            dump.AppendLine($"State: {State.State}");
-            dump.AppendLine($"Instruction: 0x{State.Instruction:X8}");
-            dump.AppendLine($"Disassembled: {disasm.Single(State.PC, State.Instruction)}");
-            dump.AppendLine($"OpCode: {ID.OpTypeCode}");
-            dump.AppendLine($"=== REGS ===");
-            Regs
-                .State
-                .x
-                .Select((r, idx) => $"x{idx}".PadRight(3) + $": 0x{r:X8}")
-                .ForEach(l => dump.AppendLine(l));
-
-            return dump.ToString();
         }
     }
 }

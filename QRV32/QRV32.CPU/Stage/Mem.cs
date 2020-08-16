@@ -7,54 +7,33 @@ namespace QRV32.CPU
 {
     public partial class RISCVModule
     {
-        bool halfMisaliged => (new RTLBitArray(internalMemAddress))[0] != false;
-        bool wordMisaliged => (new RTLBitArray(internalMemAddress))[1, 0] != 0;
+        internal bool IsLoadOp => ID.OpTypeCode == OpTypeCodes.LOAD;
+        internal bool IsStoreOp => ID.OpTypeCode == OpTypeCodes.STORE;
 
-        bool MemAddressMisaligned
+        public bool MemRead => State.State == CPUState.IF || (State.State == CPUState.MEM && IsLoadOp);
+        public bool MemWrite => State.State == CPUState.MEM && IsStoreOp;
+        uint internalMemAddress
         {
             get
             {
-                bool result = false;
-                switch (ID.LoadTypeCode)
+                uint address = 0;
+                if (State.State == CPUState.IF)
                 {
-                    case LoadTypeCodes.LW:
-                        result = wordMisaliged;
-                        break;
-                    case LoadTypeCodes.LH:
-                        result = halfMisaliged;
-                        break;
-                    case LoadTypeCodes.LHU:
-                        result = halfMisaliged;
-                        break;
+                    address = State.PC;
+                }
+                else if (IsLoadOp)
+                {
+                    address = Regs.RS1 + ID.ITypeImm;
+                }
+                else if (IsStoreOp)
+                {
+                    address = Regs.RS1 + ID.STypeImm;
                 }
 
-                return result;
+                return address;
             }
         }
-
-        void CheckMemAddressMisalign()
-        {
-            if (MemAddressMisaligned)
-            {
-                NextState.State = CPUState.IF;
-
-                // address misalign caused trap, store current address
-                DisableInterrupts();
-                NextState.CSR[(byte)CSRAddr.mepc] = State.PC;
-                NextState.CSR[(byte)CSRAddr.mtval] = internalMemAddress;
-                NextState.PC = State.CSR[(byte)CSRAddr.mtvec];
-
-                switch (ID.OpTypeCode)
-                {
-                    case OpTypeCodes.LOAD:
-                        NextState.CSR[(byte)CSRAddr.mcause] = (uint)MCAUSE.LoadAddrMisalign;
-                        break;
-                    case OpTypeCodes.STORE:
-                        NextState.CSR[(byte)CSRAddr.mcause] = (uint)MCAUSE.StoreAddrMisalign;
-                        break;
-                }
-            }
-        }
+        public uint MemAddress => internalMemAddress;
 
         RTLBitArray LWData => Inputs.MemReadData;
         RTLBitArray LHData => Inputs.MemReadData[15, 0].Signed().Resized(32);
