@@ -43,7 +43,7 @@ namespace QRV32.CPU
                         NextState.PCOffset = BranchOffset;
                     break;
                 default:
-                    Halt();
+                    Halt(HaltCode.BranchTypeCode);
                     break;
             }
         }

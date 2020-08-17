@@ -102,7 +102,6 @@ wire  [3:1] CPU_MemWriteMode;
 wire  CPU_MemRead;
 wire  CPU_MemWrite;
 wire  [32:1] CPU_MemAddress;
-wire  CPU_PCMisaligned;
 wire  CSCounterModule_WE;
 wire  [32:1] CSCounterModule_WriteValue;
 wire  [32:1] CSCounterModule_Value;
@@ -138,7 +137,6 @@ wire  [3:1] CPUMemWriteModeCPU_MemWriteModeHardLink;
 wire  CPUMemReadCPU_MemReadHardLink;
 wire  CPUMemWriteCPU_MemWriteHardLink;
 wire  [32:1] CPUMemAddressCPU_MemAddressHardLink;
-wire  CPUPCMisalignedCPU_PCMisalignedHardLink;
 wire  CSCounterModuleWECSCounterModule_WEHardLink;
 wire  [32:1] CSCounterModuleWriteValueCSCounterModule_WriteValueHardLink;
 wire  [32:1] CSCounterModuleValueCSCounterModule_ValueHardLink;
@@ -352,8 +350,7 @@ Counter_TopLevel_QuSoCModule_CPU Counter_TopLevel_QuSoCModule_CPU
 	.MemWriteMode (CPUMemWriteModeCPU_MemWriteModeHardLink),
 	.MemRead (CPUMemReadCPU_MemReadHardLink),
 	.MemWrite (CPUMemWriteCPU_MemWriteHardLink),
-	.MemAddress (CPUMemAddressCPU_MemAddressHardLink),
-	.PCMisaligned (CPUPCMisalignedCPU_PCMisalignedHardLink)
+	.MemAddress (CPUMemAddressCPU_MemAddressHardLink)
 
 );
 Counter_TopLevel_QuSoCModule_CSCounterModule Counter_TopLevel_QuSoCModule_CSCounterModule
@@ -556,7 +553,6 @@ assign CPU_MemWriteMode = CPUMemWriteModeCPU_MemWriteModeHardLink;
 assign CPU_MemRead = CPUMemReadCPU_MemReadHardLink;
 assign CPU_MemWrite = CPUMemWriteCPU_MemWriteHardLink;
 assign CPU_MemAddress = CPUMemAddressCPU_MemAddressHardLink;
-assign CPU_PCMisaligned = CPUPCMisalignedCPU_PCMisalignedHardLink;
 assign CSCounterModuleWECSCounterModule_WEHardLink = CSCounterModule_WE;
 assign CSCounterModuleWriteValueCSCounterModule_WriteValueHardLink = CSCounterModule_WriteValue;
 assign CSCounterModule_Value = CSCounterModuleValueCSCounterModule_ValueHardLink;

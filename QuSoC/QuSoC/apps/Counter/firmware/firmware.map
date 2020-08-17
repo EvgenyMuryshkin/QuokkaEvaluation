@@ -11,10 +11,10 @@ Linker script and memory map
 .text           0x0000000000000000       0xc8
                 0x0000000000000000                . = ALIGN (0x4)
  *(.text)
- .text          0x0000000000000000        0xc /tmp/ccGTEWgh.o
- .text          0x000000000000000c       0x28 /tmp/ccE3WFek.o
+ .text          0x0000000000000000        0xc /tmp/ccQ6Rfb7.o
+ .text          0x000000000000000c       0x28 /tmp/ccOdaYd8.o
                 0x000000000000000c                main
- .text          0x0000000000000034       0x2c /tmp/ccWYqiNk.o
+ .text          0x0000000000000034       0x2c /tmp/ccf7ckc9.o
                 0x0000000000000034                SOCCounter::Firmware::EntryPoint()
  *(.text*)
  *(.rodata)
@@ -22,8 +22,8 @@ Linker script and memory map
  *(.srodata)
  *(.srodata*)
  *(.eh_frame)
- .eh_frame      0x0000000000000060       0x38 /tmp/ccE3WFek.o
- .eh_frame      0x0000000000000098       0x30 /tmp/ccWYqiNk.o
+ .eh_frame      0x0000000000000060       0x38 /tmp/ccOdaYd8.o
+ .eh_frame      0x0000000000000098       0x30 /tmp/ccf7ckc9.o
  *(.eh_frame*)
                 0x00000000000000c8                . = ALIGN (0x4)
                 0x00000000000000c8                _etext = .
@@ -34,9 +34,9 @@ Linker script and memory map
                 0x00000000000000c8                _sdata = .
                 0x00000000000000c8                _ram_start = .
  *(.data)
- .data          0x00000000000000c8        0x0 /tmp/ccGTEWgh.o
- .data          0x00000000000000c8        0x0 /tmp/ccE3WFek.o
- .data          0x00000000000000c8        0x0 /tmp/ccWYqiNk.o
+ .data          0x00000000000000c8        0x0 /tmp/ccQ6Rfb7.o
+ .data          0x00000000000000c8        0x0 /tmp/ccOdaYd8.o
+ .data          0x00000000000000c8        0x0 /tmp/ccf7ckc9.o
  *(.data*)
  *(.sdata)
  *(.sdata*)
@@ -49,9 +49,9 @@ Linker script and memory map
                 0x00000000000000c8                . = ALIGN (0x4)
                 0x00000000000000c8                _sbss = .
  *(.bss)
- .bss           0x00000000000000c8        0x0 /tmp/ccGTEWgh.o
- .bss           0x00000000000000c8        0x0 /tmp/ccE3WFek.o
- .bss           0x00000000000000c8        0x0 /tmp/ccWYqiNk.o
+ .bss           0x00000000000000c8        0x0 /tmp/ccQ6Rfb7.o
+ .bss           0x00000000000000c8        0x0 /tmp/ccOdaYd8.o
+ .bss           0x00000000000000c8        0x0 /tmp/ccf7ckc9.o
  *(.bss*)
  *(.sbss)
  *(.sbss*)
@@ -62,20 +62,20 @@ Linker script and memory map
 .heap           0x00000000000000c8        0x0
                 0x00000000000000c8                . = ALIGN (0x4)
                 0x00000000000000c8                _heap_start = .
-LOAD /tmp/ccGTEWgh.o
-LOAD /tmp/ccE3WFek.o
-LOAD /tmp/ccWYqiNk.o
+LOAD /tmp/ccQ6Rfb7.o
+LOAD /tmp/ccOdaYd8.o
+LOAD /tmp/ccf7ckc9.o
 OUTPUT(firmware.elf elf32-littleriscv)
 
 .comment        0x0000000000000000       0x11
- .comment       0x0000000000000000       0x11 /tmp/ccE3WFek.o
+ .comment       0x0000000000000000       0x11 /tmp/ccOdaYd8.o
                                          0x12 (size before relaxing)
- .comment       0x0000000000000011       0x12 /tmp/ccWYqiNk.o
+ .comment       0x0000000000000011       0x12 /tmp/ccf7ckc9.o
 
 Cross Reference Table
 
 Symbol                                            File
-SOCCounter::Firmware::EntryPoint()                /tmp/ccWYqiNk.o
-                                                  /tmp/ccE3WFek.o
-main                                              /tmp/ccE3WFek.o
-                                                  /tmp/ccGTEWgh.o
+SOCCounter::Firmware::EntryPoint()                /tmp/ccf7ckc9.o
+                                                  /tmp/ccOdaYd8.o
+main                                              /tmp/ccOdaYd8.o
+                                                  /tmp/ccQ6Rfb7.o

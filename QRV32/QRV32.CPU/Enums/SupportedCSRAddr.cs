@@ -1,6 +1,6 @@
 ﻿namespace QRV32.CPU
 {
-    public enum CSRAddr : byte
+    public enum SupportedCSRAddr : byte
     {
         // Machine Information Registers
         mvendorid,

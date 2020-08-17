@@ -38,13 +38,6 @@ namespace QRV32.CPU
         }
         public uint MemAddress => internalMemAddress;
 
-        RTLBitArray LWData => Inputs.MemReadData;
-        RTLBitArray LHData => Inputs.MemReadData[15, 0].Signed().Resized(32);
-        RTLBitArray LHUData => Inputs.MemReadData[15, 0].Unsigned().Resized(32);
-        RTLBitArray LBData => Inputs.MemReadData[7, 0].Signed().Resized(32);
-        RTLBitArray LBUData => Inputs.MemReadData[7, 0].Unsigned().Resized(32);
-
-        // TODO: inlined RTLBitArray operations
         void MemStage()
         {
             if (Inputs.MemReady)
@@ -57,19 +50,19 @@ namespace QRV32.CPU
                     switch (ID.LoadTypeCode)
                     {
                         case LoadTypeCodes.LW:
-                            NextState.WBData = LWData;
+                            NextState.WBData = Inputs.MemReadData;
                             break;
                         case LoadTypeCodes.LH:
-                            NextState.WBData = LHData;
+                            NextState.WBData = Inputs.MemReadData[15, 0].Signed().Resized(32);
                             break;
                         case LoadTypeCodes.LHU:
-                            NextState.WBData = LHUData;
+                            NextState.WBData = Inputs.MemReadData[15, 0].Unsigned().Resized(32);
                             break;
                         case LoadTypeCodes.LB:
-                            NextState.WBData = LBData;
+                            NextState.WBData = Inputs.MemReadData[7, 0].Signed().Resized(32);
                             break;
                         case LoadTypeCodes.LBU:
-                            NextState.WBData = LBUData;
+                            NextState.WBData = Inputs.MemReadData[7, 0].Unsigned().Resized(32);
                             break;
                     }
                 }

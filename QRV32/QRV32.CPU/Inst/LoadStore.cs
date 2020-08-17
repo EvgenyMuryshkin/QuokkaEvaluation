@@ -41,20 +41,12 @@ namespace QRV32.CPU
                 NextState.State = CPUState.IF;
 
                 // address misalign caused trap, store current address
-                DisableInterrupts();
-                NextState.CSR[(byte)CSRAddr.mepc] = State.PC;
-                NextState.CSR[(byte)CSRAddr.mtval] = internalMemAddress;
-                NextState.PC = State.CSR[(byte)CSRAddr.mtvec];
-
-                switch (ID.OpTypeCode)
-                {
-                    case OpTypeCodes.LOAD:
-                        NextState.CSR[(byte)CSRAddr.mcause] = (uint)MCAUSE.LoadAddrMisalign;
-                        break;
-                    case OpTypeCodes.STORE:
-                        NextState.CSR[(byte)CSRAddr.mcause] = (uint)MCAUSE.StoreAddrMisalign;
-                        break;
-                }
+                SwitchToTrapHandler(
+                    State.PC, 
+                    internalMemAddress, 
+                    ID.OpTypeCode == OpTypeCodes.LOAD
+                    ? MCAUSE.LoadAddrMisalign
+                    : MCAUSE.StoreAddrMisalign);
             }
         }
     }

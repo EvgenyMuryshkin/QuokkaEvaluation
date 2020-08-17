@@ -50,7 +50,7 @@ namespace QRV32.CPU
                     }
                     break;
                 default:
-                    Halt();
+                    Halt(HaltCode.OPCode);
                     break;
             }
         }

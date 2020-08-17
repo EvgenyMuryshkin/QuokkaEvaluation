@@ -46,7 +46,7 @@ namespace QRV32.CPU
                     OnSystem();
                     break;
                 default:
-                    Halt();
+                    Halt(HaltCode.OpTypeCode);
                     break;
             }
         }

@@ -56,7 +56,7 @@ namespace QRV32.Instructions.Tests
             sim.RunAll(instructions);
             Assert.AreEqual(0xF0000004, tl.Regs.State.x[1]);
             Assert.AreEqual(0xF0000004, tl.Regs.State.x[3]);
-            Assert.AreEqual(0xF0000004, tl.State.CSR[(byte)CSRAddr.mtvec]);
+            Assert.AreEqual(0xF0000004, tl.State.CSR[(byte)SupportedCSRAddr.mtvec]);
         }
 
         [TestMethod]
@@ -68,7 +68,7 @@ namespace QRV32.Instructions.Tests
             sim.RunAll(instructions);
             Assert.AreEqual(0U, tl.Regs.State.x[2]);
             Assert.AreEqual(0x8U, tl.Regs.State.x[3]);
-            Assert.AreEqual(0U, tl.State.CSR[(byte)CSRAddr.mstatus]);
+            Assert.AreEqual(0U, tl.State.CSR[(byte)SupportedCSRAddr.mstatus]);
         }
 
         [TestMethod]
@@ -78,7 +78,7 @@ namespace QRV32.Instructions.Tests
             var tl = sim.TopLevel;
             var instructions = Inst.FromAsmFile("csrrw_mie");
             sim.RunAll(instructions);
-            Assert.AreEqual(0xFFFFFFFF, tl.State.CSR[(byte)CSRAddr.mie]);
+            Assert.AreEqual(0xFFFFFFFF, tl.State.CSR[(byte)SupportedCSRAddr.mie]);
         }
 
         [TestMethod]
@@ -88,7 +88,7 @@ namespace QRV32.Instructions.Tests
             var tl = sim.TopLevel;
             var instructions = Inst.FromAsmFile("csrrs_mie");
             sim.RunAll(instructions);
-            Assert.AreEqual(0x80000101, tl.State.CSR[(byte)CSRAddr.mie]);
+            Assert.AreEqual(0x80000101, tl.State.CSR[(byte)SupportedCSRAddr.mie]);
             Assert.AreEqual(0x1U, tl.Regs.State.x[14]);
             Assert.AreEqual(0x101U, tl.Regs.State.x[15]);
             Assert.AreEqual(0x80000101, tl.Regs.State.x[16]);
@@ -101,7 +101,7 @@ namespace QRV32.Instructions.Tests
             var tl = sim.TopLevel;
             var instructions = Inst.FromAsmFile("csrrc_mie");
             sim.RunAll(instructions);
-            Assert.AreEqual(0x7FFFFEFEU, tl.State.CSR[(byte)CSRAddr.mie]);
+            Assert.AreEqual(0x7FFFFEFEU, tl.State.CSR[(byte)SupportedCSRAddr.mie]);
             Assert.AreEqual(0xFFFFFFFF, tl.Regs.State.x[14]);
             Assert.AreEqual(0xFFFFFFFE, tl.Regs.State.x[15]);
             Assert.AreEqual(0xFFFFFEFE, tl.Regs.State.x[16]);

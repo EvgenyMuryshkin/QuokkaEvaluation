@@ -13,6 +13,7 @@ namespace QRV32.CPU
     public class CPUModuleState
     {
         public CPUState State;
+        public HaltCode HaltCode;
         public uint Instruction;
 
         public bool WBDataReady;
@@ -21,8 +22,6 @@ namespace QRV32.CPU
         public RTLBitArray PC = new RTLBitArray(uint.MinValue);
 
         public RTLBitArray PCOffset = new RTLBitArray(uint.MinValue);
-
-        public MCAUSE pendingMCause;
 
         public uint[] CSR = CSRInit();
 

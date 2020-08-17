@@ -8,41 +8,41 @@ RAM              0x0000000000000000 0x0000000000008000 xrw
 Linker script and memory map
 
 
-.text           0x0000000000000000      0x5cc
+.text           0x0000000000000000      0x504
                 0x0000000000000000                . = ALIGN (0x4)
  *(.text)
- .text          0x0000000000000000      0x5cc /tmp/ccAmUeXV.o
-                0x00000000000005cc                . = ALIGN (0x4)
-                0x00000000000005cc                _etext = .
-                0x00000000000005cc                _sidata = _etext
+ .text          0x0000000000000000      0x504 /tmp/ccHaY7uR.o
+                0x0000000000000504                . = ALIGN (0x4)
+                0x0000000000000504                _etext = .
+                0x0000000000000504                _sidata = _etext
 
 .data           0x0000000000000600      0x20c
                 0x0000000000000600                . = ALIGN (0x4)
  *(.data)
- .data          0x0000000000000600      0x20c /tmp/ccAmUeXV.o
+ .data          0x0000000000000600      0x20c /tmp/ccHaY7uR.o
                 0x0000000000000600                begin_signature
                 0x0000000000000690                end_signature
                 0x0000000000000700                begin_regstate
                 0x0000000000000800                end_regstate
                 0x000000000000080c                . = ALIGN (0x4)
                 0x000000000000080c                _edata = .
-LOAD /tmp/ccAmUeXV.o
+LOAD /tmp/ccHaY7uR.o
 OUTPUT(firmware.elf elf32-littleriscv)
 
 .tohost         0x0000000000000900      0x108
- .tohost        0x0000000000000900      0x108 /tmp/ccAmUeXV.o
+ .tohost        0x0000000000000900      0x108 /tmp/ccHaY7uR.o
                 0x0000000000000900                tohost
                 0x0000000000000a00                fromhost
 
 .bss            0x0000000000000a08        0x0
- .bss           0x0000000000000a08        0x0 /tmp/ccAmUeXV.o
+ .bss           0x0000000000000a08        0x0 /tmp/ccHaY7uR.o
 
 Cross Reference Table
 
 Symbol                                            File
-begin_regstate                                    /tmp/ccAmUeXV.o
-begin_signature                                   /tmp/ccAmUeXV.o
-end_regstate                                      /tmp/ccAmUeXV.o
-end_signature                                     /tmp/ccAmUeXV.o
-fromhost                                          /tmp/ccAmUeXV.o
-tohost                                            /tmp/ccAmUeXV.o
+begin_regstate                                    /tmp/ccHaY7uR.o
+begin_signature                                   /tmp/ccHaY7uR.o
+end_regstate                                      /tmp/ccHaY7uR.o
+end_signature                                     /tmp/ccHaY7uR.o
+fromhost                                          /tmp/ccHaY7uR.o
+tohost                                            /tmp/ccHaY7uR.o

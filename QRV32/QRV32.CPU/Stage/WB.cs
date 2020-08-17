@@ -1,86 +1,78 @@
 ﻿using Quokka.RTL;
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace QRV32.CPU
 {
     public partial class RISCVModule
     {
-        bool HasMTVEC => State.CSR[(byte)CSRAddr.mtvec] != 0;
+        bool HasMTVEC => State.CSR[(byte)SupportedCSRAddr.mtvec] != 0;
 
         RTLBitArray InstructionOffset => new RTLBitArray(4).Unsigned();
 
         RTLBitArray internalNextPC => ID.OpTypeCode == OpTypeCodes.JALR ? State.PCOffset : State.PC + State.PCOffset;
-        public bool PCMisaligned => new RTLBitArray(internalNextPC[1, 0]) != 0;
-
-        RTLBitArray MSTATUS => State.CSR[(byte)CSRAddr.mstatus];
-        bool MIE => MSTATUS[3];
-        bool MRET => ID.SystemCode == SystemCodes.E && ID.SysTypeCode == SysTypeCodes.TRAP && ID.RetTypeCode == RetTypeCodes.MRET;
-
 
         void DisableInterrupts()
         {
-            NextState.CSR[(byte)CSRAddr.mstatus] = State.CSR[(byte)CSRAddr.mstatus] & 0xFFFFFFF7;
+            NextState.CSR[(byte)SupportedCSRAddr.mstatus] = State.CSR[(byte)SupportedCSRAddr.mstatus] & 0xFFFFFFF7;
         }
 
         void EnableInterrupts()
         {
-            NextState.CSR[(byte)CSRAddr.mstatus] = State.CSR[(byte)CSRAddr.mstatus] | 0x8;
+            NextState.CSR[(byte)SupportedCSRAddr.mstatus] = State.CSR[(byte)SupportedCSRAddr.mstatus] | 0x8;
+        }
+
+        void SwitchToTrapHandler(uint mepc, uint mtval, MCAUSE mcause)
+        {
+            RTLBitArray MSTATUS = State.CSR[(byte)SupportedCSRAddr.mstatus];
+            var isMIE = MSTATUS[3];
+
+            if (!isMIE)
+            {
+                Halt(HaltCode.NoMIE);
+            }
+            else if(!HasMTVEC)
+            {
+                Halt(HaltCode.NoTrapHandler);
+            }
+            else
+            {
+                NextState.State = CPUState.IF;
+                DisableInterrupts();
+
+                NextState.CSR[(byte)SupportedCSRAddr.mepc] = mepc;
+                NextState.CSR[(byte)SupportedCSRAddr.mtval] = mtval;
+                NextState.CSR[(byte)SupportedCSRAddr.mcause] = (uint)mcause;
+                NextState.PC = State.CSR[(byte)SupportedCSRAddr.mtvec];
+            }
         }
 
         void WriteBackStage()
         {
-            if (PCMisaligned)
-            {
-                if (MIE && HasMTVEC)
-                {
-                    NextState.State = CPUState.IF;
+            var pcMisaligned = new RTLBitArray(internalNextPC[1, 0]) != 0;
+            var isMRET = ID.SystemCode == SystemCodes.E && ID.SysTypeCode == SysTypeCodes.TRAP && ID.RetTypeCode == RetTypeCodes.MRET;
+            RTLBitArray MSTATUS = State.CSR[(byte)SupportedCSRAddr.mstatus];
+            var isMIE = MSTATUS[3];
 
-                    // address misalign caused trap, store current address
-                    DisableInterrupts();
-                    NextState.CSR[(byte)CSRAddr.mepc] = State.PC;
-                    NextState.CSR[(byte)CSRAddr.mtval] = internalNextPC;
-                    NextState.CSR[(byte)CSRAddr.mcause] = (uint)MCAUSE.InstAddrMisalign;
-                    NextState.PC = State.CSR[(byte)CSRAddr.mtvec];
-                }
-                else
-                {
-                    Halt();
-                }
+            if (pcMisaligned)
+            {
+                // address misalign caused trap, store current address
+                SwitchToTrapHandler(State.PC, internalNextPC, MCAUSE.InstAddrMisalign);
             }
             else
             {
                 NextState.State = CPUState.IF;
 
-                if (State.pendingMCause != 0)
-                {
-                    if (MIE && HasMTVEC)
-                    {
-                        // in instruction caused trap, store current address
-                        DisableInterrupts();
-                        NextState.CSR[(byte)CSRAddr.mepc] = State.PC;
-                        NextState.CSR[(byte)CSRAddr.mcause] = (uint)NextState.pendingMCause;
-                        NextState.PC = State.CSR[(byte)CSRAddr.mtvec];
-                        NextState.pendingMCause = 0;
-                    }
-                    else
-                    {
-                        // no trap handler, halt execution
-                        Halt();
-                    }
-                }
-                else if (MIE && Inputs.ExtIRQ)
+                if (isMIE && Inputs.ExtIRQ)
                 {
                     // if external cause trap, store next instruction, as current once completed successfully
-                    DisableInterrupts();
-                    NextState.CSR[(byte)CSRAddr.mepc] = internalNextPC;
-                    NextState.CSR[(byte)CSRAddr.mcause] = (uint)MCAUSE.MExternalIRQ;
-                    NextState.PC = State.CSR[(byte)CSRAddr.mtvec];
+                    SwitchToTrapHandler(internalNextPC, 0, MCAUSE.MExternalIRQ);
                 }
-                else if (MRET)
+                else if (isMRET)
                 {
-                    NextState.PC = State.CSR[(byte)CSRAddr.mepc];
+                    NextState.PC = State.CSR[(byte)SupportedCSRAddr.mepc];
                     EnableInterrupts();
                 }
                 else

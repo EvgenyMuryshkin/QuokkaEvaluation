@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using QRV32.CPU;
 using QRV32.Tests;
+using Quokka.Public.Tools;
 using Quokka.RISCV.Integration.Client;
 using System;
 using System.IO;
@@ -33,7 +34,7 @@ namespace QRV32.Compliance.RV32I
             var Makefile = Path.Combine(TestLocation, "Makefile");
             var makeLines = File.ReadAllLines(Makefile);
             makeLines[0] = $"files = {testName}.S";
-            File.WriteAllLines(Makefile, makeLines);
+            FileTools.WriteAllLines(Makefile, makeLines);
 
             // make test instructions
             var context = RISCVIntegration
@@ -61,7 +62,7 @@ namespace QRV32.Compliance.RV32I
         void Disassemble()
         {
             var disassembler = new Disassembler();
-            File.WriteAllText(FirmwareAsmFile, disassembler.Disassemble(Instructions()));
+            FileTools.WriteAllText(FirmwareAsmFile, disassembler.Disassemble(Instructions()));
         }
 
         int DataMarkerAddress()
