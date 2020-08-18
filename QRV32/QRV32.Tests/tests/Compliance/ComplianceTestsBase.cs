@@ -7,7 +7,7 @@ using System;
 using System.IO;
 using System.Linq;
 
-namespace QRV32.Compliance.RV32I
+namespace QRV32.Compliance
 {
     public class ComplianceTestsBase
     {

@@ -45,5 +45,6 @@ namespace QRV32.CPU
         public IRQTypeCodes IRQTypeCode => (IRQTypeCodes)(byte)internalFunct7;
         public SystemCodes SystemCode => (SystemCodes)(byte)internalFunct3;
         public CSRCodes CSRAddress => (CSRCodes)(ushort)internalBits[31, 20];
+        public bool CSRWE => internalBits[31, 30] != 3;
     }
 }

@@ -1,16 +1,17 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using QRV32.Compliance;
 using QRV32.CPU;
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace QRV32.Compliance.RV32I
+namespace QRV32.Compliance
 {
     [TestClass]
-    public class ComplianceRV32ITests : ComplianceTestsBase
+    public class RV32I : ComplianceTestsBase
     {
-        public ComplianceRV32ITests() : base("rv32i") { }
+        public RV32I() : base("rv32i") { }
 
         [TestMethod]
         public void I_ADD_01() => RunAndAssert("I-ADD-01");

@@ -13,6 +13,7 @@
         mie         = 0x304, // Machine interrupt-enable register
         mtvec       = 0x305, // Machine trap-handler base address
         // Machine Trap Handling
+        mscratch    = 0x340, // Machine scratch register
         mepc        = 0x341, // Machine exception program counter
         mcause      = 0x342, // Machine trap cause
         mtval       = 0x343, // Machine bad address or instruction

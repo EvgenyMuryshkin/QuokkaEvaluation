@@ -12,10 +12,11 @@
         misa,
         mie,
         mtvec,
-        mtval,
         // Machine Trap Handling
+        mscratch,
         mepc,
         mcause,
+        mtval,
         mip,
     }
 }

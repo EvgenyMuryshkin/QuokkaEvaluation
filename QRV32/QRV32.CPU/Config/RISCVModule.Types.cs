@@ -1,4 +1,5 @@
 ﻿using Quokka.RTL;
+using System;
 
 namespace QRV32.CPU
 {
@@ -27,25 +28,32 @@ namespace QRV32.CPU
 
         static uint[] CSRInit()
         {
-            return new uint[]
+            var result = new uint[]
             {
                 // Machine Information Registers
-                0U,         // mvendorid:   0 - open-source
-                0xFA57DB9,  // marchid:     quokka signature code
-                0x01010101U,// mimpid:      1.1.1.1
-                0U,         // mhartid:     0, all code runs in default hart
+                0,         // mvendorid:   0 - open-source
+                0xFA57DB9, // marchid:     quokka signature code
+                0x01010101,// mimpid:      1.1.1.1
+                0,         // mhartid:     0, all code runs in default hart
                 // Machine Trap Setup
-                0U,         // mstatus:     0, TLDR, will sort out later
-                0x40000100U,// misa:        MXL: 32 bit, ISA: I
-                0U,         // mie          No interrupts enabled at startup
-                0U,         // mtvec
-                0U,         // mtval
+                0,         // mstatus:     0, TLDR, will sort out later
+                0x40000100,// misa:        MXL: 32 bit, ISA: I
+                0,         // mie          No interrupts enabled at startup
+                0,         // mtvec
                 // Machine Trap Handling
-                0U,         // mscratch
-                0U,         // mepc
-                0U,         // mcause
-                0U,         // mip
+                0,         // mscratch
+                0,         // mepc
+                0,         // mcause
+                0,         // mtval
+                0,         // mip
             };
+
+            if (Enum.GetValues(typeof(CSRCodes)).Length != result.Length)
+            {
+                throw new Exception($"CSR init lenght does not match supported codes");
+            }
+
+            return result;
         }
     }
 }

@@ -27,6 +27,7 @@ namespace QRV32.CPU
                     case CSRCodes.mcause: address = SupportedCSRAddr.mcause; break;
                     case CSRCodes.mtval: address = SupportedCSRAddr.mtval; break;
                     case CSRCodes.mip: address = SupportedCSRAddr.mip; break;
+                    case CSRCodes.mscratch: address = SupportedCSRAddr.mscratch; break;
                 }
 
                 return new RTLBitArray((byte)address)[3, 0];
@@ -68,14 +69,13 @@ namespace QRV32.CPU
 
         void OnCSR()
         {
-            bool CSRWE = ID.RS1 != 0 && CSRAddress != 0;
-            bool CSRWriteFault = CSRAddress == 0 || ID.SystemCode == SystemCodes.Unsupported;
+            bool CSRWriteFault = ID.SystemCode == SystemCodes.Unsupported;
 
             NextState.State = CPUState.WB;
             NextState.WBData = State.CSR[CSRAddress];
             NextState.WBDataReady = ID.RD != 0;
 
-            if (CSRWE)
+            if (ID.CSRWE)
             {
                 if (CSRWriteFault)
                 {

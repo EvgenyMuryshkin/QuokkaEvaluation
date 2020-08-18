@@ -29,6 +29,12 @@ namespace QRV32.CPU
                 .Select((r, idx) => $"x{idx}".PadRight(3) + $": 0x{r:X8}")
                 .ForEach(l => dump.AppendLine(l));
 
+            dump.AppendLine($"=== CSR ===");
+            for (int idx = 0; idx < State.CSR.Length; idx++)
+            {
+                dump.AppendLine($"[{(SupportedCSRAddr)idx}]".PadRight(15) + $": 0x{State.CSR[idx]:X8}");
+            }
+
             return dump.ToString();
         }
     }
