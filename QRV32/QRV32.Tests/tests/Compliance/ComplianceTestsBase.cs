@@ -11,10 +11,17 @@ namespace QRV32.Compliance.RV32I
 {
     public class ComplianceTestsBase
     {
+        string _isa;
+        public ComplianceTestsBase(string isa)
+        {
+            _isa = isa;
+        }
+
         string ComplianceTestsPath => Path.Combine(PathTools.ProjectLocation(), "compliance");
-        string SourcesLocation => Path.Combine(ComplianceTestsPath, "source");
+        string ISATestsPath => Path.Combine(ComplianceTestsPath, _isa);
+        string SourcesLocation => Path.Combine(ISATestsPath, "src");
         string TestLocation => Path.Combine(ComplianceTestsPath, "test");
-        string ReferencesLocation => Path.Combine(ComplianceTestsPath, "references");
+        string ReferencesLocation => Path.Combine(ISATestsPath, "references");
         string FirmwareFile => Path.Combine(TestLocation, "firmware.bin");
         string FirmwareMap => Path.Combine(TestLocation, "firmware.map");
         string FirmwareAsmFile => Path.Combine(TestLocation, "firmware.asm");

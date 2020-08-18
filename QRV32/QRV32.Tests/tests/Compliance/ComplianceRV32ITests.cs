@@ -10,6 +10,8 @@ namespace QRV32.Compliance.RV32I
     [TestClass]
     public class ComplianceRV32ITests : ComplianceTestsBase
     {
+        public ComplianceRV32ITests() : base("rv32i") { }
+
         [TestMethod]
         public void I_ADD_01() => RunAndAssert("I-ADD-01");
         [TestMethod]

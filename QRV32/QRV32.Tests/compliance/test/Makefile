@@ -1,4 +1,4 @@
-files = I-XOR-01.S
+files = I-ShouldPass.S
 
 elf: $(files)
 	riscv32-unknown-elf-gcc -march=rv32i -nostartfiles -Wl,-Bstatic,-T,sections.lds,--strip-debug,-Map=firmware.map,--cref  -ffreestanding -nostdlib -o firmware.elf $(files)
