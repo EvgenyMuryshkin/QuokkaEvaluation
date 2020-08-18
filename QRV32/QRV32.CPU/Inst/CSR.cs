@@ -7,10 +7,6 @@ namespace QRV32.CPU
 {
     public partial class RISCVModule
     {
-        bool IsCSR => ID.SystemCode >= SystemCodes.CSRRW && ID.SystemCode <= SystemCodes.CSRRCI;
-        RTLBitArray CSRI => ID.RS1.Unsigned().Resized(32);
-        bool CSRWE => ID.RS1 != 0 && CSRAddress != 0;
-        bool CSRWriteFault => CSRAddress == 0 || ID.SystemCode == SystemCodes.Unsupported;
         RTLBitArray CSRAddress
         {
             get
@@ -41,6 +37,8 @@ namespace QRV32.CPU
         {
             get
             {
+                var CSRI = ID.RS1.Unsigned().Resized(32);
+
                 uint result = 0;
                 switch (ID.SystemCode)
                 {
@@ -70,6 +68,9 @@ namespace QRV32.CPU
 
         void OnCSR()
         {
+            bool CSRWE = ID.RS1 != 0 && CSRAddress != 0;
+            bool CSRWriteFault = CSRAddress == 0 || ID.SystemCode == SystemCodes.Unsupported;
+
             NextState.State = CPUState.WB;
             NextState.WBData = State.CSR[CSRAddress];
             NextState.WBDataReady = ID.RD != 0;

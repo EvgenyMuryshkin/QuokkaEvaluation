@@ -7,40 +7,35 @@ namespace QRV32.CPU
 {
     public partial class RISCVModule
     {
-        RTLBitArray BranchOffset => ID.BTypeImm;
         void OnBranch()
         {
-            /*
-            TODO:
-            var cmpRes = new RTLBitArray(CMP.EQ, CMP.NE...)
-            if (cmpRes[BranchTypeCode])
-                NextState.PCOffset = PC.PC + ID.BTypeImm;
-            */
+            RTLBitArray branchOffset = ID.BTypeImm;
+
             switch (ID.BranchTypeCode)
             {
                 case BranchTypeCodes.EQ:
                     if (CMP.EQ)
-                        NextState.PCOffset = BranchOffset;
+                        NextState.PCOffset = branchOffset;
                     break;
                 case BranchTypeCodes.NE:
                     if (CMP.NE)
-                        NextState.PCOffset = BranchOffset;
+                        NextState.PCOffset = branchOffset;
                     break;
                 case BranchTypeCodes.GE:
                     if (CMP.GTS || CMP.EQ)
-                        NextState.PCOffset = BranchOffset;
+                        NextState.PCOffset = branchOffset;
                     break;
                 case BranchTypeCodes.GEU:
                     if (CMP.GTU || CMP.EQ)
-                        NextState.PCOffset = BranchOffset;
+                        NextState.PCOffset = branchOffset;
                     break;
                 case BranchTypeCodes.LT:
                     if (CMP.LTS)
-                        NextState.PCOffset = BranchOffset;
+                        NextState.PCOffset = branchOffset;
                     break;
                 case BranchTypeCodes.LTU:
                     if (CMP.LTU)
-                        NextState.PCOffset = BranchOffset;
+                        NextState.PCOffset = branchOffset;
                     break;
                 default:
                     Halt(HaltCode.BranchTypeCode);

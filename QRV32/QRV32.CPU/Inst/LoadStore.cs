@@ -7,13 +7,13 @@ namespace QRV32.CPU
 {
     public partial class RISCVModule
     {
-        bool halfMisaliged => (new RTLBitArray(internalMemAddress))[0] != false;
-        bool wordMisaliged => (new RTLBitArray(internalMemAddress))[1, 0] != 0;
-
         bool MemAddressMisaligned
         {
             get
             {
+                bool halfMisaliged = (new RTLBitArray(internalMemAddress))[0] != false;
+                bool wordMisaliged = (new RTLBitArray(internalMemAddress))[1, 0] != 0;
+
                 bool result = false;
                 switch (ID.LoadTypeCode)
                 {

@@ -23,12 +23,11 @@ namespace QRV32.CPU
         {
             NextState.CSR[(byte)SupportedCSRAddr.mstatus] = State.CSR[(byte)SupportedCSRAddr.mstatus] | 0x8;
         }
+        RTLBitArray MSTATUS => State.CSR[(byte)SupportedCSRAddr.mstatus];
+        bool isMIE => MSTATUS[3];
 
         void SwitchToTrapHandler(uint mepc, uint mtval, MCAUSE mcause)
         {
-            RTLBitArray MSTATUS = State.CSR[(byte)SupportedCSRAddr.mstatus];
-            var isMIE = MSTATUS[3];
-
             if (!isMIE)
             {
                 Halt(HaltCode.NoMIE);
@@ -53,8 +52,6 @@ namespace QRV32.CPU
         {
             var pcMisaligned = new RTLBitArray(internalNextPC[1, 0]) != 0;
             var isMRET = ID.SystemCode == SystemCodes.E && ID.SysTypeCode == SysTypeCodes.TRAP && ID.RetTypeCode == RetTypeCodes.MRET;
-            RTLBitArray MSTATUS = State.CSR[(byte)SupportedCSRAddr.mstatus];
-            var isMIE = MSTATUS[3];
 
             if (pcMisaligned)
             {

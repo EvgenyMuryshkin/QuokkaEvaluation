@@ -9,6 +9,8 @@ namespace QRV32.CPU
     {
         void OnSystem()
         {
+            bool IsCSR = ID.SystemCode >= SystemCodes.CSRRW && ID.SystemCode <= SystemCodes.CSRRCI;
+
             if (ID.SystemCode == SystemCodes.E)
             {
                 OnE();
