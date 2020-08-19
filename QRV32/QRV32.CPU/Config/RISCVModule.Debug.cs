@@ -22,6 +22,8 @@ namespace QRV32.CPU
             dump.AppendLine($"Instruction: 0x{State.Instruction:X8}");
             dump.AppendLine($"Disassembled: {disasm.Single(State.PC, State.Instruction)}");
             dump.AppendLine($"OpCode: {ID.OpTypeCode}");
+            dump.AppendLine($"HaltCode: {State.HaltCode}");
+
             dump.AppendLine($"=== REGS ===");
             Regs
                 .State

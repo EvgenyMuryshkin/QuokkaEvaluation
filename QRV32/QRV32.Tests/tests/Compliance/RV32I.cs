@@ -8,10 +8,11 @@ using System.Text;
 
 namespace QRV32.Compliance
 {
+
     [TestClass]
     public class RV32I : ComplianceTestsBase
     {
-        public RV32I() : base("rv32i") { }
+        public RV32I() : base("rv32i", "rv32i") { }
 
         [TestMethod]
         public void I_ADD_01() => RunAndAssert("I-ADD-01");

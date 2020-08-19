@@ -11,10 +11,11 @@ namespace QRV32.Compliance
 {
     public class ComplianceTestsBase
     {
-        string _isa;
-        public ComplianceTestsBase(string isa)
+        string _isa, _arch;
+        public ComplianceTestsBase(string isa, string arch)
         {
             _isa = isa;
+            _arch = arch;
         }
 
         string ComplianceTestsPath => Path.Combine(PathTools.ProjectLocation(), "compliance");
@@ -41,6 +42,7 @@ namespace QRV32.Compliance
             var Makefile = Path.Combine(TestLocation, "Makefile");
             var makeLines = File.ReadAllLines(Makefile);
             makeLines[0] = $"files = {testName}.S";
+            makeLines[1] = $"arch = {_arch}";
             FileTools.WriteAllLines(Makefile, makeLines);
 
             // make test instructions
@@ -110,7 +112,7 @@ namespace QRV32.Compliance
             return Run();
         }
 
-        public ComplianceCPUSimilator RunAndAssert(string testName)
+        public virtual ComplianceCPUSimilator RunAndAssert(string testName)
         {
             var sim = Run(testName);
             AssertReferenceOutput(testName, sim);
