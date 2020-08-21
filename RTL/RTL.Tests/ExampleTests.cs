@@ -508,6 +508,22 @@ namespace RTL.Modules
                 Assert.AreEqual(10 * (idx + 1), mux.Value);
             }
         }
+
+        [TestMethod]
+        public void TuplesModuleTest()
+        {
+            var t = Module<TuplesModule>();
+            Action<bool, bool, bool, bool> iteration = (v1, v2, s, d) =>
+            {
+                t.Cycle(new TuplesModuleInputs() { Value1 = v1, Value2 = v2 });
+                Assert.AreEqual(s, t.Same, $"Same failed for {v1}, {v2}");
+                Assert.AreEqual(d, t.Diff, $"Diff failed for {v1}, {v2}");
+            };
+            iteration(false, false, true, false);
+            iteration(false, true, false, true);
+            iteration(true, false, false, true);
+            iteration(true, true, true, false);
+        }
     }
 }
 

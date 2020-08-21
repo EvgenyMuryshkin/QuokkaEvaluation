@@ -4,6 +4,7 @@ using Quokka.Public.Tools;
 using Quokka.RISCV.Integration.Client;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -51,6 +52,24 @@ namespace QuSoC.Tests
             Arrays.Firmware.EntryPoint();
             Assert.AreEqual(Arrays.SOC.Instance.Counter, sim.TopLevel.CSCounter);
         }
+
+        [TestMethod]
+        public void FibonacciTest()
+        {
+            foreach (uint idx in Enumerable.Range(0, 7))
+            {
+                Fibonacci.SOC.Instance.Counter = idx;
+                Fibonacci.Firmware.EntryPoint();
+
+                var sim = FromApp("Fibonacci");
+                sim.TopLevel.CSCounterModule.State.Value = idx;
+                sim.RunToCompletion();
+
+                Assert.AreEqual(Fibonacci.SOC.Instance.Counter, sim.TopLevel.CSCounter);
+                Trace.WriteLine($"Fib({idx}) completed in {sim.ClockCycles} cycles");
+            }
+        }
+
         [TestMethod]
         public void ArraysDisasm()
         {

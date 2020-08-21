@@ -1,5 +1,5 @@
 Simulator report for Verilog
-Tue Jul 28 19:58:35 2020
+Fri Aug 21 17:04:22 2020
 Quartus II Version 9.1 Build 350 03/24/2010 Service Pack 2 SJ Web Edition
 
 
@@ -160,7 +160,7 @@ Info: Running Quartus II Simulator
     Info: programming logic devices manufactured by Altera and sold by 
     Info: Altera or its authorized distributors.  Please refer to the 
     Info: applicable agreement for further details.
-    Info: Processing started: Tue Jul 28 19:58:34 2020
+    Info: Processing started: Fri Aug 21 17:04:21 2020
 Info: Command: quartus_sim C:\code\QuokkaEvaluation\RTL\RTL.HDL\Verilog.qpf --read_settings_files=on --write_settings_files=off -c Verilog
 Info: Using vector source file "Waveforms/XorGateModule.vwf"
 Info: Overwriting simulation input file with simulation results
@@ -172,9 +172,9 @@ Info: Simulation coverage is     100.00 %
 Info: Number of transitions in simulation is 18
 Info: Vector file XorGateModule.vwf is saved in VWF text format. You can compress it into CVWF format in order to reduce file size. For more details please refer to the Quartus II Help.
 Info: Quartus II Simulator was successful. 0 errors, 0 warnings
-    Info: Peak virtual memory: 163 megabytes
-    Info: Processing ended: Tue Jul 28 19:58:35 2020
+    Info: Peak virtual memory: 156 megabytes
+    Info: Processing ended: Fri Aug 21 17:04:22 2020
     Info: Elapsed time: 00:00:01
-    Info: Total CPU time (on all processors): 00:00:01
+    Info: Total CPU time (on all processors): 00:00:02
 
 

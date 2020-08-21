@@ -7,12 +7,15 @@ namespace QRV32.CPU
 {
     public partial class RISCVModule
     {
-        RTLBitArray CSRAddress
+        RTLBitArray CSRAddress => CSRData.Item1;
+        bool CSRWriteFault => CSRData.Item2;
+
+        (RTLBitArray, bool) CSRData
         {
             get
             {
                 SupportedCSRAddr address = SupportedCSRAddr.mvendorid;
-
+                bool CSRWriteFault = false;
                 switch (ID.CSRAddress)
                 {
                     case CSRCodes.mvendorid: address = SupportedCSRAddr.mvendorid; break;
@@ -28,9 +31,12 @@ namespace QRV32.CPU
                     case CSRCodes.mtval: address = SupportedCSRAddr.mtval; break;
                     case CSRCodes.mip: address = SupportedCSRAddr.mip; break;
                     case CSRCodes.mscratch: address = SupportedCSRAddr.mscratch; break;
+                    default:
+                        CSRWriteFault = true;
+                        break;
                 }
 
-                return new RTLBitArray((byte)address)[3, 0];
+                return (new RTLBitArray((byte)address)[3, 0], CSRWriteFault);
             }
         }
 
@@ -69,8 +75,6 @@ namespace QRV32.CPU
 
         void OnCSR()
         {
-            bool CSRWriteFault = ID.SystemCode == SystemCodes.Unsupported;
-
             NextState.State = CPUState.WB;
             NextState.WBData = State.CSR[CSRAddress];
             NextState.WBDataReady = ID.RD != 0;

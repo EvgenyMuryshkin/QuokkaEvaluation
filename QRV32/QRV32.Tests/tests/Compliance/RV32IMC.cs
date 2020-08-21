@@ -6,13 +6,11 @@ namespace QRV32.Compliance
     public class RV32IMC : ComplianceTestsBase
     {
         public RV32IMC() : base("rv32imc", "rv32imc") { }
-        /*
         public override ComplianceCPUSimilator RunAndAssert(string testName)
         {
             Assert.Inconclusive($"Test was disabled: {testName}");
             return null;
         }
-        */
 
         [TestMethod]
         public void C_ADD() => RunAndAssert("C-ADD");
