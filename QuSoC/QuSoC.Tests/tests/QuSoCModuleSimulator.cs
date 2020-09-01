@@ -4,12 +4,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using QRV32.CPU;
+using System.Diagnostics;
 
 namespace QuSoC.Tests
 {
     public class QuSoCModuleSimulator : RTLInstanceSimulator<QuSoCModule, QuSoCModuleInputs>
     {
         protected HashSet<uint> InfiniteLoopAddresses = new HashSet<uint>();
+        public uint ClockCycles = 0;
 
         public QuSoCModuleSimulator(uint[] instructions) : base(new QuSoCModule(instructions))
         {
@@ -28,9 +30,27 @@ namespace QuSoC.Tests
 
         public void RunToCompletion(Func<bool> keepRunningCheck, uint maxClockCycles = 10000)
         {
-            uint clockCycles = 0;
+            ClockCycles = 0;
+            uint? lastIF = 0;
+
             while (true)
             {
+                if (TopLevel.CPU.State.State == CPUState.IF)
+                {
+                    var addr = TopLevel.CPU.MemAddress >> 2;
+                    if (Debugger.IsAttached && (lastIF == null || lastIF != addr))
+                    {
+                        lastIF = addr;
+                        var instruction = TopLevel.State.BlockRAM[addr];
+                        var disasm = new Disassembler();
+                        var code = disasm.Single(TopLevel.CPU.MemAddress, instruction);
+                        if (Debugger.IsAttached)
+                        {
+                            Trace.WriteLine(code);
+                        }
+                    }
+                }
+
                 if ( TopLevel.CPU.State.State == CPUState.IF && InfiniteLoopAddresses.Contains(TopLevel.CPU.MemAddress))
                 {
                     break;
@@ -41,7 +61,7 @@ namespace QuSoC.Tests
                     break;
                 }
 
-                if (clockCycles++ == maxClockCycles)
+                if (ClockCycles++ == maxClockCycles)
                     throw new Exception($"Exceeded max allowed clock cycles: {maxClockCycles}");
 
                 if (TopLevel.CPU.State.State == CPUState.Halt)

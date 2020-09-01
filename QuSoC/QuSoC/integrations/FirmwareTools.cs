@@ -85,7 +85,7 @@ namespace QuSoC
             if (File.Exists(FirmwareFile))
             {
                 var disassembler = new Disassembler();
-                File.WriteAllText(FirmwareAsmFile, disassembler.Disassemble(Instructions()));
+                FileTools.WriteAllText(FirmwareAsmFile, disassembler.Disassemble(Instructions()));
             }
 
             return File.Exists(FirmwareFile);
@@ -120,9 +120,10 @@ namespace QuSoC
                         return $"files = {names}";
 
                     return l;
-                });
+                })
+                .ToArray();
 
-            File.WriteAllLines(MakefileFile, modifiedLines);
+            FileTools.WriteAllLines(MakefileFile, modifiedLines);
         }
 
         List<string> FirmwareSourceFiles()

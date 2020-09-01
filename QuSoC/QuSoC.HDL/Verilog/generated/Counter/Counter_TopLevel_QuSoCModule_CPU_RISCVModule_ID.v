@@ -47,7 +47,8 @@ module Counter_TopLevel_QuSoCModule_CPU_RISCVModule_ID (
 	output [5: 1] RetTypeCode,
 	output [4: 1] IRQTypeCode,
 	output [3: 1] SystemCode,
-	output [12: 1] CSRAddress
+	output [12: 1] CSRAddress,
+	output CSRWE
     );
 
 // [BEGIN USER SIGNALS]
@@ -61,6 +62,7 @@ wire  false = 1'b0;
 wire  InstructionDecoders_L20F42T43_Expr = 1'b0;
 wire  InstructionDecoders_L30F134T139_Expr = 1'b0;
 wire  InstructionDecoders_L32F136T141_Expr = 1'b0;
+wire  [2:1] InstructionDecoders_L48F54T55_Expr = 2'b11;
 wire  [32:1] Inputs_Instruction;
 wire  [32:1] internalBits;
 wire signed  [32:1] internalITypeImm;
@@ -135,6 +137,13 @@ wire  [3:1] InstructionDecoders_L46F42T75_Cast;
 wire  [12:1] InstructionDecoders_L47F57T77_Index;
 wire  [16:1] InstructionDecoders_L47F49T77_Cast;
 wire  [12:1] InstructionDecoders_L47F39T77_Cast;
+wire  [2:1] InstructionDecoders_L48F30T50_Index;
+wire  InstructionDecoders_L48F30T55_Expr;
+wire signed  [3:1] InstructionDecoders_L48F30T55_ExprLhs;
+wire signed  [3:1] InstructionDecoders_L48F30T55_ExprRhs;
+assign InstructionDecoders_L48F30T55_Expr = InstructionDecoders_L48F30T55_ExprLhs != InstructionDecoders_L48F30T55_ExprRhs ? 1'b1 : 1'b0;
+assign InstructionDecoders_L48F30T55_ExprLhs = { {1{1'b0}}, InstructionDecoders_L48F30T50_Index }/*expand*/;
+assign InstructionDecoders_L48F30T55_ExprRhs = { {1{1'b0}}, InstructionDecoders_L48F54T55_Expr }/*expand*/;
 assign Inputs_Instruction = Instruction;
 assign internalBits = Inputs_Instruction;
 assign InstructionDecoders_L14F67T87_Index = internalBits[32:21];
@@ -308,6 +317,8 @@ assign InstructionDecoders_L47F57T77_Index = internalBits[32:21];
 assign InstructionDecoders_L47F49T77_Cast = { {4{1'b0}}, InstructionDecoders_L47F57T77_Index }/*expand*/;
 assign InstructionDecoders_L47F39T77_Cast = InstructionDecoders_L47F49T77_Cast[12:1]/*truncate*/;
 assign CSRAddress = InstructionDecoders_L47F39T77_Cast;
+assign InstructionDecoders_L48F30T50_Index = internalBits[32:31];
+assign CSRWE = InstructionDecoders_L48F30T55_Expr;
 // [BEGIN USER ARCHITECTURE]
 // [END USER ARCHITECTURE]
 endmodule

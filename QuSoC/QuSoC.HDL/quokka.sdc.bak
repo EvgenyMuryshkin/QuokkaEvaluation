@@ -1,0 +1,2 @@
+create_clock -name Clock -period 15 [get_ports Clock]
+derive_clock_uncertainty

@@ -1,19 +1,28 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using QRV32.CPU;
 using QRV32.Tests;
+using Quokka.Public.Tools;
 using Quokka.RISCV.Integration.Client;
 using System;
 using System.IO;
 using System.Linq;
 
-namespace QRV32.Compliance.RV32I
+namespace QRV32.Compliance
 {
     public class ComplianceTestsBase
     {
+        string _isa, _arch;
+        public ComplianceTestsBase(string isa, string arch)
+        {
+            _isa = isa;
+            _arch = arch;
+        }
+
         string ComplianceTestsPath => Path.Combine(PathTools.ProjectLocation(), "compliance");
-        string SourcesLocation => Path.Combine(ComplianceTestsPath, "source");
+        string ISATestsPath => Path.Combine(ComplianceTestsPath, _isa);
+        string SourcesLocation => Path.Combine(ISATestsPath, "src");
         string TestLocation => Path.Combine(ComplianceTestsPath, "test");
-        string ReferencesLocation => Path.Combine(ComplianceTestsPath, "references");
+        string ReferencesLocation => Path.Combine(ISATestsPath, "references");
         string FirmwareFile => Path.Combine(TestLocation, "firmware.bin");
         string FirmwareMap => Path.Combine(TestLocation, "firmware.map");
         string FirmwareAsmFile => Path.Combine(TestLocation, "firmware.asm");
@@ -33,7 +42,8 @@ namespace QRV32.Compliance.RV32I
             var Makefile = Path.Combine(TestLocation, "Makefile");
             var makeLines = File.ReadAllLines(Makefile);
             makeLines[0] = $"files = {testName}.S";
-            File.WriteAllLines(Makefile, makeLines);
+            makeLines[1] = $"arch = {_arch}";
+            FileTools.WriteAllLines(Makefile, makeLines);
 
             // make test instructions
             var context = RISCVIntegration
@@ -61,7 +71,7 @@ namespace QRV32.Compliance.RV32I
         void Disassemble()
         {
             var disassembler = new Disassembler();
-            File.WriteAllText(FirmwareAsmFile, disassembler.Disassemble(Instructions()));
+            FileTools.WriteAllText(FirmwareAsmFile, disassembler.Disassemble(Instructions()));
         }
 
         int DataMarkerAddress()
@@ -102,7 +112,7 @@ namespace QRV32.Compliance.RV32I
             return Run();
         }
 
-        public ComplianceCPUSimilator RunAndAssert(string testName)
+        public virtual ComplianceCPUSimilator RunAndAssert(string testName)
         {
             var sim = Run(testName);
             AssertReferenceOutput(testName, sim);

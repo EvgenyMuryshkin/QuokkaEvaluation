@@ -1,0 +1,16 @@
+{
+  "Project": "Modules",
+  "Configurations": [
+    {
+      "Name": "Quokka",
+      "ClockFrequency": 50000000
+    }
+  ],
+  "RTL": {
+    "TemplatesPath": "../AES.HDL/templates",
+    "Vendor": "intel",
+    "Device": "generic"
+  },
+  "HDL": "Verilog",
+  "ProjectLocation": "../AES.HDL/Verilog/generated"
+}
