@@ -1,4 +1,4 @@
-set_global_assignment -name TOP_LEVEL_ENTITY XorGateModule_TopLevel
+set_global_assignment -name TOP_LEVEL_ENTITY OverridesComposition_TopLevel
 # -------------------------------------------------------------------------- #
 #
 # Copyright (C) 1991-2010 Altera Corporation
@@ -48,7 +48,7 @@ set_global_assignment -name STRATIX_DEVICE_IO_STANDARD "2.5 V"
 set_global_assignment -name LL_ROOT_REGION ON -entity VHDL -section_id "Root Region"
 set_global_assignment -name LL_MEMBER_STATE LOCKED -entity VHDL -section_id "Root Region"
 
-set_global_assignment -name INCREMENTAL_VECTOR_INPUT_SOURCE Waveforms/XorGateModule.vwf
+set_global_assignment -name INCREMENTAL_VECTOR_INPUT_SOURCE Waveforms/OverridesComposition.vwf
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
 set_global_assignment -name LL_ROOT_REGION ON -section_id "Root Region"
@@ -71,6 +71,8 @@ set_global_assignment -name VECTOR_WAVEFORM_FILE Waveforms/UnsignedCastModule.vw
 set_global_assignment -name VHDL_FILE VHDL/generated/ShifterModule/ShifterModule_TopLevel.vhdl
 set_global_assignment -name VECTOR_WAVEFORM_FILE Waveforms/SignedCastModule.vwf
 set_global_assignment -name VECTOR_WAVEFORM_FILE Waveforms/ShifterModule.vwf
+set_global_assignment -name VECTOR_WAVEFORM_FILE Waveforms/OverridesComposition.vwf
+
 set_global_assignment -name VHDL_FILE Quokka.vhdl
 set_global_assignment -name VHDL_FILE VHDL/generated/NotGateModule/NotGateModule_TopLevel.vhdl
 set_global_assignment -name VHDL_FILE VHDL/generated/LogicRAMModule/LogicRAMModule_TopLevel.vhdl
@@ -107,3 +109,17 @@ set_global_assignment -name VECTOR_WAVEFORM_FILE Waveforms/LogicRAMModule.vwf
 set_global_assignment -name VECTOR_WAVEFORM_FILE Waveforms/AndGateModule.vwf
 set_global_assignment -name VECTOR_WAVEFORM_FILE Waveforms/OrGateModule.vwf
 set_global_assignment -name VECTOR_WAVEFORM_FILE Waveforms/XorGateModule.vwf
+set_global_assignment -name VHDL_FILE VHDL/generated/OverridesComposition/OverridesComposition_TopLevel_OverridesComposition_NoOverride.vhdl
+set_global_assignment -name VHDL_FILE VHDL/generated/OverridesComposition/OverridesComposition_TopLevel.vhdl
+set_global_assignment -name VHDL_FILE VHDL/generated/StateMembersModule/StateMembersModule_TopLevel.vhdl
+set_global_assignment -name VHDL_FILE VHDL/generated/CombinationalNoOverride/CombinationalNoOverride_TopLevel.vhdl
+set_global_assignment -name VHDL_FILE VHDL/generated/OverridesComposition/OverridesComposition_TopLevel_OverridesComposition_AutoOverride.vhdl
+set_global_assignment -name VHDL_FILE VHDL/generated/OverridesComposition/OverridesComposition_TopLevel_OverridesComposition_L1Override.vhdl
+set_global_assignment -name VHDL_FILE VHDL/generated/OverridesComposition/OverridesComposition_TopLevel_OverridesComposition_L2Override.vhdl
+set_global_assignment -name VHDL_FILE VHDL/generated/OverridesComposition/OverridesComposition_TopLevel_OverridesComposition_L3Override.vhdl
+set_global_assignment -name VHDL_FILE VHDL/generated/OverridesComposition/OverridesComposition_TopLevel_OverridesComposition_GetOverride.vhdl
+set_global_assignment -name VHDL_FILE VHDL/generated/CombinationalAutoValueOverride/CombinationalAutoValueOverride_TopLevel.vhdl
+set_global_assignment -name VHDL_FILE VHDL/generated/CombinationalGetValueOverride/CombinationalGetValueOverride_TopLevel.vhdl
+set_global_assignment -name VHDL_FILE VHDL/generated/CombinationalL1Override/CombinationalL1Override_TopLevel.vhdl
+set_global_assignment -name VHDL_FILE VHDL/generated/CombinationalL2Override/CombinationalL2Override_TopLevel.vhdl
+set_global_assignment -name VHDL_FILE VHDL/generated/CombinationalL3Override/CombinationalL3Override_TopLevel.vhdl

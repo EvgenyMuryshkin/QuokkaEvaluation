@@ -11,12 +11,12 @@ Linker script and memory map
 .text           0x0000000000000000      0x29c
                 0x0000000000000000                . = ALIGN (0x4)
  *(.text)
- .text          0x0000000000000000        0xc /tmp/ccvbMY49.o
- .text          0x000000000000000c      0x1b0 /tmp/ccVuetM9.o
+ .text          0x0000000000000000        0xc /tmp/cc1loDS7.o
+ .text          0x000000000000000c      0x1b0 /tmp/ccu2Dz05.o
                 0x000000000000000c                Arrays::Firmware::Fill(unsigned long)
                 0x00000000000000c0                Arrays::Firmware::Sum(unsigned long)
                 0x0000000000000170                Arrays::Firmware::EntryPoint()
- .text          0x00000000000001bc       0x28 /tmp/ccoSZQ4b.o
+ .text          0x00000000000001bc       0x28 /tmp/cceBDPT5.o
                 0x00000000000001bc                main
  *(.text*)
  *(.rodata)
@@ -24,8 +24,8 @@ Linker script and memory map
  *(.srodata)
  *(.srodata*)
  *(.eh_frame)
- .eh_frame      0x00000000000001e4       0x80 /tmp/ccVuetM9.o
- .eh_frame      0x0000000000000264       0x38 /tmp/ccoSZQ4b.o
+ .eh_frame      0x00000000000001e4       0x80 /tmp/ccu2Dz05.o
+ .eh_frame      0x0000000000000264       0x38 /tmp/cceBDPT5.o
  *(.eh_frame*)
                 0x000000000000029c                . = ALIGN (0x4)
                 0x000000000000029c                _etext = .
@@ -36,9 +36,9 @@ Linker script and memory map
                 0x000000000000029c                _sdata = .
                 0x000000000000029c                _ram_start = .
  *(.data)
- .data          0x000000000000029c        0x0 /tmp/ccvbMY49.o
- .data          0x000000000000029c        0x0 /tmp/ccVuetM9.o
- .data          0x000000000000029c        0x0 /tmp/ccoSZQ4b.o
+ .data          0x000000000000029c        0x0 /tmp/cc1loDS7.o
+ .data          0x000000000000029c        0x0 /tmp/ccu2Dz05.o
+ .data          0x000000000000029c        0x0 /tmp/cceBDPT5.o
  *(.data*)
  *(.sdata)
  *(.sdata*)
@@ -51,12 +51,12 @@ Linker script and memory map
                 0x000000000000029c                . = ALIGN (0x4)
                 0x000000000000029c                _sbss = .
  *(.bss)
- .bss           0x000000000000029c        0x0 /tmp/ccvbMY49.o
- .bss           0x000000000000029c       0x70 /tmp/ccVuetM9.o
+ .bss           0x000000000000029c        0x0 /tmp/cc1loDS7.o
+ .bss           0x000000000000029c       0x70 /tmp/ccu2Dz05.o
                 0x000000000000029c                Arrays::Firmware::S8Buff
                 0x00000000000002ac                Arrays::Firmware::S16Buff
                 0x00000000000002cc                Arrays::Firmware::U32Buff
- .bss           0x000000000000030c        0x0 /tmp/ccoSZQ4b.o
+ .bss           0x000000000000030c        0x0 /tmp/cceBDPT5.o
  *(.bss*)
  *(.sbss)
  *(.sbss*)
@@ -67,25 +67,25 @@ Linker script and memory map
 .heap           0x000000000000030c        0x0
                 0x000000000000030c                . = ALIGN (0x4)
                 0x000000000000030c                _heap_start = .
-LOAD /tmp/ccvbMY49.o
-LOAD /tmp/ccVuetM9.o
-LOAD /tmp/ccoSZQ4b.o
+LOAD /tmp/cc1loDS7.o
+LOAD /tmp/ccu2Dz05.o
+LOAD /tmp/cceBDPT5.o
 OUTPUT(firmware.elf elf32-littleriscv)
 
 .comment        0x0000000000000000       0x11
- .comment       0x0000000000000000       0x11 /tmp/ccVuetM9.o
+ .comment       0x0000000000000000       0x11 /tmp/ccu2Dz05.o
                                          0x12 (size before relaxing)
- .comment       0x0000000000000011       0x12 /tmp/ccoSZQ4b.o
+ .comment       0x0000000000000011       0x12 /tmp/cceBDPT5.o
 
 Cross Reference Table
 
 Symbol                                            File
-Arrays::Firmware::EntryPoint()                    /tmp/ccVuetM9.o
-                                                  /tmp/ccoSZQ4b.o
-Arrays::Firmware::Fill(unsigned long)             /tmp/ccVuetM9.o
-Arrays::Firmware::S16Buff                         /tmp/ccVuetM9.o
-Arrays::Firmware::S8Buff                          /tmp/ccVuetM9.o
-Arrays::Firmware::Sum(unsigned long)              /tmp/ccVuetM9.o
-Arrays::Firmware::U32Buff                         /tmp/ccVuetM9.o
-main                                              /tmp/ccoSZQ4b.o
-                                                  /tmp/ccvbMY49.o
+Arrays::Firmware::EntryPoint()                    /tmp/ccu2Dz05.o
+                                                  /tmp/cceBDPT5.o
+Arrays::Firmware::Fill(unsigned long)             /tmp/ccu2Dz05.o
+Arrays::Firmware::S16Buff                         /tmp/ccu2Dz05.o
+Arrays::Firmware::S8Buff                          /tmp/ccu2Dz05.o
+Arrays::Firmware::Sum(unsigned long)              /tmp/ccu2Dz05.o
+Arrays::Firmware::U32Buff                         /tmp/ccu2Dz05.o
+main                                              /tmp/cceBDPT5.o
+                                                  /tmp/cc1loDS7.o

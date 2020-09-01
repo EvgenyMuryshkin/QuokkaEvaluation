@@ -37,10 +37,10 @@ namespace QuSoC
         {
             _logStream.WriteLine(DirectoryLogging.Summary, $"QuSoC translation completed");
             _logStream.WriteLine(DirectoryLogging.Summary, $"Source location: {_runtimeConfiguration.SourceLocation}");
-            _logStream.WriteLine(DirectoryLogging.Summary, $"Config name: {_runtimeConfiguration.ConfigName}");
+            _logStream.WriteLine(DirectoryLogging.Summary, $"Config name: {Path.GetFileName(_runtimeConfiguration.ConfigPath)}");
 
-            var config = QuokkaConfigLoader.Load(Path.Combine(_runtimeConfiguration.SourceLocation, _runtimeConfiguration.ConfigName));
-            var generatedFilesLocation = FileTools.ToAbsolutePath(Path.Combine(_runtimeConfiguration.SourceLocation, config.ProjectLocation));
+            var config = _runtimeConfiguration.Config;
+            var generatedFilesLocation = FileTools.ToAbsolutePath(_runtimeConfiguration.SourceLocation, config.ProjectLocation);
             _logStream.WriteLine(DirectoryLogging.Summary, $"Generated files location: {generatedFilesLocation}");
 
             var hdlLocation = Path.Combine(Path.GetDirectoryName(_runtimeConfiguration.SourceLocation), "QuSoC.HDL");
