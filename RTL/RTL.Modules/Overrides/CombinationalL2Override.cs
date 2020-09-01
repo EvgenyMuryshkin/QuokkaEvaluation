@@ -8,12 +8,20 @@ namespace RTL.Modules.Overrides
     {
         protected override byte DecrementValue(byte value)
         {
-            return (byte)(value - 3);
+            var result = base.DecrementValue(value);
+            if (value < 0xF0)
+                result = (byte)(value - 3);
+
+            return result;
         }
 
         protected override byte IncrementValue(byte value)
         {
-            return (byte)(value + 3);
+            var result = (byte)(value + 3);
+            if (value > 0xF0)
+                result = base.IncrementValue(value);
+
+            return result;
         }
     }
 }
