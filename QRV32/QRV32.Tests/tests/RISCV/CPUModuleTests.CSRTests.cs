@@ -56,6 +56,7 @@ namespace QRV32.Instructions.Tests
             sim.RunAll(instructions);
             Assert.AreEqual(0xF0000004, tl.Regs.State.x[1]);
             Assert.AreEqual(0xF0000004, tl.Regs.State.x[3]);
+            Assert.AreEqual(0xF0000004, tl.Regs.State.x[4]);
             Assert.AreEqual(0xF0000004, tl.State.CSR[(byte)SupportedCSRAddr.mtvec]);
         }
 

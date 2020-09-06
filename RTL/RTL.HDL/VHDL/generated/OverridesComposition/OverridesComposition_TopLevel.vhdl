@@ -51,6 +51,8 @@ constant true : std_logic := '1';
 constant false : std_logic := '0';
 signal Inputs_InOverride : std_logic := '0';
 signal Inputs_InValue : unsigned(8 downto 1)  := "00000000";
+signal ModulesInputs_InOverride : std_logic := '0';
+signal ModulesInputs_InValue : unsigned(8 downto 1)  := "00000000";
 signal NoOverride_InOverride : std_logic := '0';
 signal NoOverride_InValue : unsigned(8 downto 1)  := "00000000";
 signal NoOverride_OutValue : unsigned(8 downto 1)  := "00000000";
@@ -142,22 +144,24 @@ InValue => L3OverrideInValueL3Override_InValueHardLink,
 OutValue => L3OverrideOutValueL3Override_OutValueHardLink
 
 );
-process(AutoOverride_InOverride, AutoOverride_InValue, AutoOverride_OutValue, AutoOverrideOutValueAutoOverride_OutValueHardLink, GetOverride_InOverride, GetOverride_InValue, GetOverride_OutValue, GetOverrideOutValueGetOverride_OutValueHardLink, InOverride, Inputs_InOverride, Inputs_InValue, InValue, L1Override_InOverride, L1Override_InValue, L1Override_OutValue, L1OverrideOutValueL1Override_OutValueHardLink, L2Override_InOverride, L2Override_InValue, L2Override_OutValue, L2OverrideOutValueL2Override_OutValueHardLink, L3Override_InOverride, L3Override_InValue, L3Override_OutValue, L3OverrideOutValueL3Override_OutValueHardLink, NoOverride_InOverride, NoOverride_InValue, NoOverride_OutValue, NoOverrideOutValueNoOverride_OutValueHardLink)
+process(AutoOverride_InOverride, AutoOverride_InValue, AutoOverride_OutValue, AutoOverrideOutValueAutoOverride_OutValueHardLink, GetOverride_InOverride, GetOverride_InValue, GetOverride_OutValue, GetOverrideOutValueGetOverride_OutValueHardLink, InOverride, Inputs_InOverride, Inputs_InValue, InValue, L1Override_InOverride, L1Override_InValue, L1Override_OutValue, L1OverrideOutValueL1Override_OutValueHardLink, L2Override_InOverride, L2Override_InValue, L2Override_OutValue, L2OverrideOutValueL2Override_OutValueHardLink, L3Override_InOverride, L3Override_InValue, L3Override_OutValue, L3OverrideOutValueL3Override_OutValueHardLink, ModulesInputs_InOverride, ModulesInputs_InValue, NoOverride_InOverride, NoOverride_InValue, NoOverride_OutValue, NoOverrideOutValueNoOverride_OutValueHardLink)
 begin
 Inputs_InOverride <= InOverride;
 Inputs_InValue <= InValue;
-NoOverride_InOverride <= Inputs_InOverride;
-NoOverride_InValue <= Inputs_InValue;
-AutoOverride_InOverride <= Inputs_InOverride;
-AutoOverride_InValue <= Inputs_InValue;
-L1Override_InOverride <= Inputs_InOverride;
-L1Override_InValue <= Inputs_InValue;
-L2Override_InOverride <= Inputs_InOverride;
-L2Override_InValue <= Inputs_InValue;
-L3Override_InOverride <= Inputs_InOverride;
-L3Override_InValue <= Inputs_InValue;
-GetOverride_InOverride <= Inputs_InOverride;
-GetOverride_InValue <= Inputs_InValue;
+ModulesInputs_InOverride <= Inputs_InOverride;
+ModulesInputs_InValue <= Inputs_InValue;
+NoOverride_InOverride <= ModulesInputs_InOverride;
+NoOverride_InValue <= ModulesInputs_InValue;
+AutoOverride_InOverride <= ModulesInputs_InOverride;
+AutoOverride_InValue <= ModulesInputs_InValue;
+L1Override_InOverride <= ModulesInputs_InOverride;
+L1Override_InValue <= ModulesInputs_InValue;
+L2Override_InOverride <= ModulesInputs_InOverride;
+L2Override_InValue <= ModulesInputs_InValue;
+L3Override_InOverride <= ModulesInputs_InOverride;
+L3Override_InValue <= ModulesInputs_InValue;
+GetOverride_InOverride <= ModulesInputs_InOverride;
+GetOverride_InValue <= ModulesInputs_InValue;
 NoOverrideValue <= NoOverride_OutValue;
 AutoOverrideValue <= AutoOverride_OutValue;
 L1Value <= L1Override_OutValue;

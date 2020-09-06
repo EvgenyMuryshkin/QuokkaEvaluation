@@ -2,6 +2,7 @@
 
 namespace RTL.Modules
 {
+    /*
     public class StateMembersInputs
     {
         public bool Toggle;
@@ -25,4 +26,5 @@ namespace RTL.Modules
             }
         }
     }
+    */
 }
