@@ -11,12 +11,12 @@ namespace RTL.Modules.Overrides
 
     public class OverridesComposition : RTLCombinationalModule<OverridesCompositionInputs>
     {
-        CombinationalNoOverride NoOverride = new CombinationalNoOverride();
-        CombinationalAutoValueOverride AutoOverride = new CombinationalAutoValueOverride();
-        CombinationalGetValueOverride GetOverride = new CombinationalGetValueOverride();
-        CombinationalL1Override L1Override = new CombinationalL1Override();
-        CombinationalL2Override L2Override = new CombinationalL2Override();
-        CombinationalL3Override L3Override = new CombinationalL3Override();
+        protected CombinationalNoOverride NoOverride = new CombinationalNoOverride();
+        protected CombinationalAutoValueOverride AutoOverride = new CombinationalAutoValueOverride();
+        protected CombinationalGetValueOverride GetOverride = new CombinationalGetValueOverride();
+        protected CombinationalL1Override L1Override = new CombinationalL1Override();
+        protected CombinationalL2Override L2Override = new CombinationalL2Override();
+        protected CombinationalL3Override L3Override = new CombinationalL3Override();
 
         public byte NoOverrideValue => NoOverride.OutValue;
         public byte AutoOverrideValue => AutoOverride.OutValue;
@@ -25,16 +25,17 @@ namespace RTL.Modules.Overrides
         public byte L3Value => L3Override.OutValue;
         public byte GetValue => GetOverride.OutValue;
 
+        protected virtual OverridesCompositionInputs ModulesInputs => Inputs;
         protected override void OnSchedule(Func<OverridesCompositionInputs> inputsFactory)
         {
             base.OnSchedule(inputsFactory);
 
-            NoOverride.Schedule(() => Inputs);
-            AutoOverride.Schedule(() => Inputs);
-            L1Override.Schedule(() => Inputs);
-            L2Override.Schedule(() => Inputs);
-            L3Override.Schedule(() => Inputs);
-            GetOverride.Schedule(() => Inputs);
+            NoOverride.Schedule(() => ModulesInputs);
+            AutoOverride.Schedule(() => ModulesInputs);
+            L1Override.Schedule(() => ModulesInputs);
+            L2Override.Schedule(() => ModulesInputs);
+            L3Override.Schedule(() => ModulesInputs);
+            GetOverride.Schedule(() => ModulesInputs);
         }
     }
 }
