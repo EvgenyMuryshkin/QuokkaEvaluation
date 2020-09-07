@@ -14,14 +14,14 @@
 --   Code comes AS-IS, it is your responsibility to make sure it is working as expected
 --   no responsibility will be taken for any loss or damage caused by use of Quokka toolkit.
 -- 
--- System configuration name is OverrideInputsComposition_TopLevel, clock frequency is 1Hz, Top-level
+-- System configuration name is OverrideScheduleComposition_TopLevel, clock frequency is 1Hz, Top-level
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 use work.Quokka.all;
 
-entity OverrideInputsComposition_TopLevel is
+entity OverrideScheduleComposition_TopLevel is
     port
     (
 -- [BEGIN USER PORTS]
@@ -44,7 +44,7 @@ end entity;
 
 -- FSM summary
 -- Packages
-architecture rtl of OverrideInputsComposition_TopLevel is
+architecture rtl of OverrideScheduleComposition_TopLevel is
 -- [BEGIN USER SIGNALS]
 -- [END USER SIGNALS]
 constant HiSignal : std_logic := '1';
@@ -115,7 +115,7 @@ begin
     end loop;
 
     end process;
-OverrideInputsComposition_TopLevel_OverrideInputsComposition_NoOverride : entity work.OverrideInputsComposition_TopLevel_OverrideInputsComposition_NoOverride port map
+OverrideScheduleComposition_TopLevel_OverrideScheduleComposition_NoOverride : entity work.OverrideScheduleComposition_TopLevel_OverrideScheduleComposition_NoOverride port map
 (
 --[BEGIN USER MAP FOR NoOverride]
 --[END USER MAP FOR NoOverride]
@@ -124,7 +124,7 @@ InValue => NoOverrideInValueNoOverride_InValueHardLink,
 OutValue => NoOverrideOutValueNoOverride_OutValueHardLink
 
 );
-OverrideInputsComposition_TopLevel_OverrideInputsComposition_AutoOverride : entity work.OverrideInputsComposition_TopLevel_OverrideInputsComposition_AutoOverride port map
+OverrideScheduleComposition_TopLevel_OverrideScheduleComposition_AutoOverride : entity work.OverrideScheduleComposition_TopLevel_OverrideScheduleComposition_AutoOverride port map
 (
 --[BEGIN USER MAP FOR AutoOverride]
 --[END USER MAP FOR AutoOverride]
@@ -133,7 +133,7 @@ InValue => AutoOverrideInValueAutoOverride_InValueHardLink,
 OutValue => AutoOverrideOutValueAutoOverride_OutValueHardLink
 
 );
-OverrideInputsComposition_TopLevel_OverrideInputsComposition_GetOverride : entity work.OverrideInputsComposition_TopLevel_OverrideInputsComposition_GetOverride port map
+OverrideScheduleComposition_TopLevel_OverrideScheduleComposition_GetOverride : entity work.OverrideScheduleComposition_TopLevel_OverrideScheduleComposition_GetOverride port map
 (
 --[BEGIN USER MAP FOR GetOverride]
 --[END USER MAP FOR GetOverride]
@@ -142,7 +142,7 @@ InValue => GetOverrideInValueGetOverride_InValueHardLink,
 OutValue => GetOverrideOutValueGetOverride_OutValueHardLink
 
 );
-OverrideInputsComposition_TopLevel_OverrideInputsComposition_L1Override : entity work.OverrideInputsComposition_TopLevel_OverrideInputsComposition_L1Override port map
+OverrideScheduleComposition_TopLevel_OverrideScheduleComposition_L1Override : entity work.OverrideScheduleComposition_TopLevel_OverrideScheduleComposition_L1Override port map
 (
 --[BEGIN USER MAP FOR L1Override]
 --[END USER MAP FOR L1Override]
@@ -151,7 +151,7 @@ InValue => L1OverrideInValueL1Override_InValueHardLink,
 OutValue => L1OverrideOutValueL1Override_OutValueHardLink
 
 );
-OverrideInputsComposition_TopLevel_OverrideInputsComposition_L2Override : entity work.OverrideInputsComposition_TopLevel_OverrideInputsComposition_L2Override port map
+OverrideScheduleComposition_TopLevel_OverrideScheduleComposition_L2Override : entity work.OverrideScheduleComposition_TopLevel_OverrideScheduleComposition_L2Override port map
 (
 --[BEGIN USER MAP FOR L2Override]
 --[END USER MAP FOR L2Override]
@@ -160,7 +160,7 @@ InValue => L2OverrideInValueL2Override_InValueHardLink,
 OutValue => L2OverrideOutValueL2Override_OutValueHardLink
 
 );
-OverrideInputsComposition_TopLevel_OverrideInputsComposition_L3Override : entity work.OverrideInputsComposition_TopLevel_OverrideInputsComposition_L3Override port map
+OverrideScheduleComposition_TopLevel_OverrideScheduleComposition_L3Override : entity work.OverrideScheduleComposition_TopLevel_OverrideScheduleComposition_L3Override port map
 (
 --[BEGIN USER MAP FOR L3Override]
 --[END USER MAP FOR L3Override]
@@ -179,10 +179,6 @@ ModulesInputs_InOverride <= OverrideInputsComposition_L14F30T48_Expr;
 ModulesInputs_InValue <= InvertedInput;
 OverrideInputsComposition_L7F40T71_Source <= Inputs_InValue;
 InvertedInput <= OverrideInputsComposition_L7F38T72_Expr;
-NoOverride_InOverride <= ModulesInputs_InOverride;
-NoOverride_InValue <= ModulesInputs_InValue;
-AutoOverride_InOverride <= ModulesInputs_InOverride;
-AutoOverride_InValue <= ModulesInputs_InValue;
 L1Override_InOverride <= ModulesInputs_InOverride;
 L1Override_InValue <= ModulesInputs_InValue;
 L2Override_InOverride <= ModulesInputs_InOverride;
@@ -191,6 +187,10 @@ L3Override_InOverride <= ModulesInputs_InOverride;
 L3Override_InValue <= ModulesInputs_InValue;
 GetOverride_InOverride <= ModulesInputs_InOverride;
 GetOverride_InValue <= ModulesInputs_InValue;
+NoOverride_InOverride <= Inputs_InOverride;
+NoOverride_InValue <= Inputs_InValue;
+AutoOverride_InOverride <= Inputs_InOverride;
+AutoOverride_InValue <= Inputs_InValue;
 NoOverrideValue <= NoOverride_OutValue;
 AutoOverrideValue <= AutoOverride_OutValue;
 L1Value <= L1Override_OutValue;

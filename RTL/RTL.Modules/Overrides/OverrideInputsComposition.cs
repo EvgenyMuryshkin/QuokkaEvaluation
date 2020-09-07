@@ -2,7 +2,6 @@
 
 namespace RTL.Modules.Overrides
 {
-    // not tested
     public class OverrideInputsComposition : OverridesComposition
     {
         RTLBitArray InvertedInput => !(new RTLBitArray(Inputs.InValue));

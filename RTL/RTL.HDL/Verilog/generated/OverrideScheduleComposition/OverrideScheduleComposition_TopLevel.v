@@ -15,10 +15,10 @@
 //   Code comes AS-IS, it is your responsibility to make sure it is working as expected
 //   no responsibility will be taken for any loss or damage caused by use of Quokka toolkit.
 // 
-// System configuration name is OverrideInputsComposition_TopLevel, clock frequency is 1Hz, Top-level
+// System configuration name is OverrideScheduleComposition_TopLevel, clock frequency is 1Hz, Top-level
 // FSM summary
 // -- Packages
-module OverrideInputsComposition_TopLevel (
+module OverrideScheduleComposition_TopLevel (
 // [BEGIN USER PORTS]
 // [END USER PORTS]
 
@@ -92,7 +92,7 @@ wire  [8:1] OverrideInputsComposition_L7F38T72_Expr;
 wire  [8:1] OverrideInputsComposition_L7F38T72_Expr_1;
 assign OverrideInputsComposition_L14F30T48_Expr = ~OverrideInputsComposition_L14F30T48_Expr_1;
 assign OverrideInputsComposition_L7F38T72_Expr = ~OverrideInputsComposition_L7F38T72_Expr_1;
-OverrideInputsComposition_TopLevel_OverrideInputsComposition_NoOverride OverrideInputsComposition_TopLevel_OverrideInputsComposition_NoOverride
+OverrideScheduleComposition_TopLevel_OverrideScheduleComposition_NoOverride OverrideScheduleComposition_TopLevel_OverrideScheduleComposition_NoOverride
 (
 // [BEGIN USER MAP FOR NoOverride]
 // [END USER MAP FOR NoOverride]
@@ -101,7 +101,7 @@ OverrideInputsComposition_TopLevel_OverrideInputsComposition_NoOverride Override
 	.OutValue (NoOverrideOutValueNoOverride_OutValueHardLink)
 
 );
-OverrideInputsComposition_TopLevel_OverrideInputsComposition_AutoOverride OverrideInputsComposition_TopLevel_OverrideInputsComposition_AutoOverride
+OverrideScheduleComposition_TopLevel_OverrideScheduleComposition_AutoOverride OverrideScheduleComposition_TopLevel_OverrideScheduleComposition_AutoOverride
 (
 // [BEGIN USER MAP FOR AutoOverride]
 // [END USER MAP FOR AutoOverride]
@@ -110,7 +110,7 @@ OverrideInputsComposition_TopLevel_OverrideInputsComposition_AutoOverride Overri
 	.OutValue (AutoOverrideOutValueAutoOverride_OutValueHardLink)
 
 );
-OverrideInputsComposition_TopLevel_OverrideInputsComposition_GetOverride OverrideInputsComposition_TopLevel_OverrideInputsComposition_GetOverride
+OverrideScheduleComposition_TopLevel_OverrideScheduleComposition_GetOverride OverrideScheduleComposition_TopLevel_OverrideScheduleComposition_GetOverride
 (
 // [BEGIN USER MAP FOR GetOverride]
 // [END USER MAP FOR GetOverride]
@@ -119,7 +119,7 @@ OverrideInputsComposition_TopLevel_OverrideInputsComposition_GetOverride Overrid
 	.OutValue (GetOverrideOutValueGetOverride_OutValueHardLink)
 
 );
-OverrideInputsComposition_TopLevel_OverrideInputsComposition_L1Override OverrideInputsComposition_TopLevel_OverrideInputsComposition_L1Override
+OverrideScheduleComposition_TopLevel_OverrideScheduleComposition_L1Override OverrideScheduleComposition_TopLevel_OverrideScheduleComposition_L1Override
 (
 // [BEGIN USER MAP FOR L1Override]
 // [END USER MAP FOR L1Override]
@@ -128,7 +128,7 @@ OverrideInputsComposition_TopLevel_OverrideInputsComposition_L1Override Override
 	.OutValue (L1OverrideOutValueL1Override_OutValueHardLink)
 
 );
-OverrideInputsComposition_TopLevel_OverrideInputsComposition_L2Override OverrideInputsComposition_TopLevel_OverrideInputsComposition_L2Override
+OverrideScheduleComposition_TopLevel_OverrideScheduleComposition_L2Override OverrideScheduleComposition_TopLevel_OverrideScheduleComposition_L2Override
 (
 // [BEGIN USER MAP FOR L2Override]
 // [END USER MAP FOR L2Override]
@@ -137,7 +137,7 @@ OverrideInputsComposition_TopLevel_OverrideInputsComposition_L2Override Override
 	.OutValue (L2OverrideOutValueL2Override_OutValueHardLink)
 
 );
-OverrideInputsComposition_TopLevel_OverrideInputsComposition_L3Override OverrideInputsComposition_TopLevel_OverrideInputsComposition_L3Override
+OverrideScheduleComposition_TopLevel_OverrideScheduleComposition_L3Override OverrideScheduleComposition_TopLevel_OverrideScheduleComposition_L3Override
 (
 // [BEGIN USER MAP FOR L3Override]
 // [END USER MAP FOR L3Override]
@@ -154,10 +154,6 @@ assign ModulesInputs_InOverride = OverrideInputsComposition_L14F30T48_Expr;
 assign ModulesInputs_InValue = InvertedInput;
 assign OverrideInputsComposition_L7F40T71_Source = Inputs_InValue;
 assign InvertedInput = OverrideInputsComposition_L7F38T72_Expr;
-assign NoOverride_InOverride = ModulesInputs_InOverride;
-assign NoOverride_InValue = ModulesInputs_InValue;
-assign AutoOverride_InOverride = ModulesInputs_InOverride;
-assign AutoOverride_InValue = ModulesInputs_InValue;
 assign L1Override_InOverride = ModulesInputs_InOverride;
 assign L1Override_InValue = ModulesInputs_InValue;
 assign L2Override_InOverride = ModulesInputs_InOverride;
@@ -166,6 +162,10 @@ assign L3Override_InOverride = ModulesInputs_InOverride;
 assign L3Override_InValue = ModulesInputs_InValue;
 assign GetOverride_InOverride = ModulesInputs_InOverride;
 assign GetOverride_InValue = ModulesInputs_InValue;
+assign NoOverride_InOverride = Inputs_InOverride;
+assign NoOverride_InValue = Inputs_InValue;
+assign AutoOverride_InOverride = Inputs_InOverride;
+assign AutoOverride_InValue = Inputs_InValue;
 assign NoOverrideValue = NoOverride_OutValue;
 assign AutoOverrideValue = AutoOverride_OutValue;
 assign L1Value = L1Override_OutValue;
