@@ -17,7 +17,6 @@ namespace QuSoC
         public RTLBitArray MemReadData = 0U;
         public bool MemReady;
 
-        public RTLBitArray Counter = new RTLBitArray(byte.MinValue);
         public byte[] UART = new byte[4];
         public bool UART_TX;
     }
@@ -40,11 +39,10 @@ namespace QuSoC
     public class QuSoCModule : RTLSynchronousModule<QuSoCModuleInputs, QuSoCModuleState>
     {
         internal RISCVModule CPU = new RISCVModule();
-        internal SoCRegisterModule CSCounterModule = new SoCRegisterModule();
+        internal SoCRegisterModule CounterRegister = new SoCRegisterModule();
+        internal SoCBlockRAMModule BlockRAM = new SoCBlockRAMModule(1024);
 
-
-        public byte Counter => State.Counter;
-        public uint CSCounter => CSCounterModule.Value;
+        public uint Counter => CounterRegister.ReadValue;
         public RTLBitArray CPUAddress => CPU.MemAddress;
         public bool CPUMemRead => CPU.MemRead;
         public bool CPUMemWrite => CPU.MemWrite;
@@ -58,6 +56,14 @@ namespace QuSoC
             instructions.CopyTo(State.BlockRAM, 0);
         }
 
+        SoCComponentModuleCommon ModuleCommon => new SoCComponentModuleCommon()
+        {
+            WriteValue = CPU.MemWriteData,
+            WE = CPU.MemWrite,
+            Address = CPU.MemAddress,
+            RE = CPU.MemRead
+        };
+
         protected override void OnSchedule(Func<QuSoCModuleInputs> inputsFactory)
         {
             base.OnSchedule(inputsFactory);
@@ -69,10 +75,17 @@ namespace QuSoC
                 MemReady = internalMemReady
             });
 
-            CSCounterModule.Schedule(() => new SoCRegisterModuleInputs()
+            CounterRegister.Schedule(() => new SoCRegisterModuleInputs()
             {
-                WriteValue = CPU.MemWriteData,
-                WE = CPU.MemWrite && IsCSCounterSegment
+                Common = ModuleCommon,
+                DeviceAddress = 0x80000000,
+            });
+
+            BlockRAM.Schedule(() => new SoCBlockRAMModuleInputs()
+            {
+                Common = ModuleCommon,
+                DeviceAddress = 0x80100000,
+                MemAccessMode = CPU.MemAccessMode[1,0]
             });
         }
 
@@ -82,8 +95,6 @@ namespace QuSoC
 
         RTLBitArray uartReadData => new RTLBitArray(State.UART[uartAddress]).Resized(32);
 
-        bool IsCSCounterSegment => memSegment == 0x80000;
-
         // TODO: RTLBitArray variable declaration, support for bit array methods e.g. Resize
         uint internalMemReadData
         {
@@ -91,22 +102,25 @@ namespace QuSoC
             {
                 uint result = 0;
 
-                if (IsCSCounterSegment)
+                if (CounterRegister.IsActive)
                 {
-                    result = CSCounterModule.Value;
+                    result = CounterRegister.ReadValue;
                 }
-
-                switch ((uint)memSegment)
+                else if (BlockRAM.IsActive)
                 {
-                    case 0:
-                        result = State.MemReadData >> byteAddress;
-                        break;
-                    case 1:
-                        result = State.Counter;
-                        break;
-                    case 2:
-                        result = uartReadData;
-                        break;
+                    result = BlockRAM.ReadValue;
+                }
+                else
+                {
+                    switch ((uint)memSegment)
+                    {
+                        case 0:
+                            result = State.MemReadData >> byteAddress;
+                            break;
+                        case 2:
+                            result = uartReadData;
+                            break;
+                    }
                 }
 
                 return result;
@@ -116,9 +130,9 @@ namespace QuSoC
         bool internalMemReady => State.MemReady;
 
         RTLBitArray mask =>
-            CPU.MemWriteMode == 0
+            CPU.MemAccessMode == 0
             ? (new RTLBitArray(byte.MaxValue) << byteAddress).Resized(32)
-            : CPU.MemWriteMode == 1
+            : CPU.MemAccessMode == 1
                 ? (new RTLBitArray(ushort.MaxValue) << byteAddress).Resized(32)
                 : new RTLBitArray(uint.MaxValue);
 
@@ -152,9 +166,13 @@ namespace QuSoC
 
             if (CPU.MemWrite)
             {
-                if (IsCSCounterSegment)
+                if (CounterRegister.IsActive)
                 {
-                    NextState.MemReady = true;
+                    NextState.MemReady = CounterRegister.IsReady;
+                }
+                else if (BlockRAM.IsActive)
+                {
+                    NextState.MemReady = BlockRAM.IsReady;
                 }
                 else
                 {
@@ -167,10 +185,6 @@ namespace QuSoC
                                 NextState.BlockRAMWE = true;
                                 NextState.MemReady = true;
                             }
-                            break;
-                        case 1:
-                            NextState.Counter = CPU.MemWriteData[7, 0];
-                            NextState.MemReady = true;
                             break;
                         case 2:
                             // TODO: inline element access

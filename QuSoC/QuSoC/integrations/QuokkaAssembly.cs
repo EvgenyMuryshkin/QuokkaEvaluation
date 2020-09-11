@@ -61,12 +61,19 @@ namespace QuSoC
             get
             {
                 var apps = Directory.EnumerateDirectories(Path.Combine(_runtimeConfiguration.SourceLocation, "apps"), "*.*" );
+                var limitToApps = new HashSet<string>() 
+                {
+                    //"MemBlock"
+                };
 
                 foreach (var appPath in apps)
                 {
                     var appName = Path.GetFileName(appPath);
                     
                     if (appName == "template")
+                        continue;
+
+                    if (limitToApps.Any() && !limitToApps.Contains(appName))
                         continue;
 
                     var firmwareTools = new FirmwareTools(appPath);

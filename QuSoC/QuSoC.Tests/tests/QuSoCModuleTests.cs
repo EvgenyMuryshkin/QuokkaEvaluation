@@ -40,7 +40,7 @@ namespace QuSoC.Tests
             sim.RunToCompletion();
 
             Recursion.Firmware.EntryPoint();
-            Assert.AreEqual(Recursion.SOC.Instance.Counter, sim.TopLevel.CSCounter);
+            Assert.AreEqual(Recursion.SOC.Instance.Counter, sim.TopLevel.Counter);
         }
 
         [TestMethod]
@@ -50,8 +50,23 @@ namespace QuSoC.Tests
             sim.RunToCompletion();
 
             Arrays.Firmware.EntryPoint();
-            Assert.AreEqual(Arrays.SOC.Instance.Counter, sim.TopLevel.CSCounter);
+            Assert.AreEqual(Arrays.SOC.Instance.Counter, sim.TopLevel.Counter);
         }
+
+        [TestMethod]
+        public void MemBlockTest()
+        {
+            var sim = FromApp("MemBlock");
+            sim.RunToCompletion();
+
+            MemBlock.Firmware.EntryPoint();
+            for (var idx = 0; idx < 10; idx++)
+            {
+                Assert.AreEqual(MemBlock.SOC.Instance.MemBlock[idx], sim.TopLevel.BlockRAM.State.BlockRAM[idx], $"Failed for {idx}");
+            }
+            Assert.AreEqual(MemBlock.SOC.Instance.MemBlock[1023], sim.TopLevel.BlockRAM.State.BlockRAM[1023]);
+        }
+
 
         [TestMethod]
         public void FibonacciTest()
@@ -62,10 +77,10 @@ namespace QuSoC.Tests
                 Fibonacci.Firmware.EntryPoint();
 
                 var sim = FromApp("Fibonacci");
-                sim.TopLevel.CSCounterModule.State.Value = idx;
+                sim.TopLevel.CounterRegister.State.Value = idx;
                 sim.RunToCompletion();
 
-                Assert.AreEqual(Fibonacci.SOC.Instance.Counter, sim.TopLevel.CSCounter);
+                Assert.AreEqual(Fibonacci.SOC.Instance.Counter, sim.TopLevel.Counter);
                 Trace.WriteLine($"Fib({idx}) completed in {sim.ClockCycles} cycles");
             }
         }
@@ -142,7 +157,6 @@ namespace QuSoC.Tests
             Assert.AreEqual(0xC0DEC0DE, tl.State.BlockRAM[0x42]);
         }
 
-
         [TestMethod]
         public void BlinkerSimTest()
         {
@@ -158,9 +172,8 @@ namespace QuSoC.Tests
             var memDump = sim.MemoryDump();
             var cpuDump = sim.TopLevel.CPU.ToString();
 
-            Assert.AreEqual(20U, (uint)tl.State.Counter);
+            Assert.AreEqual(20U, (uint)tl.Counter);
         }
-
 
         [TestMethod]
         public void UARTSim()
@@ -207,9 +220,9 @@ namespace QuSoC.Tests
         public void CSCounterTest()
         {
             var sim = FromApp("Counter");
-            sim.RunToCompletion(() => sim.TopLevel.CSCounter < 10);
+            sim.RunToCompletion(() => sim.TopLevel.Counter < 10);
 
-            Assert.AreEqual(10U, sim.TopLevel.CSCounter);
+            Assert.AreEqual(10U, sim.TopLevel.Counter);
         }
     }
 }

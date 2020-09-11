@@ -1,4 +1,4 @@
-﻿li x1, 0x1000 # mem blink storage
+﻿li x1, 0x80000000 # mem blink storage
 addi x3, x0, 0 # loop iterator
 addi x4, x0, 0 # blink counter
 li x20, 10 # timer iteration in blink toggle

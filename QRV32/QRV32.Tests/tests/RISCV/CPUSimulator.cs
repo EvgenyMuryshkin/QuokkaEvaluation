@@ -150,7 +150,7 @@ namespace QRV32.Tests
                             var mask = new RTLBitArray(uint.MinValue);
                             var value = (TopLevel.MemWriteData << byteAddress).Resized(32);
 
-                            switch ((byte)TopLevel.MemWriteMode)
+                            switch ((byte)TopLevel.MemAccessMode)
                             {
                                 case 0:
                                     mask = (new RTLBitArray(byte.MaxValue) << byteAddress).Resized(32);
@@ -162,7 +162,7 @@ namespace QRV32.Tests
                                     mask = new RTLBitArray(uint.MaxValue);
                                     break;
                                 default:
-                                    throw new Exception($"Unsupported mem write mode: {TopLevel.MemWriteMode}");
+                                    throw new Exception($"Unsupported mem write mode: {TopLevel.MemAccessMode}");
                             }
 
                             word &= !mask;

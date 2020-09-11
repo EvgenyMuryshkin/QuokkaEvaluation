@@ -1,4 +1,4 @@
-set_global_assignment -name TOP_LEVEL_ENTITY OverrideScheduleComposition_TopLevel
+set_global_assignment -name TOP_LEVEL_ENTITY XorGateModule_TopLevel
 # -------------------------------------------------------------------------- #
 #
 # Copyright (C) 1991-2010 Altera Corporation
@@ -48,7 +48,7 @@ set_global_assignment -name STRATIX_DEVICE_IO_STANDARD "2.5 V"
 set_global_assignment -name LL_ROOT_REGION ON -entity VHDL -section_id "Root Region"
 set_global_assignment -name LL_MEMBER_STATE LOCKED -entity VHDL -section_id "Root Region"
 
-set_global_assignment -name INCREMENTAL_VECTOR_INPUT_SOURCE Waveforms/OverrideScheduleComposition.vwf
+set_global_assignment -name INCREMENTAL_VECTOR_INPUT_SOURCE Waveforms/XorGateModule.vwf
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
 set_global_assignment -name LL_ROOT_REGION ON -section_id "Root Region"
@@ -124,7 +124,7 @@ set_global_assignment -name VHDL_FILE VHDL/generated/CombinationalL1Override/Com
 set_global_assignment -name VHDL_FILE VHDL/generated/CombinationalL2Override/CombinationalL2Override_TopLevel.vhdl
 set_global_assignment -name VHDL_FILE VHDL/generated/CombinationalL3Override/CombinationalL3Override_TopLevel.vhdl
 set_global_assignment -name VHDL_FILE VHDL/generated/StructsCombinationalModule/StructsCombinationalModule_TopLevel.vhdl
-set_global_assignment -name INCREMENTAL_VECTOR_INPUT_SOURCE Waveforms/OverrideScheduleComposition.vwf
+set_global_assignment -name INCREMENTAL_VECTOR_INPUT_SOURCE Waveforms/XorGateModule.vwf
 set_global_assignment -name VHDL_FILE VHDL/generated/OverrideInputsComposition/OverrideInputsComposition_TopLevel_OverrideInputsComposition_L2Override.vhdl
 set_global_assignment -name VHDL_FILE VHDL/generated/OverrideInputsComposition/OverrideInputsComposition_TopLevel_OverrideInputsComposition_NoOverride.vhdl
 set_global_assignment -name VHDL_FILE VHDL/generated/OverrideInputsComposition/OverrideInputsComposition_TopLevel_OverrideInputsComposition_L3Override.vhdl
@@ -141,3 +141,7 @@ set_global_assignment -name VHDL_FILE VHDL/generated/OverrideScheduleComposition
 set_global_assignment -name VHDL_FILE VHDL/generated/OverrideScheduleComposition/OverrideScheduleComposition_TopLevel_OverrideScheduleComposition_L3Override.vhdl
 set_global_assignment -name VHDL_FILE VHDL/generated/OverrideScheduleComposition/OverrideScheduleComposition_TopLevel_OverrideScheduleComposition_AutoOverride.vhdl
 set_global_assignment -name VECTOR_WAVEFORM_FILE Waveforms/OverrideScheduleComposition.vwf
+set_global_assignment -name VHDL_FILE VHDL/generated/NativeGetterModule/NativeGetterModule_TopLevel.vhdl
+set_global_assignment -name VHDL_FILE VHDL/generated/BitArrayGetterModule/BitArrayGetterModule_TopLevel.vhdl
+set_global_assignment -name INCREMENTAL_VECTOR_INPUT_SOURCE Waveforms/XorGateModule.vwf
+set_global_assignment -name INCREMENTAL_VECTOR_INPUT_SOURCE Waveforms/XorGateModule.vwf

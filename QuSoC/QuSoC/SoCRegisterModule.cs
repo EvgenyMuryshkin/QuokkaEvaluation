@@ -5,10 +5,8 @@ using System.Text;
 
 namespace QuSoC
 {
-    public class SoCRegisterModuleInputs
+    public class SoCRegisterModuleInputs : SoCComponentModuleInputs
     {
-        public bool WE { get; set; }
-        public uint WriteValue { get; set; }
     }
 
     public class SoCRegisterModuleState
@@ -16,15 +14,18 @@ namespace QuSoC
         public uint Value { get; set; }
     }
 
-    public class SoCRegisterModule : RTLSynchronousModule<SoCRegisterModuleInputs, SoCRegisterModuleState>
+    public class SoCRegisterModule : SoCComponentModule<SoCRegisterModuleInputs, SoCRegisterModuleState>
     {
-        public uint Value => State.Value;
+        bool internalIsActive => Inputs.Common.Address == Inputs.DeviceAddress;
 
+        public override uint ReadValue => State.Value;
+        public override bool IsReady => true;
+        public override bool IsActive => internalIsActive;
         protected override void OnStage()
         {
-            if (Inputs.WE)
+            if (Inputs.Common.WE && internalIsActive)
             {
-                NextState.Value = Inputs.WriteValue;
+                NextState.Value = Inputs.Common.WriteValue;
             }
         }
     }

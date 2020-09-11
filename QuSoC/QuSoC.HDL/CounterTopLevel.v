@@ -22,7 +22,7 @@ Counter_TopLevel Counter_TopLevel
 (
 	.Clock (Clock),
 	.Reset (!Reset),
-	.CSCounter (counter)
+	.Counter (counter)
 );
 
 endmodule

@@ -71,6 +71,7 @@ namespace QuSoC
 
 
             var quokkaPath = Path.Combine(hdlLocation, "Quokka.qsf");
+            _logStream.WriteLine(DirectoryLogging.Summary, "");
             _logStream.WriteLine(DirectoryLogging.Summary, $"Updating quokka files: {quokkaPath}");
 
             if (File.Exists(qsfPath))
@@ -84,7 +85,7 @@ namespace QuSoC
                 var generatedFiles = _virtualFS
                     .RecursiveFileNames
                     .Where(f => Path.GetFileNameWithoutExtension(f) != "Quokka")
-                    .Where(f => quokkaProjects.Any(p => f.Contains(p)))
+                    .Where(f => quokkaProjects.Any(p => f.StartsWith(p)))
                     .Select(f => Path.Combine(generatedFilesLocation, f))
                     .OrderBy(f => f)
                     .ToList();

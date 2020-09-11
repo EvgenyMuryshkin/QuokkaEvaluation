@@ -8,7 +8,7 @@ namespace QRV32.CPU
     public partial class RISCVModule
     {
         public RTLBitArray MemWriteData => Regs.RS2;
-        public RTLBitArray MemWriteMode => ID.Funct3;
+        public RTLBitArray MemAccessMode => ID.Funct3;
 
         internal bool IsLoadOp => ID.OpTypeCode == OpTypeCodes.LOAD;
         internal bool IsStoreOp => ID.OpTypeCode == OpTypeCodes.STORE;
