@@ -16,9 +16,14 @@ namespace QuSoC
 
     public class SoCRegisterModule : SoCComponentModule<SoCRegisterModuleInputs, SoCRegisterModuleState>
     {
-        bool internalIsActive => Inputs.Common.Address == Inputs.DeviceAddress;
+        public SoCRegisterModule() : base(4)
+        {
 
-        public override uint ReadValue => State.Value;
+        }
+
+        bool internalIsActive => addressMatch;
+
+        public override uint ReadValue => State.Value >> internalByteAddress;
         public override bool IsReady => true;
         public override bool IsActive => internalIsActive;
         protected override void OnStage()

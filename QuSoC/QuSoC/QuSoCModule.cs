@@ -13,8 +13,6 @@ namespace QuSoC
     public class QuSoCModuleState
     {
         public bool MemReady;
-        public byte[] UART = new byte[4];
-        public bool UART_TX;
     }
 
     // TODO: inheritance not supportted yet
@@ -38,6 +36,7 @@ namespace QuSoC
         internal RISCVModule CPU = new RISCVModule();
         internal SoCRegisterModule CounterRegister = new SoCRegisterModule();
         internal SoCBlockRAMModule BlockRAM = new SoCBlockRAMModule(1024);
+        internal SoCUARTSimModule UARTSim = new SoCUARTSimModule();
 
         public uint Counter => CounterRegister.ReadValue;
 
@@ -65,6 +64,13 @@ namespace QuSoC
                 MemReady = internalMemReady
             });
 
+            InstructionsRAM.Schedule(() => new SoCBlockRAMModuleInputs()
+            {
+                Common = ModuleCommon,
+                DeviceAddress = 0x00000000,
+                MemAccessMode = CPU.MemAccessMode[1, 0]
+            });
+
             CounterRegister.Schedule(() => new SoCRegisterModuleInputs()
             {
                 Common = ModuleCommon,
@@ -78,17 +84,12 @@ namespace QuSoC
                 MemAccessMode = CPU.MemAccessMode[1,0]
             });
 
-            InstructionsRAM.Schedule(() => new SoCBlockRAMModuleInputs()
+            UARTSim.Schedule(() => new SoCUARTSimModuleInputs()
             {
                 Common = ModuleCommon,
-                DeviceAddress = 0x00000000,
-                MemAccessMode = CPU.MemAccessMode[1, 0]
+                DeviceAddress = 0x80200000,
             });
         }
-
-        RTLBitArray internalMemAddress => new RTLBitArray(CPU.MemAddress);
-        RTLBitArray wordAddress => internalMemAddress >> 2;
-        RTLBitArray uartReadData => new RTLBitArray(State.UART[uartAddress]).Resized(32);
 
         // TODO: RTLBitArray variable declaration, support for bit array methods e.g. Resize
         uint internalMemReadData
@@ -109,14 +110,9 @@ namespace QuSoC
                 {
                     result = InstructionsRAM.ReadValue;
                 }    
-                else
+                else if (UARTSim.IsActive)
                 {
-                    switch ((uint)memSegment)
-                    {
-                        case 2:
-                            result = uartReadData;
-                            break;
-                    }
+                    result = UARTSim.ReadValue;
                 }
 
                 return result;
@@ -125,23 +121,12 @@ namespace QuSoC
         
         bool internalMemReady => State.MemReady;
 
-        RTLBitArray memSegment => wordAddress[31, 10];
-        RTLBitArray blockRamAddress => wordAddress[9, 0];
-
-        RTLBitArray uartAddress => internalMemAddress[1, 0];
-
-        public byte UARTWriteData => State.UART[0];
-
-        bool UARTReady => State.UART[2] != 0;
-
         protected override void OnStage()
         {
             NextState.MemReady = CPU.MemRead;
 
             // TODO: constants e.g. 32768U
             // TODO: State.BlockRAM.Length
-
-            NextState.UART_TX = false;
 
             if (CPU.MemWrite)
             {
@@ -157,26 +142,14 @@ namespace QuSoC
                 {
                     NextState.MemReady = InstructionsRAM.IsReady;
                 }
+                else if (UARTSim.IsActive)
+                {
+                    NextState.MemReady = UARTSim.IsReady;
+                }
                 else
                 {
-                    switch ((uint)memSegment)
-                    {
-                        case 2:
-                            // TODO: inline element access
-                            if (UARTReady)
-                            {
-                                // TODO: implicit cast is not handled in rtl transform
-                                NextState.UART[0] = (byte)CPU.MemWriteData;
-                                NextState.UART[2] = 0;
-                                NextState.UART_TX = true;
-                                NextState.MemReady = true;
-                            }
-                            break;
-                        default:
-                            Debugger.Break();
-                            NextState.MemReady = true;
-                            break;
-                    }
+                    Debugger.Break();
+                    NextState.MemReady = true;
                 }
             }
         }

@@ -187,23 +187,11 @@ namespace QuSoC.Tests
 
             List<byte> txBytes = new List<byte>();
 
-            var txCounter = 0;
             sim.OnPostCommit += (m) =>
             {
-                // simulate long uart transmission
-                if (tl.State.UART_TX)
+                if (tl.UARTSim.State.UART_TX)
                 {
-                    txCounter = 100;
-                    txBytes.Add(tl.State.UART[0]);
-                }
-
-                if (txCounter == 0)
-                {
-                    tl.State.UART[2] = 2;
-                }
-                else
-                {
-                    txCounter--;
+                    txBytes.Add(tl.UARTSim.State.UART[0]);
                 }
             };
 

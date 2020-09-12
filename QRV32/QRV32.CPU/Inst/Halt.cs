@@ -14,7 +14,7 @@ namespace QRV32.CPU
             NextState.HaltCode = code;
 
             // calls to Debugger and Trace are not translated into HDL.
-            Trace.WriteLine($"CPU halted");
+            Trace.WriteLine($"CPU halted: {code}");
             Debugger.Break();
         }
     }

@@ -65,7 +65,7 @@ namespace QuSoC.Tests
                     throw new Exception($"Exceeded max allowed clock cycles: {maxClockCycles}");
 
                 if (TopLevel.CPU.State.State == CPUState.Halt)
-                    throw new Exception("CPU halted");
+                    throw new Exception($"CPU halted: {TopLevel.CPU.State.HaltCode}");
 
                 ClockCycle(new QuSoCModuleInputs());
             }
