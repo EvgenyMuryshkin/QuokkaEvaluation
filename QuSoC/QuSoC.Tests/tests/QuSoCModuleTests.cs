@@ -129,7 +129,7 @@ namespace QuSoC.Tests
         {
             var sim = PowerUp("load");
             var tl = sim.TopLevel;
-            tl.State.BlockRAM[0x40] = 0x80BC80F1;
+            tl.InstructionsRAM.State.BlockRAM[0x40] = 0x80BC80F1;
 
             sim.RunToCompletion();
             var mem = sim.MemoryDump();
@@ -140,8 +140,8 @@ namespace QuSoC.Tests
             // 80BC80F1 =
             // 80BD 854B
 
-            Assert.AreEqual(0x80BC80F1, tl.State.BlockRAM[0x40]);
-            Assert.AreEqual(0x80BD854B, tl.State.BlockRAM[0x41]);
+            Assert.AreEqual(0x80BC80F1, tl.InstructionsRAM.State.BlockRAM[0x40]);
+            Assert.AreEqual(0x80BD854B, tl.InstructionsRAM.State.BlockRAM[0x41]);
         }
 
         [TestMethod]
@@ -152,9 +152,9 @@ namespace QuSoC.Tests
 
             sim.RunToCompletion();
 
-            Assert.AreEqual(0xC00DC0DE, tl.State.BlockRAM[0x40]);
-            Assert.AreEqual(0xC0DEC0DE, tl.State.BlockRAM[0x41]);
-            Assert.AreEqual(0xC0DEC0DE, tl.State.BlockRAM[0x42]);
+            Assert.AreEqual(0xC00DC0DE, tl.InstructionsRAM.State.BlockRAM[0x40]);
+            Assert.AreEqual(0xC0DEC0DE, tl.InstructionsRAM.State.BlockRAM[0x41]);
+            Assert.AreEqual(0xC0DEC0DE, tl.InstructionsRAM.State.BlockRAM[0x42]);
         }
 
         [TestMethod]
