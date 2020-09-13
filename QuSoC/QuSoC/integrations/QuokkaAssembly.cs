@@ -63,7 +63,8 @@ namespace QuSoC
                 var apps = Directory.EnumerateDirectories(Path.Combine(_runtimeConfiguration.SourceLocation, "apps"), "*.*" );
                 var limitToApps = new HashSet<string>() 
                 {
-                    //"MemBlock"
+                    //"MemBlock",
+                    //"Counter"
                 };
 
                 foreach (var appPath in apps)

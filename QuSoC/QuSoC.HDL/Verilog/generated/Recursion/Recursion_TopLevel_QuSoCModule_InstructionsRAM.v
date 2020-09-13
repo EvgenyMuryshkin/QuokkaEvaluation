@@ -170,9 +170,7 @@ wire  [32:1] SoCBlockRAMModule_L38F13L40T109_Lookup2;
 reg [32:1] State_BlockRAM [0 : 1023];
 initial
 begin
-	integer i;
-	for (i = 0; i < 1024; i = i + 1)
-		State_BlockRAM[i] = 0;
+	$readmemh("Recursion_TopLevel_QuSoCModule_InstructionsRAM_State_BlockRAM.hex", State_BlockRAM);
 end
 always @(posedge BoardSignals_Clock)
 begin

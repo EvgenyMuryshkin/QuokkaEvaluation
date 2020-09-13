@@ -35,7 +35,7 @@ namespace QuSoC
         internal SoCBlockRAMModule InstructionsRAM = new SoCBlockRAMModule(1024);
         internal RISCVModule CPU = new RISCVModule();
         internal SoCRegisterModule CounterRegister = new SoCRegisterModule();
-        internal SoCBlockRAMModule BlockRAM = new SoCBlockRAMModule(1024);
+        internal SoCBlockRAMModule BlockRAM = new SoCBlockRAMModule(512);
         internal SoCUARTSimModule UARTSim = new SoCUARTSimModule();
 
         public uint Counter => CounterRegister.ReadValue;

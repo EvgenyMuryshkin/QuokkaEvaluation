@@ -11,10 +11,10 @@ Linker script and memory map
 .text           0x0000000000000000      0x15c
                 0x0000000000000000                . = ALIGN (0x4)
  *(.text)
- .text          0x0000000000000000        0xc /tmp/ccS4vFXO.o
- .text          0x000000000000000c       0x28 /tmp/ccxLosyJ.o
+ .text          0x0000000000000000        0xc /tmp/cc8bExoT.o
+ .text          0x000000000000000c       0x28 /tmp/ccZEvApS.o
                 0x000000000000000c                main
- .text          0x0000000000000034       0xb8 /tmp/ccobupbE.o
+ .text          0x0000000000000034       0xb8 /tmp/cc4CpbtR.o
                 0x0000000000000034                MemBlock::Firmware::EntryPoint()
  *(.text*)
  *(.rodata)
@@ -22,8 +22,8 @@ Linker script and memory map
  *(.srodata)
  *(.srodata*)
  *(.eh_frame)
- .eh_frame      0x00000000000000ec       0x38 /tmp/ccxLosyJ.o
- .eh_frame      0x0000000000000124       0x38 /tmp/ccobupbE.o
+ .eh_frame      0x00000000000000ec       0x38 /tmp/ccZEvApS.o
+ .eh_frame      0x0000000000000124       0x38 /tmp/cc4CpbtR.o
  *(.eh_frame*)
                 0x000000000000015c                . = ALIGN (0x4)
                 0x000000000000015c                _etext = .
@@ -34,9 +34,9 @@ Linker script and memory map
                 0x000000000000015c                _sdata = .
                 0x000000000000015c                _ram_start = .
  *(.data)
- .data          0x000000000000015c        0x0 /tmp/ccS4vFXO.o
- .data          0x000000000000015c        0x0 /tmp/ccxLosyJ.o
- .data          0x000000000000015c        0x0 /tmp/ccobupbE.o
+ .data          0x000000000000015c        0x0 /tmp/cc8bExoT.o
+ .data          0x000000000000015c        0x0 /tmp/ccZEvApS.o
+ .data          0x000000000000015c        0x0 /tmp/cc4CpbtR.o
  *(.data*)
  *(.sdata)
  *(.sdata*)
@@ -49,9 +49,9 @@ Linker script and memory map
                 0x000000000000015c                . = ALIGN (0x4)
                 0x000000000000015c                _sbss = .
  *(.bss)
- .bss           0x000000000000015c        0x0 /tmp/ccS4vFXO.o
- .bss           0x000000000000015c        0x0 /tmp/ccxLosyJ.o
- .bss           0x000000000000015c        0x0 /tmp/ccobupbE.o
+ .bss           0x000000000000015c        0x0 /tmp/cc8bExoT.o
+ .bss           0x000000000000015c        0x0 /tmp/ccZEvApS.o
+ .bss           0x000000000000015c        0x0 /tmp/cc4CpbtR.o
  *(.bss*)
  *(.sbss)
  *(.sbss*)
@@ -62,20 +62,20 @@ Linker script and memory map
 .heap           0x000000000000015c        0x0
                 0x000000000000015c                . = ALIGN (0x4)
                 0x000000000000015c                _heap_start = .
-LOAD /tmp/ccS4vFXO.o
-LOAD /tmp/ccxLosyJ.o
-LOAD /tmp/ccobupbE.o
+LOAD /tmp/cc8bExoT.o
+LOAD /tmp/ccZEvApS.o
+LOAD /tmp/cc4CpbtR.o
 OUTPUT(firmware.elf elf32-littleriscv)
 
 .comment        0x0000000000000000       0x11
- .comment       0x0000000000000000       0x11 /tmp/ccxLosyJ.o
+ .comment       0x0000000000000000       0x11 /tmp/ccZEvApS.o
                                          0x12 (size before relaxing)
- .comment       0x0000000000000011       0x12 /tmp/ccobupbE.o
+ .comment       0x0000000000000011       0x12 /tmp/cc4CpbtR.o
 
 Cross Reference Table
 
 Symbol                                            File
-MemBlock::Firmware::EntryPoint()                  /tmp/ccobupbE.o
-                                                  /tmp/ccxLosyJ.o
-main                                              /tmp/ccxLosyJ.o
-                                                  /tmp/ccS4vFXO.o
+MemBlock::Firmware::EntryPoint()                  /tmp/cc4CpbtR.o
+                                                  /tmp/ccZEvApS.o
+main                                              /tmp/ccZEvApS.o
+                                                  /tmp/cc8bExoT.o

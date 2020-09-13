@@ -46,7 +46,7 @@ wire  Zero = 1'b0;
 wire  One = 1'b1;
 wire  true = 1'b1;
 wire  false = 1'b0;
-wire  [13:1] addressSpan = 13'b1000000000000;
+wire  [12:1] addressSpan = 12'b100000000000;
 wire  [2:1] SoCComponentModule_L38F83T84_Expr = 2'b11;
 wire  [2:1] SoCBlockRAMModule_L38F37T38_Expr = 2'b10;
 wire  [2:1] SoCBlockRAMModule_L42F57T58_Expr = 2'b10;
@@ -167,11 +167,11 @@ reg  [32:1] SoCBlockRAMModule_L38F13L40T109_Lookup = 32'b00000000000000000000000
 wire  SoCBlockRAMModule_L38F13L40T109_LookupMultiplexerAddress;
 wire  [32:1] SoCBlockRAMModule_L38F13L40T109_Lookup1;
 wire  [32:1] SoCBlockRAMModule_L38F13L40T109_Lookup2;
-reg [32:1] State_BlockRAM [0 : 1023];
+reg [32:1] State_BlockRAM [0 : 511];
 initial
 begin
 	integer i;
-	for (i = 0; i < 1024; i = i + 1)
+	for (i = 0; i < 512; i = i + 1)
 		State_BlockRAM[i] = 0;
 end
 always @(posedge BoardSignals_Clock)
@@ -307,7 +307,7 @@ assign SoCBlockRAMModule_L31F43T99_Expr_1 = SoCBlockRAMModule_L31F44T82_Expr;
 assign SoCBlockRAMModule_L31F43T99_Expr_2 = memAccessMask;
 assign SoCBlockRAMModule_L31F44T82_Expr_1 = State_ReadValue;
 assign SoCComponentModule_L36F122T156_Expr_1 = { {2{1'b0}}, Inputs_DeviceAddress }/*expand*/;
-assign SoCComponentModule_L36F122T156_Expr_2 = { {21{1'b0}}, addressSpan }/*expand*/;
+assign SoCComponentModule_L36F122T156_Expr_2 = { {22{1'b0}}, addressSpan }/*expand*/;
 assign Inputs_Common_Address = Common_Address;
 assign Inputs_Common_WriteValue = Common_WriteValue;
 assign Inputs_Common_WE = Common_WE;
