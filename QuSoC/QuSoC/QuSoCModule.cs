@@ -3,6 +3,7 @@ using Quokka.RTL;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 
 namespace QuSoC
 {
@@ -32,11 +33,19 @@ namespace QuSoC
 
     public class QuSoCModule : RTLSynchronousModule<QuSoCModuleInputs, QuSoCModuleState>
     {
-        internal SoCBlockRAMModule InstructionsRAM = new SoCBlockRAMModule(1024);
         internal RISCVModule CPU = new RISCVModule();
+        internal SoCBlockRAMModule InstructionsRAM = new SoCBlockRAMModule(1024);
         internal SoCRegisterModule CounterRegister = new SoCRegisterModule();
-        internal SoCBlockRAMModule BlockRAM = new SoCBlockRAMModule(512);
+        internal SoCBlockRAMModule BlockRAM = new SoCBlockRAMModule(1024);
         internal SoCUARTSimModule UARTSim = new SoCUARTSimModule();
+
+        ISoCComponentModule[] AllModules => new ISoCComponentModule[]
+        {
+            InstructionsRAM,
+            CounterRegister,
+            BlockRAM,
+            UARTSim
+        };
 
         public uint Counter => CounterRegister.ReadValue;
 
@@ -60,7 +69,7 @@ namespace QuSoC
             CPU.Schedule(() => new RISCVModuleInputs()
             {
                 BaseAddress = 0U,
-                MemReadData = internalMemReadData,
+                MemReadData = internalModuleReadData,
                 MemReady = internalMemReady
             });
 
@@ -92,33 +101,45 @@ namespace QuSoC
         }
 
         // TODO: RTLBitArray variable declaration, support for bit array methods e.g. Resize
-        uint internalMemReadData
+        (byte, bool) BusCS
         {
             get
             {
-                uint result = 0;
+                bool hasActive = true;
+                byte address = 0;
 
-                if (CounterRegister.IsActive)
+                // TODO: prioritized encored
+                if (InstructionsRAM.IsActive)
                 {
-                    result = CounterRegister.ReadValue;
+                    address = 0;
+                }
+                else if (CounterRegister.IsActive)
+                {
+                    address = 1;
                 }
                 else if (BlockRAM.IsActive)
                 {
-                    result = BlockRAM.ReadValue;
+                    address = 2;
                 }
-                else if (InstructionsRAM.IsActive)
-                {
-                    result = InstructionsRAM.ReadValue;
-                }    
                 else if (UARTSim.IsActive)
                 {
-                    result = UARTSim.ReadValue;
+                    address = 3;
+                }
+                else
+                {
+                    hasActive = false;
                 }
 
-                return result;
+                return (address, hasActive);
             }
         }
-        
+
+        byte ModuleIndex => BusCS.Item1;
+        bool HasActiveModule => BusCS.Item2;
+
+        uint internalModuleReadData => AllModules[ModuleIndex].ReadValue;
+        bool internalModuleIsReady => AllModules[ModuleIndex].IsReady;
+
         bool internalMemReady => State.MemReady;
 
         protected override void OnStage()
@@ -130,24 +151,13 @@ namespace QuSoC
 
             if (CPU.MemWrite)
             {
-                if (CounterRegister.IsActive)
+                if (HasActiveModule)
                 {
-                    NextState.MemReady = CounterRegister.IsReady;
-                }
-                else if (BlockRAM.IsActive)
-                {
-                    NextState.MemReady = BlockRAM.IsReady;
-                }
-                else if (InstructionsRAM.IsActive)
-                {
-                    NextState.MemReady = InstructionsRAM.IsReady;
-                }
-                else if (UARTSim.IsActive)
-                {
-                    NextState.MemReady = UARTSim.IsReady;
+                    NextState.MemReady = internalModuleIsReady;
                 }
                 else
                 {
+                    // TODO: Halt state or something
                     Debugger.Break();
                     NextState.MemReady = true;
                 }

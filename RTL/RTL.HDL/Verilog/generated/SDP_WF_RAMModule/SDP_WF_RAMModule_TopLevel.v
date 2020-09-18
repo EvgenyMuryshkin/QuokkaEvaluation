@@ -39,12 +39,12 @@ wire  Zero = 1'b0;
 wire  One = 1'b1;
 wire  true = 1'b1;
 wire  false = 1'b0;
-wire  [8:1] Inputs_ReadAddress;
-wire  [8:1] Inputs_WriteAddress;
-wire  [8:1] Inputs_WriteData;
+wire  [7:0] Inputs_ReadAddress;
+wire  [7:0] Inputs_WriteAddress;
+wire  [7:0] Inputs_WriteData;
 wire  Inputs_WE;
-reg  [8:1] State_ReadData = 8'b00000000;
-reg [8:1] State_Buff [0 : 255];
+reg  [7:0] State_ReadData = 8'b00000000;
+reg [7:0] State_Buff [0 : 255];
 initial
 begin
 	integer i;

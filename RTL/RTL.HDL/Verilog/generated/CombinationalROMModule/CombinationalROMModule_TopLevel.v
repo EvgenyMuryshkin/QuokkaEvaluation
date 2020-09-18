@@ -36,11 +36,11 @@ wire  Zero = 1'b0;
 wire  One = 1'b1;
 wire  true = 1'b1;
 wire  false = 1'b0;
-wire  [8:1] Inputs_ReadAddress1;
-wire  [8:1] Inputs_ReadAddress2;
-wire  [8:1] CombinationalROMModule_L22F31T56_Index;
-wire  [8:1] CombinationalROMModule_L23F31T56_Index;
-reg [8:1] buff [0 : 255];
+wire  [7:0] Inputs_ReadAddress1;
+wire  [7:0] Inputs_ReadAddress2;
+wire  [7:0] CombinationalROMModule_L22F31T56_Index;
+wire  [7:0] CombinationalROMModule_L23F31T56_Index;
+reg [7:0] buff [0 : 255];
 initial
 begin
 	$readmemh("CombinationalROMModule_TopLevel_buff.hex", buff);

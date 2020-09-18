@@ -44,16 +44,16 @@ wire  false = 1'b0;
 wire  EmitterModule_L22F9L25T10_EmitterModule_L24F54T55_Expr = 1'b1;
 wire  Inputs_IsEnabled;
 wire  Inputs_Ack;
-reg  [8:1] NextState_Data = 8'b00000000;
-wire  [8:1] EmitterModule_L22F9L25T10_EmitterModule_L24F34T56_Cast;
-reg  [8:1] State_Data = 8'b00000000;
-wire  [8:1] State_DataDefault = 8'b00000000;
+reg  [7:0] NextState_Data = 8'b00000000;
+wire  [7:0] EmitterModule_L22F9L25T10_EmitterModule_L24F34T56_Cast;
+reg  [7:0] State_Data = 8'b00000000;
+wire  [7:0] State_DataDefault = 8'b00000000;
 wire  EmitterModule_L22F9L25T10_EmitterModule_L23F17T47_Expr;
 wire  EmitterModule_L22F9L25T10_EmitterModule_L23F17T47_Expr_1;
 wire  EmitterModule_L22F9L25T10_EmitterModule_L23F17T47_Expr_2;
-wire  [10:1] EmitterModule_L22F9L25T10_EmitterModule_L24F41T55_Expr;
-wire signed  [10:1] EmitterModule_L22F9L25T10_EmitterModule_L24F41T55_Expr_1;
-wire signed  [10:1] EmitterModule_L22F9L25T10_EmitterModule_L24F41T55_Expr_2;
+wire  [9:0] EmitterModule_L22F9L25T10_EmitterModule_L24F41T55_Expr;
+wire signed  [9:0] EmitterModule_L22F9L25T10_EmitterModule_L24F41T55_Expr_1;
+wire signed  [9:0] EmitterModule_L22F9L25T10_EmitterModule_L24F41T55_Expr_2;
 always @(posedge BoardSignals_Clock)
 begin
 if ( BoardSignals_Reset == 1 ) begin
@@ -79,7 +79,7 @@ assign EmitterModule_L22F9L25T10_EmitterModule_L24F41T55_Expr_1 = { {2{1'b0}}, S
 assign EmitterModule_L22F9L25T10_EmitterModule_L24F41T55_Expr_2 = { {9{1'b0}}, EmitterModule_L22F9L25T10_EmitterModule_L24F54T55_Expr }/*expand*/;
 assign Inputs_IsEnabled = IsEnabled;
 assign Inputs_Ack = Ack;
-assign EmitterModule_L22F9L25T10_EmitterModule_L24F34T56_Cast = EmitterModule_L22F9L25T10_EmitterModule_L24F41T55_Expr[8:1]/*truncate*/;
+assign EmitterModule_L22F9L25T10_EmitterModule_L24F34T56_Cast = EmitterModule_L22F9L25T10_EmitterModule_L24F41T55_Expr[7:0]/*truncate*/;
 assign Data = State_Data;
 assign HasData = Inputs_IsEnabled;
 // [BEGIN USER ARCHITECTURE]

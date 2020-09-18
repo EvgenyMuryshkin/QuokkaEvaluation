@@ -47,18 +47,18 @@ constant Zero : std_logic := '0';
 constant One : std_logic := '1';
 constant true : std_logic := '1';
 constant false : std_logic := '0';
-signal Inputs_ShortValue : signed(16 downto 1)  := "0000000000000000";
-signal SignedCastModule_L13F34T57_Cast : unsigned(8 downto 1)  := "00000000";
-signal SignedCastModule_L14F36T60_Cast : signed(8 downto 1)  := "00000000";
-signal SignedCastModule_L15F38T63_Cast : unsigned(16 downto 1)  := "0000000000000000";
-signal SignedCastModule_L17F34T57_Cast : unsigned(32 downto 1)  := "00000000000000000000000000000000";
+signal Inputs_ShortValue : signed(15 downto 0)  := "0000000000000000";
+signal SignedCastModule_L13F34T57_Cast : unsigned(7 downto 0)  := "00000000";
+signal SignedCastModule_L14F36T60_Cast : signed(7 downto 0)  := "00000000";
+signal SignedCastModule_L15F38T63_Cast : unsigned(15 downto 0)  := "0000000000000000";
+signal SignedCastModule_L17F34T57_Cast : unsigned(31 downto 0)  := "00000000000000000000000000000000";
 begin
 process(Inputs_ShortValue, ShortValue, SignedCastModule_L13F34T57_Cast, SignedCastModule_L14F36T60_Cast, SignedCastModule_L15F38T63_Cast, SignedCastModule_L17F34T57_Cast)
 begin
 Inputs_ShortValue <= ShortValue;
-SignedCastModule_L13F34T57_Cast <= unsigned(Inputs_ShortValue(8 downto 1));
+SignedCastModule_L13F34T57_Cast <= unsigned(Inputs_ShortValue(7 downto 0));
 ByteValue <= SignedCastModule_L13F34T57_Cast;
-SignedCastModule_L14F36T60_Cast <= Inputs_ShortValue(8 downto 1);
+SignedCastModule_L14F36T60_Cast <= Inputs_ShortValue(7 downto 0);
 SByteValue <= SignedCastModule_L14F36T60_Cast;
 SignedCastModule_L15F38T63_Cast <= unsigned(Inputs_ShortValue);
 UShortValue <= SignedCastModule_L15F38T63_Cast;

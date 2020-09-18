@@ -43,11 +43,11 @@ wire  Logic_Item2;
 reg  TuplesModule_L16F13L21T14_same = 1'b0;
 reg  TuplesModule_L16F13L21T14_diff = 1'b0;
 wire  TuplesModule_L16F13L21T14_TuplesModule_L17F28T58_Expr;
-wire signed  [2:1] TuplesModule_L16F13L21T14_TuplesModule_L17F28T58_ExprLhs;
-wire signed  [2:1] TuplesModule_L16F13L21T14_TuplesModule_L17F28T58_ExprRhs;
+wire signed  [1:0] TuplesModule_L16F13L21T14_TuplesModule_L17F28T58_ExprLhs;
+wire signed  [1:0] TuplesModule_L16F13L21T14_TuplesModule_L17F28T58_ExprRhs;
 wire  TuplesModule_L16F13L21T14_TuplesModule_L18F28T58_Expr;
-wire signed  [2:1] TuplesModule_L16F13L21T14_TuplesModule_L18F28T58_ExprLhs;
-wire signed  [2:1] TuplesModule_L16F13L21T14_TuplesModule_L18F28T58_ExprRhs;
+wire signed  [1:0] TuplesModule_L16F13L21T14_TuplesModule_L18F28T58_ExprLhs;
+wire signed  [1:0] TuplesModule_L16F13L21T14_TuplesModule_L18F28T58_ExprRhs;
 assign TuplesModule_L16F13L21T14_TuplesModule_L17F28T58_Expr = TuplesModule_L16F13L21T14_TuplesModule_L17F28T58_ExprLhs == TuplesModule_L16F13L21T14_TuplesModule_L17F28T58_ExprRhs ? 1'b1 : 1'b0;
 assign TuplesModule_L16F13L21T14_TuplesModule_L18F28T58_Expr = TuplesModule_L16F13L21T14_TuplesModule_L18F28T58_ExprLhs != TuplesModule_L16F13L21T14_TuplesModule_L18F28T58_ExprRhs ? 1'b1 : 1'b0;
 always @*

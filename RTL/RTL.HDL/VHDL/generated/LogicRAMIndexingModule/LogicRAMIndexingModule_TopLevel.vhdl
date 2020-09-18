@@ -57,48 +57,48 @@ constant true : std_logic := '1';
 constant false : std_logic := '0';
 constant LogicRAMIndexingModule_L26F52T53_Expr : std_logic := '1';
 signal Inputs_WE : std_logic := '0';
-signal Inputs_WriteAddr : unsigned(2 downto 1)  := "00";
-signal Inputs_WriteData : unsigned(8 downto 1)  := "00000000";
-signal Inputs_ReadAddr : unsigned(2 downto 1)  := "00";
-signal Inputs_OpData : unsigned(8 downto 1)  := "00000000";
-signal State_BuffDefault : unsigned(8 downto 1)  := "00000000";
-signal LogicRAMIndexingModule_L26F41T54_Index : unsigned(8 downto 1)  := "00000000";
-signal LogicRAMIndexingModule_L26F57T84_Index : unsigned(8 downto 1)  := "00000000";
-signal LogicRAMIndexingModule_L26F34T85_Cast : unsigned(8 downto 1)  := "00000000";
-signal LogicRAMIndexingModule_L27F42T69_Index : unsigned(8 downto 1)  := "00000000";
-signal LogicRAMIndexingModule_L27F35T86_Cast : unsigned(8 downto 1)  := "00000000";
-signal LogicRAMIndexingModule_L28F58T85_Index : unsigned(8 downto 1)  := "00000000";
-signal LogicRAMIndexingModule_L28F35T86_Cast : unsigned(8 downto 1)  := "00000000";
-signal LogicRAMIndexingModule_L30F43T70_Index : unsigned(8 downto 1)  := "00000000";
-signal LogicRAMIndexingModule_L30F36T87_Cast : unsigned(8 downto 1)  := "00000000";
-signal LogicRAMIndexingModule_L31F59T86_Index : unsigned(8 downto 1)  := "00000000";
-signal LogicRAMIndexingModule_L31F36T87_Cast : unsigned(8 downto 1)  := "00000000";
-signal LogicRAMIndexingModule_L33F34T61_Index : unsigned(8 downto 1)  := "00000000";
-signal LogicRAMIndexingModule_L34F50T77_Index : unsigned(8 downto 1)  := "00000000";
-signal LogicRAMIndexingModule_L30F43T86_Expr : unsigned(8 downto 1)  := "00000000";
-signal LogicRAMIndexingModule_L30F43T86_Expr_1 : unsigned(8 downto 1)  := "00000000";
-signal LogicRAMIndexingModule_L30F43T86_Expr_2 : unsigned(8 downto 1)  := "00000000";
-signal LogicRAMIndexingModule_L31F43T86_Expr : unsigned(8 downto 1)  := "00000000";
-signal LogicRAMIndexingModule_L31F43T86_Expr_1 : unsigned(8 downto 1)  := "00000000";
-signal LogicRAMIndexingModule_L31F43T86_Expr_2 : unsigned(8 downto 1)  := "00000000";
-signal LogicRAMIndexingModule_L26F41T84_Expr : unsigned(10 downto 1)  := "0000000000";
-signal LogicRAMIndexingModule_L26F41T84_Expr_1 : signed(10 downto 1)  := "0000000000";
-signal LogicRAMIndexingModule_L26F41T84_Expr_2 : signed(10 downto 1)  := "0000000000";
-signal LogicRAMIndexingModule_L27F42T85_Expr : signed(10 downto 1)  := "0000000000";
-signal LogicRAMIndexingModule_L27F42T85_Expr_1 : signed(10 downto 1)  := "0000000000";
-signal LogicRAMIndexingModule_L27F42T85_Expr_2 : signed(10 downto 1)  := "0000000000";
-signal LogicRAMIndexingModule_L28F42T85_Expr : unsigned(10 downto 1)  := "0000000000";
-signal LogicRAMIndexingModule_L28F42T85_Expr_1 : signed(10 downto 1)  := "0000000000";
-signal LogicRAMIndexingModule_L28F42T85_Expr_2 : signed(10 downto 1)  := "0000000000";
+signal Inputs_WriteAddr : unsigned(1 downto 0)  := "00";
+signal Inputs_WriteData : unsigned(7 downto 0)  := "00000000";
+signal Inputs_ReadAddr : unsigned(1 downto 0)  := "00";
+signal Inputs_OpData : unsigned(7 downto 0)  := "00000000";
+signal State_BuffDefault : unsigned(7 downto 0)  := "00000000";
+signal LogicRAMIndexingModule_L26F41T54_Index : unsigned(7 downto 0)  := "00000000";
+signal LogicRAMIndexingModule_L26F57T84_Index : unsigned(7 downto 0)  := "00000000";
+signal LogicRAMIndexingModule_L26F34T85_Cast : unsigned(7 downto 0)  := "00000000";
+signal LogicRAMIndexingModule_L27F42T69_Index : unsigned(7 downto 0)  := "00000000";
+signal LogicRAMIndexingModule_L27F35T86_Cast : unsigned(7 downto 0)  := "00000000";
+signal LogicRAMIndexingModule_L28F58T85_Index : unsigned(7 downto 0)  := "00000000";
+signal LogicRAMIndexingModule_L28F35T86_Cast : unsigned(7 downto 0)  := "00000000";
+signal LogicRAMIndexingModule_L30F43T70_Index : unsigned(7 downto 0)  := "00000000";
+signal LogicRAMIndexingModule_L30F36T87_Cast : unsigned(7 downto 0)  := "00000000";
+signal LogicRAMIndexingModule_L31F59T86_Index : unsigned(7 downto 0)  := "00000000";
+signal LogicRAMIndexingModule_L31F36T87_Cast : unsigned(7 downto 0)  := "00000000";
+signal LogicRAMIndexingModule_L33F34T61_Index : unsigned(7 downto 0)  := "00000000";
+signal LogicRAMIndexingModule_L34F50T77_Index : unsigned(7 downto 0)  := "00000000";
+signal LogicRAMIndexingModule_L30F43T86_Expr : unsigned(7 downto 0)  := "00000000";
+signal LogicRAMIndexingModule_L30F43T86_Expr_1 : unsigned(7 downto 0)  := "00000000";
+signal LogicRAMIndexingModule_L30F43T86_Expr_2 : unsigned(7 downto 0)  := "00000000";
+signal LogicRAMIndexingModule_L31F43T86_Expr : unsigned(7 downto 0)  := "00000000";
+signal LogicRAMIndexingModule_L31F43T86_Expr_1 : unsigned(7 downto 0)  := "00000000";
+signal LogicRAMIndexingModule_L31F43T86_Expr_2 : unsigned(7 downto 0)  := "00000000";
+signal LogicRAMIndexingModule_L26F41T84_Expr : unsigned(9 downto 0)  := "0000000000";
+signal LogicRAMIndexingModule_L26F41T84_Expr_1 : signed(9 downto 0)  := "0000000000";
+signal LogicRAMIndexingModule_L26F41T84_Expr_2 : signed(9 downto 0)  := "0000000000";
+signal LogicRAMIndexingModule_L27F42T85_Expr : signed(9 downto 0)  := "0000000000";
+signal LogicRAMIndexingModule_L27F42T85_Expr_1 : signed(9 downto 0)  := "0000000000";
+signal LogicRAMIndexingModule_L27F42T85_Expr_2 : signed(9 downto 0)  := "0000000000";
+signal LogicRAMIndexingModule_L28F42T85_Expr : unsigned(9 downto 0)  := "0000000000";
+signal LogicRAMIndexingModule_L28F42T85_Expr_1 : signed(9 downto 0)  := "0000000000";
+signal LogicRAMIndexingModule_L28F42T85_Expr_2 : signed(9 downto 0)  := "0000000000";
 signal LogicRAMIndexingModule_L33F34T77_Expr : std_logic := '0';
-signal LogicRAMIndexingModule_L33F34T77_ExprLhs : signed(9 downto 1)  := "000000000";
-signal LogicRAMIndexingModule_L33F34T77_ExprRhs : signed(9 downto 1)  := "000000000";
+signal LogicRAMIndexingModule_L33F34T77_ExprLhs : signed(8 downto 0)  := "000000000";
+signal LogicRAMIndexingModule_L33F34T77_ExprRhs : signed(8 downto 0)  := "000000000";
 signal LogicRAMIndexingModule_L34F34T77_Expr : std_logic := '0';
-signal LogicRAMIndexingModule_L34F34T77_ExprLhs : signed(9 downto 1)  := "000000000";
-signal LogicRAMIndexingModule_L34F34T77_ExprRhs : signed(9 downto 1)  := "000000000";
-type State_BuffArray is array(0 to 3) of unsigned(8 downto 1);
+signal LogicRAMIndexingModule_L34F34T77_ExprLhs : signed(8 downto 0)  := "000000000";
+signal LogicRAMIndexingModule_L34F34T77_ExprRhs : signed(8 downto 0)  := "000000000";
+type State_BuffArray is array(0 to 3) of unsigned(7 downto 0);
 signal State_Buff : State_BuffArray := (others => (others => '0'));
-type NextState_BuffArray is array(0 to 3) of unsigned(8 downto 1);
+type NextState_BuffArray is array(0 to 3) of unsigned(7 downto 0);
 signal NextState_Buff : NextState_BuffArray := (others => (others => '0'));
 begin
 process (Clock, NextState_Buff, Reset, State_BuffDefault)
@@ -121,7 +121,7 @@ end process;
 process(LogicRAMIndexingModule_L30F43T86_Expr_1, LogicRAMIndexingModule_L30F43T86_Expr_2)
 begin
 
-    for i in 8 downto 1 loop
+    for i in 7 downto 0 loop
         LogicRAMIndexingModule_L30F43T86_Expr(i) <= LogicRAMIndexingModule_L30F43T86_Expr_1(i)  OR LogicRAMIndexingModule_L30F43T86_Expr_2(i)    ;
     end loop;
 
@@ -130,7 +130,7 @@ begin
 process(LogicRAMIndexingModule_L31F43T86_Expr_1, LogicRAMIndexingModule_L31F43T86_Expr_2)
 begin
 
-    for i in 8 downto 1 loop
+    for i in 7 downto 0 loop
         LogicRAMIndexingModule_L31F43T86_Expr(i) <= LogicRAMIndexingModule_L31F43T86_Expr_1(i)  AND LogicRAMIndexingModule_L31F43T86_Expr_2(i)    ;
     end loop;
 
@@ -183,11 +183,11 @@ Inputs_WriteAddr <= WriteAddr;
 Inputs_WriteData <= WriteData;
 Inputs_ReadAddr <= ReadAddr;
 Inputs_OpData <= OpData;
-LogicRAMIndexingModule_L26F34T85_Cast <= LogicRAMIndexingModule_L26F41T84_Expr(8 downto 1);
+LogicRAMIndexingModule_L26F34T85_Cast <= LogicRAMIndexingModule_L26F41T84_Expr(7 downto 0);
 MemLhsRhs <= LogicRAMIndexingModule_L26F34T85_Cast;
-LogicRAMIndexingModule_L27F35T86_Cast <= unsigned(LogicRAMIndexingModule_L27F42T85_Expr(8 downto 1));
+LogicRAMIndexingModule_L27F35T86_Cast <= unsigned(LogicRAMIndexingModule_L27F42T85_Expr(7 downto 0));
 MathMemLhs <= LogicRAMIndexingModule_L27F35T86_Cast;
-LogicRAMIndexingModule_L28F35T86_Cast <= LogicRAMIndexingModule_L28F42T85_Expr(8 downto 1);
+LogicRAMIndexingModule_L28F35T86_Cast <= LogicRAMIndexingModule_L28F42T85_Expr(7 downto 0);
 MathMemRhs <= LogicRAMIndexingModule_L28F35T86_Cast;
 LogicRAMIndexingModule_L30F36T87_Cast <= LogicRAMIndexingModule_L30F43T86_Expr;
 LogicMemLhs <= LogicRAMIndexingModule_L30F36T87_Cast;

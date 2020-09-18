@@ -5,6 +5,14 @@ using System.Text;
 
 namespace QuSoC
 {
+    // NOTE: inheritance from IRTLCombinationalModule is a key to create module multiplexer
+    public interface ISoCComponentModule : IRTLCombinationalModule
+    {
+        bool IsActive { get; }
+        bool IsReady { get; }
+        uint ReadValue { get; }
+    }
+
     public struct SoCComponentModuleCommon
     {
         public uint Address;
@@ -19,7 +27,7 @@ namespace QuSoC
         public uint DeviceAddress;
     }
 
-    public abstract class SoCComponentModule<TInputs, TState> : RTLSynchronousModule<TInputs, TState>
+    public abstract class SoCComponentModule<TInputs, TState> : RTLSynchronousModule<TInputs, TState>, ISoCComponentModule
         where TInputs : SoCComponentModuleInputs, new()
         where TState : new()
     {

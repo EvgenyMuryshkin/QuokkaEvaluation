@@ -47,17 +47,17 @@ constant Zero : std_logic := '0';
 constant One : std_logic := '1';
 constant true : std_logic := '1';
 constant false : std_logic := '0';
-signal Inputs_Addr : unsigned(2 downto 1)  := "00";
-signal Inputs_Sig0 : unsigned(8 downto 1)  := "00000000";
-signal Inputs_Sig1 : unsigned(8 downto 1)  := "00000000";
-signal Inputs_Sig2 : unsigned(8 downto 1)  := "00000000";
-signal Inputs_Sig3 : unsigned(8 downto 1)  := "00000000";
-signal SignalsMuxModule_L24F30T50_Mux : unsigned(8 downto 1)  := "00000000";
-signal SignalsMuxModule_L24F30T50_MuxMultiplexerAddress : unsigned(2 downto 1)  := "00";
-signal SignalsMuxModule_L24F30T50_Mux1 : unsigned(8 downto 1)  := "00000000";
-signal SignalsMuxModule_L24F30T50_Mux2 : unsigned(8 downto 1)  := "00000000";
-signal SignalsMuxModule_L24F30T50_Mux3 : unsigned(8 downto 1)  := "00000000";
-signal SignalsMuxModule_L24F30T50_Mux4 : unsigned(8 downto 1)  := "00000000";
+signal Inputs_Addr : unsigned(1 downto 0)  := "00";
+signal Inputs_Sig0 : unsigned(7 downto 0)  := "00000000";
+signal Inputs_Sig1 : unsigned(7 downto 0)  := "00000000";
+signal Inputs_Sig2 : unsigned(7 downto 0)  := "00000000";
+signal Inputs_Sig3 : unsigned(7 downto 0)  := "00000000";
+signal SignalsMuxModule_L24F30T50_Mux : unsigned(7 downto 0)  := "00000000";
+signal SignalsMuxModule_L24F30T50_MuxMultiplexerAddress : unsigned(1 downto 0)  := "00";
+signal SignalsMuxModule_L24F30T50_Mux1 : unsigned(7 downto 0)  := "00000000";
+signal SignalsMuxModule_L24F30T50_Mux2 : unsigned(7 downto 0)  := "00000000";
+signal SignalsMuxModule_L24F30T50_Mux3 : unsigned(7 downto 0)  := "00000000";
+signal SignalsMuxModule_L24F30T50_Mux4 : unsigned(7 downto 0)  := "00000000";
 begin
 process(SignalsMuxModule_L24F30T50_Mux1, SignalsMuxModule_L24F30T50_Mux2, SignalsMuxModule_L24F30T50_Mux3, SignalsMuxModule_L24F30T50_Mux4, SignalsMuxModule_L24F30T50_MuxMultiplexerAddress)
 begin
