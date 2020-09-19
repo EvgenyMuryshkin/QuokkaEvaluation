@@ -6,11 +6,13 @@ namespace RTL.Modules
     public class BitArrayInputs
     {
         public byte Value;
+        public RTLBitArray Bit = new RTLBitArray().Resized(3);
     }
 
     public class BitArrayModule : RTLCombinationalModule<BitArrayInputs>
     {
         RTLBitArray Bits => Inputs.Value;
+        public bool ValueBit => Bits[Inputs.Bit];
         public RTLBitArray Direct => Bits;
         public RTLBitArray High => Bits[7, 4];
         public RTLBitArray Low => Bits[3, 0];
@@ -20,6 +22,5 @@ namespace RTL.Modules
         public RTLBitArray Picks => new RTLBitArray(Bits[6,5], Bits[0,1]);
         public RTLBitArray FromBits1 => new RTLBitArray(true, true, false, true);
         public RTLBitArray FromBits2 => new RTLBitArray(false, true, true, true);
-
     }
 }

@@ -38,7 +38,7 @@
 
 set_global_assignment -name FAMILY "Cyclone II"
 set_global_assignment -name DEVICE AUTO
-set_global_assignment -name TOP_LEVEL_ENTITY XorGateModule_TopLevel
+set_global_assignment -name TOP_LEVEL_ENTITY BitArrayModule_TopLevel
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION "9.1 SP2"
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "20:45:17  JUNE 07, 2019"
 set_global_assignment -name LAST_QUARTUS_VERSION "9.1 SP2"
@@ -151,7 +151,8 @@ set_global_assignment -name VECTOR_WAVEFORM_FILE Waveforms/NativeGetterModule.vw
 
 
 set_global_assignment -name VECTOR_WAVEFORM_FILE Waveforms/BitArrayGetterModule.vwf
-set_global_assignment -name INCREMENTAL_VECTOR_INPUT_SOURCE Waveforms/XorGateModule.vwf
+set_global_assignment -name INCREMENTAL_VECTOR_INPUT_SOURCE Waveforms/BitArrayModule.vwf
+
 
 
 
