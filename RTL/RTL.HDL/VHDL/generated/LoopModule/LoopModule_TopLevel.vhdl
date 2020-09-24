@@ -28,7 +28,9 @@ entity LoopModule_TopLevel is
 -- [END USER PORTS]
 
 InData : in  unsigned(7 downto 0);
-OutOr : out  std_logic
+OutOr : out  std_logic;
+OutAnd : out  std_logic;
+OutXor : out  std_logic
     );
 end entity;
 
@@ -43,37 +45,55 @@ constant Zero : std_logic := '0';
 constant One : std_logic := '1';
 constant true : std_logic := '1';
 constant false : std_logic := '0';
-constant LoopModule_L16F13L25T14_LoopModule_L17F31T36_Expr : std_logic := '0';
-constant LoopModule_L16F13L25T14_Inputs_InData_Size : unsigned(4 downto 1)  := "1000";
-constant LoopModule_L16F13L25T14_LoopModule_L24F24T29_Expr : std_logic := '0';
-signal Inputs_InData : unsigned(8 downto 1)  := "00000000";
-signal LoopModule_L16F13L25T14_result : std_logic := '0';
-signal LoopModule_L16F13L25T14_LoopModule_L20F17L22T18_LoopModule_L21F30T57_Expr : unsigned(8 downto 1)  := "00000000";
-signal LoopModule_L16F13L25T14_LoopModule_L20F17L22T18_LoopModule_L21F30T57_Expr_1 : unsigned(8 downto 1)  := "00000000";
-signal LoopModule_L16F13L25T14_LoopModule_L20F17L22T18_LoopModule_L21F30T57_Expr_2 : unsigned(8 downto 1)  := "00000000";
+constant LoopModule_L16F13L23T14_Inputs_InData_Size : unsigned(3 downto 0)  := "1000";
+constant LoopModule_L29F13L36T14_LoopModule_L30F31T35_Expr : std_logic := '1';
+constant LoopModule_L29F13L36T14_Inputs_InData_Size : unsigned(3 downto 0)  := "1000";
+constant LoopModule_L42F13L49T14_Inputs_InData_Size : unsigned(3 downto 0)  := "1000";
+signal Inputs_InData : unsigned(7 downto 0)  := "00000000";
+signal LoopModule_L16F13L23T14_LoopModule_L17F31T47_Index : std_logic := '0';
+signal LoopModule_L16F13L23T14_result : std_logic := '0';
+signal LoopModule_L29F13L36T14_result : std_logic := '1';
+signal LoopModule_L42F13L49T14_LoopModule_L43F31T47_Index : std_logic := '0';
+signal LoopModule_L42F13L49T14_result : std_logic := '0';
 begin
-
-process(LoopModule_L16F13L25T14_LoopModule_L20F17L22T18_LoopModule_L21F30T57_Expr_1, LoopModule_L16F13L25T14_LoopModule_L20F17L22T18_LoopModule_L21F30T57_Expr_2)
+process(Inputs_InData, LoopModule_L16F13L23T14_LoopModule_L17F31T47_Index)
+	variable tmp0 : std_logic;
 begin
-
-    for i in 8 downto 1 loop
-        LoopModule_L16F13L25T14_LoopModule_L20F17L22T18_LoopModule_L21F30T57_Expr(i) <= LoopModule_L16F13L25T14_LoopModule_L20F17L22T18_LoopModule_L21F30T57_Expr_1(i)  AND LoopModule_L16F13L25T14_LoopModule_L20F17L22T18_LoopModule_L21F30T57_Expr_2(i)    ;
-    end loop;
-
-    end process;
-process(LoopModule_L16F13L25T14_LoopModule_L20F17L22T18_LoopModule_L21F30T57_Expr)
-begin
-LoopModule_L16F13L25T14_result <= LoopModule_L16F13L25T14_LoopModule_L17F31T36_Expr;
-for LoopModule_L16F13L25T14_idx in 0 to 7 loop
-LoopModule_L16F13L25T14_result <= LoopModule_L16F13L25T14_LoopModule_L20F17L22T18_LoopModule_L21F30T57_Expr(1);
+LoopModule_L16F13L23T14_result <= LoopModule_L16F13L23T14_LoopModule_L17F31T47_Index;
+tmp0 := LoopModule_L16F13L23T14_LoopModule_L17F31T47_Index;
+for LoopModule_L16F13L23T14_idx in 1 to 7 loop
+tmp0 := tmp0 OR Inputs_InData(LoopModule_L16F13L23T14_idx);
 end loop;
+LoopModule_L16F13L23T14_result <= tmp0;
 end process;
-process(InData, Inputs_InData, LoopModule_L16F13L25T14_result)
+process(Inputs_InData)
+	variable tmp0 : std_logic;
 begin
-LoopModule_L16F13L25T14_LoopModule_L20F17L22T18_LoopModule_L21F30T57_Expr_1 <= (1 => LoopModule_L16F13L25T14_result, others => '0');
-LoopModule_L16F13L25T14_LoopModule_L20F17L22T18_LoopModule_L21F30T57_Expr_2 <= (1 => Inputs_InData(LoopModule_L16F13L25T14_idx), others => '0');
+LoopModule_L29F13L36T14_result <= LoopModule_L29F13L36T14_LoopModule_L30F31T35_Expr;
+tmp0 := LoopModule_L29F13L36T14_LoopModule_L30F31T35_Expr;
+for LoopModule_L29F13L36T14_idx in 0 to 7 loop
+tmp0 := tmp0 AND Inputs_InData(LoopModule_L29F13L36T14_idx);
+end loop;
+LoopModule_L29F13L36T14_result <= tmp0;
+end process;
+process(Inputs_InData, LoopModule_L42F13L49T14_LoopModule_L43F31T47_Index)
+	variable tmp0 : std_logic;
+begin
+LoopModule_L42F13L49T14_result <= LoopModule_L42F13L49T14_LoopModule_L43F31T47_Index;
+tmp0 := LoopModule_L42F13L49T14_LoopModule_L43F31T47_Index;
+for LoopModule_L42F13L49T14_idx in 1 to 7 loop
+tmp0 := tmp0 XOR Inputs_InData(LoopModule_L42F13L49T14_idx);
+end loop;
+LoopModule_L42F13L49T14_result <= tmp0;
+end process;
+process(InData, Inputs_InData, LoopModule_L16F13L23T14_result, LoopModule_L29F13L36T14_result, LoopModule_L42F13L49T14_result)
+begin
 Inputs_InData <= InData;
-OutOr <= LoopModule_L16F13L25T14_LoopModule_L24F24T29_Expr;
+LoopModule_L16F13L23T14_LoopModule_L17F31T47_Index <= Inputs_InData(0);
+OutOr <= LoopModule_L16F13L23T14_result;
+OutAnd <= LoopModule_L29F13L36T14_result;
+LoopModule_L42F13L49T14_LoopModule_L43F31T47_Index <= Inputs_InData(0);
+OutXor <= LoopModule_L42F13L49T14_result;
 end process;
 -- [BEGIN USER ARCHITECTURE]
 -- [END USER ARCHITECTURE]
