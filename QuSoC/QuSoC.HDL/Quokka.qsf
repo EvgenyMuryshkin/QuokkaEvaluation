@@ -75,6 +75,8 @@ set_global_assignment -name LL_MEMBER_STATE LOCKED -section_id "Root Region"
 
 
 
+
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
 set_global_assignment -name VERILOG_FILE Verilog/generated/BlinkerInf/BlinkerInf_TopLevel.v
 set_global_assignment -name VERILOG_FILE Verilog/generated/BlinkerInf/BlinkerInf_TopLevel_QuSoCModule_BlockRAM.v
 set_global_assignment -name VERILOG_FILE Verilog/generated/BlinkerInf/BlinkerInf_TopLevel_QuSoCModule_CounterRegister.v
@@ -95,5 +97,3 @@ set_global_assignment -name VERILOG_FILE Verilog/generated/Counter/Counter_TopLe
 set_global_assignment -name VERILOG_FILE Verilog/generated/Counter/Counter_TopLevel_QuSoCModule_CPU_RISCVModule_Regs.v
 set_global_assignment -name VERILOG_FILE Verilog/generated/Counter/Counter_TopLevel_QuSoCModule_InstructionsRAM.v
 set_global_assignment -name VERILOG_FILE Verilog/generated/Counter/Counter_TopLevel_QuSoCModule_UARTSim.v
-
-set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

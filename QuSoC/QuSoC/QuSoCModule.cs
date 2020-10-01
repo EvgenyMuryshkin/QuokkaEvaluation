@@ -46,6 +46,7 @@ namespace QuSoC
             BlockRAM,
             UARTSim
         };
+        public RTLBitArray CombinedModuleRead => new RTLBitArray(AllModules.Select(g => g.IsReady));
 
         public uint Counter => CounterRegister.ReadValue;
 
@@ -100,6 +101,7 @@ namespace QuSoC
             });
         }
 
+        //RTLBitArray IsActive
         // TODO: RTLBitArray variable declaration, support for bit array methods e.g. Resize
         (byte, bool) BusCS
         {
@@ -131,6 +133,20 @@ namespace QuSoC
                 }
 
                 return (address, hasActive);
+                /*
+                bool hasActive = false;
+                byte address = 0;
+
+                for (byte idx = 0; idx < CombinedModuleRead.Size; idx++)
+                {
+                    hasActive = hasActive | CombinedModuleRead[idx];
+
+                    if (CombinedModuleRead[idx])
+                        address = idx;
+                }
+
+                return (address, hasActive);
+                */
             }
         }
 

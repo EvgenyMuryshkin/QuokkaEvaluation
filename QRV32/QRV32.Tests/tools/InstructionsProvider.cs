@@ -1,4 +1,5 @@
-﻿using Quokka.RISCV.Integration.Client;
+﻿using Quokka.Public.Tools;
+using Quokka.RISCV.Integration.Client;
 using Quokka.RISCV.Integration.Engine;
 using System;
 using System.IO;
@@ -9,8 +10,8 @@ namespace QRV32.Tests
 {
     public class InstructionsProvider
     {
-        public virtual string ProjectLocation(string current = null) => PathTools.ProjectLocation(current);
-        public virtual string SolutionLocation(string current = null) => PathTools.SolutionLocation(current);
+        public virtual string ProjectLocation(string current = null) => TestPathTools.ProjectLocation(current);
+        public virtual string SolutionLocation(string current = null) => TestPathTools.SolutionLocation(current);
 
         public virtual string AsmFilesLocation => Path.Combine(ProjectLocation(), "asm");
         public virtual uint[] FromAsmFile(string fileName)

@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace QRV32.Tests
 {
-    public class PathTools
+    public class TestPathTools
     {
         public static string ProjectLocation(string current = null)
         {

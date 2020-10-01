@@ -1,4 +1,4 @@
-files = I-XOR-01.S
+files = I-CSRRW-01.S
 arch = rv32i
 
 elf: $(files)

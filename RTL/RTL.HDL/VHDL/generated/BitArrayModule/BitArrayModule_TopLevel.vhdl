@@ -96,11 +96,11 @@ BitArrayModule_L21F43T53_Index <= (0 => Bits(3), 1 => Bits(2), 2 => Bits(1), 3 =
 ReversedLow <= BitArrayModule_L21F43T53_Index;
 BitArrayModule_L22F53T62_Index <= Bits(6 downto 5);
 BitArrayModule_L22F64T73_Index <= (0 => Bits(1), 1 => Bits(0), others => '0');
-BitArrayModule_L22F37T74_Source <= (0 => BitArrayModule_L22F64T73_Index(0), 1 => BitArrayModule_L22F64T73_Index(1), 2 => BitArrayModule_L22F53T62_Index(0), 3 => BitArrayModule_L22F53T62_Index(1), others => '0');
+BitArrayModule_L22F37T74_Source <= (0 => BitArrayModule_L22F53T62_Index(0), 1 => BitArrayModule_L22F53T62_Index(1), 2 => BitArrayModule_L22F64T73_Index(0), 3 => BitArrayModule_L22F64T73_Index(1), others => '0');
 Picks <= BitArrayModule_L22F37T74_Source;
-BitArrayModule_L23F41T81_Source <= (0 => BitArrayModule_L23F76T80_Expr, 1 => BitArrayModule_L23F69T74_Expr, 2 => BitArrayModule_L23F63T67_Expr, 3 => BitArrayModule_L23F57T61_Expr, others => '0');
+BitArrayModule_L23F41T81_Source <= (0 => BitArrayModule_L23F57T61_Expr, 1 => BitArrayModule_L23F63T67_Expr, 2 => BitArrayModule_L23F69T74_Expr, 3 => BitArrayModule_L23F76T80_Expr, others => '0');
 FromBits1 <= BitArrayModule_L23F41T81_Source;
-BitArrayModule_L24F41T81_Source <= (0 => BitArrayModule_L24F76T80_Expr, 1 => BitArrayModule_L24F70T74_Expr, 2 => BitArrayModule_L24F64T68_Expr, 3 => BitArrayModule_L24F57T62_Expr, others => '0');
+BitArrayModule_L24F41T81_Source <= (0 => BitArrayModule_L24F57T62_Expr, 1 => BitArrayModule_L24F64T68_Expr, 2 => BitArrayModule_L24F70T74_Expr, 3 => BitArrayModule_L24F76T80_Expr, others => '0');
 FromBits2 <= BitArrayModule_L24F41T81_Source;
 end process;
 -- [BEGIN USER ARCHITECTURE]
