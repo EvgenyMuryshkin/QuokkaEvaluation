@@ -46,7 +46,10 @@ namespace QuSoC
             BlockRAM,
             UARTSim
         };
-        public RTLBitArray CombinedModuleRead => new RTLBitArray(AllModules.Select(g => g.IsReady));
+
+        // NOTE: reverse is needed because RTLBitArray constructor is MSB ordered
+        // Please get in touch if you are interested in rationale (dirty hacks) behind this.
+        public RTLBitArray CombinedModuleIsActive => new RTLBitArray(AllModules.Select(g => g.IsActive)).Reversed();
 
         public uint Counter => CounterRegister.ReadValue;
 
@@ -107,46 +110,18 @@ namespace QuSoC
         {
             get
             {
-                bool hasActive = true;
-                byte address = 0;
-
-                // TODO: prioritized encored
-                if (InstructionsRAM.IsActive)
-                {
-                    address = 0;
-                }
-                else if (CounterRegister.IsActive)
-                {
-                    address = 1;
-                }
-                else if (BlockRAM.IsActive)
-                {
-                    address = 2;
-                }
-                else if (UARTSim.IsActive)
-                {
-                    address = 3;
-                }
-                else
-                {
-                    hasActive = false;
-                }
-
-                return (address, hasActive);
-                /*
                 bool hasActive = false;
                 byte address = 0;
 
-                for (byte idx = 0; idx < CombinedModuleRead.Size; idx++)
+                for (byte idx = 0; idx < CombinedModuleIsActive.Size; idx++)
                 {
-                    hasActive = hasActive | CombinedModuleRead[idx];
+                    hasActive = hasActive | CombinedModuleIsActive[idx];
 
-                    if (CombinedModuleRead[idx])
+                    if (CombinedModuleIsActive[idx])
                         address = idx;
                 }
 
                 return (address, hasActive);
-                */
             }
         }
 

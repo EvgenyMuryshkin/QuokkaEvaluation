@@ -127,7 +127,7 @@ OrGate_I2 <= Inputs_I2;
 XorGate_I1 <= Inputs_I1;
 XorGate_I2 <= Inputs_I2;
 O <= ModuleSignalsMuxModule_L27F26T46_Mux;
-ModuleSignalsMuxModule_L29F41T80_Source <= (0 => AndGate_O, 1 => OrGate_O, 2 => XorGate_O, others => '0');
+ModuleSignalsMuxModule_L29F41T80_Source <= (0 => XorGate_O, 1 => OrGate_O, 2 => AndGate_O, others => '0');
 CombinedO <= ModuleSignalsMuxModule_L29F41T80_Source;
 AndGateI1AndGate_I1HardLink <= AndGate_I1;
 AndGateI2AndGate_I2HardLink <= AndGate_I2;
