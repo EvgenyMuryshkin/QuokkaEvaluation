@@ -1,7 +1,9 @@
 ﻿using QRV32.CPU;
 using Quokka.RTL;
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 
 namespace QuSoC
 {
@@ -11,14 +13,7 @@ namespace QuSoC
 
     public class QuSoCModuleState
     {
-        public uint[] BlockRAM = new uint[1024];
-        public bool BlockRAMWE;
-
-        public RTLBitArray MemReadData = 0U;
         public bool MemReady;
-
-        public byte[] UART = new byte[4];
-        public bool UART_TX;
     }
 
     // TODO: inheritance not supportted yet
@@ -39,21 +34,28 @@ namespace QuSoC
     public class QuSoCModule : RTLSynchronousModule<QuSoCModuleInputs, QuSoCModuleState>
     {
         internal RISCVModule CPU = new RISCVModule();
+        internal SoCBlockRAMModule InstructionsRAM = new SoCBlockRAMModule(1024);
         internal SoCRegisterModule CounterRegister = new SoCRegisterModule();
         internal SoCBlockRAMModule BlockRAM = new SoCBlockRAMModule(1024);
+        internal SoCUARTSimModule UARTSim = new SoCUARTSimModule();
+
+        ISoCComponentModule[] AllModules => new ISoCComponentModule[]
+        {
+            InstructionsRAM,
+            CounterRegister,
+            BlockRAM,
+            UARTSim
+        };
+
+        // NOTE: reverse is needed because RTLBitArray constructor is MSB ordered
+        // Please get in touch if you are interested in rationale (dirty hacks) behind this.
+        public RTLBitArray CombinedModuleIsActive => new RTLBitArray(AllModules.Select(g => g.IsActive)).Reversed();
 
         public uint Counter => CounterRegister.ReadValue;
-        public RTLBitArray CPUAddress => CPU.MemAddress;
-        public bool CPUMemRead => CPU.MemRead;
-        public bool CPUMemWrite => CPU.MemWrite;
-        public RTLBitArray CPUMemReadData => internalMemReadData;
-        public bool SOCMemReady => State.MemReady;
-        public bool CPUHalted => CPU.IsHalted;
-        public bool BlockRAMWE => State.BlockRAMWE;
 
         public QuSoCModule(uint[] instructions)
         {
-            instructions.CopyTo(State.BlockRAM, 0);
+            instructions.CopyTo(InstructionsRAM.State.BlockRAM, 0);
         }
 
         SoCComponentModuleCommon ModuleCommon => new SoCComponentModuleCommon()
@@ -71,8 +73,15 @@ namespace QuSoC
             CPU.Schedule(() => new RISCVModuleInputs()
             {
                 BaseAddress = 0U,
-                MemReadData = internalMemReadData,
+                MemReadData = internalModuleReadData,
                 MemReady = internalMemReady
+            });
+
+            InstructionsRAM.Schedule(() => new SoCBlockRAMModuleInputs()
+            {
+                Common = ModuleCommon,
+                DeviceAddress = 0x00000000,
+                MemAccessMode = CPU.MemAccessMode[1, 0]
             });
 
             CounterRegister.Schedule(() => new SoCRegisterModuleInputs()
@@ -87,121 +96,61 @@ namespace QuSoC
                 DeviceAddress = 0x80100000,
                 MemAccessMode = CPU.MemAccessMode[1,0]
             });
+
+            UARTSim.Schedule(() => new SoCUARTSimModuleInputs()
+            {
+                Common = ModuleCommon,
+                DeviceAddress = 0x80200000,
+            });
         }
 
-        RTLBitArray internalMemAddress => new RTLBitArray(CPU.MemAddress);
-        RTLBitArray wordAddress => internalMemAddress >> 2;
-        RTLBitArray byteAddress => new RTLBitArray(internalMemAddress[1, 0]) << 3;
-
-        RTLBitArray uartReadData => new RTLBitArray(State.UART[uartAddress]).Resized(32);
-
+        //RTLBitArray IsActive
         // TODO: RTLBitArray variable declaration, support for bit array methods e.g. Resize
-        uint internalMemReadData
+        (byte, bool) BusCS
         {
             get
             {
-                uint result = 0;
+                bool hasActive = false;
+                byte address = 0;
 
-                if (CounterRegister.IsActive)
+                for (byte idx = 0; idx < CombinedModuleIsActive.Size; idx++)
                 {
-                    result = CounterRegister.ReadValue;
-                }
-                else if (BlockRAM.IsActive)
-                {
-                    result = BlockRAM.ReadValue;
-                }
-                else
-                {
-                    switch ((uint)memSegment)
-                    {
-                        case 0:
-                            result = State.MemReadData >> byteAddress;
-                            break;
-                        case 2:
-                            result = uartReadData;
-                            break;
-                    }
+                    hasActive = hasActive | CombinedModuleIsActive[idx];
+
+                    if (CombinedModuleIsActive[idx])
+                        address = idx;
                 }
 
-                return result;
+                return (address, hasActive);
             }
         }
-        
+
+        byte ModuleIndex => BusCS.Item1;
+        bool HasActiveModule => BusCS.Item2;
+
+        uint internalModuleReadData => AllModules[ModuleIndex].ReadValue;
+        bool internalModuleIsReady => AllModules[ModuleIndex].IsReady;
+
         bool internalMemReady => State.MemReady;
-
-        RTLBitArray mask =>
-            CPU.MemAccessMode == 0
-            ? (new RTLBitArray(byte.MaxValue) << byteAddress).Resized(32)
-            : CPU.MemAccessMode == 1
-                ? (new RTLBitArray(ushort.MaxValue) << byteAddress).Resized(32)
-                : new RTLBitArray(uint.MaxValue);
-
-        RTLBitArray blockRAMWriteData =>
-            (State.MemReadData & !mask) | ((CPU.MemWriteData << byteAddress) & mask);
-
-        RTLBitArray memSegment => wordAddress[31, 10];
-        RTLBitArray blockRamAddress => wordAddress[9, 0];
-
-        RTLBitArray uartAddress => internalMemAddress[1, 0];
-
-        public byte UARTWriteData => State.UART[0];
-
-        bool UARTReady => State.UART[2] != 0;
 
         protected override void OnStage()
         {
-            if (State.BlockRAMWE)
-            {
-                NextState.BlockRAM[blockRamAddress] = blockRAMWriteData;
-            }
-
-            NextState.MemReadData = State.BlockRAM[blockRamAddress];
             NextState.MemReady = CPU.MemRead;
 
             // TODO: constants e.g. 32768U
             // TODO: State.BlockRAM.Length
 
-            NextState.BlockRAMWE = false;
-            NextState.UART_TX = false;
-
             if (CPU.MemWrite)
             {
-                if (CounterRegister.IsActive)
+                if (HasActiveModule)
                 {
-                    NextState.MemReady = CounterRegister.IsReady;
-                }
-                else if (BlockRAM.IsActive)
-                {
-                    NextState.MemReady = BlockRAM.IsReady;
+                    NextState.MemReady = internalModuleIsReady;
                 }
                 else
                 {
-                    switch ((uint)memSegment)
-                    {
-                        case 0:
-                            if (!State.BlockRAMWE)
-                            {
-                                // write back to block ram on next cycle
-                                NextState.BlockRAMWE = true;
-                                NextState.MemReady = true;
-                            }
-                            break;
-                        case 2:
-                            // TODO: inline element access
-                            if (UARTReady)
-                            {
-                                // TODO: implicit cast is not handled in rtl transform
-                                NextState.UART[0] = (byte)CPU.MemWriteData;
-                                NextState.UART[2] = 0;
-                                NextState.UART_TX = true;
-                                NextState.MemReady = true;
-                            }
-                            break;
-                        default:
-                            Debugger.Break();
-                            NextState.MemReady = true;
-                            break;
-                    }
+                    // TODO: Halt state or something
+                    Debugger.Break();
+                    NextState.MemReady = true;
                 }
             }
         }

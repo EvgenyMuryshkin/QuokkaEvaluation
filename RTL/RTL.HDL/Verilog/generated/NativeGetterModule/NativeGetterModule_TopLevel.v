@@ -34,13 +34,13 @@ wire  Zero = 1'b0;
 wire  One = 1'b1;
 wire  true = 1'b1;
 wire  false = 1'b0;
-wire  [8:1] BitArrayGetterModule_L34F13L41T14_BitArrayGetterModule_L35F30T43_Expr = 8'b11111111;
-wire  [7:1] BitArrayGetterModule_L34F13L41T14_BitArrayGetterModule_L37F36T39_Expr = 7'b1100100;
-wire  [8:1] Inputs_Value;
-reg  [8:1] BitArrayGetterModule_L34F13L41T14_result = 8'b11111111;
+wire  [7:0] BitArrayGetterModule_L34F13L41T14_BitArrayGetterModule_L35F30T43_Expr = 8'b11111111;
+wire  [6:0] BitArrayGetterModule_L34F13L41T14_BitArrayGetterModule_L37F36T39_Expr = 7'b1100100;
+wire  [7:0] Inputs_Value;
+reg  [7:0] BitArrayGetterModule_L34F13L41T14_result = 8'b11111111;
 wire  BitArrayGetterModule_L34F13L41T14_BitArrayGetterModule_L37F21T39_Expr;
-wire signed  [9:1] BitArrayGetterModule_L34F13L41T14_BitArrayGetterModule_L37F21T39_ExprLhs;
-wire signed  [9:1] BitArrayGetterModule_L34F13L41T14_BitArrayGetterModule_L37F21T39_ExprRhs;
+wire signed  [8:0] BitArrayGetterModule_L34F13L41T14_BitArrayGetterModule_L37F21T39_ExprLhs;
+wire signed  [8:0] BitArrayGetterModule_L34F13L41T14_BitArrayGetterModule_L37F21T39_ExprRhs;
 assign BitArrayGetterModule_L34F13L41T14_BitArrayGetterModule_L37F21T39_Expr = BitArrayGetterModule_L34F13L41T14_BitArrayGetterModule_L37F21T39_ExprLhs < BitArrayGetterModule_L34F13L41T14_BitArrayGetterModule_L37F21T39_ExprRhs ? 1'b1 : 1'b0;
 always @*
 begin

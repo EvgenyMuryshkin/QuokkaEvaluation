@@ -38,11 +38,11 @@ wire  Zero = 1'b0;
 wire  One = 1'b1;
 wire  true = 1'b1;
 wire  false = 1'b0;
-wire  [8:1] Inputs_Addr1;
-wire  [8:1] Inputs_Addr2;
-reg  [8:1] State_Data1 = 8'b00000000;
-reg  [8:1] State_Data2 = 8'b00000000;
-reg [8:1] State_Buff [0 : 255];
+wire  [7:0] Inputs_Addr1;
+wire  [7:0] Inputs_Addr2;
+reg  [7:0] State_Data1 = 8'b00000000;
+reg  [7:0] State_Data2 = 8'b00000000;
+reg [7:0] State_Buff [0 : 255];
 initial
 begin
 	$readmemh("SynchronousROMModule_TopLevel_State_Buff.hex", State_Buff);

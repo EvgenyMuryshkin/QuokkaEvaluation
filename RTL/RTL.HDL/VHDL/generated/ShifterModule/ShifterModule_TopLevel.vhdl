@@ -46,16 +46,16 @@ constant Zero : std_logic := '0';
 constant One : std_logic := '1';
 constant true : std_logic := '1';
 constant false : std_logic := '0';
-signal Inputs_Value : unsigned(8 downto 1)  := "00000000";
-signal Inputs_ShiftBy : unsigned(3 downto 1)  := "000";
-signal ShifterModule_L14F36T59_SignChange : unsigned(8 downto 1)  := "00000000";
-signal ShifterModule_L15F36T57_SignChange : signed(8 downto 1)  := "00000000";
-signal ShifterModule_L13F36T66_Expr : unsigned(8 downto 1)  := "00000000";
-signal ShifterModule_L13F36T66_Expr_1 : unsigned(8 downto 1)  := "00000000";
-signal ShifterModule_L14F36T77_Expr : unsigned(8 downto 1)  := "00000000";
-signal ShifterModule_L14F36T77_Expr_1 : unsigned(8 downto 1)  := "00000000";
-signal ShifterModule_L15F36T75_Expr : signed(8 downto 1)  := "00000000";
-signal ShifterModule_L15F36T75_Expr_1 : signed(8 downto 1)  := "00000000";
+signal Inputs_Value : unsigned(7 downto 0)  := "00000000";
+signal Inputs_ShiftBy : unsigned(2 downto 0)  := "000";
+signal ShifterModule_L14F36T59_SignChange : unsigned(7 downto 0)  := "00000000";
+signal ShifterModule_L15F36T57_SignChange : signed(7 downto 0)  := "00000000";
+signal ShifterModule_L13F36T66_Expr : unsigned(7 downto 0)  := "00000000";
+signal ShifterModule_L13F36T66_Expr_1 : unsigned(7 downto 0)  := "00000000";
+signal ShifterModule_L14F36T77_Expr : unsigned(7 downto 0)  := "00000000";
+signal ShifterModule_L14F36T77_Expr_1 : unsigned(7 downto 0)  := "00000000";
+signal ShifterModule_L15F36T75_Expr : signed(7 downto 0)  := "00000000";
+signal ShifterModule_L15F36T75_Expr_1 : signed(7 downto 0)  := "00000000";
 begin
 process(ShifterModule_L13F36T66_Expr_1, Inputs_ShiftBy)
 begin

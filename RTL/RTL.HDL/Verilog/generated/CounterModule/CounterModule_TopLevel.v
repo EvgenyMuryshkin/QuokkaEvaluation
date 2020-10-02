@@ -38,18 +38,18 @@ wire  true = 1'b1;
 wire  false = 1'b0;
 wire  CounterModule_L19F65T66_Expr = 1'b1;
 wire  Inputs_Enabled;
-reg  [8:1] NextState_Value = 8'b00000000;
-wire  [8:1] NextValue;
-wire  [8:1] CounterModule_L19F27T81_Cast;
-reg  [8:1] State_Value = 8'b00000000;
-wire  [8:1] State_ValueDefault = 8'b00000000;
-wire  [10:1] CounterModule_L19F51T66_Expr;
-wire signed  [10:1] CounterModule_L19F51T66_Expr_1;
-wire signed  [10:1] CounterModule_L19F51T66_Expr_2;
-reg  [8:1] CounterModule_L19F34T80_Lookup = 8'b00000000;
+reg  [7:0] NextState_Value = 8'b00000000;
+wire  [7:0] NextValue;
+wire  [7:0] CounterModule_L19F27T81_Cast;
+reg  [7:0] State_Value = 8'b00000000;
+wire  [7:0] State_ValueDefault = 8'b00000000;
+wire  [9:0] CounterModule_L19F51T66_Expr;
+wire signed  [9:0] CounterModule_L19F51T66_Expr_1;
+wire signed  [9:0] CounterModule_L19F51T66_Expr_2;
+reg  [7:0] CounterModule_L19F34T80_Lookup = 8'b00000000;
 wire  CounterModule_L19F34T80_LookupMultiplexerAddress;
-wire  [8:1] CounterModule_L19F34T80_Lookup1;
-wire  [8:1] CounterModule_L19F34T80_Lookup2;
+wire  [7:0] CounterModule_L19F34T80_Lookup1;
+wire  [7:0] CounterModule_L19F34T80_Lookup2;
 always @(posedge Clock)
 begin
 if ( Reset == 1 ) begin
@@ -85,7 +85,7 @@ assign CounterModule_L19F27T81_Cast = CounterModule_L19F34T80_Lookup;
 assign NextValue = CounterModule_L19F27T81_Cast;
 assign Value = State_Value;
 assign CounterModule_L19F34T80_Lookup1 = State_Value;
-assign CounterModule_L19F34T80_Lookup2 = CounterModule_L19F51T66_Expr[8:1]/*truncate*/;
+assign CounterModule_L19F34T80_Lookup2 = CounterModule_L19F51T66_Expr[7:0]/*truncate*/;
 assign CounterModule_L19F34T80_LookupMultiplexerAddress = Inputs_Enabled;
 // [BEGIN USER ARCHITECTURE]
 // [END USER ARCHITECTURE]

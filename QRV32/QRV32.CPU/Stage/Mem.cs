@@ -8,12 +8,16 @@ namespace QRV32.CPU
     public partial class RISCVModule
     {
         public RTLBitArray MemWriteData => Regs.RS2;
-        public RTLBitArray MemAccessMode => ID.Funct3;
+        public RTLBitArray MemAccessMode => 
+            IsIF 
+            ? new RTLBitArray(2).Resized(3) // 32 bit mem read if IF
+            : ID.Funct3;
+        internal bool IsIF => State.State == CPUState.IF;
 
         internal bool IsLoadOp => ID.OpTypeCode == OpTypeCodes.LOAD;
         internal bool IsStoreOp => ID.OpTypeCode == OpTypeCodes.STORE;
 
-        public bool MemRead => State.State == CPUState.IF || (State.State == CPUState.MEM && IsLoadOp);
+        public bool MemRead => IsIF || (State.State == CPUState.MEM && IsLoadOp);
         public bool MemWrite => State.State == CPUState.MEM && IsStoreOp;
         uint internalMemAddress
         {

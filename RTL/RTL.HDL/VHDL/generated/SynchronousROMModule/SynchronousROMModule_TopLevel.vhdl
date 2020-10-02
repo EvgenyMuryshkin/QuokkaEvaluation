@@ -47,11 +47,11 @@ constant Zero : std_logic := '0';
 constant One : std_logic := '1';
 constant true : std_logic := '1';
 constant false : std_logic := '0';
-signal Inputs_Addr1 : unsigned(8 downto 1)  := "00000000";
-signal Inputs_Addr2 : unsigned(8 downto 1)  := "00000000";
-signal State_Data1 : unsigned(8 downto 1)  := "00000000";
-signal State_Data2 : unsigned(8 downto 1)  := "00000000";
-type State_BuffArray is array(0 to 255) of unsigned(8 downto 1);
+signal Inputs_Addr1 : unsigned(7 downto 0)  := "00000000";
+signal Inputs_Addr2 : unsigned(7 downto 0)  := "00000000";
+signal State_Data1 : unsigned(7 downto 0)  := "00000000";
+signal State_Data2 : unsigned(7 downto 0)  := "00000000";
+type State_BuffArray is array(0 to 255) of unsigned(7 downto 0);
 constant State_BuffArrayInit: State_BuffArray:= (
 "10110000",
 "01001100",

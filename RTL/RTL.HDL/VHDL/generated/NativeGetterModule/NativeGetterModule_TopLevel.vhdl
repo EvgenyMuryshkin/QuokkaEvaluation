@@ -43,13 +43,13 @@ constant Zero : std_logic := '0';
 constant One : std_logic := '1';
 constant true : std_logic := '1';
 constant false : std_logic := '0';
-constant BitArrayGetterModule_L34F13L41T14_BitArrayGetterModule_L35F30T43_Expr : unsigned(8 downto 1)  := "11111111";
-constant BitArrayGetterModule_L34F13L41T14_BitArrayGetterModule_L37F36T39_Expr : unsigned(7 downto 1)  := "1100100";
-signal Inputs_Value : unsigned(8 downto 1)  := "00000000";
-signal BitArrayGetterModule_L34F13L41T14_result : unsigned(8 downto 1)  := "11111111";
+constant BitArrayGetterModule_L34F13L41T14_BitArrayGetterModule_L35F30T43_Expr : unsigned(7 downto 0)  := "11111111";
+constant BitArrayGetterModule_L34F13L41T14_BitArrayGetterModule_L37F36T39_Expr : unsigned(6 downto 0)  := "1100100";
+signal Inputs_Value : unsigned(7 downto 0)  := "00000000";
+signal BitArrayGetterModule_L34F13L41T14_result : unsigned(7 downto 0)  := "11111111";
 signal BitArrayGetterModule_L34F13L41T14_BitArrayGetterModule_L37F21T39_Expr : std_logic := '0';
-signal BitArrayGetterModule_L34F13L41T14_BitArrayGetterModule_L37F21T39_ExprLhs : signed(9 downto 1)  := "000000000";
-signal BitArrayGetterModule_L34F13L41T14_BitArrayGetterModule_L37F21T39_ExprRhs : signed(9 downto 1)  := "000000000";
+signal BitArrayGetterModule_L34F13L41T14_BitArrayGetterModule_L37F21T39_ExprLhs : signed(8 downto 0)  := "000000000";
+signal BitArrayGetterModule_L34F13L41T14_BitArrayGetterModule_L37F21T39_ExprRhs : signed(8 downto 0)  := "000000000";
 begin
     BitArrayGetterModule_L34F13L41T14_BitArrayGetterModule_L37F21T39_Expr <= '1' when (signed(resize(BitArrayGetterModule_L34F13L41T14_BitArrayGetterModule_L37F21T39_ExprLhs, BitArrayGetterModule_L34F13L41T14_BitArrayGetterModule_L37F21T39_ExprLhs'length + 1)) < signed(resize(BitArrayGetterModule_L34F13L41T14_BitArrayGetterModule_L37F21T39_ExprRhs, BitArrayGetterModule_L34F13L41T14_BitArrayGetterModule_L37F21T39_ExprRhs'length + 1))) else '0';
 process(BitArrayGetterModule_L34F13L41T14_BitArrayGetterModule_L37F21T39_Expr, Inputs_Value)

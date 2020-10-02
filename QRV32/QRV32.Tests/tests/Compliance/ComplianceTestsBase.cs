@@ -18,7 +18,7 @@ namespace QRV32.Compliance
             _arch = arch;
         }
 
-        string ComplianceTestsPath => Path.Combine(PathTools.ProjectLocation(), "compliance");
+        string ComplianceTestsPath => Path.Combine(TestPathTools.ProjectLocation(), "compliance");
         string ISATestsPath => Path.Combine(ComplianceTestsPath, _isa);
         string SourcesLocation => Path.Combine(ISATestsPath, "src");
         string TestLocation => Path.Combine(ComplianceTestsPath, "test");

@@ -41,7 +41,7 @@ namespace QuSoC.Tests
                     if (Debugger.IsAttached && (lastIF == null || lastIF != addr))
                     {
                         lastIF = addr;
-                        var instruction = TopLevel.State.BlockRAM[addr];
+                        var instruction = TopLevel.InstructionsRAM.State.BlockRAM[addr];
                         var disasm = new Disassembler();
                         var code = disasm.Single(TopLevel.CPU.MemAddress, instruction);
                         if (Debugger.IsAttached)
@@ -65,7 +65,7 @@ namespace QuSoC.Tests
                     throw new Exception($"Exceeded max allowed clock cycles: {maxClockCycles}");
 
                 if (TopLevel.CPU.State.State == CPUState.Halt)
-                    throw new Exception("CPU halted");
+                    throw new Exception($"CPU halted: {TopLevel.CPU.State.HaltCode}");
 
                 ClockCycle(new QuSoCModuleInputs());
             }
@@ -73,7 +73,7 @@ namespace QuSoC.Tests
 
         public List<string> MemoryDump()
         {
-            var memDump = TopLevel.State.BlockRAM
+            var memDump = TopLevel.InstructionsRAM.State.BlockRAM
                 .Select((data, idx) => new { data, idx = idx * 4 })
                 .Where(d => d.data != 0)
                 .Select(d => $"[{d.idx:X6}]: {d.data:X8}")

@@ -48,12 +48,12 @@ constant Zero : std_logic := '0';
 constant One : std_logic := '1';
 constant true : std_logic := '1';
 constant false : std_logic := '0';
-signal Inputs_ReadAddress : unsigned(8 downto 1)  := "00000000";
-signal Inputs_WriteAddress : unsigned(8 downto 1)  := "00000000";
-signal Inputs_WriteData : unsigned(8 downto 1)  := "00000000";
+signal Inputs_ReadAddress : unsigned(7 downto 0)  := "00000000";
+signal Inputs_WriteAddress : unsigned(7 downto 0)  := "00000000";
+signal Inputs_WriteData : unsigned(7 downto 0)  := "00000000";
 signal Inputs_WE : std_logic := '0';
-signal State_ReadData : unsigned(8 downto 1)  := "00000000";
-type State_BuffArray is array(0 to 255) of unsigned(8 downto 1);
+signal State_ReadData : unsigned(7 downto 0)  := "00000000";
+type State_BuffArray is array(0 to 255) of unsigned(7 downto 0);
 signal State_Buff : State_BuffArray := (others => (others => '0'));
 signal Inputs_ReadAddress_reg: unsigned(8 downto 1);
 

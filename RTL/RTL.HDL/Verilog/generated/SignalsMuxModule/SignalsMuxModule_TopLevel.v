@@ -38,17 +38,17 @@ wire  Zero = 1'b0;
 wire  One = 1'b1;
 wire  true = 1'b1;
 wire  false = 1'b0;
-wire  [2:1] Inputs_Addr;
-wire  [8:1] Inputs_Sig0;
-wire  [8:1] Inputs_Sig1;
-wire  [8:1] Inputs_Sig2;
-wire  [8:1] Inputs_Sig3;
-reg  [8:1] SignalsMuxModule_L24F30T50_Mux = 8'b00000000;
-wire  [2:1] SignalsMuxModule_L24F30T50_MuxMultiplexerAddress;
-wire  [8:1] SignalsMuxModule_L24F30T50_Mux1;
-wire  [8:1] SignalsMuxModule_L24F30T50_Mux2;
-wire  [8:1] SignalsMuxModule_L24F30T50_Mux3;
-wire  [8:1] SignalsMuxModule_L24F30T50_Mux4;
+wire  [1:0] Inputs_Addr;
+wire  [7:0] Inputs_Sig0;
+wire  [7:0] Inputs_Sig1;
+wire  [7:0] Inputs_Sig2;
+wire  [7:0] Inputs_Sig3;
+reg  [7:0] SignalsMuxModule_L24F30T50_Mux = 8'b00000000;
+wire  [1:0] SignalsMuxModule_L24F30T50_MuxMultiplexerAddress;
+wire  [7:0] SignalsMuxModule_L24F30T50_Mux1;
+wire  [7:0] SignalsMuxModule_L24F30T50_Mux2;
+wire  [7:0] SignalsMuxModule_L24F30T50_Mux3;
+wire  [7:0] SignalsMuxModule_L24F30T50_Mux4;
 always @*
 begin
 case (SignalsMuxModule_L24F30T50_MuxMultiplexerAddress)

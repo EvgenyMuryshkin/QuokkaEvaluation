@@ -45,11 +45,11 @@ constant Zero : std_logic := '0';
 constant One : std_logic := '1';
 constant true : std_logic := '1';
 constant false : std_logic := '0';
-signal Inputs_ReadAddress1 : unsigned(8 downto 1)  := "00000000";
-signal Inputs_ReadAddress2 : unsigned(8 downto 1)  := "00000000";
-signal CombinationalROMModule_L22F31T56_Index : unsigned(8 downto 1)  := "00000000";
-signal CombinationalROMModule_L23F31T56_Index : unsigned(8 downto 1)  := "00000000";
-type buffArray is array(0 to 255) of unsigned(8 downto 1);
+signal Inputs_ReadAddress1 : unsigned(7 downto 0)  := "00000000";
+signal Inputs_ReadAddress2 : unsigned(7 downto 0)  := "00000000";
+signal CombinationalROMModule_L22F31T56_Index : unsigned(7 downto 0)  := "00000000";
+signal CombinationalROMModule_L23F31T56_Index : unsigned(7 downto 0)  := "00000000";
+type buffArray is array(0 to 255) of unsigned(7 downto 0);
 constant buffArrayInit: buffArray:= (
 "00100000",
 "00100000",

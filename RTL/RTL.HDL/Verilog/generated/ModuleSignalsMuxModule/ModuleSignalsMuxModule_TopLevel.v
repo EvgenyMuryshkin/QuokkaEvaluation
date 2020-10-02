@@ -25,7 +25,8 @@ module ModuleSignalsMuxModule_TopLevel (
 	input  [1: 0] Addr,
 	input  I1,
 	input  I2,
-	output O
+	output O,
+	output [2: 0] CombinedO
     );
 
 // [BEGIN USER SIGNALS]
@@ -36,7 +37,7 @@ wire  Zero = 1'b0;
 wire  One = 1'b1;
 wire  true = 1'b1;
 wire  false = 1'b0;
-wire  [2:1] Inputs_Addr;
+wire  [1:0] Inputs_Addr;
 wire  Inputs_I1;
 wire  Inputs_I2;
 wire  AndGate_I1;
@@ -48,6 +49,7 @@ wire  OrGate_O;
 wire  XorGate_I1;
 wire  XorGate_I2;
 wire  XorGate_O;
+wire  [2:0] ModuleSignalsMuxModule_L29F41T80_Source;
 wire  AndGateI1AndGate_I1HardLink;
 wire  AndGateI2AndGate_I2HardLink;
 wire  AndGateOAndGate_OHardLink;
@@ -57,11 +59,11 @@ wire  OrGateOOrGate_OHardLink;
 wire  XorGateI1XorGate_I1HardLink;
 wire  XorGateI2XorGate_I2HardLink;
 wire  XorGateOXorGate_OHardLink;
-reg  ModuleSignalsMuxModule_L26F26T46_Mux = 1'b0;
-wire  [2:1] ModuleSignalsMuxModule_L26F26T46_MuxMultiplexerAddress;
-wire  ModuleSignalsMuxModule_L26F26T46_Mux1;
-wire  ModuleSignalsMuxModule_L26F26T46_Mux2;
-wire  ModuleSignalsMuxModule_L26F26T46_Mux3;
+reg  ModuleSignalsMuxModule_L27F26T46_Mux = 1'b0;
+wire  [1:0] ModuleSignalsMuxModule_L27F26T46_MuxMultiplexerAddress;
+wire  ModuleSignalsMuxModule_L27F26T46_Mux1;
+wire  ModuleSignalsMuxModule_L27F26T46_Mux2;
+wire  ModuleSignalsMuxModule_L27F26T46_Mux3;
 ModuleSignalsMuxModule_TopLevel_ModuleSignalsMuxModule_AndGate ModuleSignalsMuxModule_TopLevel_ModuleSignalsMuxModule_AndGate
 (
 // [BEGIN USER MAP FOR AndGate]
@@ -91,15 +93,15 @@ ModuleSignalsMuxModule_TopLevel_ModuleSignalsMuxModule_XorGate ModuleSignalsMuxM
 );
 always @*
 begin
-case (ModuleSignalsMuxModule_L26F26T46_MuxMultiplexerAddress)
+case (ModuleSignalsMuxModule_L27F26T46_MuxMultiplexerAddress)
     'b00:
-ModuleSignalsMuxModule_L26F26T46_Mux = ModuleSignalsMuxModule_L26F26T46_Mux1;
+ModuleSignalsMuxModule_L27F26T46_Mux = ModuleSignalsMuxModule_L27F26T46_Mux1;
     'b01:
-ModuleSignalsMuxModule_L26F26T46_Mux = ModuleSignalsMuxModule_L26F26T46_Mux2;
+ModuleSignalsMuxModule_L27F26T46_Mux = ModuleSignalsMuxModule_L27F26T46_Mux2;
     'b10:
-ModuleSignalsMuxModule_L26F26T46_Mux = ModuleSignalsMuxModule_L26F26T46_Mux3;
+ModuleSignalsMuxModule_L27F26T46_Mux = ModuleSignalsMuxModule_L27F26T46_Mux3;
   default:
-ModuleSignalsMuxModule_L26F26T46_Mux = 'b0;
+ModuleSignalsMuxModule_L27F26T46_Mux = 'b0;
 endcase
 
 end
@@ -112,7 +114,11 @@ assign OrGate_I1 = Inputs_I1;
 assign OrGate_I2 = Inputs_I2;
 assign XorGate_I1 = Inputs_I1;
 assign XorGate_I2 = Inputs_I2;
-assign O = ModuleSignalsMuxModule_L26F26T46_Mux;
+assign O = ModuleSignalsMuxModule_L27F26T46_Mux;
+assign ModuleSignalsMuxModule_L29F41T80_Source[0] = XorGate_O;
+assign ModuleSignalsMuxModule_L29F41T80_Source[1] = OrGate_O;
+assign ModuleSignalsMuxModule_L29F41T80_Source[2] = AndGate_O;
+assign CombinedO = ModuleSignalsMuxModule_L29F41T80_Source;
 assign AndGateI1AndGate_I1HardLink = AndGate_I1;
 assign AndGateI2AndGate_I2HardLink = AndGate_I2;
 assign AndGate_O = AndGateOAndGate_OHardLink;
@@ -122,10 +128,10 @@ assign OrGate_O = OrGateOOrGate_OHardLink;
 assign XorGateI1XorGate_I1HardLink = XorGate_I1;
 assign XorGateI2XorGate_I2HardLink = XorGate_I2;
 assign XorGate_O = XorGateOXorGate_OHardLink;
-assign ModuleSignalsMuxModule_L26F26T46_Mux1 = AndGate_O;
-assign ModuleSignalsMuxModule_L26F26T46_Mux2 = OrGate_O;
-assign ModuleSignalsMuxModule_L26F26T46_Mux3 = XorGate_O;
-assign ModuleSignalsMuxModule_L26F26T46_MuxMultiplexerAddress = Inputs_Addr;
+assign ModuleSignalsMuxModule_L27F26T46_Mux1 = AndGate_O;
+assign ModuleSignalsMuxModule_L27F26T46_Mux2 = OrGate_O;
+assign ModuleSignalsMuxModule_L27F26T46_Mux3 = XorGate_O;
+assign ModuleSignalsMuxModule_L27F26T46_MuxMultiplexerAddress = Inputs_Addr;
 // [BEGIN USER ARCHITECTURE]
 // [END USER ARCHITECTURE]
 endmodule

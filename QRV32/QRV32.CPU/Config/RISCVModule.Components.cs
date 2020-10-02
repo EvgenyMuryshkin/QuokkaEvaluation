@@ -17,7 +17,7 @@ namespace QRV32.CPU
         RTLBitArray ALUOp2 => ID.OpTypeCode == OpTypeCodes.OPIMM ? ID.ITypeImm : Regs.RS2;
 
         RTLBitArray ALUSHAMT => ID.OpTypeCode == OpTypeCodes.OPIMM ? ID.SHAMT : Regs.RS2[4, 0];
-        bool RegsRead => State.State == CPUState.ID;
+        bool RegsRead => State.State == CPUState.ID && !Regs.Ready;
         bool RegsWE => State.State == CPUState.WB && State.WBDataReady;
 
         RTLBitArray CMPLhs => Regs.RS1;

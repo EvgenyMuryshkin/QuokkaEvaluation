@@ -20,17 +20,13 @@ namespace QuSoC
 
     public class SoCBlockRAMModule : SoCComponentModule<SoCBlockRAMModuleInputs, SoCBlockRAMModuleState>
     {
-        private readonly uint addressSpan;
-        public SoCBlockRAMModule(uint size)
+        public SoCBlockRAMModule(uint size) : base(size * 4)
         {
-            addressSpan = size * 4;
             State.BlockRAM = new uint[size];
         }
 
-        RTLBitArray internalAddress => new RTLBitArray(Inputs.Common.Address);
-        RTLBitArray internalWordAddress => internalAddress[11, 2];
-        RTLBitArray internalByteAddress => internalAddress[1, 0] << 3;
-        bool internalIsActive => (Inputs.Common.RE || Inputs.Common.WE) && Inputs.Common.Address >= Inputs.DeviceAddress && Inputs.Common.Address < (Inputs.DeviceAddress + addressSpan);
+        RTLBitArray internalWordAddress => internalAddressBits[11, 2];
+        bool internalIsActive => (Inputs.Common.RE || Inputs.Common.WE) && addressMatch;
 
         public override uint ReadValue => (State.ReadValue >> internalByteAddress) & memAccessMask;
         public override bool IsReady => State.Ready;

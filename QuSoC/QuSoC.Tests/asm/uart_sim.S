@@ -1,4 +1,4 @@
-﻿.equ UART_BASE, 0x2000
+﻿.equ UART_BASE, 0x80200000
 .equ REG_RBR, 0
 .equ REG_TBR, 0
 .equ REG_IIR, 2
