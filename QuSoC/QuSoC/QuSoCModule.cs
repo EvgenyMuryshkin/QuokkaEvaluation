@@ -49,8 +49,7 @@ namespace QuSoC
 
         // NOTE: reverse is needed because RTLBitArray constructor is MSB ordered
         // Please get in touch if you are interested in rationale (dirty hacks) behind this.
-        public RTLBitArray CombinedModuleIsActive => new RTLBitArray(AllModules.Select(g => g.IsActive)).Reversed();
-
+        RTLBitArray CombinedModuleIsActive => new RTLBitArray(AllModules.Select(g => g.IsActive)).Reversed();
         public uint Counter => CounterRegister.ReadValue;
 
         public QuSoCModule(uint[] instructions)

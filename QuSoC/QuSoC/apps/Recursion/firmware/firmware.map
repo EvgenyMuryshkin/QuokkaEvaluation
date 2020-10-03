@@ -11,10 +11,10 @@ Linker script and memory map
 .text           0x0000000000000000      0x154
                 0x0000000000000000                . = ALIGN (0x4)
  *(.text)
- .text          0x0000000000000000        0xc /tmp/ccTsv2qX.o
- .text          0x000000000000000c       0x28 /tmp/ccLBQRib.o
+ .text          0x0000000000000000        0xc /tmp/cc1YefZe.o
+ .text          0x000000000000000c       0x28 /tmp/ccCLlX6s.o
                 0x000000000000000c                main
- .text          0x0000000000000034       0x88 /tmp/ccTriZcp.o
+ .text          0x0000000000000034       0x88 /tmp/ccNOmqhH.o
                 0x0000000000000034                Recursion::Firmware::RecursiveCounter(unsigned long)
                 0x0000000000000090                Recursion::Firmware::EntryPoint()
  *(.text*)
@@ -23,8 +23,8 @@ Linker script and memory map
  *(.srodata)
  *(.srodata*)
  *(.eh_frame)
- .eh_frame      0x00000000000000bc       0x38 /tmp/ccLBQRib.o
- .eh_frame      0x00000000000000f4       0x60 /tmp/ccTriZcp.o
+ .eh_frame      0x00000000000000bc       0x38 /tmp/ccCLlX6s.o
+ .eh_frame      0x00000000000000f4       0x60 /tmp/ccNOmqhH.o
  *(.eh_frame*)
                 0x0000000000000154                . = ALIGN (0x4)
                 0x0000000000000154                _etext = .
@@ -35,9 +35,9 @@ Linker script and memory map
                 0x0000000000000154                _sdata = .
                 0x0000000000000154                _ram_start = .
  *(.data)
- .data          0x0000000000000154        0x0 /tmp/ccTsv2qX.o
- .data          0x0000000000000154        0x0 /tmp/ccLBQRib.o
- .data          0x0000000000000154        0x0 /tmp/ccTriZcp.o
+ .data          0x0000000000000154        0x0 /tmp/cc1YefZe.o
+ .data          0x0000000000000154        0x0 /tmp/ccCLlX6s.o
+ .data          0x0000000000000154        0x0 /tmp/ccNOmqhH.o
  *(.data*)
  *(.sdata)
  *(.sdata*)
@@ -50,9 +50,9 @@ Linker script and memory map
                 0x0000000000000154                . = ALIGN (0x4)
                 0x0000000000000154                _sbss = .
  *(.bss)
- .bss           0x0000000000000154        0x0 /tmp/ccTsv2qX.o
- .bss           0x0000000000000154        0x0 /tmp/ccLBQRib.o
- .bss           0x0000000000000154        0x0 /tmp/ccTriZcp.o
+ .bss           0x0000000000000154        0x0 /tmp/cc1YefZe.o
+ .bss           0x0000000000000154        0x0 /tmp/ccCLlX6s.o
+ .bss           0x0000000000000154        0x0 /tmp/ccNOmqhH.o
  *(.bss*)
  *(.sbss)
  *(.sbss*)
@@ -63,21 +63,21 @@ Linker script and memory map
 .heap           0x0000000000000154        0x0
                 0x0000000000000154                . = ALIGN (0x4)
                 0x0000000000000154                _heap_start = .
-LOAD /tmp/ccTsv2qX.o
-LOAD /tmp/ccLBQRib.o
-LOAD /tmp/ccTriZcp.o
+LOAD /tmp/cc1YefZe.o
+LOAD /tmp/ccCLlX6s.o
+LOAD /tmp/ccNOmqhH.o
 OUTPUT(firmware.elf elf32-littleriscv)
 
 .comment        0x0000000000000000       0x11
- .comment       0x0000000000000000       0x11 /tmp/ccLBQRib.o
+ .comment       0x0000000000000000       0x11 /tmp/ccCLlX6s.o
                                          0x12 (size before relaxing)
- .comment       0x0000000000000011       0x12 /tmp/ccTriZcp.o
+ .comment       0x0000000000000011       0x12 /tmp/ccNOmqhH.o
 
 Cross Reference Table
 
 Symbol                                            File
-Recursion::Firmware::EntryPoint()                 /tmp/ccTriZcp.o
-                                                  /tmp/ccLBQRib.o
-Recursion::Firmware::RecursiveCounter(unsigned long) /tmp/ccTriZcp.o
-main                                              /tmp/ccLBQRib.o
-                                                  /tmp/ccTsv2qX.o
+Recursion::Firmware::EntryPoint()                 /tmp/ccNOmqhH.o
+                                                  /tmp/ccCLlX6s.o
+Recursion::Firmware::RecursiveCounter(unsigned long) /tmp/ccNOmqhH.o
+main                                              /tmp/ccCLlX6s.o
+                                                  /tmp/cc1YefZe.o

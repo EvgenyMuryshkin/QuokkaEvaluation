@@ -14,6 +14,7 @@ namespace RTL.Modules
         RTLBitArray Bits => Inputs.Value;
         public bool ValueBit => Bits[Inputs.Bit];
         public RTLBitArray Direct => Bits;
+        public RTLBitArray ReversedByCall => Bits.Reversed();
         public RTLBitArray High => Bits[7, 4];
         public RTLBitArray Low => Bits[3, 0];
         public RTLBitArray Reversed => Bits[0, 7];
