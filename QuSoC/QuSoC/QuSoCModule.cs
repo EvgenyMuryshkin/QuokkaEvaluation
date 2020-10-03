@@ -31,7 +31,7 @@ namespace QuSoC
     }
     */
 
-    public class QuSoCModule : RTLSynchronousModule<QuSoCModuleInputs, QuSoCModuleState>
+    public partial class QuSoCModule : RTLSynchronousModule<QuSoCModuleInputs, QuSoCModuleState>
     {
         internal RISCVModule CPU = new RISCVModule();
         internal SoCBlockRAMModule InstructionsRAM = new SoCBlockRAMModule(1024);
@@ -50,6 +50,7 @@ namespace QuSoC
         // NOTE: reverse is needed because RTLBitArray constructor is MSB ordered
         // Please get in touch if you are interested in rationale (dirty hacks) behind this.
         RTLBitArray CombinedModuleIsActive => new RTLBitArray(AllModules.Select(g => g.IsActive)).Reversed();
+        RTLBitArray internalMemAccessMode => CPU.MemAccessMode[1, 0];
         public uint Counter => CounterRegister.ReadValue;
 
         public QuSoCModule(uint[] instructions)
@@ -80,27 +81,10 @@ namespace QuSoC
             {
                 Common = ModuleCommon,
                 DeviceAddress = 0x00000000,
-                MemAccessMode = CPU.MemAccessMode[1, 0]
+                MemAccessMode = internalMemAccessMode
             });
 
-            CounterRegister.Schedule(() => new SoCRegisterModuleInputs()
-            {
-                Common = ModuleCommon,
-                DeviceAddress = 0x80000000,
-            });
-
-            BlockRAM.Schedule(() => new SoCBlockRAMModuleInputs()
-            {
-                Common = ModuleCommon,
-                DeviceAddress = 0x80100000,
-                MemAccessMode = CPU.MemAccessMode[1,0]
-            });
-
-            UARTSim.Schedule(() => new SoCUARTSimModuleInputs()
-            {
-                Common = ModuleCommon,
-                DeviceAddress = 0x80200000,
-            });
+            OnScheduleGenerated();
         }
 
         //RTLBitArray IsActive
