@@ -34,6 +34,13 @@ namespace QuSoC.Tests
         }
 
         [TestMethod]
+        public void BlinkerModuleTest()
+        {
+            var module = new QuSoCBlinkerModule();
+        }
+
+
+        [TestMethod]
         public void RecursionTest()
         {
             var sim = FromApp("Recursion");

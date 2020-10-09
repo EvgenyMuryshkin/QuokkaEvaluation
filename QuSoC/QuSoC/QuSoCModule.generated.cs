@@ -2,6 +2,21 @@
 {
     public partial class QuSoCModule
     {
+        internal SoCRegisterModule CounterRegister = new SoCRegisterModule();
+        internal SoCBlockRAMModule BlockRAM = new SoCBlockRAMModule(1024);
+
+        ISoCComponentModule[] GeneratedModules => new ISoCComponentModule[]
+        {
+            CounterRegister,
+            BlockRAM
+        };
+
+        void CreateGeneratedModules()
+        {
+            CounterRegister = new SoCRegisterModule();
+            BlockRAM = new SoCBlockRAMModule(1024);
+        }
+
         void OnScheduleGenerated()
         {
             CounterRegister.Schedule(() => new SoCRegisterModuleInputs()
@@ -15,12 +30,6 @@
                 Common = ModuleCommon,
                 DeviceAddress = 0x80100000,
                 MemAccessMode = internalMemAccessMode
-            });
-
-            UARTSim.Schedule(() => new SoCUARTSimModuleInputs()
-            {
-                Common = ModuleCommon,
-                DeviceAddress = 0x80200000,
             });
         }
     }

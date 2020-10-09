@@ -1,6 +1,7 @@
 ﻿using QRV32.CPU;
 using Quokka.RTL;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
@@ -16,36 +17,32 @@ namespace QuSoC
         public bool MemReady;
     }
 
-    // TODO: inheritance not supportted yet
-    /*
     public class QuSoCBlinkerModule : QuSoCModule
     {
-        public QuSoCBlinkerModule()
+        public QuSoCBlinkerModule() : base(FirmwareTools.FromApp("BlinkerInf"))
         {
-        }
-
-        protected override void OnSchedule(Func<QuSoCModuleInputs> inputsFactory)
-        {
-            base.OnSchedule(inputsFactory);
         }
     }
-    */
 
     public partial class QuSoCModule : RTLSynchronousModule<QuSoCModuleInputs, QuSoCModuleState>
     {
         internal RISCVModule CPU = new RISCVModule();
         internal SoCBlockRAMModule InstructionsRAM = new SoCBlockRAMModule(1024);
-        internal SoCRegisterModule CounterRegister = new SoCRegisterModule();
-        internal SoCBlockRAMModule BlockRAM = new SoCBlockRAMModule(1024);
         internal SoCUARTSimModule UARTSim = new SoCUARTSimModule();
 
-        ISoCComponentModule[] AllModules => new ISoCComponentModule[]
+        ISoCComponentModule[] ManualModules => new ISoCComponentModule[]
         {
             InstructionsRAM,
-            CounterRegister,
-            BlockRAM,
             UARTSim
         };
+
+        ISoCComponentModule[] AllModules => new []
+        {
+            ManualModules,
+            GeneratedModules
+        }
+        .SelectMany(m => m)
+        .ToArray();
 
         // NOTE: reverse is needed because RTLBitArray constructor is MSB ordered
         // Please get in touch if you are interested in rationale (dirty hacks) behind this.
@@ -56,6 +53,7 @@ namespace QuSoC
         public QuSoCModule(uint[] instructions)
         {
             instructions.CopyTo(InstructionsRAM.State.BlockRAM, 0);
+            CreateGeneratedModules();
         }
 
         SoCComponentModuleCommon ModuleCommon => new SoCComponentModuleCommon()
@@ -82,6 +80,12 @@ namespace QuSoC
                 Common = ModuleCommon,
                 DeviceAddress = 0x00000000,
                 MemAccessMode = internalMemAccessMode
+            });
+
+            UARTSim.Schedule(() => new SoCUARTSimModuleInputs()
+            {
+                Common = ModuleCommon,
+                DeviceAddress = 0x80200000,
             });
 
             OnScheduleGenerated();

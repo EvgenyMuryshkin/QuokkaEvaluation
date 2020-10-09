@@ -1,10 +1,12 @@
-﻿using Quokka.Public.Tools;
+﻿using Quokka.Core.Builders.LowLevel;
+using Quokka.Public.Tools;
 using Quokka.RISCV.CS2CPP.Tools;
 using Quokka.RISCV.CS2CPP.Translator;
 using Quokka.RISCV.Integration.Client;
 using Quokka.RISCV.Integration.DTO;
 using Quokka.RISCV.Integration.Engine;
 using Quokka.RISCV.Integration.Generator.SOC;
+using Quokka.RTL;
 using Quokka.Schema.HLS;
 using System;
 using System.Collections.Generic;
@@ -18,22 +20,12 @@ namespace QuSoC
     public class QuokkaAssembly : IQuokkaAssembly
     {
         private readonly RuntimeConfiguration _runtimeConfiguration;
+        private readonly RTLModulesDiscovery _rtlModulesDiscovery;
 
-        public QuokkaAssembly(RuntimeConfiguration runtimeConfiguration)
+        public QuokkaAssembly(RuntimeConfiguration runtimeConfiguration, RTLModulesDiscovery rtlModulesDiscovery)
         {
             _runtimeConfiguration = runtimeConfiguration;
-        }
-
-        public string SolutionLocation(string current = null)
-        {
-            if (current == "")
-                return "";
-
-            current = current ?? Directory.GetCurrentDirectory();
-            if (Directory.EnumerateFiles(current, "*.sln").Any())
-                return current;
-
-            return SolutionLocation(Path.GetDirectoryName(current));
+            _rtlModulesDiscovery = rtlModulesDiscovery;
         }
 
         public virtual uint[] FromAsmSource(string asmSource)
@@ -60,6 +52,13 @@ namespace QuSoC
         {
             get
             {
+                // add default creatable modules, declared in this assembly only
+                foreach (var moduleType in _rtlModulesDiscovery.ModuleTypes.Where(t => t.Assembly == GetType().Assembly))
+                {
+                    var instance = Activator.CreateInstance(moduleType) as IRTLCombinationalModule;
+                    yield return new RTLModuleConfig() { Instance = instance, Name = instance.ModuleName };
+                }
+
                 var apps = Directory.EnumerateDirectories(Path.Combine(_runtimeConfiguration.SourceLocation, "apps"), "*.*" );
                 var limitToApps = new HashSet<string>() 
                 {
