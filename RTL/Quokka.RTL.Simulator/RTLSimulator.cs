@@ -26,7 +26,17 @@ namespace Quokka.RTL.Simulator
         public Action<TModule> OnPostCommit { get; set; }
         public Func<RTLSimulatorCallback<TModule>, bool> IsRunning { get; set; }
 
+        protected RTLInstanceSimulator()
+        {
+
+        }
+
         public RTLInstanceSimulator(TModule topLevel)
+        {
+            Initialize(topLevel);
+        }
+
+        protected void Initialize(TModule topLevel)
         {
             _topLevel = topLevel;
             _topLevel.Setup();

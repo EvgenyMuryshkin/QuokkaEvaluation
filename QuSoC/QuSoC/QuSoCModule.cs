@@ -4,7 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace QuSoC
 {
@@ -17,26 +19,19 @@ namespace QuSoC
         public bool MemReady;
     }
 
-    public class QuSoCBlinkerModule : QuSoCModule
-    {
-        public QuSoCBlinkerModule() : base(FirmwareTools.FromApp("BlinkerInf"))
-        {
-        }
-    }
-
     public partial class QuSoCModule : RTLSynchronousModule<QuSoCModuleInputs, QuSoCModuleState>
     {
         internal RISCVModule CPU = new RISCVModule();
         internal SoCBlockRAMModule InstructionsRAM = new SoCBlockRAMModule(1024);
         internal SoCUARTSimModule UARTSim = new SoCUARTSimModule();
 
-        ISoCComponentModule[] ManualModules => new ISoCComponentModule[]
+        protected virtual ISoCComponentModule[] ManualModules => new ISoCComponentModule[]
         {
             InstructionsRAM,
             UARTSim
         };
 
-        ISoCComponentModule[] AllModules => new []
+        protected virtual ISoCComponentModule[] AllModules => new []
         {
             ManualModules,
             GeneratedModules
@@ -50,7 +45,26 @@ namespace QuSoC
         RTLBitArray internalMemAccessMode => CPU.MemAccessMode[1, 0];
         public uint Counter => CounterRegister.ReadValue;
 
+        string fp([CallerFilePath] string p = "") => p;
+        string mn([CallerMemberName] string p = "") => p; 
+
+        protected static string AppLocation([CallerFilePath] string callerFilePath = "")
+        {
+            var projectLocation = FirmwareTools.ProjectLocation(Path.GetDirectoryName(callerFilePath));
+            return Path.Combine(projectLocation, "apps", Path.GetFileNameWithoutExtension(callerFilePath));
+        }
+        
+        protected QuSoCModule(string app)
+        {
+            FromInstructions(FirmwareTools.FromApp(app));
+        }
+        
         public QuSoCModule(uint[] instructions)
+        {
+            FromInstructions(instructions);
+        }
+
+        void FromInstructions(uint[] instructions)
         {
             instructions.CopyTo(InstructionsRAM.State.BlockRAM, 0);
             CreateGeneratedModules();
@@ -122,6 +136,7 @@ namespace QuSoC
 
         protected override void OnStage()
         {
+            // assumption for now is that module is immediately ready
             NextState.MemReady = CPU.MemRead;
 
             // TODO: constants e.g. 32768U

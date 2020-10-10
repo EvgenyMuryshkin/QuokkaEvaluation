@@ -52,47 +52,27 @@ namespace QuSoC
         {
             get
             {
-                // add default creatable modules, declared in this assembly only
-                foreach (var moduleType in _rtlModulesDiscovery.ModuleTypes.Where(t => t.Assembly == GetType().Assembly))
+                var apps = new HashSet<string>()
                 {
-                    var instance = Activator.CreateInstance(moduleType) as IRTLCombinationalModule;
-                    yield return new RTLModuleConfig() { Instance = instance, Name = instance.ModuleName };
-                }
-
-                var apps = Directory.EnumerateDirectories(Path.Combine(_runtimeConfiguration.SourceLocation, "apps"), "*.*" );
-                var limitToApps = new HashSet<string>() 
-                {
-                    //"MemBlock",
-                    //"Counter"
+                    //nameof(MemBlock),
+                    //nameof(Counter)
                 };
 
-                foreach (var appPath in apps)
+                if (apps.Any())
                 {
-                    var appName = Path.GetFileName(appPath);
-                    
-                    if (appName == "template")
-                        continue;
-
-                    if (limitToApps.Any() && !limitToApps.Contains(appName))
-                        continue;
-
-                    var firmwareTools = new FirmwareTools(appPath);
-
-                    if (firmwareTools.FirmwareFromAppFolder())
+                    foreach (var app in apps)
                     {
-                        var firmwareData = File.ReadAllBytes(firmwareTools.FirmwareFile);
-                        var firmwareinstructions = RISCVIntegrationClient.ToInstructions(firmwareData).ToArray();
-
-                        var app = new QuSoCModule(firmwareinstructions);
-                        yield return new RTLModuleConfig() { Instance = app, Name = appName };
+                        var module = new QuSoCModule(FirmwareTools.FromApp(app));
+                        yield return new RTLModuleConfig() { Instance = module, Name = app };
                     }
-                    else
+                }
+                else
+                {
+                    // add default creatable modules, declared in this assembly only
+                    foreach (var moduleType in _rtlModulesDiscovery.ModuleTypes.Where(t => typeof(QuSoCModule).IsAssignableFrom(t)))
                     {
-                        var mainPath = Path.Combine(appPath, "main.S");
-                        var mainSource = File.ReadAllText(mainPath);
-                        var instructions = FromAsmSource(mainSource);
-                        var blinker = new QuSoCModule(instructions);
-                        yield return new RTLModuleConfig() { Instance = blinker, Name = appName };
+                        var instance = Activator.CreateInstance(moduleType) as IRTLCombinationalModule;
+                        yield return new RTLModuleConfig() { Instance = instance, Name = instance.ModuleName };
                     }
                 }
             }

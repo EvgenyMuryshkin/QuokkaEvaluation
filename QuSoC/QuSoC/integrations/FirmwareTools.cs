@@ -33,6 +33,18 @@ namespace QuSoC
         public bool SourceExists => Directory.Exists(SourceFolder);
         public string MainFile => Path.Combine(SourceFolder, "main.S");
 
+        public static string ProjectLocation(string currentLocation = null)
+        {
+            if (currentLocation == "")
+                return "";
+
+            currentLocation = currentLocation ?? Directory.GetCurrentDirectory();
+            if (Directory.Exists(currentLocation) && Directory.EnumerateFiles(currentLocation, "*.csproj").Any())
+                return currentLocation;
+
+            return ProjectLocation(Path.GetDirectoryName(currentLocation));
+        }
+
         public static uint[] FromApp(string path)
         {
             if (!Path.IsPathRooted(path))
