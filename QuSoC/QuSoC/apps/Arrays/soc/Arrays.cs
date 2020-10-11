@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Arrays
 {
-    public class Arrays : QuSoCModule
+    public partial class Arrays : QuSoCModule
     {
         public Arrays() : base(AppLocation()) { }
     }

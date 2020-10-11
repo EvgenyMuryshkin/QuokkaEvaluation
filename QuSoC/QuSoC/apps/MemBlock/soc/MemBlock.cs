@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MemBlock
 {
-    public class MemBlock : QuSoCModule
+    public partial class MemBlock : QuSoCModule
     {
         public MemBlock() : base(AppLocation()) { }
     }

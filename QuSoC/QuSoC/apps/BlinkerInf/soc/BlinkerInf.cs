@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BlinkerInf
 {
-    public class BlinkerInf : QuSoCModule
+    public partial class BlinkerInf : QuSoCModule
     {
         public BlinkerInf() : base(AppLocation()) { }
     }

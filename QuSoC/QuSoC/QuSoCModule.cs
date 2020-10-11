@@ -45,11 +45,14 @@ namespace QuSoC
         RTLBitArray internalMemAccessMode => CPU.MemAccessMode[1, 0];
         public uint Counter => CounterRegister.ReadValue;
 
-        string fp([CallerFilePath] string p = "") => p;
-        string mn([CallerMemberName] string p = "") => p; 
-
+        /// <summary>
+        /// This method uses compiler services to determine source location and path to the app
+        /// </summary>
+        /// <param name="callerFilePath"></param>
+        /// <returns></returns>
         protected static string AppLocation([CallerFilePath] string callerFilePath = "")
         {
+            Console.WriteLine($"AppLocation: {callerFilePath}");
             var projectLocation = FirmwareTools.ProjectLocation(Path.GetDirectoryName(callerFilePath));
             return Path.Combine(projectLocation, "apps", Path.GetFileNameWithoutExtension(callerFilePath));
         }
@@ -78,10 +81,8 @@ namespace QuSoC
             RE = CPU.MemRead
         };
 
-        protected override void OnSchedule(Func<QuSoCModuleInputs> inputsFactory)
+        void ScheduleManualModules()
         {
-            base.OnSchedule(inputsFactory);
-
             CPU.Schedule(() => new RISCVModuleInputs()
             {
                 BaseAddress = 0U,
@@ -101,8 +102,14 @@ namespace QuSoC
                 Common = ModuleCommon,
                 DeviceAddress = 0x80200000,
             });
+        }
 
-            OnScheduleGenerated();
+        protected override void OnSchedule(Func<QuSoCModuleInputs> inputsFactory)
+        {
+            base.OnSchedule(inputsFactory);
+
+            ScheduleManualModules();
+            ScheduleGeneratedModules();
         }
 
         //RTLBitArray IsActive

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Fibonacci
 {
-    public class Fibonacci : QuSoCModule
+    public partial class Fibonacci : QuSoCModule
     {
         public Fibonacci() : base(AppLocation()) { }
     }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Recursion
 {
-    public class Recursion : QuSoCModule
+    public partial class Recursion : QuSoCModule
     {
         public Recursion() : base(AppLocation()) { }
     }

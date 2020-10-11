@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Counter
 {
-    public class Counter : QuSoCModule
+    public partial class Counter : QuSoCModule
     {
         public Counter() : base(AppLocation()) { }
     }

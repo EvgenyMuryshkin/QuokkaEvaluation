@@ -17,7 +17,7 @@
             BlockRAM = new SoCBlockRAMModule(1024);
         }
 
-        void OnScheduleGenerated()
+        void ScheduleGeneratedModules()
         {
             CounterRegister.Schedule(() => new SoCRegisterModuleInputs()
             {
