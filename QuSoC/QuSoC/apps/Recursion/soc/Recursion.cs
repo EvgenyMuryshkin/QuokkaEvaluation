@@ -7,6 +7,5 @@ namespace Recursion
 {
     public partial class Recursion : QuSoCModule
     {
-        public Recursion() : base(AppLocation()) { }
     }
 }

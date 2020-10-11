@@ -7,6 +7,5 @@ namespace BlinkerSim
 {
     public partial class BlinkerSim : QuSoCModule
     {
-        public BlinkerSim() : base(AppLocation()) { }
     }
 }

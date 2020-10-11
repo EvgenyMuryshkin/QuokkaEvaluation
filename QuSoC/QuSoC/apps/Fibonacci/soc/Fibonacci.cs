@@ -7,6 +7,5 @@ namespace Fibonacci
 {
     public partial class Fibonacci : QuSoCModule
     {
-        public Fibonacci() : base(AppLocation()) { }
     }
 }

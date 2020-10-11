@@ -44,22 +44,10 @@ namespace QuSoC
         RTLBitArray CombinedModuleIsActive => new RTLBitArray(AllModules.Select(g => g.IsActive)).Reversed();
         RTLBitArray internalMemAccessMode => CPU.MemAccessMode[1, 0];
         public uint Counter => CounterRegister.ReadValue;
-
-        /// <summary>
-        /// This method uses compiler services to determine source location and path to the app
-        /// </summary>
-        /// <param name="callerFilePath"></param>
-        /// <returns></returns>
-        protected static string AppLocation([CallerFilePath] string callerFilePath = "")
+         
+        protected QuSoCModule()
         {
-            Console.WriteLine($"AppLocation: {callerFilePath}");
-            var projectLocation = FirmwareTools.ProjectLocation(Path.GetDirectoryName(callerFilePath));
-            return Path.Combine(projectLocation, "apps", Path.GetFileNameWithoutExtension(callerFilePath));
-        }
-        
-        protected QuSoCModule(string app)
-        {
-            FromInstructions(FirmwareTools.FromApp(app));
+            FromInstructions(FirmwareTools.FromApp(GetType().Name));
         }
         
         public QuSoCModule(uint[] instructions)

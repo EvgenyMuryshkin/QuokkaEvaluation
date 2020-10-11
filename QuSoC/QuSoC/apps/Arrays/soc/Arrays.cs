@@ -7,6 +7,5 @@ namespace Arrays
 {
     public partial class Arrays : QuSoCModule
     {
-        public Arrays() : base(AppLocation()) { }
     }
 }

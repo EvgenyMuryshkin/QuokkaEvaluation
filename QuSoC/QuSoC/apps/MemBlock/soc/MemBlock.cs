@@ -7,6 +7,5 @@ namespace MemBlock
 {
     public partial class MemBlock : QuSoCModule
     {
-        public MemBlock() : base(AppLocation()) { }
     }
 }

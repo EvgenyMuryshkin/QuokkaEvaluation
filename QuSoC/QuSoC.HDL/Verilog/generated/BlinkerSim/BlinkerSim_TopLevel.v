@@ -38,10 +38,10 @@ wire  false = 1'b0;
 wire  QuSoCModule_L108F13L121T14_QuSoCModule_L109F34T39_Expr = 1'b0;
 wire  QuSoCModule_L108F13L121T14_QuSoCModule_L110F32T33_Expr = 1'b0;
 wire  [2:0] QuSoCModule_L108F13L121T14_CombinedModuleIsActive_Size = 3'b100;
-wire  QuSoCModule_L82F31T33_Expr = 1'b0;
+wire  QuSoCModule_L76F31T33_Expr = 1'b0;
 wire  RISCVModule_Types_L11F30T35_Expr = 1'b0;
-wire  QuSoCModule_L90F33T43_Expr = 1'b0;
-wire  [31:0] QuSoCModule_L97F33T43_Expr = 32'b10000000001000000000000000000000;
+wire  QuSoCModule_L84F33T43_Expr = 1'b0;
+wire  [31:0] QuSoCModule_L91F33T43_Expr = 32'b10000000001000000000000000000000;
 wire  [31:0] QuSoCModule_generated_L25F33T43_Expr = 32'b10000000000000000000000000000000;
 wire  [31:0] QuSoCModule_generated_L31F33T43_Expr = 32'b10000000000100000000000000000000;
 wire  QuSoCModule_L133F9L153T10_QuSoCModule_L141F13L152T14_QuSoCModule_L147F17L151T18_QuSoCModule_L150F42T46_Expr = 1'b1;
@@ -103,8 +103,8 @@ wire  [1:0] BlockRAM_MemAccessMode;
 wire  [31:0] BlockRAM_ReadValue;
 wire  BlockRAM_IsReady;
 wire  BlockRAM_IsActive;
-wire  [3:0] QuSoCModule_L43F47T98_Source;
-wire  [1:0] QuSoCModule_L44F46T69_Index;
+wire  [3:0] QuSoCModule_L44F47T98_Source;
+wire  [1:0] QuSoCModule_L45F46T69_Index;
 reg  QuSoCModule_L108F13L121T14_hasActive = 1'b0;
 reg  [7:0] QuSoCModule_L108F13L121T14_address = 8'b00000000;
 integer QuSoCModule_L108F13L121T14_idx;
@@ -154,8 +154,8 @@ wire  BlockRAMIsReadyBlockRAM_IsReadyHardLink;
 wire  BlockRAMIsActiveBlockRAM_IsActiveHardLink;
 reg  State_MemReady = 1'b0;
 wire  State_MemReadyDefault = 1'b0;
-wire  [3:0] QuSoCModule_L43F47T109_Expr;
-wire  [3:0] QuSoCModule_L43F47T109_Expr_1;
+wire  [3:0] QuSoCModule_L44F47T109_Expr;
+wire  [3:0] QuSoCModule_L44F47T109_Expr_1;
 reg  [31:0] QuSoCModule_L127F40T73_Mux = 32'b00000000000000000000000000000000;
 reg  QuSoCModule_L128F39T70_Mux = 1'b0;
 wire  [1:0] QuSoCModule_L127F40T73_MuxMultiplexerAddress;
@@ -189,7 +189,7 @@ end
     generate
     for (LogicalFunctionLogicalFunction1_idx = 3; LogicalFunctionLogicalFunction1_idx >= 0; LogicalFunctionLogicalFunction1_idx = LogicalFunctionLogicalFunction1_idx - 1)
     begin : LogicalFunctionLogicalFunction1_idxReverse
-assign QuSoCModule_L43F47T109_Expr[LogicalFunctionLogicalFunction1_idx] = QuSoCModule_L43F47T109_Expr_1[3 - LogicalFunctionLogicalFunction1_idx];
+assign QuSoCModule_L44F47T109_Expr[LogicalFunctionLogicalFunction1_idx] = QuSoCModule_L44F47T109_Expr_1[3 - LogicalFunctionLogicalFunction1_idx];
 end
     endgenerate
 
@@ -352,14 +352,14 @@ end
 end
 
 end
-assign QuSoCModule_L43F47T109_Expr_1 = QuSoCModule_L43F47T98_Source;
-assign QuSoCModule_L43F47T98_Source[0] = BlockRAM_IsActive;
-assign QuSoCModule_L43F47T98_Source[1] = CounterRegister_IsActive;
-assign QuSoCModule_L43F47T98_Source[2] = UARTSim_IsActive;
-assign QuSoCModule_L43F47T98_Source[3] = InstructionsRAM_IsActive;
-assign CombinedModuleIsActive = QuSoCModule_L43F47T109_Expr;
-assign QuSoCModule_L44F46T69_Index = CPU_MemAccessMode[1:0];
-assign internalMemAccessMode = QuSoCModule_L44F46T69_Index;
+assign QuSoCModule_L44F47T109_Expr_1 = QuSoCModule_L44F47T98_Source;
+assign QuSoCModule_L44F47T98_Source[0] = BlockRAM_IsActive;
+assign QuSoCModule_L44F47T98_Source[1] = CounterRegister_IsActive;
+assign QuSoCModule_L44F47T98_Source[2] = UARTSim_IsActive;
+assign QuSoCModule_L44F47T98_Source[3] = InstructionsRAM_IsActive;
+assign CombinedModuleIsActive = QuSoCModule_L44F47T109_Expr;
+assign QuSoCModule_L45F46T69_Index = CPU_MemAccessMode[1:0];
+assign internalMemAccessMode = QuSoCModule_L45F46T69_Index;
 assign ModuleCommon_Address = CPU_MemAddress;
 assign ModuleCommon_WriteValue = CPU_MemWriteData;
 assign ModuleCommon_WE = CPU_MemWrite;
@@ -371,7 +371,7 @@ assign HasActiveModule = BusCS_Item2;
 assign internalModuleReadData = QuSoCModule_L127F40T73_Mux;
 assign internalModuleIsReady = QuSoCModule_L128F39T70_Mux;
 assign internalMemReady = State_MemReady;
-assign CPU_BaseAddress = { {31{1'b0}}, QuSoCModule_L82F31T33_Expr }/*expand*/;
+assign CPU_BaseAddress = { {31{1'b0}}, QuSoCModule_L76F31T33_Expr }/*expand*/;
 assign CPU_MemReadData = internalModuleReadData;
 assign CPU_MemReady = internalMemReady;
 assign CPU_ExtIRQ = RISCVModule_Types_L11F30T35_Expr;
@@ -380,12 +380,12 @@ assign InstructionsRAM_Common_Address = ModuleCommon_Address;
 assign InstructionsRAM_Common_WriteValue = ModuleCommon_WriteValue;
 assign InstructionsRAM_Common_WE = ModuleCommon_WE;
 assign InstructionsRAM_Common_RE = ModuleCommon_RE;
-assign InstructionsRAM_DeviceAddress = { {31{1'b0}}, QuSoCModule_L90F33T43_Expr }/*expand*/;
+assign InstructionsRAM_DeviceAddress = { {31{1'b0}}, QuSoCModule_L84F33T43_Expr }/*expand*/;
 assign UARTSim_Common_Address = ModuleCommon_Address;
 assign UARTSim_Common_WriteValue = ModuleCommon_WriteValue;
 assign UARTSim_Common_WE = ModuleCommon_WE;
 assign UARTSim_Common_RE = ModuleCommon_RE;
-assign UARTSim_DeviceAddress = QuSoCModule_L97F33T43_Expr;
+assign UARTSim_DeviceAddress = QuSoCModule_L91F33T43_Expr;
 assign CounterRegister_Common_Address = ModuleCommon_Address;
 assign CounterRegister_Common_WriteValue = ModuleCommon_WriteValue;
 assign CounterRegister_Common_WE = ModuleCommon_WE;

@@ -1,4 +1,4 @@
-#include "SOCCounter.h"
+#include "Counter.h"
 #include <stdint.h>
 #include <stdbool.h>
 #include "soc.h"

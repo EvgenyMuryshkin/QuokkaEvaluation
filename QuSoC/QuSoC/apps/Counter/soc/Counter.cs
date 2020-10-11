@@ -7,6 +7,5 @@ namespace Counter
 {
     public partial class Counter : QuSoCModule
     {
-        public Counter() : base(AppLocation()) { }
     }
 }

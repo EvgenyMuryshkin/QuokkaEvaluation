@@ -7,6 +7,5 @@ namespace BlinkerInf
 {
     public partial class BlinkerInf : QuSoCModule
     {
-        public BlinkerInf() : base(AppLocation()) { }
     }
 }

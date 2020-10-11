@@ -1,5 +1,5 @@
-#ifndef SOCCounter_H
-#define SOCCounter_H
+#ifndef Counter_H
+#define Counter_H
 #include <stdint.h>
 #include <stdbool.h>
 #include "soc.h"

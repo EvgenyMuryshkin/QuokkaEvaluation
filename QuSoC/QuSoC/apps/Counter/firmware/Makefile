@@ -1,4 +1,4 @@
-files = start.S main.cpp SOCCounter.cpp
+files = start.S Counter.cpp main.cpp
 elf: $(files)
 	riscv32-unknown-elf-gcc -march=rv32i -nostartfiles -Wl,-Bstatic,-T,sections.lds,--strip-debug,-Map=firmware.map,--cref  -ffreestanding -nostdlib -o firmware.elf $(files)
 

@@ -129,7 +129,6 @@ namespace QuSoC
                     // add default creatable modules, declared in this assembly only
                     foreach (var moduleType in _rtlModulesDiscovery.ModuleTypes.Where(t => typeof(QuSoCModule).IsAssignableFrom(t)))
                     {
-                        Console.WriteLine($"ModuleType: {moduleType.Name}");
                         var instance = Activator.CreateInstance(moduleType) as IRTLCombinationalModule;
                         yield return new RTLModuleConfig() { Instance = instance, Name = instance.ModuleName };
                     }
