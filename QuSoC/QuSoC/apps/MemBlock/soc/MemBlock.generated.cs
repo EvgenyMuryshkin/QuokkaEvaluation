@@ -4,6 +4,19 @@ namespace MemBlock
 {
 	public partial class MemBlock
 	{
+		internal SoCRegisterModule Counter;
+		internal SoCBlockRAMModule MemBlock;
+		ISoCComponentModule[] GeneratedModules => new ISoCComponentModule[] { CounterModule,MemBlockModule }
+		protected override void CreateGeneratedModules()
+		{
+			Counter = new SoCRegisterModule();
+			MemBlock = new SoCBlockRAMModule();
+		} // CreateGeneratedModules
+		protected override void ScheduleGeneratedModules()
+		{
+			Counter.Schedule(() => new SoCRegisterModuleInputs() { Common = ModuleCommon, DeviceAddress = 80000000 })
+			MemBlock.Schedule(() => new SoCBlockRAMModuleInputs() { Common = ModuleCommon, DeviceAddress = 81000000 })
+		} // ScheduleGeneratedModules
 	}
 }
 */

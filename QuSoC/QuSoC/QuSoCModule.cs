@@ -25,14 +25,19 @@ namespace QuSoC
         internal SoCBlockRAMModule InstructionsRAM = new SoCBlockRAMModule(1024);
         internal SoCUARTSimModule UARTSim = new SoCUARTSimModule();
 
+        protected virtual ISoCComponentModule[] QuSoCModules => new ISoCComponentModule[]
+        {
+            InstructionsRAM
+        };
+
         protected virtual ISoCComponentModule[] ManualModules => new ISoCComponentModule[]
         {
-            InstructionsRAM,
             UARTSim
         };
 
         protected virtual ISoCComponentModule[] AllModules => new []
         {
+            QuSoCModules,
             ManualModules,
             GeneratedModules
         }
@@ -66,10 +71,11 @@ namespace QuSoC
             WriteValue = CPU.MemWriteData,
             WE = CPU.MemWrite,
             Address = CPU.MemAddress,
-            RE = CPU.MemRead
+            RE = CPU.MemRead,
+            MemAccessMode = internalMemAccessMode
         };
 
-        void ScheduleManualModules()
+        void ScheduleQuSoCModules()
         {
             CPU.Schedule(() => new RISCVModuleInputs()
             {
@@ -82,13 +88,15 @@ namespace QuSoC
             {
                 Common = ModuleCommon,
                 DeviceAddress = 0x00000000,
-                MemAccessMode = internalMemAccessMode
             });
+        }
 
+        protected virtual void ScheduleManualModules()
+        {
             UARTSim.Schedule(() => new SoCUARTSimModuleInputs()
             {
                 Common = ModuleCommon,
-                DeviceAddress = 0x80200000,
+                DeviceAddress = 0x90000000,
             });
         }
 
@@ -96,6 +104,7 @@ namespace QuSoC
         {
             base.OnSchedule(inputsFactory);
 
+            ScheduleQuSoCModules();
             ScheduleManualModules();
             ScheduleGeneratedModules();
         }

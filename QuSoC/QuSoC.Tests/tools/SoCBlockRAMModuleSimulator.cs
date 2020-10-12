@@ -19,9 +19,9 @@ namespace QuSoC.Tests
                     RE = false,
                     WE = true,
                     WriteValue = value,
+                    MemAccessMode = 2
                 },
                 DeviceAddress = 0,
-                MemAccessMode = 2
             });
         }
 
@@ -35,9 +35,9 @@ namespace QuSoC.Tests
                     RE = true,
                     WE = false,
                     WriteValue = 0,
+                    MemAccessMode = 2
                 },
                 DeviceAddress = 0,
-                MemAccessMode = 2
             });
 
             return TopLevel.ReadValue;
@@ -53,9 +53,9 @@ namespace QuSoC.Tests
                     RE = false,
                     WE = true,
                     WriteValue = value,
+                    MemAccessMode = 1
                 },
                 DeviceAddress = 0,
-                MemAccessMode = 1
             });
         }
 
@@ -69,9 +69,9 @@ namespace QuSoC.Tests
                     RE = true,
                     WE = false,
                     WriteValue = 0,
+                    MemAccessMode = 1
                 },
                 DeviceAddress = 0,
-                MemAccessMode = 1
             });
 
             return TopLevel.ReadValue;
@@ -87,9 +87,9 @@ namespace QuSoC.Tests
                     RE = false,
                     WE = true,
                     WriteValue = value,
+                    MemAccessMode = 0
                 },
                 DeviceAddress = 0,
-                MemAccessMode = 0
             });
         }
 
@@ -103,9 +103,9 @@ namespace QuSoC.Tests
                     RE = true,
                     WE = false,
                     WriteValue = 0,
+                    MemAccessMode = 0
                 },
                 DeviceAddress = 0,
-                MemAccessMode = 0
             });
 
             return TopLevel.ReadValue;

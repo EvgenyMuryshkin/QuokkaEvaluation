@@ -6,5 +6,5 @@
 
 // main is called from start.S assembly file
 void main() {
-	SOCCounter::Firmware::EntryPoint();
+	Counter::Firmware::EntryPoint();
 }

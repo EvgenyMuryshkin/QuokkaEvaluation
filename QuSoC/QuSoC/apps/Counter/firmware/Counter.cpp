@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "soc.h"
-namespace SOCCounter
+namespace Counter
 {
 	void Firmware::EntryPoint()
 	{
@@ -10,7 +10,7 @@ namespace SOCCounter
 		while(true)
 		{
 			(counter++);
-			SOCCounter_SOC_Counter = counter;
+			Counter_SOC_Counter = counter;
 		}
 	}
 }

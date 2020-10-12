@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -86,6 +87,60 @@ namespace QuSoC
 
                 if (socType != null && qusoc != null)
                 {
+                    var socTypeInstance = Activator.CreateInstance(socType);
+                    var deviceAddress = 0x80000000;
+                    Func<string> nextDeviceAddress = () =>
+                    {
+                        var address = deviceAddress;
+                        deviceAddress += 0x1000000;
+                        return address.ToString("X8");
+                    };
+
+                    List<string> moduleDeclarations = new List<string>();
+                    List<string> moduleInitializers = new List<string>();
+                    List<string> moduleSchedule = new List<string>();
+                    List<string> moduleNames = new List<string>();
+                    foreach (var member in socType.GetMembers(BindingFlags.Public | BindingFlags.Instance))
+                    {
+                        switch (member)
+                        {
+                            case PropertyInfo pi:
+                            case FieldInfo fi:
+                                var value = member.GetValue(socTypeInstance);
+
+                                moduleNames.Add($"{member.Name}Module");
+                                var memberType = member.GetMemberType();
+                                if (memberType.IsArray)
+                                {
+                                    var elementType = memberType.GetElementType();
+                                    if (elementType == typeof(uint))
+                                    {
+                                        moduleDeclarations.Add($"SoCBlockRAMModule {member.Name}");
+                                        moduleInitializers.Add($"{member.Name} = new SoCBlockRAMModule();");
+                                        moduleSchedule.Add($"{member.Name}.Schedule(() => new SoCBlockRAMModuleInputs() {{ Common = ModuleCommon, DeviceAddress = {nextDeviceAddress()} }})");
+                                    }
+                                    else
+                                    {
+                                        throw new Exception($"ElementType is not supported: {member}");
+                                    }
+                                }
+                                else
+                                {
+                                    if (memberType == typeof(uint))
+                                    {
+                                        moduleDeclarations.Add($"SoCRegisterModule {member.Name}");
+                                        moduleInitializers.Add($"{member.Name} = new SoCRegisterModule();");
+                                        moduleSchedule.Add($"{member.Name}.Schedule(() => new SoCRegisterModuleInputs() {{ Common = ModuleCommon, DeviceAddress = {nextDeviceAddress()} }})");
+                                    }
+                                    else
+                                    {
+                                        throw new Exception($"MemberType is not supported: {member}");
+                                    }
+                                }
+                                break;
+                        }
+                    }
+
                     _logStream.WriteLine(DirectoryLogging.Summary, $"Found SoC Type: {socType}");
                     var content = new StringBuilder();
                     content.AppendLine("/*");
@@ -94,6 +149,28 @@ namespace QuSoC
                     content.AppendLine("{");
                     content.AppendLine($"\tpublic partial class {qusoc.Name}");
                     content.AppendLine("\t{");
+                    foreach (var decl in moduleDeclarations)
+                    {
+                        content.AppendLine($"\t\tinternal {decl};");
+                    }
+                    content.AppendLine($"\t\tISoCComponentModule[] GeneratedModules => new ISoCComponentModule[] {{ {moduleNames.ToCSV()} }}");
+
+                    content.AppendLine($"\t\tprotected override void CreateGeneratedModules()");
+                    content.AppendLine("\t\t{");
+                    foreach (var init in moduleInitializers)
+                    {
+                        content.AppendLine($"\t\t\t{init}");
+                    }
+                    content.AppendLine("\t\t} // CreateGeneratedModules");
+
+                    content.AppendLine($"\t\tprotected override void ScheduleGeneratedModules()");
+                    content.AppendLine("\t\t{");
+                    foreach (var schedule in moduleSchedule)
+                    {
+                        content.AppendLine($"\t\t\t{schedule}");
+                    }
+                    content.AppendLine("\t\t} // ScheduleGeneratedModules");
+
                     content.AppendLine("\t}");
                     content.AppendLine("}");
                     content.AppendLine("*/");

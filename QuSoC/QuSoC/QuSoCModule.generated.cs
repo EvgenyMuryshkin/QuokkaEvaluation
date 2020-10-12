@@ -11,13 +11,13 @@
             BlockRAM
         };
 
-        void CreateGeneratedModules()
+        protected virtual void CreateGeneratedModules()
         {
             CounterRegister = new SoCRegisterModule();
             BlockRAM = new SoCBlockRAMModule(1024);
         }
 
-        void ScheduleGeneratedModules()
+        protected virtual void ScheduleGeneratedModules()
         {
             CounterRegister.Schedule(() => new SoCRegisterModuleInputs()
             {
@@ -29,7 +29,6 @@
             {
                 Common = ModuleCommon,
                 DeviceAddress = 0x80100000,
-                MemAccessMode = internalMemAccessMode
             });
         }
     }

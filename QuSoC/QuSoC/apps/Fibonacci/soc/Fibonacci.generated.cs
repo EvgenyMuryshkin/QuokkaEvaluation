@@ -4,6 +4,16 @@ namespace Fibonacci
 {
 	public partial class Fibonacci
 	{
+		internal SoCRegisterModule Counter;
+		ISoCComponentModule[] GeneratedModules => new ISoCComponentModule[] { CounterModule }
+		protected override void CreateGeneratedModules()
+		{
+			Counter = new SoCRegisterModule();
+		} // CreateGeneratedModules
+		protected override void ScheduleGeneratedModules()
+		{
+			Counter.Schedule(() => new SoCRegisterModuleInputs() { Common = ModuleCommon, DeviceAddress = 80000000 })
+		} // ScheduleGeneratedModules
 	}
 }
 */

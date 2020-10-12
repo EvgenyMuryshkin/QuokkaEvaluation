@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SOCCounter
+namespace Counter
 {
     public class SOC
     {

@@ -3,7 +3,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "soc.h"
-namespace SOCCounter
+namespace Counter
 {
 	class Firmware
 	{
