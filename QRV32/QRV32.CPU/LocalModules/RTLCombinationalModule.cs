@@ -111,22 +111,14 @@ namespace Quokka.RTL
             Scheduled?.Invoke(this, new EventArgs());
         }
 
+        protected virtual bool DeepEquals(object lhs, object rhs) => RTLModuleHelper.DeepEquals(lhs, rhs);
         protected virtual bool ShouldStage(TInput nextInputs)
         {
             if (InputProps == null)
                 ThrowNotSetup();
 
             // check if given set of inputs was already processed on previous iteration
-            foreach (var prop in InputProps)
-            {
-                var currentValue = prop.GetValue(Inputs);
-                var nextVaue = prop.GetValue(nextInputs);
-
-                if (!currentValue.Equals(nextVaue))
-                    return true;
-            }
-
-            return false;
+            return !DeepEquals(Inputs, nextInputs);
         }
 
         public virtual bool Stage(int iteration)
@@ -178,7 +170,7 @@ namespace Quokka.RTL
 
         protected virtual IEnumerable<VCDVariable> ToVCDVariables(MemberInfo memberInfo, object value)
         {
-            switch(value)
+            switch (value)
             {
                 case Enum v:
                     return new[]

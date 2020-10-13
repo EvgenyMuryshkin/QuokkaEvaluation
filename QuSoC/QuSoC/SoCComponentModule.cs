@@ -24,7 +24,7 @@ namespace QuSoC
 
     public class SoCComponentModuleInputs
     {
-        public SoCComponentModuleCommon Common;
+        public SoCComponentModuleCommon Common = new SoCComponentModuleCommon();
         public uint DeviceAddress;
     }
 

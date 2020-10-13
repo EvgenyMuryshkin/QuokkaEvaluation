@@ -1,4 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Experimental.Tests;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Quokka.Core.Tools;
+using Quokka.Public.Tools;
 using Quokka.RISCV.Integration.Client;
 using System.IO;
 using System.Linq;
@@ -47,14 +50,17 @@ namespace QuSoC.Tests
         protected QuSoCModuleSimulator PowerUp<T>()
             where T : QuSoCModule, new()
         {
-            var module = new T();
+            using (new CurrentDirectory(Path.Combine(PathTools.SolutionPath, "QuSoC", "QuSoC")))
+            {
+                var module = new T();
 
-            var sim = new QuSoCModuleSimulator(module);
+                var sim = new QuSoCModuleSimulator(module);
 
-            // first cycle handles CPU reset state
-            sim.ClockCycle();
+                // first cycle handles CPU reset state
+                sim.ClockCycle();
 
-            return sim;
+                return sim;
+            }
         }
     }
 }

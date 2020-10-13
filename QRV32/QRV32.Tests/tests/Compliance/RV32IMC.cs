@@ -2,7 +2,7 @@
 
 namespace QRV32.Compliance
 {
-    [TestClass]
+    //[TestClass]
     public class RV32IMC : ComplianceTestsBase
     {
         public RV32IMC() : base("rv32imc", "rv32imc") { }

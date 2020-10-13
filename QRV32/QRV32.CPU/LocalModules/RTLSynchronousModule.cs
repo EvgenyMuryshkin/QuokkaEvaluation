@@ -14,7 +14,7 @@ namespace Quokka.RTL
     /// <typeparam name="TInput"></typeparam>
     /// <typeparam name="TState"></typeparam>
     [RTLToolkitType]
-    public abstract class RTLSynchronousModule<TInput, TState> : RTLCombinationalModule<TInput>, IRTLSynchronousModule<TInput, TState>
+    public abstract class RTLSynchronousModule<TInput, TState> : DefaultRTLCombinationalModule<TInput>, IRTLSynchronousModule<TInput, TState>
         where TInput : new()
         where TState : new()
     {
@@ -96,7 +96,7 @@ namespace Quokka.RTL
         public override void Reset()
         {
             base.Reset();
-            
+
             if (Equals(DefaultState, default(TState)))
             {
                 ThrowNotSetup();
@@ -116,7 +116,7 @@ namespace Quokka.RTL
                         throw new Exception($"No reset type is defined for {StateType.Name}.{prop.Name}. Use [MemoryBlockResetType] on property to declare behavious");
                     }
 
-                    switch(resetTypeAttribute.ResetType)
+                    switch (resetTypeAttribute.ResetType)
                     {
                         case rtlMemoryBlockResetType.Keep:
                             break;

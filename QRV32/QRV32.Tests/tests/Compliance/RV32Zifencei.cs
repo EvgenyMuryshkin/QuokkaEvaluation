@@ -2,7 +2,7 @@
 
 namespace QRV32.Compliance
 {
-    [TestClass]
+    //[TestClass]
     public class RV32Zifencei : ComplianceTestsBase
     {
         public RV32Zifencei() : base("rv32Zifencei", "rv32i") { }
