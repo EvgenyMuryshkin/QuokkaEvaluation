@@ -7,5 +7,6 @@ namespace MemBlock
 {
     public partial class MemBlock : QuSoCModule
     {
+        public uint Counter => CounterModule.ReadValue;
     }
 }

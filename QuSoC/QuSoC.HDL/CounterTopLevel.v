@@ -18,7 +18,7 @@ assign LED2 = counter[19];
 assign LED3 = counter[20];
 assign LED4 = counter[21];
 
-Counter_TopLevel Counter_TopLevel
+Increment_TopLevel Increment_TopLevel
 (
 	.Clock (Clock),
 	.Reset (!Reset),

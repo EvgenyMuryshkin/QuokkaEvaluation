@@ -8,28 +8,34 @@ using System.Diagnostics;
 
 namespace QuSoC.Tests
 {
-    public class QuSoCModuleSimulator : RTLInstanceSimulator<QuSoCModule>
+    public class QuSoCModuleSimulator : QuSoCModuleSimulator<IntegrationTestModule>
     {
-        protected HashSet<uint> InfiniteLoopAddresses = new HashSet<uint>();
-        public uint ClockCycles = 0;
-
-        public QuSoCModuleSimulator(QuSoCModule module)
+        public QuSoCModuleSimulator(uint[] instructions)
         {
-            Initialize(module);
+            Initialize(new IntegrationTestModule(instructions));
+
             InfiniteLoopAddresses.AddRange(
-                module.InstructionsRAM.State.BlockRAM
+                instructions
                 .Select((i, idx) => new { i, idx })
                 .Where(p => p.i == 0x6F) // j loop code
                 .Select(p => (uint)(p.idx * 4))
             );
         }
+    }
 
-        public QuSoCModuleSimulator(uint[] instructions)
+    public class QuSoCModuleSimulator<T> : RTLInstanceSimulator<T>
+        where T : QuSoCModule
+    {
+        protected HashSet<uint> InfiniteLoopAddresses = new HashSet<uint>();
+        public uint ClockCycles = 0;
+
+        protected QuSoCModuleSimulator() { }
+
+        public QuSoCModuleSimulator(T module)
         {
-            Initialize(new QuSoCModule(instructions));
-
+            Initialize(module);
             InfiniteLoopAddresses.AddRange(
-                instructions
+                module.InstructionsRAM.State.BlockRAM
                 .Select((i, idx) => new { i, idx })
                 .Where(p => p.i == 0x6F) // j loop code
                 .Select(p => (uint)(p.idx * 4))

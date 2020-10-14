@@ -1,0 +1,81 @@
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+RAM              0x0000000000000000 0x0000000000008000 xrw
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+
+.text           0x0000000000000000       0xc8
+                0x0000000000000000                . = ALIGN (0x4)
+ *(.text)
+ .text          0x0000000000000000        0xc /tmp/ccR1mhw5.o
+ .text          0x000000000000000c       0x2c /tmp/ccFMXTcb.o
+                0x000000000000000c                Increment::Firmware::EntryPoint()
+ .text          0x0000000000000038       0x28 /tmp/ccxoBzVg.o
+                0x0000000000000038                main
+ *(.text*)
+ *(.rodata)
+ *(.rodata*)
+ *(.srodata)
+ *(.srodata*)
+ *(.eh_frame)
+ .eh_frame      0x0000000000000060       0x30 /tmp/ccFMXTcb.o
+ .eh_frame      0x0000000000000090       0x38 /tmp/ccxoBzVg.o
+ *(.eh_frame*)
+                0x00000000000000c8                . = ALIGN (0x4)
+                0x00000000000000c8                _etext = .
+                0x00000000000000c8                _sidata = _etext
+
+.data           0x00000000000000c8        0x0
+                0x00000000000000c8                . = ALIGN (0x4)
+                0x00000000000000c8                _sdata = .
+                0x00000000000000c8                _ram_start = .
+ *(.data)
+ .data          0x00000000000000c8        0x0 /tmp/ccR1mhw5.o
+ .data          0x00000000000000c8        0x0 /tmp/ccFMXTcb.o
+ .data          0x00000000000000c8        0x0 /tmp/ccxoBzVg.o
+ *(.data*)
+ *(.sdata)
+ *(.sdata*)
+ *(.init_array)
+ *(.init_array*)
+                0x00000000000000c8                . = ALIGN (0x4)
+                0x00000000000000c8                _edata = .
+
+.bss            0x00000000000000c8        0x0
+                0x00000000000000c8                . = ALIGN (0x4)
+                0x00000000000000c8                _sbss = .
+ *(.bss)
+ .bss           0x00000000000000c8        0x0 /tmp/ccR1mhw5.o
+ .bss           0x00000000000000c8        0x0 /tmp/ccFMXTcb.o
+ .bss           0x00000000000000c8        0x0 /tmp/ccxoBzVg.o
+ *(.bss*)
+ *(.sbss)
+ *(.sbss*)
+ *(COMMON)
+                0x00000000000000c8                . = ALIGN (0x4)
+                0x00000000000000c8                _ebss = .
+
+.heap           0x00000000000000c8        0x0
+                0x00000000000000c8                . = ALIGN (0x4)
+                0x00000000000000c8                _heap_start = .
+LOAD /tmp/ccR1mhw5.o
+LOAD /tmp/ccFMXTcb.o
+LOAD /tmp/ccxoBzVg.o
+OUTPUT(firmware.elf elf32-littleriscv)
+
+.comment        0x0000000000000000       0x11
+ .comment       0x0000000000000000       0x11 /tmp/ccFMXTcb.o
+                                         0x12 (size before relaxing)
+ .comment       0x0000000000000011       0x12 /tmp/ccxoBzVg.o
+
+Cross Reference Table
+
+Symbol                                            File
+Increment::Firmware::EntryPoint()                 /tmp/ccFMXTcb.o
+                                                  /tmp/ccxoBzVg.o
+main                                              /tmp/ccxoBzVg.o
+                                                  /tmp/ccR1mhw5.o

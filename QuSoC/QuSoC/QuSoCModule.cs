@@ -23,17 +23,14 @@ namespace QuSoC
     {
         internal RISCVModule CPU = new RISCVModule();
         internal SoCBlockRAMModule InstructionsRAM = new SoCBlockRAMModule(1024);
-        internal SoCUARTSimModule UARTSim = new SoCUARTSimModule();
 
         protected virtual ISoCComponentModule[] QuSoCModules => new ISoCComponentModule[]
         {
             InstructionsRAM
         };
 
-        protected virtual ISoCComponentModule[] ManualModules => new ISoCComponentModule[]
-        {
-            UARTSim
-        };
+        protected virtual ISoCComponentModule[] ManualModules => new ISoCComponentModule[] { };
+        protected virtual ISoCComponentModule[] GeneratedModules => new ISoCComponentModule[] { };
 
         protected virtual ISoCComponentModule[] AllModules => new []
         {
@@ -48,7 +45,6 @@ namespace QuSoC
         // Please get in touch if you are interested in rationale (dirty hacks) behind this.
         RTLBitArray CombinedModuleIsActive => new RTLBitArray(AllModules.Select(g => g.IsActive)).Reversed();
         RTLBitArray internalMemAccessMode => CPU.MemAccessMode[1, 0];
-        public uint Counter => CounterRegister.ReadValue;
          
         protected QuSoCModule()
         {
@@ -65,8 +61,9 @@ namespace QuSoC
             instructions.CopyTo(InstructionsRAM.State.BlockRAM, 0);
             CreateGeneratedModules();
         }
+        protected virtual void CreateGeneratedModules() { }
 
-        SoCComponentModuleCommon ModuleCommon => new SoCComponentModuleCommon()
+        protected SoCComponentModuleCommon ModuleCommon => new SoCComponentModuleCommon()
         {
             WriteValue = CPU.MemWriteData,
             WE = CPU.MemWrite,
@@ -91,14 +88,8 @@ namespace QuSoC
             });
         }
 
-        protected virtual void ScheduleManualModules()
-        {
-            UARTSim.Schedule(() => new SoCUARTSimModuleInputs()
-            {
-                Common = ModuleCommon,
-                DeviceAddress = 0x90000000,
-            });
-        }
+        protected virtual void ScheduleManualModules() { }
+        protected virtual void ScheduleGeneratedModules() { }
 
         protected override void OnSchedule(Func<QuSoCModuleInputs> inputsFactory)
         {

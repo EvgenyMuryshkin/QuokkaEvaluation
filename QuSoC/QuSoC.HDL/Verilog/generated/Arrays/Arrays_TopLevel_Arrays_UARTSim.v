@@ -31,6 +31,7 @@ module Arrays_TopLevel_Arrays_UARTSim (
 	input  [32: 1] Common_WriteValue,
 	input  Common_WE,
 	input  Common_RE,
+	input  [2: 1] Common_MemAccessMode,
 	input  [32: 1] DeviceAddress,
 	output IsActive,
 	output IsReady,
@@ -46,7 +47,7 @@ wire  One = 1'b1;
 wire  true = 1'b1;
 wire  false = 1'b0;
 wire  [2:0] addressSpan = 3'b100;
-wire  [1:0] SoCComponentModule_L46F83T84_Expr = 2'b11;
+wire  [1:0] SoCComponentModule_L47F83T84_Expr = 2'b11;
 wire  [1:0] SoCUARTSimModule_L27F44T45_Expr = 2'b10;
 wire  SoCUARTSimModule_L27F50T51_Expr = 1'b0;
 wire  SoCUARTSimModule_L35F9L56T10_SoCUARTSimModule_L36F33T38_Expr = 1'b0;
@@ -67,6 +68,7 @@ wire  [31:0] Inputs_Common_Address;
 wire  [31:0] Inputs_Common_WriteValue;
 wire  Inputs_Common_WE;
 wire  Inputs_Common_RE;
+wire  [1:0] Inputs_Common_MemAccessMode;
 wire  [31:0] Inputs_DeviceAddress;
 reg  NextState_UART_TX = 1'b0;
 reg  [7:0] NextState_txSimCounter = 8'b00000000;
@@ -75,8 +77,8 @@ wire  [31:0] internalAddressBits;
 wire  [4:0] internalByteAddress;
 wire  internalIsActive;
 wire  internalIsReady;
-wire  [31:0] SoCComponentModule_L45F54T92_Source;
-wire  [1:0] SoCComponentModule_L46F54T79_Index;
+wire  [31:0] SoCComponentModule_L46F54T92_Source;
+wire  [1:0] SoCComponentModule_L47F54T79_Index;
 wire  [7:0] SoCUARTSimModule_L27F33T46_Index;
 wire  [7:0] SoCUARTSimModule_L35F9L56T10_SoCUARTSimModule_L39F13L47T14_SoCUARTSimModule_L41F37T67_Cast;
 wire  [7:0] SoCUARTSimModule_L35F9L56T10_SoCUARTSimModule_L50F13L55T14_SoCUARTSimModule_L54F46T76_Cast;
@@ -90,11 +92,11 @@ reg  State_UART_TX = 1'b0;
 wire  State_UART_TXDefault = 1'b0;
 reg  [7:0] State_txSimCounter = 8'b00000000;
 wire  [7:0] State_txSimCounterDefault = 8'b00000000;
-wire  SoCComponentModule_L44F48T157_Expr;
-wire  SoCComponentModule_L44F48T157_Expr_1;
-wire  SoCComponentModule_L44F48T157_Expr_2;
-wire  [7:0] SoCComponentModule_L46F54T84_Expr;
-wire  [7:0] SoCComponentModule_L46F54T84_Expr_1;
+wire  SoCComponentModule_L45F48T157_Expr;
+wire  SoCComponentModule_L45F48T157_Expr_1;
+wire  SoCComponentModule_L45F48T157_Expr_2;
+wire  [7:0] SoCComponentModule_L47F54T84_Expr;
+wire  [7:0] SoCComponentModule_L47F54T84_Expr_1;
 wire  SoCUARTSimModule_L35F9L56T10_SoCUARTSimModule_L38F17T72_Expr;
 wire  SoCUARTSimModule_L35F9L56T10_SoCUARTSimModule_L38F17T72_Expr_1;
 wire  SoCUARTSimModule_L35F9L56T10_SoCUARTSimModule_L38F17T72_Expr_2;
@@ -105,18 +107,18 @@ wire  SoCUARTSimModule_L35F9L56T10_SoCUARTSimModule_L49F17T33_Expr;
 wire  SoCUARTSimModule_L35F9L56T10_SoCUARTSimModule_L49F17T33_Expr_1;
 wire  [31:0] SoCUARTSimModule_L31F43L32T95_Expr;
 wire  [31:0] SoCUARTSimModule_L31F43L32T95_Expr_1;
-wire  [33:0] SoCComponentModule_L44F122T156_Expr;
-wire signed  [33:0] SoCComponentModule_L44F122T156_Expr_1;
-wire signed  [33:0] SoCComponentModule_L44F122T156_Expr_2;
+wire  [33:0] SoCComponentModule_L45F122T156_Expr;
+wire signed  [33:0] SoCComponentModule_L45F122T156_Expr_1;
+wire signed  [33:0] SoCComponentModule_L45F122T156_Expr_2;
 wire signed  [9:0] SoCUARTSimModule_L35F9L56T10_SoCUARTSimModule_L50F13L55T14_SoCUARTSimModule_L54F53T75_Expr;
 wire signed  [9:0] SoCUARTSimModule_L35F9L56T10_SoCUARTSimModule_L50F13L55T14_SoCUARTSimModule_L54F53T75_Expr_1;
 wire signed  [9:0] SoCUARTSimModule_L35F9L56T10_SoCUARTSimModule_L50F13L55T14_SoCUARTSimModule_L54F53T75_Expr_2;
-wire  SoCComponentModule_L44F48T93_Expr;
-wire signed  [32:0] SoCComponentModule_L44F48T93_ExprLhs;
-wire signed  [32:0] SoCComponentModule_L44F48T93_ExprRhs;
-wire  SoCComponentModule_L44F97T157_Expr;
-wire signed  [34:0] SoCComponentModule_L44F97T157_ExprLhs;
-wire signed  [34:0] SoCComponentModule_L44F97T157_ExprRhs;
+wire  SoCComponentModule_L45F48T93_Expr;
+wire signed  [32:0] SoCComponentModule_L45F48T93_ExprLhs;
+wire signed  [32:0] SoCComponentModule_L45F48T93_ExprRhs;
+wire  SoCComponentModule_L45F97T157_Expr;
+wire signed  [34:0] SoCComponentModule_L45F97T157_ExprLhs;
+wire signed  [34:0] SoCComponentModule_L45F97T157_ExprRhs;
 wire  SoCUARTSimModule_L27F33T51_Expr;
 wire signed  [8:0] SoCUARTSimModule_L27F33T51_ExprLhs;
 wire signed  [8:0] SoCUARTSimModule_L27F33T51_ExprRhs;
@@ -162,24 +164,24 @@ State_UART[State_UART_Iterator] <= NextState_UART[State_UART_Iterator];
 end
 end
 end
-assign SoCComponentModule_L44F48T93_Expr = SoCComponentModule_L44F48T93_ExprLhs >= SoCComponentModule_L44F48T93_ExprRhs ? 1'b1 : 1'b0;
-assign SoCComponentModule_L44F97T157_Expr = SoCComponentModule_L44F97T157_ExprLhs < SoCComponentModule_L44F97T157_ExprRhs ? 1'b1 : 1'b0;
+assign SoCComponentModule_L45F48T93_Expr = SoCComponentModule_L45F48T93_ExprLhs >= SoCComponentModule_L45F48T93_ExprRhs ? 1'b1 : 1'b0;
+assign SoCComponentModule_L45F97T157_Expr = SoCComponentModule_L45F97T157_ExprLhs < SoCComponentModule_L45F97T157_ExprRhs ? 1'b1 : 1'b0;
 assign SoCUARTSimModule_L27F33T51_Expr = SoCUARTSimModule_L27F33T51_ExprLhs != SoCUARTSimModule_L27F33T51_ExprRhs ? 1'b1 : 1'b0;
 assign SoCUARTSimModule_L35F9L56T10_SoCUARTSimModule_L50F13L55T14_SoCUARTSimModule_L51F21T44_Expr = SoCUARTSimModule_L35F9L56T10_SoCUARTSimModule_L50F13L55T14_SoCUARTSimModule_L51F21T44_ExprLhs == SoCUARTSimModule_L35F9L56T10_SoCUARTSimModule_L50F13L55T14_SoCUARTSimModule_L51F21T44_ExprRhs ? 1'b1 : 1'b0;
-assign SoCComponentModule_L44F48T157_Expr = SoCComponentModule_L44F48T157_Expr_1 & SoCComponentModule_L44F48T157_Expr_2;
-assign SoCComponentModule_L46F54T84_Expr[0] = 0;
-assign SoCComponentModule_L46F54T84_Expr[1] = 0;
-assign SoCComponentModule_L46F54T84_Expr[2] = 0;
-assign SoCComponentModule_L46F54T84_Expr[3] = SoCComponentModule_L46F54T84_Expr_1[0];
-assign SoCComponentModule_L46F54T84_Expr[4] = SoCComponentModule_L46F54T84_Expr_1[1];
-assign SoCComponentModule_L46F54T84_Expr[5] = 0;
-assign SoCComponentModule_L46F54T84_Expr[6] = 0;
-assign SoCComponentModule_L46F54T84_Expr[7] = 0;
+assign SoCComponentModule_L45F48T157_Expr = SoCComponentModule_L45F48T157_Expr_1 & SoCComponentModule_L45F48T157_Expr_2;
+assign SoCComponentModule_L47F54T84_Expr[0] = 0;
+assign SoCComponentModule_L47F54T84_Expr[1] = 0;
+assign SoCComponentModule_L47F54T84_Expr[2] = 0;
+assign SoCComponentModule_L47F54T84_Expr[3] = SoCComponentModule_L47F54T84_Expr_1[0];
+assign SoCComponentModule_L47F54T84_Expr[4] = SoCComponentModule_L47F54T84_Expr_1[1];
+assign SoCComponentModule_L47F54T84_Expr[5] = 0;
+assign SoCComponentModule_L47F54T84_Expr[6] = 0;
+assign SoCComponentModule_L47F54T84_Expr[7] = 0;
 assign SoCUARTSimModule_L35F9L56T10_SoCUARTSimModule_L38F17T72_Expr = SoCUARTSimModule_L35F9L56T10_SoCUARTSimModule_L38F17T72_Expr_1 & SoCUARTSimModule_L35F9L56T10_SoCUARTSimModule_L38F17T72_Expr_2;
 assign SoCUARTSimModule_L35F9L56T10_SoCUARTSimModule_L38F17T52_Expr = SoCUARTSimModule_L35F9L56T10_SoCUARTSimModule_L38F17T52_Expr_1 & SoCUARTSimModule_L35F9L56T10_SoCUARTSimModule_L38F17T52_Expr_2;
 assign SoCUARTSimModule_L35F9L56T10_SoCUARTSimModule_L49F17T33_Expr = ~SoCUARTSimModule_L35F9L56T10_SoCUARTSimModule_L49F17T33_Expr_1;
 assign SoCUARTSimModule_L31F43L32T95_Expr = SoCUARTSimModule_L31F43L32T95_Expr_1 >> internalByteAddress;
-assign SoCComponentModule_L44F122T156_Expr = SoCComponentModule_L44F122T156_Expr_1 + SoCComponentModule_L44F122T156_Expr_2;
+assign SoCComponentModule_L45F122T156_Expr = SoCComponentModule_L45F122T156_Expr_1 + SoCComponentModule_L45F122T156_Expr_2;
 assign SoCUARTSimModule_L35F9L56T10_SoCUARTSimModule_L50F13L55T14_SoCUARTSimModule_L54F53T75_Expr = SoCUARTSimModule_L35F9L56T10_SoCUARTSimModule_L50F13L55T14_SoCUARTSimModule_L54F53T75_Expr_1 - SoCUARTSimModule_L35F9L56T10_SoCUARTSimModule_L50F13L55T14_SoCUARTSimModule_L54F53T75_Expr_2;
 always @*
 begin
@@ -206,37 +208,38 @@ end
 end
 
 end
-assign SoCComponentModule_L44F48T93_ExprLhs = { {1{1'b0}}, Inputs_Common_Address }/*expand*/;
-assign SoCComponentModule_L44F48T93_ExprRhs = { {1{1'b0}}, Inputs_DeviceAddress }/*expand*/;
-assign SoCComponentModule_L44F97T157_ExprLhs = { {3{1'b0}}, Inputs_Common_Address }/*expand*/;
-assign SoCComponentModule_L44F97T157_ExprRhs = { {1{1'b0}}, SoCComponentModule_L44F122T156_Expr }/*expand*/;
+assign SoCComponentModule_L45F48T93_ExprLhs = { {1{1'b0}}, Inputs_Common_Address }/*expand*/;
+assign SoCComponentModule_L45F48T93_ExprRhs = { {1{1'b0}}, Inputs_DeviceAddress }/*expand*/;
+assign SoCComponentModule_L45F97T157_ExprLhs = { {3{1'b0}}, Inputs_Common_Address }/*expand*/;
+assign SoCComponentModule_L45F97T157_ExprRhs = { {1{1'b0}}, SoCComponentModule_L45F122T156_Expr }/*expand*/;
 assign SoCUARTSimModule_L27F33T51_ExprLhs = { {1{1'b0}}, SoCUARTSimModule_L27F33T46_Index }/*expand*/;
 assign SoCUARTSimModule_L27F33T51_ExprRhs = { {8{1'b0}}, SoCUARTSimModule_L27F50T51_Expr }/*expand*/;
 assign SoCUARTSimModule_L35F9L56T10_SoCUARTSimModule_L50F13L55T14_SoCUARTSimModule_L51F21T44_ExprLhs = { {1{1'b0}}, State_txSimCounter }/*expand*/;
 assign SoCUARTSimModule_L35F9L56T10_SoCUARTSimModule_L50F13L55T14_SoCUARTSimModule_L51F21T44_ExprRhs = { {8{1'b0}}, SoCUARTSimModule_L35F9L56T10_SoCUARTSimModule_L50F13L55T14_SoCUARTSimModule_L51F43T44_Expr }/*expand*/;
-assign SoCComponentModule_L44F48T157_Expr_1 = SoCComponentModule_L44F48T93_Expr;
-assign SoCComponentModule_L44F48T157_Expr_2 = SoCComponentModule_L44F97T157_Expr;
-assign SoCComponentModule_L46F54T84_Expr_1 = { {6{1'b0}}, SoCComponentModule_L46F54T79_Index }/*expand*/;
+assign SoCComponentModule_L45F48T157_Expr_1 = SoCComponentModule_L45F48T93_Expr;
+assign SoCComponentModule_L45F48T157_Expr_2 = SoCComponentModule_L45F97T157_Expr;
+assign SoCComponentModule_L47F54T84_Expr_1 = { {6{1'b0}}, SoCComponentModule_L47F54T79_Index }/*expand*/;
 assign SoCUARTSimModule_L35F9L56T10_SoCUARTSimModule_L38F17T72_Expr_1 = SoCUARTSimModule_L35F9L56T10_SoCUARTSimModule_L38F17T52_Expr;
 assign SoCUARTSimModule_L35F9L56T10_SoCUARTSimModule_L38F17T72_Expr_2 = Inputs_Common_WE;
 assign SoCUARTSimModule_L35F9L56T10_SoCUARTSimModule_L38F17T52_Expr_1 = internalIsReady;
 assign SoCUARTSimModule_L35F9L56T10_SoCUARTSimModule_L38F17T52_Expr_2 = internalIsActive;
 assign SoCUARTSimModule_L35F9L56T10_SoCUARTSimModule_L49F17T33_Expr_1 = internalIsReady;
 assign SoCUARTSimModule_L31F43L32T95_Expr_1 = SoCUARTSimModule_L31F43L32T72_Source;
-assign SoCComponentModule_L44F122T156_Expr_1 = { {2{1'b0}}, Inputs_DeviceAddress }/*expand*/;
-assign SoCComponentModule_L44F122T156_Expr_2 = { {31{1'b0}}, addressSpan }/*expand*/;
+assign SoCComponentModule_L45F122T156_Expr_1 = { {2{1'b0}}, Inputs_DeviceAddress }/*expand*/;
+assign SoCComponentModule_L45F122T156_Expr_2 = { {31{1'b0}}, addressSpan }/*expand*/;
 assign SoCUARTSimModule_L35F9L56T10_SoCUARTSimModule_L50F13L55T14_SoCUARTSimModule_L54F53T75_Expr_1 = { {2{1'b0}}, State_txSimCounter }/*expand*/;
 assign SoCUARTSimModule_L35F9L56T10_SoCUARTSimModule_L50F13L55T14_SoCUARTSimModule_L54F53T75_Expr_2 = { {9{1'b0}}, SoCUARTSimModule_L35F9L56T10_SoCUARTSimModule_L50F13L55T14_SoCUARTSimModule_L54F74T75_Expr }/*expand*/;
 assign Inputs_Common_Address = Common_Address;
 assign Inputs_Common_WriteValue = Common_WriteValue;
 assign Inputs_Common_WE = Common_WE;
 assign Inputs_Common_RE = Common_RE;
+assign Inputs_Common_MemAccessMode = Common_MemAccessMode;
 assign Inputs_DeviceAddress = DeviceAddress;
-assign addressMatch = SoCComponentModule_L44F48T157_Expr;
-assign SoCComponentModule_L45F54T92_Source = Inputs_Common_Address;
-assign internalAddressBits = SoCComponentModule_L45F54T92_Source;
-assign SoCComponentModule_L46F54T79_Index = internalAddressBits[1:0];
-assign internalByteAddress = SoCComponentModule_L46F54T84_Expr[4:0]/*truncate*/;
+assign addressMatch = SoCComponentModule_L45F48T157_Expr;
+assign SoCComponentModule_L46F54T92_Source = Inputs_Common_Address;
+assign internalAddressBits = SoCComponentModule_L46F54T92_Source;
+assign SoCComponentModule_L47F54T79_Index = internalAddressBits[1:0];
+assign internalByteAddress = SoCComponentModule_L47F54T84_Expr[4:0]/*truncate*/;
 assign internalIsActive = addressMatch;
 assign internalIsReady = SoCUARTSimModule_L27F33T51_Expr;
 assign SoCUARTSimModule_L35F9L56T10_SoCUARTSimModule_L39F13L47T14_SoCUARTSimModule_L41F37T67_Cast = Inputs_Common_WriteValue[7:0]/*truncate*/;

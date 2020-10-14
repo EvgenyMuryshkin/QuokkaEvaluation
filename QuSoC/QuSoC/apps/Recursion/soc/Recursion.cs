@@ -7,5 +7,6 @@ namespace Recursion
 {
     public partial class Recursion : QuSoCModule
     {
+        public uint Counter => CounterModule.ReadValue;
     }
 }

@@ -7,5 +7,6 @@ namespace Arrays
 {
     public partial class Arrays : QuSoCModule
     {
+        public uint Counter => CounterModule.ReadValue;
     }
 }

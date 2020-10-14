@@ -36,9 +36,9 @@ namespace QuSoC.Tests
             MemBlock.Firmware.EntryPoint();
             for (var idx = 0; idx < 10; idx++)
             {
-                Assert.AreEqual(MemBlock.SOC.Instance.MemBlock[idx], sim.TopLevel.BlockRAM.State.BlockRAM[idx], $"Failed for {idx}");
+                Assert.AreEqual(MemBlock.SOC.Instance.MemBlock[idx], sim.TopLevel.MemBlockModule.State.BlockRAM[idx], $"Failed for {idx}");
             }
-            Assert.AreEqual(MemBlock.SOC.Instance.MemBlock[1023], sim.TopLevel.BlockRAM.State.BlockRAM[1023]);
+            Assert.AreEqual(MemBlock.SOC.Instance.MemBlock[1023], sim.TopLevel.MemBlockModule.State.BlockRAM[1023]);
         }
 
 
@@ -51,7 +51,7 @@ namespace QuSoC.Tests
                 Fibonacci.Firmware.EntryPoint();
 
                 var sim = PowerUp<Fibonacci.Fibonacci>();
-                sim.TopLevel.CounterRegister.State.Value = idx;
+                sim.TopLevel.CounterModule.State.Value = idx;
                 sim.RunToCompletion();
 
                 Assert.AreEqual(Fibonacci.SOC.Instance.Counter, sim.TopLevel.Counter);
@@ -60,9 +60,9 @@ namespace QuSoC.Tests
         }
 
         [TestMethod]
-        public void CounterTest()
+        public void IncrementTest()
         {
-            var sim = PowerUp<Counter.Counter>();
+            var sim = PowerUp<Increment.Increment>();
             sim.RunToCompletion(() => sim.TopLevel.Counter < 10);
 
             Assert.AreEqual(10U, sim.TopLevel.Counter);

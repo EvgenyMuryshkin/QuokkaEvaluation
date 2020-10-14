@@ -7,5 +7,6 @@ namespace Fibonacci
 {
     public partial class Fibonacci : QuSoCModule
     {
+        public uint Counter => CounterModule.ReadValue;
     }
 }

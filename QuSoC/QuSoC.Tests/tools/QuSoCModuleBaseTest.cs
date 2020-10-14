@@ -47,14 +47,14 @@ namespace QuSoC.Tests
             return sim;
         }
 
-        protected QuSoCModuleSimulator PowerUp<T>()
+        protected QuSoCModuleSimulator<T> PowerUp<T>()
             where T : QuSoCModule, new()
         {
             using (new CurrentDirectory(Path.Combine(PathTools.SolutionPath, "QuSoC", "QuSoC")))
             {
                 var module = new T();
 
-                var sim = new QuSoCModuleSimulator(module);
+                var sim = new QuSoCModuleSimulator<T>(module);
 
                 // first cycle handles CPU reset state
                 sim.ClockCycle();
