@@ -1,4 +1,5 @@
-﻿using QRV32.CPU;
+﻿using Newtonsoft.Json.Schema;
+using QRV32.CPU;
 using Quokka.Public.Tools;
 using Quokka.RISCV.CS2CPP.Tools;
 using Quokka.RISCV.CS2CPP.Translator;
@@ -8,8 +9,10 @@ using Quokka.RISCV.Integration.Engine;
 using Quokka.RISCV.Integration.Generator.SOC;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace QuSoC
 {
@@ -21,27 +24,72 @@ namespace QuSoC
             appPath = path;
         }
 
+        public string AppName => Path.GetFileName(appPath);
         public string SourceFolder => Path.Combine(appPath, "source");
         public string FirmwareFolder => Path.Combine(appPath, "firmware");
         public string FirmwareFile => Path.Combine(FirmwareFolder, "firmware.bin");
         public string FirmwareAsmFile => Path.Combine(FirmwareFolder, "firmware.asm");
         public string MakefileFile => Path.Combine(FirmwareFolder, "makefile");
         public bool SourceExists => Directory.Exists(SourceFolder);
+        public string MainFile => Path.Combine(SourceFolder, "main.S");
 
-        public bool FirmwareFromAppFolder()
+        public static string ProjectLocation(string currentLocation = null)
         {
-            if (!SourceExists)
-                return false;
+            if (currentLocation == "")
+                return "";
 
-            // delete old firmware before making new one
-            if (File.Exists(FirmwareFile))
-                File.Delete(FirmwareFile);
+            currentLocation = currentLocation ?? Directory.GetCurrentDirectory();
+            if (Directory.Exists(currentLocation) && Directory.EnumerateFiles(currentLocation, "*.csproj").Any())
+                return currentLocation;
 
-            var appName = Path.GetFileName(appPath);
-            var sourceFolder = Path.Combine(appPath, "source");
-            var firmwareFolder = Path.Combine(appPath, "firmware");
+            return ProjectLocation(Path.GetDirectoryName(currentLocation));
+        }
 
-            var csFiles = Directory.EnumerateFiles(sourceFolder);
+        public static uint[] FromApp(string path)
+        {
+            if (!Path.IsPathRooted(path))
+            {
+                path = Path.Combine(PathTools.ProjectPath, "apps", path);
+            }
+
+            var tools = new FirmwareTools(path);
+            if (!tools.FirmwareFromAppFolder())
+                throw new Exception($"Failed to get instructions for app {path}");
+
+            return tools.Instructions();
+        }
+
+        public uint[] FromAsmSource(string asmSource)
+        {
+            // making a API call to integration server.
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                // on Windows, integration server is required to run in Docker or WSL.
+                // Installation steps are same for WSL and for docker.
+                // https://github.com/EvgenyMuryshkin/Quokka.RISCV.Docker
+
+                var instructions = RISCVIntegrationClient.Asm(new RISCVIntegrationEndpoint(), asmSource);
+                return instructions.Result;
+            }
+            else
+            {
+                // on Linux, just make local call to RISCV toolchain
+                return RISCVIntegrationClient.ToInstructions(Toolchain.Asm(asmSource)).ToArray();
+            }
+        }
+
+        void FirmwareFromMainFile()
+        {
+            var mainSource = File.ReadAllText(MainFile);
+            var instructions = FromAsmSource(mainSource);
+            var bytes = instructions.SelectMany(i => BitConverter.GetBytes(i));
+            FileTools.CreateDirectoryRecursive(FirmwareFolder);
+            File.WriteAllBytes(FirmwareFile, bytes.ToArray());
+        }
+
+        void FirmwareFromCS()
+        {
+            var csFiles = Directory.EnumerateFiles(SourceFolder);
             var csFilesContent = csFiles
                 .Select(path => new FSTextFile() { Name = path, Content = File.ReadAllText(path) })
                 .ToList();
@@ -66,8 +114,8 @@ namespace QuSoC
                 var socRecords = socRecordsBuilder.ToSOCRecords(0x800, tx.SOCResources);
                 firmwareSource.Add(socGenerator.SOCImport(socRecords));
 
-                FileTools.CreateDirectoryRecursive(firmwareFolder);
-                var m = new FSManager(firmwareFolder);
+                FileTools.CreateDirectoryRecursive(FirmwareFolder);
+                var m = new FSManager(FirmwareFolder);
                 m.SaveSnapshot(firmwareSource);
             }
 
@@ -76,10 +124,29 @@ namespace QuSoC
             if (File.Exists(MakefileFile))
             {
                 var context = RISCVIntegration
-                    .DefaultContext(firmwareFolder)
+                    .DefaultContext(FirmwareFolder)
                     .WithMakeTarget("bin");
 
                 RISCVIntegrationClient.Make(context).Wait();
+            }
+        }
+
+        public bool FirmwareFromAppFolder()
+        {
+            if (!SourceExists)
+                return false;
+
+            // delete old firmware before making new one
+            if (File.Exists(FirmwareFile))
+                File.Delete(FirmwareFile);
+
+            if (File.Exists(MainFile))
+            {
+                FirmwareFromMainFile();
+            }
+            else
+            {
+                FirmwareFromCS();
             }
 
             if (File.Exists(FirmwareFile))

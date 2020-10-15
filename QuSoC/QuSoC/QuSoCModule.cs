@@ -1,9 +1,12 @@
 ﻿using QRV32.CPU;
 using Quokka.RTL;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace QuSoC
 {
@@ -16,59 +19,61 @@ namespace QuSoC
         public bool MemReady;
     }
 
-    // TODO: inheritance not supportted yet
-    /*
-    public class QuSoCBlinkerModule : QuSoCModule
-    {
-        public QuSoCBlinkerModule()
-        {
-        }
-
-        protected override void OnSchedule(Func<QuSoCModuleInputs> inputsFactory)
-        {
-            base.OnSchedule(inputsFactory);
-        }
-    }
-    */
-
-    public class QuSoCModule : RTLSynchronousModule<QuSoCModuleInputs, QuSoCModuleState>
+    public partial class QuSoCModule : RTLSynchronousModule<QuSoCModuleInputs, QuSoCModuleState>
     {
         internal RISCVModule CPU = new RISCVModule();
         internal SoCBlockRAMModule InstructionsRAM = new SoCBlockRAMModule(1024);
-        internal SoCRegisterModule CounterRegister = new SoCRegisterModule();
-        internal SoCBlockRAMModule BlockRAM = new SoCBlockRAMModule(1024);
-        internal SoCUARTSimModule UARTSim = new SoCUARTSimModule();
 
-        ISoCComponentModule[] AllModules => new ISoCComponentModule[]
+        protected virtual ISoCComponentModule[] QuSoCModules => new ISoCComponentModule[]
         {
-            InstructionsRAM,
-            CounterRegister,
-            BlockRAM,
-            UARTSim
+            InstructionsRAM
         };
+
+        protected virtual ISoCComponentModule[] ManualModules => new ISoCComponentModule[] { };
+        protected virtual ISoCComponentModule[] GeneratedModules => new ISoCComponentModule[] { };
+
+        protected virtual ISoCComponentModule[] AllModules => new []
+        {
+            QuSoCModules,
+            ManualModules,
+            GeneratedModules
+        }
+        .SelectMany(m => m)
+        .ToArray();
 
         // NOTE: reverse is needed because RTLBitArray constructor is MSB ordered
         // Please get in touch if you are interested in rationale (dirty hacks) behind this.
         RTLBitArray CombinedModuleIsActive => new RTLBitArray(AllModules.Select(g => g.IsActive)).Reversed();
-        public uint Counter => CounterRegister.ReadValue;
-
+        RTLBitArray internalMemAccessMode => CPU.MemAccessMode[1, 0];
+         
+        protected QuSoCModule()
+        {
+            FromInstructions(FirmwareTools.FromApp(GetType().Name));
+        }
+        
         public QuSoCModule(uint[] instructions)
         {
-            instructions.CopyTo(InstructionsRAM.State.BlockRAM, 0);
+            FromInstructions(instructions);
         }
 
-        SoCComponentModuleCommon ModuleCommon => new SoCComponentModuleCommon()
+        void FromInstructions(uint[] instructions)
+        {
+            instructions.CopyTo(InstructionsRAM.State.BlockRAM, 0);
+            CreateGeneratedModules();
+        }
+        protected virtual void CreateGeneratedModules() { }
+
+        protected SoCComponentModuleCommon ModuleCommon => new SoCComponentModuleCommon()
         {
             WriteValue = CPU.MemWriteData,
             WE = CPU.MemWrite,
             Address = CPU.MemAddress,
-            RE = CPU.MemRead
+            RE = CPU.MemRead,
+            MemAccessMode = internalMemAccessMode
         };
 
-        protected override void OnSchedule(Func<QuSoCModuleInputs> inputsFactory)
+        void ScheduleQuSoCModules()
         {
-            base.OnSchedule(inputsFactory);
-
             CPU.Schedule(() => new RISCVModuleInputs()
             {
                 BaseAddress = 0U,
@@ -80,27 +85,19 @@ namespace QuSoC
             {
                 Common = ModuleCommon,
                 DeviceAddress = 0x00000000,
-                MemAccessMode = CPU.MemAccessMode[1, 0]
             });
+        }
 
-            CounterRegister.Schedule(() => new SoCRegisterModuleInputs()
-            {
-                Common = ModuleCommon,
-                DeviceAddress = 0x80000000,
-            });
+        protected virtual void ScheduleManualModules() { }
+        protected virtual void ScheduleGeneratedModules() { }
 
-            BlockRAM.Schedule(() => new SoCBlockRAMModuleInputs()
-            {
-                Common = ModuleCommon,
-                DeviceAddress = 0x80100000,
-                MemAccessMode = CPU.MemAccessMode[1,0]
-            });
+        protected override void OnSchedule(Func<QuSoCModuleInputs> inputsFactory)
+        {
+            base.OnSchedule(inputsFactory);
 
-            UARTSim.Schedule(() => new SoCUARTSimModuleInputs()
-            {
-                Common = ModuleCommon,
-                DeviceAddress = 0x80200000,
-            });
+            ScheduleQuSoCModules();
+            ScheduleManualModules();
+            ScheduleGeneratedModules();
         }
 
         //RTLBitArray IsActive
@@ -134,6 +131,7 @@ namespace QuSoC
 
         protected override void OnStage()
         {
+            // assumption for now is that module is immediately ready
             NextState.MemReady = CPU.MemRead;
 
             // TODO: constants e.g. 32768U

@@ -13,17 +13,18 @@ namespace QuSoC
         uint ReadValue { get; }
     }
 
-    public struct SoCComponentModuleCommon
+    public class SoCComponentModuleCommon
     {
         public uint Address;
         public uint WriteValue;
         public bool WE;
         public bool RE;
+        public RTLBitArray MemAccessMode = new RTLBitArray().Resized(2);
     }
 
     public class SoCComponentModuleInputs
     {
-        public SoCComponentModuleCommon Common;
+        public SoCComponentModuleCommon Common = new SoCComponentModuleCommon();
         public uint DeviceAddress;
     }
 

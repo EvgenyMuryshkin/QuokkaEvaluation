@@ -79,7 +79,7 @@ namespace QuSoC
                 var quokkaProjects = new[]
                 {
                     "BlinkerInf",
-                    "Counter"
+                    "Increment"
                 };
 
                 var generatedFiles = _virtualFS

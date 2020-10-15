@@ -7,7 +7,6 @@ namespace QuSoC
 {
     public class SoCBlockRAMModuleInputs : SoCComponentModuleInputs
     {
-        public RTLBitArray MemAccessMode = new RTLBitArray().Resized(2);
     }
 
     public class SoCBlockRAMModuleState
@@ -35,11 +34,11 @@ namespace QuSoC
         RTLBitArray internalWriteValueBits => Inputs.Common.WriteValue;
         RTLBitArray writeMask => (memAccessMask << internalByteAddress).Resized(32);
         RTLBitArray internalWriteData =>
-            Inputs.MemAccessMode == 2
+            Inputs.Common.MemAccessMode == 2
             ? internalWriteValueBits
             : (State.ReadValue & !writeMask) | ((internalWriteValueBits << internalByteAddress) & writeMask);
 
-        bool readBeforeWrite => Inputs.MemAccessMode != 2;
+        bool readBeforeWrite => Inputs.Common.MemAccessMode != 2;
 
         bool internalWE => !readBeforeWrite || State.ReadBeforeWrite;
 
@@ -49,9 +48,9 @@ namespace QuSoC
             {
                 var mask = new RTLBitArray(uint.MaxValue);
 
-                if (Inputs.MemAccessMode == 0)
+                if (Inputs.Common.MemAccessMode == 0)
                     mask = new RTLBitArray(byte.MaxValue).Resized(32);
-                else if (Inputs.MemAccessMode == 1)
+                else if (Inputs.Common.MemAccessMode == 1)
                     mask = new RTLBitArray(ushort.MaxValue).Resized(32);
 
                 return mask;

@@ -1,8 +1,8 @@
 ﻿li x1, 0x80000000 # mem blink storage
 addi x3, x0, 0 # loop iterator
 addi x4, x0, 0 # blink counter
-li x20, 10 # timer iteration in blink toggle
-li x21, 20 # number of toggles to run in simulation (half is the number of full blinks)
+li x20, 3 # timer iteration in blink toggle
+li x21, 5 # number of toggles to run in simulation (half is the number of full blinks)
 
 blink:
 lw x31, 0(x1)

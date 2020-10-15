@@ -1,11 +1,14 @@
 ﻿using Experimental.Tests;
 using Microsoft.CodeAnalysis.Operations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Quokka.Public.Tools;
 using Quokka.RTL;
 using Quokka.RTL.Simulator;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace RTL.Modules
 {
@@ -29,6 +32,11 @@ namespace RTL.Modules
     [TestClass]
     public class ExampleTests
     {
+        static string VCDOutputPath([CallerMemberName] string testName = "")
+        {
+            return Path.Combine(PathTools.ProjectPath, "SimResults", $"{testName}.vcd");
+        }
+
         T Module<T>()
             where T : IRTLCombinationalModule, new()
         {
@@ -322,7 +330,7 @@ namespace RTL.Modules
         {
             var sim = new RTLSimulator<CounterModule>();
             sim.IsRunning = (cb) => cb.Clock < 100;
-            sim.TraceToVCD(PathTools.VCDOutputPath());
+            sim.TraceToVCD(VCDOutputPath());
             sim.TopLevel.Schedule(() => new CounterInputs() { Enabled = true });
 
             Assert.AreEqual(0, sim.TopLevel.Value);
@@ -334,7 +342,7 @@ namespace RTL.Modules
         public void NotGateFeedbackModuleTest()
         {
             var sim = new RTLSimulator<NotGateFeedbackModule>();
-            sim.TraceToVCD(PathTools.VCDOutputPath());
+            sim.TraceToVCD(VCDOutputPath());
 
             Assert.ThrowsException<MaxStageIterationReachedException>(() =>
             {
@@ -347,7 +355,7 @@ namespace RTL.Modules
         {
             var sim = new RTLSimulator<NotGateModule>();
             sim.IsRunning = (cb) => cb.Clock == 0;
-            sim.TraceToVCD(PathTools.VCDOutputPath());
+            sim.TraceToVCD(VCDOutputPath());
             sim.TopLevel.Schedule(() => new NotGateInputs() { Input = true }); ;
 
             Assert.AreEqual(true, sim.TopLevel.Output);
