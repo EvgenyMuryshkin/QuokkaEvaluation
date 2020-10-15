@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="System.IO.Ports" Version="4.7.0" />
-    <PackageReference Include="Quokka.FPGA" Version="0.1.0.87" />
+    <PackageReference Include="Quokka.FPGA" Version="0.1.0.89" />
   </ItemGroup>
 
   <ItemGroup>

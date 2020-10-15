@@ -125,15 +125,7 @@ else begin
 State_MemReady <= NextState_MemReady;
 end
 end
-
-    genvar LogicalFunctionLogicalFunction1_idx;
-    generate
-    for (LogicalFunctionLogicalFunction1_idx = 0; LogicalFunctionLogicalFunction1_idx >= 0; LogicalFunctionLogicalFunction1_idx = LogicalFunctionLogicalFunction1_idx - 1)
-    begin : LogicalFunctionLogicalFunction1_idxReverse
-assign QuSoCModule_L46F47T109_Expr[LogicalFunctionLogicalFunction1_idx] = QuSoCModule_L46F47T109_Expr_1[0 - LogicalFunctionLogicalFunction1_idx];
-end
-    endgenerate
-
+assign QuSoCModule_L46F47T109_Expr = QuSoCModule_L46F47T109_Expr_1;
 BlinkerSim_TopLevel_BlinkerSim_CPU BlinkerSim_TopLevel_BlinkerSim_CPU
 (
 // [BEGIN USER MAP FOR CPU]
@@ -201,8 +193,8 @@ QuSoCModule_L108F13L121T14_hasActive = QuSoCModule_L108F13L121T14_QuSoCModule_L1
 QuSoCModule_L108F13L121T14_address = { {7{1'b0}}, QuSoCModule_L108F13L121T14_QuSoCModule_L110F32T33_Expr }/*expand*/;
 for (QuSoCModule_L108F13L121T14_idx = 0; QuSoCModule_L108F13L121T14_idx < 1; QuSoCModule_L108F13L121T14_idx = QuSoCModule_L108F13L121T14_idx + 1)
 begin
-QuSoCModule_L108F13L121T14_hasActive = QuSoCModule_L108F13L121T14_hasActive | CombinedModuleIsActive[QuSoCModule_L108F13L121T14_idx];
-if (CombinedModuleIsActive[QuSoCModule_L108F13L121T14_idx])
+QuSoCModule_L108F13L121T14_hasActive = QuSoCModule_L108F13L121T14_hasActive | CombinedModuleIsActive;
+if (CombinedModuleIsActive)
 begin
 QuSoCModule_L108F13L121T14_address = QuSoCModule_L108F13L121T14_idx;
 end

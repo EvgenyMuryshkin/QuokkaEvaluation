@@ -11,8 +11,8 @@
     <PackageReference Include="MSTest.TestAdapter" Version="2.0.0" />
     <PackageReference Include="MSTest.TestFramework" Version="2.0.0" />
     <PackageReference Include="PLplot" Version="5.13.7" />
-    <PackageReference Include="Quokka.FPGA" Version="0.1.0.87" />
-    <PackageReference Include="Quokka.RTL" Version="0.1.0.69" />
+    <PackageReference Include="Quokka.FPGA" Version="0.1.0.89" />
+    <PackageReference Include="Quokka.RTL" Version="0.1.0.71" />
   </ItemGroup>
 
   <ItemGroup>

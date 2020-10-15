@@ -26,7 +26,8 @@ namespace QuSoC.Tests
             Assert.ThrowsException<Exception>(() => sim.RunToCompletion(100));
         }
 
-        [TestMethod]
+        // WIP
+        //[TestMethod]
         public void InterruptTest()
         {
             var sim = PowerUp("interrupt");
@@ -88,7 +89,7 @@ namespace QuSoC.Tests
             var sim = PowerUp("blinker_sim");
             
             // WIP, does not support arrays yet
-            //sim.TraceToVCD(PathTools.VCDOutputPath());
+            sim.TraceToVCD(VCDOutputPath());
 
             var tl = sim.TopLevel;
 
@@ -97,7 +98,7 @@ namespace QuSoC.Tests
             var memDump = sim.MemoryDump();
             var cpuDump = sim.TopLevel.CPU.ToString();
 
-            Assert.AreEqual(20U, (uint)tl.Counter);
+            Assert.AreEqual(5U, tl.Counter);
         }
 
         [TestMethod]
@@ -106,7 +107,7 @@ namespace QuSoC.Tests
             var sim = PowerUp("uart_sim");
 
             // WIP, does not support arrays yet
-            //sim.TraceToVCD(PathTools.VCDOutputPath());
+            sim.TraceToVCD(VCDOutputPath());
 
             var tl = sim.TopLevel;
 

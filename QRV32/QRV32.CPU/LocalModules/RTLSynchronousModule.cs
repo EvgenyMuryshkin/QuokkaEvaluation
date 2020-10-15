@@ -14,7 +14,7 @@ namespace Quokka.RTL
     /// <typeparam name="TInput"></typeparam>
     /// <typeparam name="TState"></typeparam>
     [RTLToolkitType]
-    public abstract class RTLSynchronousModule<TInput, TState> : DefaultRTLCombinationalModule<TInput>, IRTLSynchronousModule<TInput, TState>
+    public abstract class RTLSynchronousModule<TInput, TState> : RTLCombinationalModule<TInput>, IRTLSynchronousModule<TInput, TState>
         where TInput : new()
         where TState : new()
     {
@@ -46,6 +46,10 @@ namespace Quokka.RTL
 
                 foreach (var prop in StateProps)
                 {
+                    // TODO: support arrays in VCD
+                    if (prop.GetMemberType().IsArray)
+                        continue;
+
                     currentMember = prop;
                     var value = currentMember.GetValue(State);
                     currentSnapshot.SetVariables(ToVCDVariables(currentMember, value));
@@ -57,6 +61,10 @@ namespace Quokka.RTL
 
                 foreach (var prop in StateProps)
                 {
+                    // TODO: support arrays in VCD
+                    if (prop.GetMemberType().IsArray)
+                        continue;
+
                     currentMember = prop;
                     var value = currentMember.GetValue(NextState);
                     currentSnapshot.SetVariables(ToVCDVariables(currentMember, value));

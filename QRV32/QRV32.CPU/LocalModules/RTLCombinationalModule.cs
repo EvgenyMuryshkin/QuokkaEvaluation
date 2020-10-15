@@ -22,10 +22,6 @@ namespace Quokka.RTL
 
         public event EventHandler Scheduled;
 
-        public RTLCombinationalModule()
-        {
-        }
-
         protected void ThrowNotSetup()
         {
             throw new InvalidOperationException($"Module '{GetType().Name}' is not initialized. Please call .Setup() on module instance or top of the hierarchy.");
@@ -168,20 +164,39 @@ namespace Quokka.RTL
             }
         }
 
-        protected virtual IEnumerable<VCDVariable> ToVCDVariables(MemberInfo memberInfo, object value)
+        protected virtual IEnumerable<VCDVariable> ToVCDVariables(MemberInfo memberInfo, object value, string namePrefix = "")
         {
             switch (value)
             {
                 case Enum v:
                     return new[]
                     {
-                        new VCDVariable($"{memberInfo.Name}ToString", value.ToString(), SizeOf("")),
-                        new VCDVariable(memberInfo.Name, value, SizeOf(value))
+                        new VCDVariable($"{namePrefix}{memberInfo.Name}ToString", value.ToString(), SizeOf("")),
+                        new VCDVariable($"{namePrefix}{memberInfo.Name}", value, SizeOf(value))
                     };
-                default:
+                case RTLBitArray b:
                     return new[]
                     {
                         new VCDVariable(memberInfo.Name, value, SizeOf(value))
+                    };
+                default:
+                    var valueType = value.GetType();
+                    if (value.GetType().IsClass)
+                    {
+                        var result = new List<VCDVariable>();
+
+                        var props = RTLModuleHelper.SynthesizableMembers(valueType);
+                        foreach (var m in props)
+                        {
+                            result.AddRange(ToVCDVariables(m, m.GetValue(value), $"{namePrefix}{memberInfo.Name}_"));
+                        }
+
+                        return result;
+                    }
+
+                    return new[]
+                    {
+                        new VCDVariable($"{namePrefix}{memberInfo.Name}", value, SizeOf(value))
                     };
             }
         }
@@ -191,7 +206,7 @@ namespace Quokka.RTL
 
         protected void ThrowVCDException(Exception ex)
         {
-            throw new Exception($"Failed to save snapshot of {GetType().Name}.{(currentSnapshot?.Name ?? "null")}.{(currentMember?.Name ?? "null")}", ex);
+            throw new VCDSnapshotException($"Failed to save snapshot of {GetType().Name}.{(currentSnapshot?.Name ?? "null")}.{(currentMember?.Name ?? "null")}", ex);
         }
 
         public virtual void PopulateSnapshot(VCDSignalsSnapshot snapshot)
@@ -215,13 +230,20 @@ namespace Quokka.RTL
                 }
 
                 currentSnapshot = null;
-                foreach (var m in ModuleProps)
+                foreach (var m in ModuleProps.Where(m => RTLModuleHelper.IsField(m)))
                 {
+                    var value = m.GetValue(this);
                     currentMember = m;
-                    var module = (IRTLCombinationalModule)m.GetValue(this);
-                    var moduleScope = snapshot.Scope(m.Name);
 
-                    module.PopulateSnapshot(moduleScope);
+                    if (value is IRTLCombinationalModule module)
+                    {
+                        var moduleScope = snapshot.Scope(m.Name);
+
+                        module.PopulateSnapshot(moduleScope);
+                        continue;
+                    }
+
+                    // TODO: support for modules array
                 }
             }
             catch (VCDSnapshotException)

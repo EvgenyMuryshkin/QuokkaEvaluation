@@ -5,6 +5,7 @@ using Quokka.Public.Tools;
 using Quokka.RISCV.Integration.Client;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace QuSoC.Tests
 {
@@ -18,6 +19,11 @@ namespace QuSoC.Tests
                 "QuSoC",
                 "QuSoC",
                 "apps", app);
+
+        protected string VCDOutputPath([CallerMemberName] string testName = "")
+        {
+            return Path.Combine(PathTools.ProjectPath, "SimResults", $"{testName}.vcd");
+        }
 
         protected QuSoCModuleSimulator FromApp(string appName)
         {
