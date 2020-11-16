@@ -22,22 +22,22 @@ module StructsCombinationalModule_TopLevel (
 // [BEGIN USER PORTS]
 // [END USER PORTS]
 
-	input  [7: 0] In_Op1,
-	input  [7: 0] In_Op2,
-	output [7: 0] Op1,
-	output [7: 0] Sum,
-	output [7: 0] OutDirect_Op1,
-	output [7: 0] OutDirect_Op2,
-	output [7: 0] OutInternal_Op1,
-	output [7: 0] OutInternal_Op2,
-	output [7: 0] OutSwapped_Op1,
-	output [7: 0] OutSwapped_Op2,
-	output [7: 0] OutMath_Op1,
-	output [7: 0] OutMath_Op2,
-	output [7: 0] Default1_Op1,
-	output [7: 0] Default1_Op2,
-	output [7: 0] Default2_Op1,
-	output [7: 0] Default2_Op2
+	input wire  [7: 0] In_Op1,
+	input wire  [7: 0] In_Op2,
+	output wire [7: 0] Op1,
+	output wire [7: 0] Sum,
+	output wire [7: 0] OutDirect_Op1,
+	output wire [7: 0] OutDirect_Op2,
+	output wire [7: 0] OutInternal_Op1,
+	output wire [7: 0] OutInternal_Op2,
+	output wire [7: 0] OutSwapped_Op1,
+	output wire [7: 0] OutSwapped_Op2,
+	output wire [7: 0] OutMath_Op1,
+	output wire [7: 0] OutMath_Op2,
+	output wire [7: 0] Default1_Op1,
+	output wire [7: 0] Default1_Op2,
+	output wire [7: 0] Default2_Op1,
+	output wire [7: 0] Default2_Op2
     );
 
 // [BEGIN USER SIGNALS]

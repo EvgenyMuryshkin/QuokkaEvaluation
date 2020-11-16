@@ -22,13 +22,13 @@ module SDP_RF_RAMModule_TopLevel (
 // [BEGIN USER PORTS]
 // [END USER PORTS]
 
-	input  Clock,
-	input  Reset,
-	input  [7: 0] ReadAddress,
-	input  [7: 0] WriteAddress,
-	input  [7: 0] WriteData,
-	input  WE,
-	output [7: 0] Data
+	input wire  Clock,
+	input wire  Reset,
+	input wire  [7: 0] ReadAddress,
+	input wire  [7: 0] WriteAddress,
+	input wire  [7: 0] WriteData,
+	input wire  WE,
+	output wire [7: 0] Data
     );
 
 // [BEGIN USER SIGNALS]
@@ -43,10 +43,10 @@ wire  [7:0] Inputs_ReadAddress;
 wire  [7:0] Inputs_WriteAddress;
 wire  [7:0] Inputs_WriteData;
 wire  Inputs_WE;
-reg  [7:0] State_ReadData = 8'b00000000;
+reg  [7:0] State_ReadData;
 reg [7:0] State_Buff [0 : 255];
 initial
-begin
+begin : Init_State_Buff
 	integer i;
 	for (i = 0; i < 256; i = i + 1)
 		State_Buff[i] = 0;

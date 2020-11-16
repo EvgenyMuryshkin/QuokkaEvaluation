@@ -22,18 +22,18 @@ module CompositionModule_TopLevel_CompositionModule_Transmitter (
 // [BEGIN USER PORTS]
 // [END USER PORTS]
 
-	input  BoardSignals_Clock,
-	input  BoardSignals_Reset,
-	input  BoardSignals_Running,
-	input  BoardSignals_Starting,
-	input  BoardSignals_Started,
-	input  Trigger,
-	input  Ack,
-	input  [8: 1] Data,
-	output Bit,
-	output IsReady,
-	output IsTransmitting,
-	output IsTransmissionStarted
+	input wire  BoardSignals_Clock,
+	input wire  BoardSignals_Reset,
+	input wire  BoardSignals_Running,
+	input wire  BoardSignals_Starting,
+	input wire  BoardSignals_Started,
+	input wire  Trigger,
+	input wire  Ack,
+	input wire  [8: 1] Data,
+	output wire Bit,
+	output wire IsReady,
+	output wire IsTransmitting,
+	output wire IsTransmissionStarted
     );
 
 // [BEGIN USER SIGNALS]
@@ -61,9 +61,9 @@ wire  TransmitterModule_L11F99T126_Expr = 1'b1;
 wire  Inputs_Trigger;
 wire  Inputs_Ack;
 wire  [7:0] Inputs_Data;
-reg  [1:0] NextState_FSM = 2'b00;
-reg  [7:0] NextState_Data = 8'b00000000;
-reg  [7:0] NextState_Counter = 8'b00000000;
+reg  [1:0] NextState_FSM;
+reg  [7:0] NextState_Data;
+reg  [7:0] NextState_Counter;
 wire  [7:0] TransmitterModule_L13F9L40T10_TransmitterModule_L14F13L39T14_TransmitterModule_L30F21L32T22_TransmitterModule_L31F45T70_Cast;
 wire  TransmitterModule_L8F28T41_Index;
 reg  [1:0] State_FSM = 2'b00;

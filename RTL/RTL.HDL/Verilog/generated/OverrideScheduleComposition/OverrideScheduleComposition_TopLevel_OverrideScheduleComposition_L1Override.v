@@ -22,9 +22,9 @@ module OverrideScheduleComposition_TopLevel_OverrideScheduleComposition_L1Overri
 // [BEGIN USER PORTS]
 // [END USER PORTS]
 
-	input  InOverride,
-	input  [8: 1] InValue,
-	output [8: 1] OutValue
+	input wire  InOverride,
+	input wire  [8: 1] InValue,
+	output wire [8: 1] OutValue
     );
 
 // [BEGIN USER SIGNALS]
@@ -49,7 +49,7 @@ wire signed  [9:0] CombinationalOverridesBase_L14F61T77_CombinationalL1Override_
 wire signed  [9:0] CombinationalOverridesBase_L14F80T96_CombinationalL1Override_L10F9L12T10_CombinationalL1Override_L11F27T45_Expr;
 wire signed  [9:0] CombinationalOverridesBase_L14F80T96_CombinationalL1Override_L10F9L12T10_CombinationalL1Override_L11F27T45_Expr_1;
 wire signed  [9:0] CombinationalOverridesBase_L14F80T96_CombinationalL1Override_L10F9L12T10_CombinationalL1Override_L11F27T45_Expr_2;
-reg  [7:0] CombinationalOverridesBase_L14F41T96_Lookup = 8'b00000000;
+reg  [7:0] CombinationalOverridesBase_L14F41T96_Lookup;
 wire  CombinationalOverridesBase_L14F41T96_LookupMultiplexerAddress;
 wire  [7:0] CombinationalOverridesBase_L14F41T96_Lookup1;
 wire  [7:0] CombinationalOverridesBase_L14F41T96_Lookup2;

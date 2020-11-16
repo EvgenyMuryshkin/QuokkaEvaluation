@@ -22,12 +22,12 @@ module SignalsMuxModule_TopLevel (
 // [BEGIN USER PORTS]
 // [END USER PORTS]
 
-	input  [1: 0] Addr,
-	input  [7: 0] Sig0,
-	input  [7: 0] Sig1,
-	input  [7: 0] Sig2,
-	input  [7: 0] Sig3,
-	output [7: 0] Value
+	input wire  [1: 0] Addr,
+	input wire  [7: 0] Sig0,
+	input wire  [7: 0] Sig1,
+	input wire  [7: 0] Sig2,
+	input wire  [7: 0] Sig3,
+	output wire [7: 0] Value
     );
 
 // [BEGIN USER SIGNALS]

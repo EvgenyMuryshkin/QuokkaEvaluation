@@ -22,15 +22,15 @@ module TransmitterModule_TopLevel (
 // [BEGIN USER PORTS]
 // [END USER PORTS]
 
-	input  Clock,
-	input  Reset,
-	input  Trigger,
-	input  Ack,
-	input  [7: 0] Data,
-	output Bit,
-	output IsReady,
-	output IsTransmitting,
-	output IsTransmissionStarted
+	input wire  Clock,
+	input wire  Reset,
+	input wire  Trigger,
+	input wire  Ack,
+	input wire  [7: 0] Data,
+	output wire Bit,
+	output wire IsReady,
+	output wire IsTransmitting,
+	output wire IsTransmissionStarted
     );
 
 // [BEGIN USER SIGNALS]
@@ -58,9 +58,9 @@ wire  TransmitterModule_L11F99T126_Expr = 1'b1;
 wire  Inputs_Trigger;
 wire  Inputs_Ack;
 wire  [7:0] Inputs_Data;
-reg  [1:0] NextState_FSM = 2'b00;
-reg  [7:0] NextState_Data = 8'b00000000;
-reg  [7:0] NextState_Counter = 8'b00000000;
+reg  [1:0] NextState_FSM;
+reg  [7:0] NextState_Data;
+reg  [7:0] NextState_Counter;
 wire  [7:0] TransmitterModule_L13F9L40T10_TransmitterModule_L14F13L39T14_TransmitterModule_L30F21L32T22_TransmitterModule_L31F45T70_Cast;
 wire  TransmitterModule_L8F28T41_Index;
 reg  [1:0] State_FSM = 2'b00;

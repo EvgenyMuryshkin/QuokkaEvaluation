@@ -22,10 +22,10 @@ module TuplesModule_TopLevel (
 // [BEGIN USER PORTS]
 // [END USER PORTS]
 
-	input  Value1,
-	input  Value2,
-	output Same,
-	output Diff
+	input wire  Value1,
+	input wire  Value2,
+	output wire Same,
+	output wire Diff
     );
 
 // [BEGIN USER SIGNALS]
@@ -40,8 +40,8 @@ wire  Inputs_Value1;
 wire  Inputs_Value2;
 wire  Logic_Item1;
 wire  Logic_Item2;
-reg  TuplesModule_L16F13L21T14_same = 1'b0;
-reg  TuplesModule_L16F13L21T14_diff = 1'b0;
+reg  TuplesModule_L16F13L21T14_same;
+reg  TuplesModule_L16F13L21T14_diff;
 wire  TuplesModule_L16F13L21T14_TuplesModule_L17F28T58_Expr;
 wire signed  [1:0] TuplesModule_L16F13L21T14_TuplesModule_L17F28T58_ExprLhs;
 wire signed  [1:0] TuplesModule_L16F13L21T14_TuplesModule_L17F28T58_ExprRhs;

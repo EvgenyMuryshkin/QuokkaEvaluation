@@ -22,16 +22,16 @@ module CompositionModule_TopLevel_CompositionModule_Receiver (
 // [BEGIN USER PORTS]
 // [END USER PORTS]
 
-	input  BoardSignals_Clock,
-	input  BoardSignals_Reset,
-	input  BoardSignals_Running,
-	input  BoardSignals_Starting,
-	input  BoardSignals_Started,
-	input  IsValid,
-	input  Ack,
-	input  Bit,
-	output HasData,
-	output [8: 1] Data
+	input wire  BoardSignals_Clock,
+	input wire  BoardSignals_Reset,
+	input wire  BoardSignals_Running,
+	input wire  BoardSignals_Starting,
+	input wire  BoardSignals_Started,
+	input wire  IsValid,
+	input wire  Ack,
+	input wire  Bit,
+	output wire HasData,
+	output wire [8: 1] Data
     );
 
 // [BEGIN USER SIGNALS]
@@ -56,8 +56,8 @@ wire  [1:0] ReceiverModule_L8F46T71_Expr = 2'b10;
 wire  Inputs_IsValid;
 wire  Inputs_Ack;
 wire  Inputs_Bit;
-reg  [1:0] NextState_FSM = 2'b00;
-reg  [7:0] NextState_Data = 8'b00000000;
+reg  [1:0] NextState_FSM;
+reg  [7:0] NextState_Data;
 wire  [7:0] PartialData;
 wire  [7:0] ReceiverModule_L10F29T58_Cast;
 wire  [7:0] ReceiverModule_L13F9L41T10_ReceiverModule_L14F13L40T14_ReceiverModule_L25F21L27T22_ReceiverModule_L26F42T81_Cast;
@@ -82,7 +82,7 @@ wire signed  [2:0] ReceiverModule_L13F9L41T10_ReceiverModule_L14F13L40T14_Receiv
 wire  ReceiverModule_L8F32T71_Expr;
 wire signed  [2:0] ReceiverModule_L8F32T71_ExprLhs;
 wire signed  [2:0] ReceiverModule_L8F32T71_ExprRhs;
-reg  [7:0] ReceiverModule_L10F36T57_Lookup = 8'b00000000;
+reg  [7:0] ReceiverModule_L10F36T57_Lookup;
 wire  ReceiverModule_L10F36T57_LookupMultiplexerAddress;
 wire  [7:0] ReceiverModule_L10F36T57_Lookup1;
 wire  [7:0] ReceiverModule_L10F36T57_Lookup2;

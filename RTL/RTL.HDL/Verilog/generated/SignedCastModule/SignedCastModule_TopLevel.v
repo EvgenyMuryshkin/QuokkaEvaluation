@@ -22,12 +22,12 @@ module SignedCastModule_TopLevel (
 // [BEGIN USER PORTS]
 // [END USER PORTS]
 
-	input  signed [15: 0] ShortValue,
-	output [7: 0] ByteValue,
-	output signed [7: 0] SByteValue,
-	output [15: 0] UShortValue,
-	output signed [31: 0] IntValue,
-	output [31: 0] UIntValue
+	input wire  signed [15: 0] ShortValue,
+	output wire [7: 0] ByteValue,
+	output wire signed [7: 0] SByteValue,
+	output wire [15: 0] UShortValue,
+	output wire signed [31: 0] IntValue,
+	output wire [31: 0] UIntValue
     );
 
 // [BEGIN USER SIGNALS]

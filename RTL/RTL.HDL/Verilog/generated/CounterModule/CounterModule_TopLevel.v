@@ -22,10 +22,10 @@ module CounterModule_TopLevel (
 // [BEGIN USER PORTS]
 // [END USER PORTS]
 
-	input  Clock,
-	input  Reset,
-	input  Enabled,
-	output [7: 0] Value
+	input wire  Clock,
+	input wire  Reset,
+	input wire  Enabled,
+	output wire [7: 0] Value
     );
 
 // [BEGIN USER SIGNALS]
@@ -38,7 +38,7 @@ wire  true = 1'b1;
 wire  false = 1'b0;
 wire  CounterModule_L19F65T66_Expr = 1'b1;
 wire  Inputs_Enabled;
-reg  [7:0] NextState_Value = 8'b00000000;
+reg  [7:0] NextState_Value;
 wire  [7:0] NextValue;
 wire  [7:0] CounterModule_L19F27T81_Cast;
 reg  [7:0] State_Value = 8'b00000000;
@@ -46,7 +46,7 @@ wire  [7:0] State_ValueDefault = 8'b00000000;
 wire  [9:0] CounterModule_L19F51T66_Expr;
 wire signed  [9:0] CounterModule_L19F51T66_Expr_1;
 wire signed  [9:0] CounterModule_L19F51T66_Expr_2;
-reg  [7:0] CounterModule_L19F34T80_Lookup = 8'b00000000;
+reg  [7:0] CounterModule_L19F34T80_Lookup;
 wire  CounterModule_L19F34T80_LookupMultiplexerAddress;
 wire  [7:0] CounterModule_L19F34T80_Lookup1;
 wire  [7:0] CounterModule_L19F34T80_Lookup2;

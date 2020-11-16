@@ -11,7 +11,9 @@ namespace FPGA
     {
         public static long Factorial(int n)
         {
-            if (n == 0)
+            if (n < 0)
+                return 0;
+            if (n < 2)
                 return 1;
 
             long r = n;
@@ -25,15 +27,9 @@ namespace FPGA
 
         public static void Fibonacci(uint n, out ulong result)
         {
-            if(n == 0 )
+            if (n < 2)
             {
-                result = 0;
-                return;
-            }
-
-            if( n == 1 )
-            {
-                result = 1;
+                result = n;
                 return;
             }
 

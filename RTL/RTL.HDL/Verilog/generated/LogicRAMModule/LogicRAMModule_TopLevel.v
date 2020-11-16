@@ -22,10 +22,10 @@ module LogicRAMModule_TopLevel (
 // [BEGIN USER PORTS]
 // [END USER PORTS]
 
-	input  Clock,
-	input  Reset,
-	input  [7: 0] Value,
-	output [7: 0] Avg
+	input wire  Clock,
+	input wire  Reset,
+	input wire  [7: 0] Value,
+	output wire [7: 0] Avg
     );
 
 // [BEGIN USER SIGNALS]
@@ -43,7 +43,7 @@ wire  [1:0] LogicRAMModule_L25F79T80_Expr = 2'b10;
 wire  [1:0] LogicRAMModule_L25F95T96_Expr = 2'b11;
 wire  [1:0] LogicRAMModule_L25F102T103_Expr = 2'b10;
 wire  [7:0] Inputs_Value;
-reg  [1:0] NextState_Index = 2'b00;
+reg  [1:0] NextState_Index;
 wire  [1:0] LogicRAMModule_L28F9L31T10_LogicRAMModule_L30F31T54_Index;
 reg  [7:0] State_BuffDefault = 8'b00000000;
 wire  [7:0] LogicRAMModule_L25F36T49_Index;
@@ -70,14 +70,14 @@ wire signed  [9:0] LogicRAMModule_L25F36T65_Expr_2;
 integer State_Buff_Iterator;
 reg [7:0] State_Buff [0 : 3];
 initial
-begin
+begin : Init_State_Buff
 	for (State_Buff_Iterator = 0; State_Buff_Iterator < 4; State_Buff_Iterator = State_Buff_Iterator + 1)
 		State_Buff[State_Buff_Iterator] = 0;
 end
 integer NextState_Buff_Iterator;
 reg [7:0] NextState_Buff [0 : 3];
 initial
-begin
+begin : Init_NextState_Buff
 	for (NextState_Buff_Iterator = 0; NextState_Buff_Iterator < 4; NextState_Buff_Iterator = NextState_Buff_Iterator + 1)
 		NextState_Buff[NextState_Buff_Iterator] = 0;
 end

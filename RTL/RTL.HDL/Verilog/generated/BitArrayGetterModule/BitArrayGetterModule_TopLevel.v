@@ -22,8 +22,8 @@ module BitArrayGetterModule_TopLevel (
 // [BEGIN USER PORTS]
 // [END USER PORTS]
 
-	input  [7: 0] Value,
-	output [7: 0] Getter
+	input wire  [7: 0] Value,
+	output wire [7: 0] Getter
     );
 
 // [BEGIN USER SIGNALS]
@@ -39,7 +39,7 @@ wire  [5:0] BitArrayGetterModule_L16F13L25T14_BitArrayGetterModule_L19F36T38_Exp
 wire  [6:0] BitArrayGetterModule_L16F13L25T14_BitArrayGetterModule_L21F41T44_Expr = 7'b1100100;
 wire  [7:0] Inputs_Value;
 wire  [7:0] BitArrayGetterModule_L16F13L25T14_BitArrayGetterModule_L17F30T60_Source;
-reg  [7:0] BitArrayGetterModule_L16F13L25T14_result = 8'b00000000;
+reg  [7:0] BitArrayGetterModule_L16F13L25T14_result;
 reg  [7:0] BitArrayGetterModule_L16F13L25T14_BitArrayGetterModule_L20F30T38_Cast = 8'b00101010;
 wire  [7:0] BitArrayGetterModule_L16F13L25T14_BitArrayGetterModule_L22F30T59_Source;
 wire  [7:0] BitArrayGetterModule_L16F13L25T14_BitArrayGetterModule_L22F30T70_Resize;

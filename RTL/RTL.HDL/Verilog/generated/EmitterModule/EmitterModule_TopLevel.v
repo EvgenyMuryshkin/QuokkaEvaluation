@@ -22,12 +22,12 @@ module EmitterModule_TopLevel (
 // [BEGIN USER PORTS]
 // [END USER PORTS]
 
-	input  Clock,
-	input  Reset,
-	input  IsEnabled,
-	input  Ack,
-	output [7: 0] Data,
-	output HasData
+	input wire  Clock,
+	input wire  Reset,
+	input wire  IsEnabled,
+	input wire  Ack,
+	output wire [7: 0] Data,
+	output wire HasData
     );
 
 // [BEGIN USER SIGNALS]
@@ -41,7 +41,7 @@ wire  false = 1'b0;
 wire  EmitterModule_L22F9L25T10_EmitterModule_L24F54T55_Expr = 1'b1;
 wire  Inputs_IsEnabled;
 wire  Inputs_Ack;
-reg  [7:0] NextState_Data = 8'b00000000;
+reg  [7:0] NextState_Data;
 wire  [7:0] EmitterModule_L22F9L25T10_EmitterModule_L24F34T56_Cast;
 reg  [7:0] State_Data = 8'b00000000;
 wire  [7:0] State_DataDefault = 8'b00000000;

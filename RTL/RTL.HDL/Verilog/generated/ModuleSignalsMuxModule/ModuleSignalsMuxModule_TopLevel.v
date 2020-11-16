@@ -22,11 +22,11 @@ module ModuleSignalsMuxModule_TopLevel (
 // [BEGIN USER PORTS]
 // [END USER PORTS]
 
-	input  [1: 0] Addr,
-	input  I1,
-	input  I2,
-	output O,
-	output [2: 0] CombinedO
+	input wire  [1: 0] Addr,
+	input wire  I1,
+	input wire  I2,
+	output wire O,
+	output wire [2: 0] CombinedO
     );
 
 // [BEGIN USER SIGNALS]
@@ -59,7 +59,7 @@ wire  OrGateOOrGate_OHardLink;
 wire  XorGateI1XorGate_I1HardLink;
 wire  XorGateI2XorGate_I2HardLink;
 wire  XorGateOXorGate_OHardLink;
-reg  ModuleSignalsMuxModule_L27F26T46_Mux = 1'b0;
+reg  ModuleSignalsMuxModule_L27F26T46_Mux;
 wire  [1:0] ModuleSignalsMuxModule_L27F26T46_MuxMultiplexerAddress;
 wire  ModuleSignalsMuxModule_L27F26T46_Mux1;
 wire  ModuleSignalsMuxModule_L27F26T46_Mux2;

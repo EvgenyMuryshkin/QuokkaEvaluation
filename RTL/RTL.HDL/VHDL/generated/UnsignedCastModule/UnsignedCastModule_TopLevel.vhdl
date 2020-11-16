@@ -47,11 +47,11 @@ constant Zero : std_logic := '0';
 constant One : std_logic := '1';
 constant true : std_logic := '1';
 constant false : std_logic := '0';
-signal Inputs_UShortValue : unsigned(15 downto 0)  := "0000000000000000";
-signal UnsignedCastModule_L13F34T58_Cast : unsigned(7 downto 0)  := "00000000";
-signal UnsignedCastModule_L14F36T61_Cast : signed(7 downto 0)  := "00000000";
-signal UnsignedCastModule_L15F36T61_Cast : signed(15 downto 0)  := "0000000000000000";
-signal UnsignedCastModule_L17F34T58_Cast : unsigned(31 downto 0)  := "00000000000000000000000000000000";
+signal Inputs_UShortValue : unsigned(15 downto 0) := (others => '0');
+signal UnsignedCastModule_L13F34T58_Cast : unsigned(7 downto 0) := (others => '0');
+signal UnsignedCastModule_L14F36T61_Cast : signed(7 downto 0) := (others => '0');
+signal UnsignedCastModule_L15F36T61_Cast : signed(15 downto 0) := (others => '0');
+signal UnsignedCastModule_L17F34T58_Cast : unsigned(31 downto 0) := (others => '0');
 begin
 process(Inputs_UShortValue, UnsignedCastModule_L13F34T58_Cast, UnsignedCastModule_L14F36T61_Cast, UnsignedCastModule_L15F36T61_Cast, UnsignedCastModule_L17F34T58_Cast, UShortValue)
 begin

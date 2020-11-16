@@ -22,12 +22,12 @@ module UnsignedCastModule_TopLevel (
 // [BEGIN USER PORTS]
 // [END USER PORTS]
 
-	input  [15: 0] UShortValue,
-	output [7: 0] ByteValue,
-	output signed [7: 0] SByteValue,
-	output signed [15: 0] ShortValue,
-	output signed [31: 0] IntValue,
-	output [31: 0] UIntValue
+	input wire  [15: 0] UShortValue,
+	output wire [7: 0] ByteValue,
+	output wire signed [7: 0] SByteValue,
+	output wire signed [15: 0] ShortValue,
+	output wire signed [31: 0] IntValue,
+	output wire [31: 0] UIntValue
     );
 
 // [BEGIN USER SIGNALS]

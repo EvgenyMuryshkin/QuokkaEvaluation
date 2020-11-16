@@ -22,11 +22,11 @@ module FullAdderModule_TopLevel (
 // [BEGIN USER PORTS]
 // [END USER PORTS]
 
-	input  A,
-	input  B,
-	input  CIn,
-	output O,
-	output COut
+	input wire  A,
+	input wire  B,
+	input wire  CIn,
+	output wire O,
+	output wire COut
     );
 
 // [BEGIN USER SIGNALS]

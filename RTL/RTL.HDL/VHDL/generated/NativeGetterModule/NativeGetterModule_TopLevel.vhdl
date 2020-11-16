@@ -45,7 +45,7 @@ constant true : std_logic := '1';
 constant false : std_logic := '0';
 constant BitArrayGetterModule_L34F13L41T14_BitArrayGetterModule_L35F30T43_Expr : unsigned(7 downto 0)  := "11111111";
 constant BitArrayGetterModule_L34F13L41T14_BitArrayGetterModule_L37F36T39_Expr : unsigned(6 downto 0)  := "1100100";
-signal Inputs_Value : unsigned(7 downto 0)  := "00000000";
+signal Inputs_Value : unsigned(7 downto 0) := (others => '0');
 signal BitArrayGetterModule_L34F13L41T14_result : unsigned(7 downto 0)  := "11111111";
 signal BitArrayGetterModule_L34F13L41T14_BitArrayGetterModule_L37F21T39_Expr : std_logic := '0';
 signal BitArrayGetterModule_L34F13L41T14_BitArrayGetterModule_L37F21T39_ExprLhs : signed(8 downto 0)  := "000000000";

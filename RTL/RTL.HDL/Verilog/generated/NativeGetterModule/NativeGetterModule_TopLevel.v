@@ -22,8 +22,8 @@ module NativeGetterModule_TopLevel (
 // [BEGIN USER PORTS]
 // [END USER PORTS]
 
-	input  [7: 0] Value,
-	output [7: 0] Getter
+	input wire  [7: 0] Value,
+	output wire [7: 0] Getter
     );
 
 // [BEGIN USER SIGNALS]
@@ -37,7 +37,7 @@ wire  false = 1'b0;
 wire  [7:0] BitArrayGetterModule_L34F13L41T14_BitArrayGetterModule_L35F30T43_Expr = 8'b11111111;
 wire  [6:0] BitArrayGetterModule_L34F13L41T14_BitArrayGetterModule_L37F36T39_Expr = 7'b1100100;
 wire  [7:0] Inputs_Value;
-reg  [7:0] BitArrayGetterModule_L34F13L41T14_result = 8'b11111111;
+reg  [7:0] BitArrayGetterModule_L34F13L41T14_result;
 wire  BitArrayGetterModule_L34F13L41T14_BitArrayGetterModule_L37F21T39_Expr;
 wire signed  [8:0] BitArrayGetterModule_L34F13L41T14_BitArrayGetterModule_L37F21T39_ExprLhs;
 wire signed  [8:0] BitArrayGetterModule_L34F13L41T14_BitArrayGetterModule_L37F21T39_ExprRhs;

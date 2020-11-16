@@ -22,19 +22,19 @@ module BitArrayModule_TopLevel (
 // [BEGIN USER PORTS]
 // [END USER PORTS]
 
-	input  [7: 0] Value,
-	input  [2: 0] Bit,
-	output ValueBit,
-	output [7: 0] Direct,
-	output [7: 0] ReversedByCall,
-	output [3: 0] High,
-	output [3: 0] Low,
-	output [7: 0] Reversed,
-	output [3: 0] ReversedHigh,
-	output [3: 0] ReversedLow,
-	output [3: 0] Picks,
-	output [3: 0] FromBits1,
-	output [3: 0] FromBits2
+	input wire  [7: 0] Value,
+	input wire  [2: 0] Bit,
+	output wire ValueBit,
+	output wire [7: 0] Direct,
+	output wire [7: 0] ReversedByCall,
+	output wire [3: 0] High,
+	output wire [3: 0] Low,
+	output wire [7: 0] Reversed,
+	output wire [3: 0] ReversedHigh,
+	output wire [3: 0] ReversedLow,
+	output wire [3: 0] Picks,
+	output wire [3: 0] FromBits1,
+	output wire [3: 0] FromBits2
     );
 
 // [BEGIN USER SIGNALS]

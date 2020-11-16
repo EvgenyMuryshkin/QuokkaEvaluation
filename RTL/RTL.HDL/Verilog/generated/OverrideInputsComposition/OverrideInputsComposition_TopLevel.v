@@ -22,18 +22,18 @@ module OverrideInputsComposition_TopLevel (
 // [BEGIN USER PORTS]
 // [END USER PORTS]
 
-	input  InOverride,
-	input  [7: 0] InValue,
-	output [7: 0] NoOverrideValue,
-	output [7: 0] AutoOverrideValue,
-	output [7: 0] L1Value,
-	output [7: 0] L2Value,
-	output [7: 0] L3Value,
-	output [7: 0] GetValue,
-	output RawInputs_InOverride,
-	output [7: 0] RawInputs_InValue,
-	output OverrideInputs_InOverride,
-	output [7: 0] OverrideInputs_InValue
+	input wire  InOverride,
+	input wire  [7: 0] InValue,
+	output wire [7: 0] NoOverrideValue,
+	output wire [7: 0] AutoOverrideValue,
+	output wire [7: 0] L1Value,
+	output wire [7: 0] L2Value,
+	output wire [7: 0] L3Value,
+	output wire [7: 0] GetValue,
+	output wire RawInputs_InOverride,
+	output wire [7: 0] RawInputs_InValue,
+	output wire OverrideInputs_InOverride,
+	output wire [7: 0] OverrideInputs_InValue
     );
 
 // [BEGIN USER SIGNALS]

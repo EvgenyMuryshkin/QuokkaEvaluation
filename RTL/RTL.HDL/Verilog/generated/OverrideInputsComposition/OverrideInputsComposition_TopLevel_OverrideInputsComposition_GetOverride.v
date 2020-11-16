@@ -22,9 +22,9 @@ module OverrideInputsComposition_TopLevel_OverrideInputsComposition_GetOverride 
 // [BEGIN USER PORTS]
 // [END USER PORTS]
 
-	input  InOverride,
-	input  [8: 1] InValue,
-	output [8: 1] OutValue
+	input wire  InOverride,
+	input wire  [8: 1] InValue,
+	output wire [8: 1] OutValue
     );
 
 // [BEGIN USER SIGNALS]
@@ -40,7 +40,7 @@ wire  [1:0] CombinationalGetValueOverride_L12F13L19T14_CombinationalGetValueOver
 wire  Inputs_InOverride;
 wire  [7:0] Inputs_InValue;
 wire  [7:0] InternalOffset;
-reg  [7:0] CombinationalGetValueOverride_L12F13L19T14_result = 8'b00000000;
+reg  [7:0] CombinationalGetValueOverride_L12F13L19T14_result;
 wire  [7:0] CombinationalGetValueOverride_L12F13L19T14_CombinationalOverridesBase_L14F61T77_CombinationalOverridesBase_L24F9L26T10_CombinationalOverridesBase_L25F20T50_CombinationalOverridesBase_L34F9L36T10_CombinationalOverridesBase_L35F20T50_Cast;
 wire  [7:0] CombinationalGetValueOverride_L12F13L19T14_CombinationalOverridesBase_L14F80T96_CombinationalOverridesBase_L19F9L21T10_CombinationalOverridesBase_L20F20T50_CombinationalOverridesBase_L29F9L31T10_CombinationalOverridesBase_L30F20T50_Cast;
 wire  [7:0] CombinationalGetValueOverride_L12F13L19T14_CombinationalGetValueOverride_L16F30T56_Cast;
@@ -53,7 +53,7 @@ wire signed  [9:0] CombinationalGetValueOverride_L12F13L19T14_CombinationalOverr
 wire  [9:0] CombinationalGetValueOverride_L12F13L19T14_CombinationalGetValueOverride_L16F37T55_Expr;
 wire signed  [9:0] CombinationalGetValueOverride_L12F13L19T14_CombinationalGetValueOverride_L16F37T55_Expr_1;
 wire signed  [9:0] CombinationalGetValueOverride_L12F13L19T14_CombinationalGetValueOverride_L16F37T55_Expr_2;
-reg  [7:0] CombinationalGetValueOverride_L12F13L19T14_CombinationalOverridesBase_L14F41T96_Lookup = 8'b00000000;
+reg  [7:0] CombinationalGetValueOverride_L12F13L19T14_CombinationalOverridesBase_L14F41T96_Lookup;
 wire  CombinationalGetValueOverride_L12F13L19T14_CombinationalOverridesBase_L14F41T96_LookupMultiplexerAddress;
 wire  [7:0] CombinationalGetValueOverride_L12F13L19T14_CombinationalOverridesBase_L14F41T96_Lookup1;
 wire  [7:0] CombinationalGetValueOverride_L12F13L19T14_CombinationalOverridesBase_L14F41T96_Lookup2;

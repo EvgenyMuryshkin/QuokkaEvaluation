@@ -22,11 +22,11 @@ module ShifterModule_TopLevel (
 // [BEGIN USER PORTS]
 // [END USER PORTS]
 
-	input  [7: 0] Value,
-	input  [2: 0] ShiftBy,
-	output [7: 0] SHLL,
-	output [7: 0] SHRL,
-	output signed [7: 0] SHRA
+	input wire  [7: 0] Value,
+	input wire  [2: 0] ShiftBy,
+	output wire [7: 0] SHLL,
+	output wire [7: 0] SHRL,
+	output wire signed [7: 0] SHRA
     );
 
 // [BEGIN USER SIGNALS]

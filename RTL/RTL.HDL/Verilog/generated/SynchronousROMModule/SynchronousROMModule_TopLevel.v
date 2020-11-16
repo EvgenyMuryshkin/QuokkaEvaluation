@@ -22,12 +22,12 @@ module SynchronousROMModule_TopLevel (
 // [BEGIN USER PORTS]
 // [END USER PORTS]
 
-	input  Clock,
-	input  Reset,
-	input  [7: 0] Addr1,
-	input  [7: 0] Addr2,
-	output [7: 0] Data1,
-	output [7: 0] Data2
+	input wire  Clock,
+	input wire  Reset,
+	input wire  [7: 0] Addr1,
+	input wire  [7: 0] Addr2,
+	output wire [7: 0] Data1,
+	output wire [7: 0] Data2
     );
 
 // [BEGIN USER SIGNALS]
@@ -44,7 +44,7 @@ reg  [7:0] State_Data1 = 8'b00000000;
 reg  [7:0] State_Data2 = 8'b00000000;
 reg [7:0] State_Buff [0 : 255];
 initial
-begin
+begin : Init_State_Buff
 	$readmemh("SynchronousROMModule_TopLevel_State_Buff.hex", State_Buff);
 end
 always @(posedge Clock)

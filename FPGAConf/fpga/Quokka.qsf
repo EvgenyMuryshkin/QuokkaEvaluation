@@ -88,8 +88,6 @@ set_location_assignment PIN_141 -to AggregatorservoHandler0_servoOutputPin
 set_location_assignment PIN_138 -to AggregatorservoHandler1_servoOutputPin
 set_location_assignment PIN_137 -to AggregatorservoHandler2_servoOutputPin
 set_location_assignment PIN_127 -to AggregatorservoHandler3_servoOutputPin
-set_global_assignment -name TIMEQUEST_MULTICORNER_ANALYSIS ON
-set_global_assignment -name TIMEQUEST_DO_CCPP_REMOVAL ON
 set_global_assignment -name USE_CONFIGURATION_DEVICE ON
 set_global_assignment -name CYCLONEIII_CONFIGURATION_DEVICE EPCS4
 set_global_assignment -name ON_CHIP_BITSTREAM_DECOMPRESSION OFF

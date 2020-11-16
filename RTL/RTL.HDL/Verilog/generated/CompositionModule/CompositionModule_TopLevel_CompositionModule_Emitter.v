@@ -22,15 +22,15 @@ module CompositionModule_TopLevel_CompositionModule_Emitter (
 // [BEGIN USER PORTS]
 // [END USER PORTS]
 
-	input  BoardSignals_Clock,
-	input  BoardSignals_Reset,
-	input  BoardSignals_Running,
-	input  BoardSignals_Starting,
-	input  BoardSignals_Started,
-	input  IsEnabled,
-	input  Ack,
-	output [8: 1] Data,
-	output HasData
+	input wire  BoardSignals_Clock,
+	input wire  BoardSignals_Reset,
+	input wire  BoardSignals_Running,
+	input wire  BoardSignals_Starting,
+	input wire  BoardSignals_Started,
+	input wire  IsEnabled,
+	input wire  Ack,
+	output wire [8: 1] Data,
+	output wire HasData
     );
 
 // [BEGIN USER SIGNALS]
@@ -44,7 +44,7 @@ wire  false = 1'b0;
 wire  EmitterModule_L22F9L25T10_EmitterModule_L24F54T55_Expr = 1'b1;
 wire  Inputs_IsEnabled;
 wire  Inputs_Ack;
-reg  [7:0] NextState_Data = 8'b00000000;
+reg  [7:0] NextState_Data;
 wire  [7:0] EmitterModule_L22F9L25T10_EmitterModule_L24F34T56_Cast;
 reg  [7:0] State_Data = 8'b00000000;
 wire  [7:0] State_DataDefault = 8'b00000000;

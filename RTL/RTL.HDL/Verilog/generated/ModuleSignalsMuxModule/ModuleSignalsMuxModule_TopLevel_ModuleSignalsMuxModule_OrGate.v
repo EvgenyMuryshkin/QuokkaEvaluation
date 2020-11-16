@@ -22,9 +22,9 @@ module ModuleSignalsMuxModule_TopLevel_ModuleSignalsMuxModule_OrGate (
 // [BEGIN USER PORTS]
 // [END USER PORTS]
 
-	input  I1,
-	input  I2,
-	output O
+	input wire  I1,
+	input wire  I2,
+	output wire O
     );
 
 // [BEGIN USER SIGNALS]

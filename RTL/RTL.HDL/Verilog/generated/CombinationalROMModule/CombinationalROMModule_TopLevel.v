@@ -22,10 +22,10 @@ module CombinationalROMModule_TopLevel (
 // [BEGIN USER PORTS]
 // [END USER PORTS]
 
-	input  [7: 0] ReadAddress1,
-	input  [7: 0] ReadAddress2,
-	output [7: 0] Value1,
-	output [7: 0] Value2
+	input wire  [7: 0] ReadAddress1,
+	input wire  [7: 0] ReadAddress2,
+	output wire [7: 0] Value1,
+	output wire [7: 0] Value2
     );
 
 // [BEGIN USER SIGNALS]
@@ -42,7 +42,7 @@ wire  [7:0] CombinationalROMModule_L22F31T56_Index;
 wire  [7:0] CombinationalROMModule_L23F31T56_Index;
 reg [7:0] buff [0 : 255];
 initial
-begin
+begin : Init_buff
 	$readmemh("CombinationalROMModule_TopLevel_buff.hex", buff);
 end
 assign Inputs_ReadAddress1 = ReadAddress1;

@@ -22,14 +22,14 @@ module LoopModule_TopLevel (
 // [BEGIN USER PORTS]
 // [END USER PORTS]
 
-	input  [7: 0] InData,
-	output OutOr,
-	output OutAnd,
-	output OutXor,
-	output [7: 0] Encode,
-	output [7: 0] EncodeInv,
-	output [7: 0] OutTupleAddress,
-	output OutTupleIsValid
+	input wire  [7: 0] InData,
+	output wire OutOr,
+	output wire OutAnd,
+	output wire OutXor,
+	output wire [7: 0] Encode,
+	output wire [7: 0] EncodeInv,
+	output wire [7: 0] OutTupleAddress,
+	output wire OutTupleIsValid
     );
 
 // [BEGIN USER SIGNALS]
@@ -54,20 +54,20 @@ wire  [3:0] LoopModule_L70F13L79T14_Inputs_InData_Size = 4'b1000;
 wire  [7:0] Inputs_InData;
 wire  [7:0] Tuple_Item1;
 wire  Tuple_Item2;
-reg  LoopModule_L85F13L96T14_isValid = 1'b0;
-reg  [7:0] LoopModule_L85F13L96T14_result = 8'b00000000;
+reg  LoopModule_L85F13L96T14_isValid;
+reg  [7:0] LoopModule_L85F13L96T14_result;
 integer LoopModule_L85F13L96T14_idx;
 wire  LoopModule_L16F13L23T14_LoopModule_L17F31T47_Index;
-reg  LoopModule_L16F13L23T14_result = 1'b0;
+reg  LoopModule_L16F13L23T14_result;
 integer LoopModule_L16F13L23T14_idx;
-reg  LoopModule_L29F13L36T14_result = 1'b1;
+reg  LoopModule_L29F13L36T14_result;
 integer LoopModule_L29F13L36T14_idx;
 wire  LoopModule_L42F13L49T14_LoopModule_L43F31T47_Index;
-reg  LoopModule_L42F13L49T14_result = 1'b0;
+reg  LoopModule_L42F13L49T14_result;
 integer LoopModule_L42F13L49T14_idx;
-reg  [7:0] LoopModule_L55F13L64T14_result = 8'b00000000;
+reg  [7:0] LoopModule_L55F13L64T14_result;
 integer LoopModule_L55F13L64T14_idx;
-reg signed  [31:0] LoopModule_L70F13L79T14_result = 32'b00000000000000000000000000000000;
+reg signed  [31:0] LoopModule_L70F13L79T14_result;
 integer LoopModule_L70F13L79T14_idx;
 wire  [7:0] LoopModule_L70F13L79T14_LoopModule_L78F24T36_Cast;
 always @*

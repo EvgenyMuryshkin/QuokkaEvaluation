@@ -22,20 +22,20 @@ module LogicRAMIndexingModule_TopLevel (
 // [BEGIN USER PORTS]
 // [END USER PORTS]
 
-	input  Clock,
-	input  Reset,
-	input  WE,
-	input  [1: 0] WriteAddr,
-	input  [7: 0] WriteData,
-	input  [1: 0] ReadAddr,
-	input  [7: 0] OpData,
-	output [7: 0] MemLhsRhs,
-	output [7: 0] MathMemLhs,
-	output [7: 0] MathMemRhs,
-	output [7: 0] LogicMemLhs,
-	output [7: 0] LogicMemRhs,
-	output CmpMemLhs,
-	output CmpMemRhs
+	input wire  Clock,
+	input wire  Reset,
+	input wire  WE,
+	input wire  [1: 0] WriteAddr,
+	input wire  [7: 0] WriteData,
+	input wire  [1: 0] ReadAddr,
+	input wire  [7: 0] OpData,
+	output wire [7: 0] MemLhsRhs,
+	output wire [7: 0] MathMemLhs,
+	output wire [7: 0] MathMemRhs,
+	output wire [7: 0] LogicMemLhs,
+	output wire [7: 0] LogicMemRhs,
+	output wire CmpMemLhs,
+	output wire CmpMemRhs
     );
 
 // [BEGIN USER SIGNALS]
@@ -90,14 +90,14 @@ wire signed  [8:0] LogicRAMIndexingModule_L34F34T77_ExprRhs;
 integer State_Buff_Iterator;
 reg [7:0] State_Buff [0 : 3];
 initial
-begin
+begin : Init_State_Buff
 	for (State_Buff_Iterator = 0; State_Buff_Iterator < 4; State_Buff_Iterator = State_Buff_Iterator + 1)
 		State_Buff[State_Buff_Iterator] = 0;
 end
 integer NextState_Buff_Iterator;
 reg [7:0] NextState_Buff [0 : 3];
 initial
-begin
+begin : Init_NextState_Buff
 	for (NextState_Buff_Iterator = 0; NextState_Buff_Iterator < 4; NextState_Buff_Iterator = NextState_Buff_Iterator + 1)
 		NextState_Buff[NextState_Buff_Iterator] = 0;
 end

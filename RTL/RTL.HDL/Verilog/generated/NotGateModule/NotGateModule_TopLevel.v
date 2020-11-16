@@ -22,8 +22,8 @@ module NotGateModule_TopLevel (
 // [BEGIN USER PORTS]
 // [END USER PORTS]
 
-	input  Input,
-	output Output
+	input wire  Input,
+	output wire Output
     );
 
 // [BEGIN USER SIGNALS]

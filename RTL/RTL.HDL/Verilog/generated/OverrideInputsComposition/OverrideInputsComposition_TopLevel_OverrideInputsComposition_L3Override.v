@@ -22,9 +22,9 @@ module OverrideInputsComposition_TopLevel_OverrideInputsComposition_L3Override (
 // [BEGIN USER PORTS]
 // [END USER PORTS]
 
-	input  InOverride,
-	input  [8: 1] InValue,
-	output [8: 1] OutValue
+	input wire  InOverride,
+	input wire  [8: 1] InValue,
+	output wire [8: 1] OutValue
     );
 
 // [BEGIN USER SIGNALS]
@@ -48,8 +48,8 @@ wire signed  [9:0] CombinationalOverridesBase_L14F61T77_CombinationalOverridesBa
 wire signed  [9:0] CombinationalOverridesBase_L14F80T96_CombinationalOverridesBase_L19F9L21T10_CombinationalOverridesBase_L20F20T50_CombinationalOverridesBase_L29F9L31T10_CombinationalOverridesBase_L30F27T49_Expr;
 wire signed  [9:0] CombinationalOverridesBase_L14F80T96_CombinationalOverridesBase_L19F9L21T10_CombinationalOverridesBase_L20F20T50_CombinationalOverridesBase_L29F9L31T10_CombinationalOverridesBase_L30F27T49_Expr_1;
 wire signed  [9:0] CombinationalOverridesBase_L14F80T96_CombinationalOverridesBase_L19F9L21T10_CombinationalOverridesBase_L20F20T50_CombinationalOverridesBase_L29F9L31T10_CombinationalOverridesBase_L30F27T49_Expr_2;
-reg  [7:0] CombinationalL3Override_L9F51T100_Lookup = 8'b00000000;
-reg  [7:0] CombinationalOverridesBase_L14F41T96_Lookup = 8'b00000000;
+reg  [7:0] CombinationalL3Override_L9F51T100_Lookup;
+reg  [7:0] CombinationalOverridesBase_L14F41T96_Lookup;
 wire  CombinationalL3Override_L9F51T100_LookupMultiplexerAddress;
 wire  [7:0] CombinationalL3Override_L9F51T100_Lookup1;
 wire  [7:0] CombinationalL3Override_L9F51T100_Lookup2;

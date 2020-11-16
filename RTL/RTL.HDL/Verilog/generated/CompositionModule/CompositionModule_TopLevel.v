@@ -22,11 +22,11 @@ module CompositionModule_TopLevel (
 // [BEGIN USER PORTS]
 // [END USER PORTS]
 
-	input  Clock,
-	input  Reset,
-	input  IsEnabled,
-	output HasData,
-	output [7: 0] Data
+	input wire  Clock,
+	input wire  Reset,
+	input wire  IsEnabled,
+	output wire HasData,
+	output wire [7: 0] Data
     );
 
 // [BEGIN USER SIGNALS]
