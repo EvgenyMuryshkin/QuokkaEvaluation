@@ -21,7 +21,8 @@ namespace ConfDevice
             FPGA.OutputSignal<bool> TXD,
 
             // Servo
-            FPGA.OutputSignal<bool> Servo
+            FPGA.OutputSignal<bool> Servo,
+            FPGA.OutputSignal<bool> ServoInf
             )
         {
             QuokkaBoard.OutputBank(Bank1);
@@ -33,8 +34,13 @@ namespace ConfDevice
             byte servoValue = 90;
             bool internalServo = false;
             FPGA.Config.Link(internalServo, Servo);
-
             MG996R.Continuous(servoValue, internalServo);
+
+            byte servoInfValue = 0;
+            bool internalInfServo = false;
+            FPGA.Config.Link(internalInfServo, ServoInf);
+            MG996R.Continuous(servoInfValue, internalInfServo);
+
 
             Sequential servoHandler = () =>
             {
@@ -50,8 +56,19 @@ namespace ConfDevice
                     }
                 }
             };
-
             FPGA.Config.OnStartup(servoHandler);
+
+            Sequential servoInfHandler = () =>
+            {
+                while (true)
+                {
+                    servoInfValue = 0;
+                    FPGA.Runtime.Delay(TimeSpan.FromMilliseconds(1000));
+                    servoInfValue = 90;
+                    FPGA.Runtime.Delay(TimeSpan.FromMilliseconds(1000));
+                }
+            };
+            FPGA.Config.OnStartup(servoInfHandler);
         }
     }
 }

@@ -297,3 +297,6 @@ __pycache__/
 /QRV32/QRV32.HDL/db/**
 /QuSoC/QuSoC.HDL/db/**
 /AES/AES.HDL/db/**
+/FPGAConf/arty/servo.runs/**
+/FPGAConf/arty/servo.cache/**
+/FPGAConf/arty/servo.hw/**
