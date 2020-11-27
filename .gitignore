@@ -300,3 +300,6 @@ __pycache__/
 /FPGAConf/arty/servo.runs/**
 /FPGAConf/arty/servo.cache/**
 /FPGAConf/arty/servo.hw/**
+/FPGAConf/artyA35/artyA35.cache/**
+/FPGAConf/artyA35/artyA35.runs/**
+/FPGAConf/artyA35/artyA35.hw/**
