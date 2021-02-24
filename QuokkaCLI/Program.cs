@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.InteropServices;
 using Quokka.Core.Bootstrap;
 using Quokka.RTL;
 
@@ -9,9 +10,11 @@ namespace QuokkaCLI
     {
         static void Main(string[] args)
         {
-            Console.WriteLine($"Running from {Directory.GetCurrentDirectory()}");
+            Console.WriteLine($"Environment: {RuntimeInformation.OSDescription}, {RuntimeInformation.OSArchitecture}, {RuntimeInformation.FrameworkDescription}, {RuntimeInformation.ProcessArchitecture}");
+            Console.WriteLine($"Current location: {Directory.GetCurrentDirectory()}");
             Console.WriteLine($"Quokka.FPGA version: {typeof(QuokkaRunner).Assembly.GetName().Version}");
             Console.WriteLine($"Quokka.RTL version: {typeof(RTLBitArray).Assembly.GetName().Version}");
+
 
             Console.WriteLine("Cleaning up ...");
 

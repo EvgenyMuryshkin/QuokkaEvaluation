@@ -2,7 +2,7 @@
   "profiles": {
     "Quokka.LocalCLI": {
       "commandName": "Project",
-      "commandLineArgs": "C:\\code\\QuokkaEvaluation\\QuSoC\\QuSoC\\rtl.verilog.json -w"
+      "commandLineArgs": "-s C:\\code\\QuokkaEvaluation\\SensorsBoard\\Device\\verilog.json"
     }
   }
 }

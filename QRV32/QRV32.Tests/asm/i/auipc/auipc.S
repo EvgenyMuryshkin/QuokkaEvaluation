@@ -1,5 +1,0 @@
-﻿nop
-nop
-auipc x1, 0x1
-auipc x2, 0x100
-auipc x3, 0xFFFFF

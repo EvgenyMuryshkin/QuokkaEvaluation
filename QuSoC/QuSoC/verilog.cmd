@@ -1,1 +1,0 @@
-dotnet run --project ../../QuokkaCLI/QuokkaCLI.csproj -- rtl.verilog.json -w
