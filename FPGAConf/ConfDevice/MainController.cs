@@ -22,7 +22,9 @@ namespace ConfDevice
 
             // Servo
             FPGA.OutputSignal<bool> Servo,
-            FPGA.OutputSignal<bool> ServoInf
+            FPGA.OutputSignal<bool> ServoInf,
+            FPGA.OutputSignal<bool> DOUT
+
             )
         {
             QuokkaBoard.OutputBank(Bank1);
@@ -64,11 +66,27 @@ namespace ConfDevice
                 {
                     servoInfValue = 0;
                     FPGA.Runtime.Delay(TimeSpan.FromMilliseconds(1000));
-                    servoInfValue = 90;
+                    servoInfValue = 180;
                     FPGA.Runtime.Delay(TimeSpan.FromMilliseconds(1000));
                 }
             };
             FPGA.Config.OnStartup(servoInfHandler);
+
+            bool internalDOUT = false;
+            FPGA.Config.Link(internalDOUT, DOUT);
+            Sequential rgbHander = () =>
+            {
+                uint[] buff = new uint[1];
+                bool value = false;
+                while (true)
+                {
+                    buff[0] = (uint)(value ? 255 : 0);
+                    WS2812B.SyncWrite(buff, 0, 1, out internalDOUT);
+                    FPGA.Runtime.Delay(TimeSpan.FromSeconds(1));
+                    value = !value;
+                }
+            };
+            FPGA.Config.OnStartup(rgbHander);
         }
     }
 }

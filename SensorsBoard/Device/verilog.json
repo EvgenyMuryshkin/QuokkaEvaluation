@@ -7,5 +7,5 @@
     }
   ],
   "HDL": "Verilog",
-  "ProjectLocation": "../../Verilog"
+  "ProjectLocation": "../Verilog"
 }

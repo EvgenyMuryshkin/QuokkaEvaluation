@@ -14,7 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\RTL\Quokka.RTL.Simulator\Quokka.RTL.Simulator.csproj" />
     <ProjectReference Include="..\AES\AES.csproj" />
   </ItemGroup>
 
