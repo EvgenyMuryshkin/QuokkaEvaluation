@@ -9,7 +9,7 @@ namespace Tutorials
     [BoardConfig(Name = "Quokka")]
     public static class T00BlinkyController
     {
-        public static async Task Aggregator(FPGA.OutputSignal<bool> LED1)
+        public static async Task Aggregator(OutputSignal<bool> LED1)
         {
             bool internalAlive = false;
             Config.Link(internalAlive, LED1);

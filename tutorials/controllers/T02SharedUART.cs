@@ -10,18 +10,18 @@ namespace Tutorials
     public static class T01SharedUARTController
     {
         public static async Task Aggregator(
-            FPGA.OutputSignal<bool> LED1,
-            FPGA.OutputSignal<bool> TXD)
+            OutputSignal<bool> LED1,
+            OutputSignal<bool> TXD)
         {
             IsAlive.Blink(LED1);
 
             bool internalTXD = true;
-            FPGA.Config.Link(internalTXD, TXD);
+            Config.Link(internalTXD, TXD);
             object txdLock = new object();
 
             Sequential handler = () =>
             {
-                Const<uint> instanceId = FPGA.Config.InstanceId();
+                Const<uint> instanceId = Config.InstanceId();
                 byte[] data = TutorialsDataSource.HelloWorldBytesFromHandler(instanceId);
 
                 while (true)

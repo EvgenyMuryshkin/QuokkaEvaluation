@@ -10,8 +10,8 @@ namespace Tutorials
     public static class T01UARTController
     {
         public static async Task Aggregator(
-            FPGA.OutputSignal<bool> LED1,
-            FPGA.OutputSignal<bool> TXD)
+            OutputSignal<bool> LED1,
+            OutputSignal<bool> TXD)
         {
             IsAlive.Blink(LED1);
 
