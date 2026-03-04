@@ -1,12 +1,10 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="Quokka.FPGA" Version="0.1.0.97" />
-    <PackageReference Include="Quokka.RTL" Version="0.1.0.151" />
+    <PackageReference Include="Quokka.FPGA" Version="0.1.8.269" />
+    <PackageReference Include="Quokka.RTL" Version="0.1.8.620" />
   </ItemGroup>
-
 </Project>
